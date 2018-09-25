@@ -1,0 +1,43 @@
+#pragma once
+
+#include "IScene.h"
+#include "Player.h"
+#include "level/Level.h"
+#include "GameCamera.h"
+#include "Enemy.h"
+
+//これらは前方宣言でよい！
+struct PathPoint;
+class Enemy;
+
+//ゲームクラス。
+class Game : public IScene
+{
+public:
+	/*!
+	* @brief	コンストラクタ。
+	*/
+	Game();
+	/*!
+	* @brief	デストラクタ
+	*/
+	~Game();
+	/*!
+	* @brief	更新。
+	*/
+	void Update() override;
+	/*!
+	* @brief	描画。
+	*/
+	void Draw() override;
+private:
+	Player m_player;						//プレイヤー
+	GameCamera m_gameCamera;				//ゲームカメラ。
+	Level m_level;							//レベルを初期化。
+	std::vector< Enemy* > m_enemyList;		//エネミーのリスト。
+};
+
+//グローバルなアクセスポイントをグローバル変数として提供する。
+extern Game* g_game;
+
+
