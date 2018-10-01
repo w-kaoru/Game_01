@@ -202,7 +202,6 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="GameCamera.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="IScene.h" />
     <ClInclude Include="Title.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="PlayerState\PlStateMachine.h" />

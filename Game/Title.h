@@ -1,7 +1,7 @@
 #pragma once
-#include "IScene.h"
+#include "gameObject\IGameObject.h"
 
-class Title : public IScene
+class Title:public IGameObject
 {
 public:
 	Title();

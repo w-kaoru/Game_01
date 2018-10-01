@@ -3,7 +3,7 @@
 #include "Title.h"
 #include <algorithm>
 
-IScene* g_currentScene = nullptr;
+IGameObject* g_gameObj = nullptr;
 
 ///////////////////////////////////////////////////////////////////
 //ゲームの更新処理。
@@ -18,7 +18,7 @@ void UpdateGame()
 	//物理エンジンの更新。
 	g_physics.Update();
 	//現在のシーンの更新。
-	g_currentScene->Update();
+	g_gameObj->Update();
 }
 ///////////////////////////////////////////////////////////////////
 // ゲームの描画処理。
@@ -30,7 +30,7 @@ void RenderGame()
 	g_graphicsEngine->BegineRender();
 
 	//現在のシーンの描画。
-	g_currentScene->Draw();
+	g_gameObj->Draw();
 
 	//描画終了。
 	g_graphicsEngine->EndRender();
@@ -51,7 +51,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	//ゲームの初期化。
 	InitGame(hInstance, hPrevInstance, lpCmdLine, nCmdShow, "Game");
 	//タイトルシーンの作成。
-	g_currentScene = new Title;
+	g_gameObj = new Title;
 
 	//ゲームループ。
 	while (DispatchWindowMessage() == true)

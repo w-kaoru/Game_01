@@ -1,6 +1,6 @@
 #pragma once
 
-#include "IScene.h"
+#include "gameObject\IGameObject.h"
 #include "Player.h"
 #include "level/Level.h"
 #include "GameCamera.h"
@@ -11,7 +11,7 @@ struct PathPoint;
 class Enemy;
 
 //ゲームクラス。
-class Game : public IScene
+class Game : public IGameObject
 {
 public:
 	/*!

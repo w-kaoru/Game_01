@@ -44,7 +44,7 @@ Player::~Player()
 	m_charaCon.RemoveRigidBoby();
 }
 //移動
-void Player::Run()
+void Player::Move()
 {
 	//スティックの入力量を受け取る。
 	float lStick_x = g_pad[0].GetLStickXF();
@@ -71,13 +71,16 @@ void Player::Run()
 		auto angle = atan2f(m_moveSpeed.x, m_moveSpeed.z);
 		m_rotation.SetRotation(CVector3::AxisY(), angle);
 	}
-	/*else {
-		animove = idle;
-	}
 	if (g_pad[0].IsTrigger(enButtonA) == true
 		&& m_charaCon.IsOnGround() == true
 		) {
-		animove = jump;
+		PlayerState::AniMove::jump;
+	}
+	if (m_charaCon.IsJump() == true && m_charaCon.IsOnGround() == false) {
+		m_moveSpeed.y += 450.0f;
+	}
+	/*else {
+		animove = idle;
 	}
 	if (g_pad[0].IsTrigger(enButtonX) == true
 		&& m_charaCon.IsOnGround() == true
@@ -158,7 +161,7 @@ void Player::Run()
 
 void Player::Update()
 {	
-	Run();
+	Move();
 	m_stMa.Update();
 
 	/*switch (animove)

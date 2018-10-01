@@ -59,7 +59,7 @@ void Game::Update()
 	if (g_pad[0].IsTrigger(enButtonB)) {
 		delete g_game;
 		//タイトルシーンの作成。
-		g_currentScene = new Title;
+		g_gameObj = new Title;
 	}
 	
 }

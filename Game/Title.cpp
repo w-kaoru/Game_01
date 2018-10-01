@@ -15,7 +15,7 @@ void Title::Update()
 {
 	if (g_pad[0].IsTrigger(enButtonB) == true) {
 		//ゲームシーンを作成して、自分は死ぬ。
-		g_currentScene = new Game;
+		g_gameObj = new Game;
 		delete this;
 	}
 }

@@ -9,10 +9,10 @@ class Player
 public:
 	Player();
 	~Player();
-	void Run();
-	void Idle();
+	void Move();
+	/*void Idle();
 	void Jump();
-	void Attack();
+	void Attack();*/
 	void Update();
 	void Draw();
 	void SetPosition(CVector3 pos)

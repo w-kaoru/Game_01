@@ -7,11 +7,29 @@ class GameObjectManager
 public:
 	GameObjectManager();
 	~GameObjectManager();
+	template<class T>
+	T* NewGameObject()
+	{
+		T* newObj = new T;
+		m_gameObjectList.push_back(newObj);
+		return newObj;
+	}
+
+	void DeleteGameObject(IGameObject* gameObject)
+	{
+		if (gameObject != nullptr) {
+			gameObject->Destroy();
+			for (auto obj : m_gameObjectList) {
+				m_gameObjectList.erase(
+					std::remove(m_gameObjectList.begin(),m_gameObjectList.end(),obj),
+					m_gameObjectList.end()
+				);
+			}
+			delete gameObject;
+		}
+	}
 private:
 	typedef std::list<IGameObject*>	GameObjectList;
-	std::vector<GameObjectList>	m_gameObjectListArray;					//!<ゲームオブジェクトの優先度付きリスト。
-	std::vector<GameObjectList>	m_deleteObjectArray[2];					//!<削除するオブジェクトのリスト。削除処理を行っている最中にDeleteGameObjectが呼ばれる可能性が高いので、ダブルバッファ化。
-	int m_currentDeleteObjectBufferNo = 0;								//!<現在の削除オブジェクトのバッファ番号。
-	static const unsigned char 			GAME_OBJECT_PRIO_MAX = 255;		//!<ゲームオブジェクトの優先度の最大値。
+	std::vector<GameObjectList>	m_gameObjectList;					//!<ゲームオブジェクトの優先度付きリスト。
 };
 
