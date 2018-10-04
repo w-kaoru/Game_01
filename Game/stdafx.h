@@ -33,6 +33,8 @@
 #include "graphics/SkinModel.h"
 #include "graphics/Skeleton.h"
 
+
+#include "gameObject/GameObjectManager.h"
 #include "graphics/animation/Animation.h"
 #include "graphics/animation/AnimationClip.h"
 #include "graphics/Camera.h"

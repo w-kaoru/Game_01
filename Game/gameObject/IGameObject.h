@@ -1,6 +1,5 @@
 #pragma once
 class GameObjectManager;
-typedef unsigned char	GameObjectPrio;
 class IGameObject
 {
 public:
@@ -13,4 +12,3 @@ public:
 protected:
 	GameObjectManager * m_gojm = nullptr;
 };
-extern IGameObject* g_gameObj;

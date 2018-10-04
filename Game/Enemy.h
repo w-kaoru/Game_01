@@ -2,10 +2,10 @@
 #include "character/CharacterController.h"
 
 class Player;
-class Enemy
+class Enemy:public IGameObject
 {
 public:
-	Enemy(CVector3 pos, CQuaternion rot, Player* player);
+	Enemy();
 	~Enemy();
 	void Update();
 	void Draw();
@@ -17,6 +17,14 @@ public:
 	{
 		m_position = pos;
 	}
+	/*void SetRotation(CQuaternion rot)
+	{
+		m_rotation = rot;
+	}
+	void GetPlayer(Player* pl)
+	{
+		m_player = pl;
+	}*/
 	bool GetEnemydead()
 	{
 		return isDead;
@@ -32,7 +40,7 @@ private:
 	CVector3 m_moveSpeed = CVector3::Zero();			//移動速度。
 	CQuaternion m_rotation = CQuaternion::Identity();	//回転。
 	SkinModel m_model;									//モデル。
-	Player* m_player = nullptr;
+	Player* m_player = nullptr;							//プレイヤー
 	CharacterController m_charaCon;						//キャラクターコントローラーを追加。
 	int m_currentPointNo = 0;
 	float toPlayerLen;

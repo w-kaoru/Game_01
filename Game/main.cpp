@@ -2,8 +2,8 @@
 #include "system/system.h"
 #include "Title.h"
 #include <algorithm>
+#include"gameObject/GameObjectManager.h"
 
-IGameObject* g_gameObj = nullptr;
 
 ///////////////////////////////////////////////////////////////////
 //ゲームの更新処理。
@@ -18,7 +18,7 @@ void UpdateGame()
 	//物理エンジンの更新。
 	g_physics.Update();
 	//現在のシーンの更新。
-	g_gameObj->Update();
+	//g_gameObjM->Update();
 }
 ///////////////////////////////////////////////////////////////////
 // ゲームの描画処理。
@@ -30,7 +30,7 @@ void RenderGame()
 	g_graphicsEngine->BegineRender();
 
 	//現在のシーンの描画。
-	g_gameObj->Draw();
+	//g_gameObjM->Draw();
 
 	//描画終了。
 	g_graphicsEngine->EndRender();
@@ -51,7 +51,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	//ゲームの初期化。
 	InitGame(hInstance, hPrevInstance, lpCmdLine, nCmdShow, "Game");
 	//タイトルシーンの作成。
-	g_gameObj = new Title;
+	g_gameObjM->NewGameObject<Title>();
 
 	//ゲームループ。
 	while (DispatchWindowMessage() == true)

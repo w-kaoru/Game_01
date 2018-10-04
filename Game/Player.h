@@ -4,7 +4,7 @@
 #include "PlayerState\PlStateMachine.h"
 
 class GameCamera;
-class Player
+class Player:public IGameObject
 {
 public:
 	Player();

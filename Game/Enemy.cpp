@@ -3,16 +3,13 @@
 #include "Player.h"
 
 
-Enemy::Enemy(CVector3 pos, CQuaternion rot, Player* player) :
-	m_position(pos),
-	m_rotation(rot),
-	m_player(player)
+Enemy::Enemy()
 {
 	m_model.Init(L"Assets/modelData/enemy.cmo");
 	m_position.y = 100.0f;
 	//キャラクターコントローラーの初期化。
 	m_charaCon.Init(25.0f, 50.0f, m_position);
-
+	
 }
 
 

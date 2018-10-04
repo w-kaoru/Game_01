@@ -109,15 +109,15 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="PlayerState\PlStateMachine.cpp" />
-    <ClCompile Include="PlayerState\PlStateIdle.cpp" />
-    <ClCompile Include="PlayerState\IPlState.cpp" />
-    <ClCompile Include="PlayerState\PlStateRun.cpp" />
     <ClCompile Include="gameObject\GameObjectManager.cpp" />
     <ClCompile Include="gameObject\IGameObject.cpp" />
     <ClCompile Include="level\HID\Pad.cpp">
       <Filter>HID</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerState\IPlState.cpp" />
+    <ClCompile Include="PlayerState\PlStateIdle.cpp" />
+    <ClCompile Include="PlayerState\PlStateMachine.cpp" />
+    <ClCompile Include="PlayerState\PlStateRun.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -204,16 +204,16 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="Title.h" />
     <ClInclude Include="Enemy.h" />
-    <ClInclude Include="PlayerState\PlStateMachine.h" />
-    <ClInclude Include="PlayerState\PlStateIdle.h" />
-    <ClInclude Include="PlayerState\IPlState.h" />
-    <ClInclude Include="PlayerState\PlStateRun.h" />
-    <ClInclude Include="PlayerState\PlayerState.h" />
     <ClInclude Include="gameObject\GameObjectManager.h" />
     <ClInclude Include="gameObject\IGameObject.h" />
     <ClInclude Include="level\HID\Pad.h">
       <Filter>HID</Filter>
     </ClInclude>
+    <ClInclude Include="PlayerState\IPlState.h" />
+    <ClInclude Include="PlayerState\PlayerState.h" />
+    <ClInclude Include="PlayerState\PlStateIdle.h" />
+    <ClInclude Include="PlayerState\PlStateMachine.h" />
+    <ClInclude Include="PlayerState\PlStateRun.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\background.FBX">

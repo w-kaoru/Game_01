@@ -10,6 +10,7 @@ Game* g_game = nullptr;
 
 Game::Game()
 {
+	m_player = g_gameObjM->NewGameObject<Player>();
 	g_game = this;
 	//レベルを初期化。
 	//m_level.Init(L"Assets/level/stage_00.tkl", nullptr);
@@ -17,18 +18,20 @@ Game::Game()
 	m_level.Init(L"Assets/level/stage_00.tkl", [&](LevelObjectData& objData) {
 		if (objData.EqualName(L"Thethief_H") == true) {
 			//Unityちゃん。
-			m_player.SetPosition(objData.position);
+			m_player->SetPosition(objData.position);
 			return true;
 		}
 		else if (objData.EqualName(L"enemy") == true) {
 			//エネミー！！！
-			auto enemy = new Enemy(objData.position, objData.rotation, &m_player);
-			m_enemyList.push_back(enemy);
+			//auto enemy = new Enemy(objData.position, objData.rotation, &m_player);
+			auto m_enemy = g_gameObjM->NewGameObject<Enemy>();
+			m_enemyList.push_back(m_enemy);
 			return true;
 		}
 		return false;
 	});
-	m_gameCamera.SetPlayer(&m_player);
+	m_gameCamera.SetPlayer(m_player);
+	//return false;
 }
 
 
@@ -44,7 +47,8 @@ Game::~Game()
 void Game::Update()
 {
 	//プレイヤーの更新。
-	m_player.Update();
+	
+	m_player->Update();
 	//Enemyを更新。
 	for (auto& enemy : m_enemyList) {
 		enemy->Update();
@@ -59,7 +63,7 @@ void Game::Update()
 	if (g_pad[0].IsTrigger(enButtonB)) {
 		delete g_game;
 		//タイトルシーンの作成。
-		g_gameObj = new Title;
+		g_gameObjM->NewGameObject<Title>();
 	}
 	
 }
@@ -67,7 +71,7 @@ void Game::Update()
 void Game::Draw()
 {
 	//プレイヤーの描画。
-	m_player.Draw();
+	m_player->Draw();
 	//レベルを描画。
 	m_level.Draw();
 	//エネミーを描画。
