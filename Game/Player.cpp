@@ -3,23 +3,23 @@
 #include "PlayerState\PlStateMachine.h"
 
 
-Player::Player():m_stMa(this)
+Player::Player() :m_stMa(this)
 {
 	//cmoファイルの読み込み。
 	m_model.Init(L"Assets/modelData/Thethief_H.cmo", enFbxUpAxisZ);
 
 	//tkaファイルの読み込み。
-		m_animationClips[PlayerState::idle].Load(L"Assets/animData/idle.tka");
-		m_animationClips[PlayerState::idle].SetLoopFlag(true);
+	m_animationClips[PlayerState::idle].Load(L"Assets/animData/idle.tka");
+	m_animationClips[PlayerState::idle].SetLoopFlag(true);
 
-		m_animationClips[PlayerState::run].Load(L"Assets/animData/run.tka");
-		m_animationClips[PlayerState::run].SetLoopFlag(true);
-		
-		m_animationClips[PlayerState::jump].Load(L"Assets/animData/jump.tka");
-		m_animationClips[PlayerState::jump].SetLoopFlag(false);
-		
-		m_animationClips[PlayerState::attack].Load(L"Assets/animData/attack.tka");
-		m_animationClips[PlayerState::attack].SetLoopFlag(false);
+	m_animationClips[PlayerState::run].Load(L"Assets/animData/run.tka");
+	m_animationClips[PlayerState::run].SetLoopFlag(true);
+
+	m_animationClips[PlayerState::jump].Load(L"Assets/animData/jump.tka");
+	m_animationClips[PlayerState::jump].SetLoopFlag(false);
+
+	m_animationClips[PlayerState::attack].Load(L"Assets/animData/attack.tka");
+	m_animationClips[PlayerState::attack].SetLoopFlag(false);
 
 	//アニメーションの初期化。
 	m_animation.Init(
@@ -28,20 +28,19 @@ Player::Player():m_stMa(this)
 		m_animationClips,	//アニメーションクリップの配列。
 		4					//アニメーションクリップの数。
 	);
-
-	m_position.y = 100.0f;
-	m_position.x = 500.0f;
-	m_position.x = 300.0f;
+	m_position.y = 200.0f;
 	m_scale *= 4;
-	//キャラクターコントローラーの初期化。
-	m_charaCon.Init(10.0f, 50.0f, m_position);
-	m_stMa.Start();
 }
-
-
 Player::~Player()
 {
 	m_charaCon.RemoveRigidBoby();
+}
+bool Player::Start()
+{
+	//キャラクターコントローラーの初期化。
+	m_charaCon.Init(10.0f, 50.0f, m_position);
+	m_stMa.Start();
+	return true;
 }
 //移動
 void Player::Move()

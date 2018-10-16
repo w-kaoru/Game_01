@@ -6,10 +6,7 @@
 Enemy::Enemy()
 {
 	m_model.Init(L"Assets/modelData/enemy.cmo");
-	m_position.y = 100.0f;
-	//キャラクターコントローラーの初期化。
-	m_charaCon.Init(25.0f, 50.0f, m_position);
-	
+	m_position.y = 200.0f;
 }
 
 
@@ -18,8 +15,16 @@ Enemy::~Enemy()
 	m_charaCon.RemoveRigidBoby();
 }
 
+bool Enemy::Start()
+{
+	//キャラクターコントローラーの初期化。
+	m_charaCon.Init(25.0f, 50.0f, m_position);
+	return true;
+}
+
 void Enemy::PlLen()
 {
+
 	//エネミーからプレイヤーに伸びるベクトルを求める。
 	m_moveSpeed = m_player->GetPosition() - m_position;
 	//正規化を行う前に、プレイヤーまでの距離を求めておく。
@@ -66,8 +71,6 @@ void Enemy::Move()
 		movestate = idle;
 	}
 	m_moveSpeed.y -= 9800.0f * (1.0f / 60.0f);
-	//キャラコンを使って移動する。aaa
-	m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
 }
 
 void Enemy::Idle()
@@ -84,8 +87,6 @@ void Enemy::Idle()
 		m_moveSpeed.z *= 0.0f;
 	}
 	m_moveSpeed.y -= 9800.0f * (1.0f / 60.0f);
-	//キャラコンを使って移動する。
-	m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
 	
 }
 
@@ -104,6 +105,8 @@ void Enemy::Update()
 		isDead = true;
 		m_charaCon.RemoveRigidBoby();
 	}
+	//キャラコンを使って移動する。
+	m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
 	//ワールド行列を求める。
 	m_model.UpdateWorldMatrix(m_position, m_rotation, { 3.0f, 3.0f, 3.0f });
 }

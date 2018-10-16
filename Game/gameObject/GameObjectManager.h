@@ -12,14 +12,6 @@ public:
 	~GameObjectManager();
 	//実行
 	void Execute();
-	/*!
-	 *@brief	インスタンスの取得。
-	 */
-	static GameObjectManager& Instance()
-	{
-		static GameObjectManager instance;
-		return instance;
-	}
 	template<class T>
 	T* NewGameObject()
 	{
@@ -32,38 +24,16 @@ public:
 	{
 		if (gameObject != nullptr) {
 			gameObject->Destroy();
-			for (auto obj : m_gameObjectList) {
-				m_gameObjectList.erase(
-					std::remove(m_gameObjectList.begin(),m_gameObjectList.end(),obj),
-					m_gameObjectList.end()
-				);
-			}
-			delete gameObject;
+			m_gameObjectList[0].erase(
+				std::remove(m_gameObjectList[0].begin(), m_gameObjectList[0].end(), gameObject),
+				m_gameObjectList[0].end()
+			);
 		}
+		delete gameObject;
+
 	}
 private:
 	typedef std::list<IGameObject*>	GameObjectList;
-	std::vector<GameObjectList>	m_gameObjectList;					//!<ゲームオブジェクトの優先度付きリスト。
+	std::vector<GameObjectList>	m_gameObjectList;					//ゲームオブジェクトのリスト。
 };
 extern GameObjectManager* g_gameObjM;
-
-//static inline GameObjectManager& gameObjectManager()
-//{
-//	return GameObjectManager::Instance();
-//}	
-//
-///*!
-//*@brief	ゲームオブジェクト生成のヘルパー関数。
-//*/
-//template<class T>
-//static inline T* NewGo()
-//{
-//	gameObjectManager().NewGameObject<T>();
-//}
-///*!
-//*@brief	削除するゲームオブジェクト。
-//*/
-//static inline void DeleteGo(IGameObject* go)
-//{
-//	gameObjectManager().DeleteGameObject(go);
-//}

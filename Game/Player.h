@@ -9,6 +9,7 @@ class Player:public IGameObject
 public:
 	Player();
 	~Player();
+	bool Start();
 	void Move();
 	/*void Idle();
 	void Jump();

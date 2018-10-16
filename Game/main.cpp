@@ -28,10 +28,11 @@ void RenderGame()
 {
 	//描画開始。
 	g_graphicsEngine->BegineRender();
+	g_gameObjM->Execute();
 
 	//現在のシーンの描画。
 	//g_gameObjM->Draw();
-
+	//g_gameObjM->ExecuteDraw();
 	//描画終了。
 	g_graphicsEngine->EndRender();
 }
@@ -51,6 +52,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	//ゲームの初期化。
 	InitGame(hInstance, hPrevInstance, lpCmdLine, nCmdShow, "Game");
 	//タイトルシーンの作成。
+
 	g_gameObjM->NewGameObject<Title>();
 
 	//ゲームループ。

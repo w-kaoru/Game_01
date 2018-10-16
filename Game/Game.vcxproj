@@ -185,6 +185,8 @@
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\background.FBX" />
     <MeshContentTask Include="Assets\modelData\enemy.FBX" />
+    <MeshContentTask Include="Assets\modelData\enpath.FBX" />
+    <MeshContentTask Include="Assets\modelData\plpath.FBX" />
     <MeshContentTask Include="Assets\modelData\Thethief_H.FBX" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
