@@ -118,6 +118,8 @@
     <ClCompile Include="PlayerState\PlStateIdle.cpp" />
     <ClCompile Include="PlayerState\PlStateMachine.cpp" />
     <ClCompile Include="PlayerState\PlStateRun.cpp" />
+    <ClCompile Include="enemyState\IEnState.cpp" />
+    <ClCompile Include="enemyState\EnStateMachine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -214,6 +216,9 @@
     <ClInclude Include="PlayerState\PlStateIdle.h" />
     <ClInclude Include="PlayerState\PlStateMachine.h" />
     <ClInclude Include="PlayerState\PlStateRun.h" />
+    <ClInclude Include="enemyState\IEnState.h" />
+    <ClInclude Include="enemyState\EnStateMachine.h" />
+    <ClInclude Include="enemyState\EnemyState.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\background.FBX">

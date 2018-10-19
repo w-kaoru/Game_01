@@ -2,13 +2,13 @@
 
 class Player;
 class PlStateMachine;
-class IPlState
+class IPlState:public IGameObject
 {
 public:
 	IPlState(Player *pl,PlStateMachine *psm);
 	~IPlState();
-	virtual bool Start() = 0;
-	virtual void Update() = 0;
+	bool Start() = 0;
+	void Update() = 0;
 protected:
 	PlStateMachine * m_plstma = nullptr;
 	Player * m_player = nullptr;

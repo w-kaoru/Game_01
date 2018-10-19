@@ -156,10 +156,22 @@ float4 PSMain( PSInput In ) : SV_Target0
 	//albedoテクスチャからカラーをフェッチする。
 	float4 albedoColor = albedoTexture.Sample(Sampler, In.TexCoord);
 	//ディレクションライトの拡散反射光を計算する。
+	//float3 lig = max(0.0f, dot(In.Normal * -1.0f, directionLight.direction)) * directionLight.color.xyz;
+	//ディレクションライトの鏡面反射光を計算する。
+	/*{
+		float3 toEyeDir = normalize(eyePos - In.worldPos);
+
+		float3 Reflection = -toEyeDir + 2 * dot(In.Normal, toEyeDir) * In.Normal;
+
+		float3 t = max(0.0f, dot(-directionLight.direction, Reflection));
+	
+		float3 specLig = pow(t, specPow) * directionLight.color.xyz;
+
+		lig += specLig;
+
+	}*/
 	float4 finalColor = float4(0.0f, 0.0f, 0.0f, 1.0f);
 	float3 lig = max(0.0f, dot(In.Normal * -1.0f, directionLight.direction)) * directionLight.color.xyz;
-	finalColor.xyz = albedoColor.xyz * lig +albedoColor.xyz*0.5;
-	
+	finalColor.xyz = albedoColor.xyz * lig + albedoColor.xyz*0.5;
 	return finalColor;
-	//return albedoTexture.Sample(Sampler, In.TexCoord);
 }

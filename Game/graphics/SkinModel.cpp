@@ -59,6 +59,10 @@ void SkinModel::InitSkeleton(const wchar_t* filePath)
 #endif
 	}
 }
+int SkinModel::Raundup16(int n)
+{
+	return (((n - 1) / 16) + 1) * 16;
+}
 void SkinModel::InitConstantBuffer()
 {
 	//作成するバッファのサイズをsizeof演算子で求める。
@@ -67,7 +71,7 @@ void SkinModel::InitConstantBuffer()
 	D3D11_BUFFER_DESC bufferDesc;
 	ZeroMemory(&bufferDesc, sizeof(bufferDesc));				//０でクリア。
 	bufferDesc.Usage = D3D11_USAGE_DEFAULT;						//バッファで想定されている、読み込みおよび書き込み方法。
-	bufferDesc.ByteWidth = (((bufferSize - 1) / 16) + 1) * 16;	//バッファは16バイトアライメントになっている必要がある。
+	bufferDesc.ByteWidth = Raundup16(bufferSize);				//バッファは16バイトアライメントになっている必要がある。
 																//アライメントって→バッファのサイズが16の倍数ということです。
 	bufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;			//バッファをどのようなパイプラインにバインドするかを指定する。
 																//定数バッファにバインドするので、D3D11_BIND_CONSTANT_BUFFERを指定する。
@@ -75,20 +79,20 @@ void SkinModel::InitConstantBuffer()
 																//CPUアクセスが不要な場合は0。
 	//作成。
 	g_graphicsEngine->GetD3DDevice()->CreateBuffer(&bufferDesc, NULL, &m_cb);
-	//作成するバッファのサイズをsizeof演算子で求める。
-	int bufferSize1 = sizeof(SLight);
+	//作成するライトのバッファのサイズをsizeof演算子で求める。
+	int bufferSizelight = sizeof(SLight);
 	//どんなバッファを作成するのかをせてbufferDescに設定する。
-	D3D11_BUFFER_DESC bufferDesc1;
-	ZeroMemory(&bufferDesc1, sizeof(bufferDesc1));				//０でクリア。
-	bufferDesc1.Usage = D3D11_USAGE_DEFAULT;						//バッファで想定されている、読み込みおよび書き込み方法。
-	bufferDesc1.ByteWidth = (((bufferSize1 - 1) / 16) + 1) * 16;	//バッファは16バイトアライメントになっている必要がある。
-																//アライメントって→バッファのサイズが16の倍数ということです。
-	bufferDesc1.BindFlags = D3D11_BIND_CONSTANT_BUFFER;			//バッファをどのようなパイプラインにバインドするかを指定する。
-																//定数バッファにバインドするので、D3D11_BIND_CONSTANT_BUFFERを指定する。
-	bufferDesc1.CPUAccessFlags = 0;								//CPU アクセスのフラグです。
-																//CPUアクセスが不要な場合は0。
-																//作成。
-	g_graphicsEngine->GetD3DDevice()->CreateBuffer(&bufferDesc1, NULL, &m_lightCb);
+	D3D11_BUFFER_DESC bufferDesclight;
+	ZeroMemory(&bufferDesclight, sizeof(bufferDesclight));				//０でクリア。
+	bufferDesclight.Usage = D3D11_USAGE_DEFAULT;						//バッファで想定されている、読み込みおよび書き込み方法。
+	bufferDesclight.ByteWidth = Raundup16(bufferSizelight);					//バッファは16バイトアライメントになっている必要がある。
+																		//アライメントって→バッファのサイズが16の倍数ということです。
+	bufferDesclight.BindFlags = D3D11_BIND_CONSTANT_BUFFER;				//バッファをどのようなパイプラインにバインドするかを指定する。
+																		//定数バッファにバインドするので、D3D11_BIND_CONSTANT_BUFFERを指定する。
+	bufferDesclight.CPUAccessFlags = 0;									//CPU アクセスのフラグです。
+																		//CPUアクセスが不要な場合は0。
+	//作成。
+	g_graphicsEngine->GetD3DDevice()->CreateBuffer(&bufferDesclight, NULL, &m_lightCb);
 }
 //ディレクションライトの初期化。(追加)
 void SkinModel::InitDirectionLight()

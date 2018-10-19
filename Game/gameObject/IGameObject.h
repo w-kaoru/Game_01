@@ -7,7 +7,7 @@ public:
 	virtual ~IGameObject();
 	virtual bool Start() { return true; }
 	virtual void Update() = 0;
-	virtual void Draw() = 0;
+	virtual void Draw() {};
 	virtual void Destroy() {};
 	friend class GameObjectManager;
 	void StartDed(){

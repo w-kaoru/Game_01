@@ -28,7 +28,6 @@ Player::Player() :m_stMa(this)
 		m_animationClips,	//アニメーションクリップの配列。
 		4					//アニメーションクリップの数。
 	);
-	m_position.y = 200.0f;
 	m_scale *= 4;
 }
 Player::~Player()
@@ -37,6 +36,7 @@ Player::~Player()
 }
 bool Player::Start()
 {
+	m_position.y = 200.0f;
 	//キャラクターコントローラーの初期化。
 	m_charaCon.Init(10.0f, 50.0f, m_position);
 	m_stMa.Start();

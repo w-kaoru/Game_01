@@ -6,7 +6,6 @@
 Enemy::Enemy()
 {
 	m_model.Init(L"Assets/modelData/enemy.cmo");
-	m_position.y = 200.0f;
 }
 
 
@@ -17,6 +16,7 @@ Enemy::~Enemy()
 
 bool Enemy::Start()
 {
+	m_position.y = 200.0f;
 	//キャラクターコントローラーの初期化。
 	m_charaCon.Init(40.0f, 50.0f, m_position);
 	return true;

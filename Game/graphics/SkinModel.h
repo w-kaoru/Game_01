@@ -97,10 +97,7 @@ private:
 	void InitSkeleton(const wchar_t* filePath);
 
 	//16の倍数に切り上げる処理を関数化。
-	int Raundup16(int n)
-	{
-		return (((n - 1) / 16) + 1) * 16;
-	}
+	int Raundup16(int n);
 private:
 	//ディレクションライト（追加）
 	struct SDirectionLight {
