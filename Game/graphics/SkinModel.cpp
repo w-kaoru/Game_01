@@ -8,6 +8,10 @@ SkinModel::~SkinModel()
 		//定数バッファを解放。
 		m_cb->Release();
 	}
+	//ライト用の定数バッファの解放。
+	if (m_lightCb != nullptr) {
+		m_lightCb->Release();
+	}
 	if (m_samplerState != nullptr) {
 		//サンプラステートを解放。
 		m_samplerState->Release();
@@ -23,6 +27,10 @@ void SkinModel::Init(const wchar_t* filePath, EnFbxUpAxis enFbxUpAxis)
 
 	//サンプラステートの初期化。
 	InitSamplerState();
+
+	//ディレクションライトの初期化。
+	InitDirectionLight();
+
 
 	//SkinModelDataManagerを使用してCMOファイルのロード。
 	m_modelDx = g_skinModelDataManager.Load(filePath, m_skeleton);
@@ -67,6 +75,27 @@ void SkinModel::InitConstantBuffer()
 																//CPUアクセスが不要な場合は0。
 	//作成。
 	g_graphicsEngine->GetD3DDevice()->CreateBuffer(&bufferDesc, NULL, &m_cb);
+	//作成するバッファのサイズをsizeof演算子で求める。
+	int bufferSize1 = sizeof(SLight);
+	//どんなバッファを作成するのかをせてbufferDescに設定する。
+	D3D11_BUFFER_DESC bufferDesc1;
+	ZeroMemory(&bufferDesc1, sizeof(bufferDesc1));				//０でクリア。
+	bufferDesc1.Usage = D3D11_USAGE_DEFAULT;						//バッファで想定されている、読み込みおよび書き込み方法。
+	bufferDesc1.ByteWidth = (((bufferSize1 - 1) / 16) + 1) * 16;	//バッファは16バイトアライメントになっている必要がある。
+																//アライメントって→バッファのサイズが16の倍数ということです。
+	bufferDesc1.BindFlags = D3D11_BIND_CONSTANT_BUFFER;			//バッファをどのようなパイプラインにバインドするかを指定する。
+																//定数バッファにバインドするので、D3D11_BIND_CONSTANT_BUFFERを指定する。
+	bufferDesc1.CPUAccessFlags = 0;								//CPU アクセスのフラグです。
+																//CPUアクセスが不要な場合は0。
+																//作成。
+	g_graphicsEngine->GetD3DDevice()->CreateBuffer(&bufferDesc1, NULL, &m_lightCb);
+}
+//ディレクションライトの初期化。(追加)
+void SkinModel::InitDirectionLight()
+{
+	m_light.directionLight.direction = { 0.0f, -1.0f,0.0f, 0.0f };
+	m_light.directionLight.color = { 1.0f, 0.0f, 1.0f, 1.0f };
+	m_light.specPow = 10.0f;
 }
 void SkinModel::InitSamplerState()
 {
@@ -116,9 +145,17 @@ void SkinModel::Draw(CMatrix viewMatrix, CMatrix projMatrix)
 	vsCb.mProj = projMatrix;
 	vsCb.mView = viewMatrix;
 	d3dDeviceContext->UpdateSubresource(m_cb, 0, nullptr, &vsCb, 0, 0);
-	//定数バッファをGPUに転送。
+	//視点の更新と設定。(追加)
+	m_light.eyePos = g_camera3D.GetPosition();
+	InitDirectionLight();
+	//ライト用の定数バッファを更新。(追加)
+	d3dDeviceContext->UpdateSubresource(m_lightCb, 0, nullptr, &m_light, 0, 0);
+	//定数バッファをシェーダースロットに設定。(追加)
 	d3dDeviceContext->VSSetConstantBuffers(0, 1, &m_cb);
-	d3dDeviceContext->PSSetConstantBuffers(0, 1, &m_cb);
+	d3dDeviceContext->PSSetConstantBuffers(0, 1, &m_lightCb);
+	//定数バッファをGPUに転送。
+	//d3dDeviceContext->VSSetConstantBuffers(0, 1, &m_cb);
+	//d3dDeviceContext->PSSetConstantBuffers(0, 1, &m_cb);
 	//サンプラステートを設定。
 	d3dDeviceContext->PSSetSamplers(0, 1, &m_samplerState);
 	//ボーン行列をGPUに転送。

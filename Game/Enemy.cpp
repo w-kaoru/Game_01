@@ -18,7 +18,7 @@ Enemy::~Enemy()
 bool Enemy::Start()
 {
 	//キャラクターコントローラーの初期化。
-	m_charaCon.Init(25.0f, 50.0f, m_position);
+	m_charaCon.Init(40.0f, 50.0f, m_position);
 	return true;
 }
 

@@ -88,24 +88,44 @@ private:
 	*@brief	定数バッファの作成。
 	*/
 	void InitConstantBuffer();
+	//ディレクションライトの初期化。
+	void InitDirectionLight();
 	/*!
 	*@brief	スケルトンの初期化。
 	*@param[in]	filePath		ロードするcmoファイルのファイルパス。
 	*/
 	void InitSkeleton(const wchar_t* filePath);
-	
+
+	//16の倍数に切り上げる処理を関数化。
+	int Raundup16(int n)
+	{
+		return (((n - 1) / 16) + 1) * 16;
+	}
 private:
+	//ディレクションライト（追加）
+	struct SDirectionLight {
+		CVector4 direction;		//ライトの方向。
+		CVector4 color;			//ライトのカラー。
+	};
+	//ライトの構造体（追加）
+	struct SLight {
+		SDirectionLight		directionLight;		//ディレクションライト
+		CVector3			eyePos;				//視点の座標。
+		float				specPow;			//鏡面反射の絞り。
+	};
 	//定数バッファ。
 	struct SVSConstantBuffer {
 		CMatrix mWorld;
 		CMatrix mView;
 		CMatrix mProj;
 	};
-	EnFbxUpAxis			m_enFbxUpAxis = enFbxUpAxisZ;	//!<FBXの上方向。
-	ID3D11Buffer*		m_cb = nullptr;					//!<定数バッファ。
-	Skeleton			m_skeleton;						//!<スケルトン。
-	CMatrix				m_worldMatrix;					//!<ワールド行列。
-	DirectX::Model*		m_modelDx;						//!<DirectXTKが提供するモデルクラス。
-	ID3D11SamplerState* m_samplerState = nullptr;		//!<サンプラステート。
+	EnFbxUpAxis			m_enFbxUpAxis = enFbxUpAxisZ;		//!<FBXの上方向。
+	ID3D11Buffer*		m_cb = nullptr;						//!<定数バッファ。
+	ID3D11Buffer*		m_lightCb = nullptr;				//ライト用の定数バッファ。（追加）
+	SLight				m_light;							//ライトの構造体。（追加）
+	Skeleton			m_skeleton;							//!<スケルトン。
+	CMatrix				m_worldMatrix;						//!<ワールド行列。
+	DirectX::Model*		m_modelDx;							//!<DirectXTKが提供するモデルクラス。
+	ID3D11SamplerState* m_samplerState = nullptr;			//!<サンプラステート。
 };
 

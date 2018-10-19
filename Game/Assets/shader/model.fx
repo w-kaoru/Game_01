@@ -28,6 +28,17 @@ cbuffer VSPSCb : register(b0){
 	float4x4 mProj;
 };
 
+//ディレクションライト。
+struct SDirectionLight {
+	float3 direction;
+	float4 color;
+};
+//ライト用の定数バッファ
+cbuffer LightCb:register(b0) {
+	SDirectionLight		directionLight;		//ディレクションライト。
+	float3				eyePos;				//カメラの視点。
+	float				specPow;			//スペキュラライトの絞り。
+};
 
 /////////////////////////////////////////////////////////////
 //各種構造体
@@ -142,5 +153,13 @@ PSInput VSMainSkin( VSInputNmTxWeights In )
 //--------------------------------------------------------------------------------------
 float4 PSMain( PSInput In ) : SV_Target0
 {
-	return albedoTexture.Sample(Sampler, In.TexCoord);
+	//albedoテクスチャからカラーをフェッチする。
+	float4 albedoColor = albedoTexture.Sample(Sampler, In.TexCoord);
+	//ディレクションライトの拡散反射光を計算する。
+	float4 finalColor = float4(0.0f, 0.0f, 0.0f, 1.0f);
+	float3 lig = max(0.0f, dot(In.Normal * -1.0f, directionLight.direction)) * directionLight.color.xyz;
+	finalColor.xyz = albedoColor.xyz * lig +albedoColor.xyz*0.5;
+	
+	return finalColor;
+	//return albedoTexture.Sample(Sampler, In.TexCoord);
 }
