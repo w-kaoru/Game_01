@@ -5,7 +5,6 @@
 
 Enemy::Enemy()
 {
-	m_model.Init(L"Assets/modelData/enemy.cmo");
 }
 
 
@@ -16,6 +15,14 @@ Enemy::~Enemy()
 
 bool Enemy::Start()
 {
+	//m_model.Init(L"Assets/modelData/enemy.cmo");
+	
+	if (selectModel == 1) {
+		m_model.Init(L"Assets/modelData/enemy.cmo");
+	}
+	if (selectModel == 2) {
+		m_model.Init(L"Assets/modelData/ToonRTS_demo_Knight.cmo");
+	}
 	m_position.y = 200.0f;
 	//キャラクターコントローラーの初期化。
 	m_charaCon.Init(40.0f, 50.0f, m_position);
@@ -24,7 +31,6 @@ bool Enemy::Start()
 
 void Enemy::PlLen()
 {
-
 	//エネミーからプレイヤーに伸びるベクトルを求める。
 	m_moveSpeed = m_player->GetPosition() - m_position;
 	//正規化を行う前に、プレイヤーまでの距離を求めておく。
@@ -51,14 +57,16 @@ bool Enemy::Search()
 		//見つけた。
 		return true;
 	}
-	//見つけていない。
-	return false;
+	else if (toPlayerLen > 600.0) {
+		//見つけていない。
+		return false;
+	}
 }
 //エネミー追跡状態。
 void Enemy::Move()
 {
 	PlLen();
-	if (toPlayerLen < 1000.0f) {
+	if (Search()==true) {
 		m_moveSpeed.x *= 200.0f;
 		m_moveSpeed.z *= 200.0f;
 		//向きも変える。
@@ -68,39 +76,16 @@ void Enemy::Move()
 		}
 	}
 	else {
-		movestate = idle;
-	}
-	m_moveSpeed.y -= 9800.0f * (1.0f / 60.0f);
-}
-
-void Enemy::Idle()
-{
-	PlLen();
-	if (Search() == true
-		&&toPlayerLen < 1000.0f
-		) {
-		movestate = move;
-	}
-	else
-	{
 		m_moveSpeed.x *= 0.0f;
 		m_moveSpeed.z *= 0.0f;
+
 	}
 	m_moveSpeed.y -= 9800.0f * (1.0f / 60.0f);
-	
 }
 
 void Enemy::Update()
 {
-	switch (movestate)
-	{
-	case idle:
-		Idle();
-		break;
-	case move:
-		Move();
-		break;
-	}
+	Move();
 	if (toPlayerLen < 40) {
 		isDead = true;
 		m_charaCon.RemoveRigidBoby();

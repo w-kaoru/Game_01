@@ -12,7 +12,6 @@ public:
 	void Draw();
 	void Move();
 	bool Search();
-	void Idle();
 	void PlLen();
 	void SetPosition(CVector3 pos)
 	{
@@ -30,7 +29,10 @@ public:
 	{
 		return isDead;
 	}
-
+	void SetEnemySelect(int s)
+	{
+		selectModel = s;
+	}
 private:
 	enum MoveState {
 		idle,
@@ -46,5 +48,6 @@ private:
 	int m_currentPointNo = 0;
 	float toPlayerLen;
 	bool isDead = false;
+	int selectModel = 0;
 };
 

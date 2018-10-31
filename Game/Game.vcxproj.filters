@@ -228,5 +228,7 @@
     <MeshContentTask Include="Assets\modelData\Thethief_H.FBX" />
     <MeshContentTask Include="Assets\modelData\plpath.FBX" />
     <MeshContentTask Include="Assets\modelData\enpath.FBX" />
+    <MeshContentTask Include="Assets\modelData\ToonRTS_demo_Knight.FBX" />
+    <MeshContentTask Include="Assets\modelData\enpath2.fbx" />
   </ItemGroup>
 </Project>

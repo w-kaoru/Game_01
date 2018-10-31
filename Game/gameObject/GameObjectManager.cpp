@@ -18,12 +18,12 @@ void GameObjectManager::Execute()
 	}
 	for (GameObjectList objList : m_gameObjectList) {
 		for (IGameObject* obj:objList)	{
-			obj->Update();
+			obj->UpdateStart();
 		}
 	}
 	for (GameObjectList objList : m_gameObjectList) {
 		for (IGameObject* obj : objList) {
-			obj->Draw();
+			obj->DrawStart();
 		}
 	}
 }

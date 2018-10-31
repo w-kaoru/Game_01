@@ -16,6 +16,16 @@ public:
 			startDed = true;
 		}
 	}
+	void DrawStart() {
+		if (startDed == true) {
+			Draw();
+		}
+	}
+	void UpdateStart() {
+		if (startDed == true) {
+			Update();
+		}
+	}
 private:
 	bool startDed = false;
 };
