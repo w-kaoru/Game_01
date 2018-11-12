@@ -74,6 +74,7 @@ struct PSInput{
 	float3 Normal		: NORMAL;
 	float3 Tangent		: TANGENT;
 	float2 TexCoord 	: TEXCOORD0;
+	float3 worldPos		: TEXCOORD1;	//ワールド座標。(追加)
 };
 /*!
  *@brief	スキン行列を計算。
@@ -99,6 +100,9 @@ PSInput VSMain( VSInputNmTxVcTangent In )
 {
 	PSInput psInput = (PSInput)0;
 	float4 pos = mul(mWorld, In.Position);
+	//鏡面反射の計算のために、ワールド座標をピクセルシェーダーに渡す。(追加)
+	psInput.worldPos = pos;
+
 	pos = mul(mView, pos);
 	pos = mul(mProj, pos);
 	psInput.Position = pos;
@@ -156,22 +160,28 @@ float4 PSMain( PSInput In ) : SV_Target0
 	//albedoテクスチャからカラーをフェッチする。
 	float4 albedoColor = albedoTexture.Sample(Sampler, In.TexCoord);
 	//ディレクションライトの拡散反射光を計算する。
-	//float3 lig = max(0.0f, dot(In.Normal * -1.0f, directionLight.direction)) * directionLight.color.xyz;
+	float3 lig = max(0.0f, dot(In.Normal * -1.0f, directionLight.direction)) * directionLight.color.xyz;
 	//ディレクションライトの鏡面反射光を計算する。
-	/*{
+	{
+		//ライトを当てるピクセルのワールド座標から視点に伸びるベクトルtoEyeDirを求める。
+		//	 視点の座標は定数バッファで渡されている。LightCbを参照するように。
 		float3 toEyeDir = normalize(eyePos - In.worldPos);
 
+		//求めたtoEyeDirの反射ベクトルを求める。
 		float3 Reflection = -toEyeDir + 2 * dot(In.Normal, toEyeDir) * In.Normal;
 
+		//求めた反射ベクトルとディレクションライトの方向との内積を取って、スペキュラの強さを計算する。
 		float3 t = max(0.0f, dot(-directionLight.direction, Reflection));
-	
+
+		//pow関数を使って、スペキュラを絞る。絞りの強さは定数バッファで渡されている。
 		float3 specLig = pow(t, specPow) * directionLight.color.xyz;
 
+		//スペキュラ反射が求まったら、ligに加算する。
+		//鏡面反射を反射光に加算する。
 		lig += specLig;
-
-	}*/
+	}
 	float4 finalColor = float4(0.0f, 0.0f, 0.0f, 1.0f);
-	float3 lig = max(0.0f, dot(In.Normal * -1.0f, directionLight.direction)) * directionLight.color.xyz;
+	//float3 lig = max(0.0f, dot(In.Normal * -1.0f, directionLight.direction)) * directionLight.color.xyz;
 	finalColor.xyz = albedoColor.xyz * lig + albedoColor.xyz*0.5;
 	return finalColor;
 }

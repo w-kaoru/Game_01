@@ -13,26 +13,6 @@ Game::Game()
 	//m_player = g_gameObjM->NewGameObject<Player>();
 	g_game = this;
 	//レベルを初期化。
-	//m_level.Init(L"Assets/level/stage_01.tkl", nullptr);
-	//m_level.Init(L"Assets/level/stage_01.tkl", [&](LevelObjectData& objData) {
-	//	if (objData.EqualName(L"plpath") == true) {
-	//		m_player = g_gameObjM->NewGameObject<Player>();
-	//		m_player->SetPosition(objData.position);
-	//		return true;
-	//	}
-	//	else if (objData.EqualName(L"enpath") == true) {
-	//		//エネミー！！！
-	//		m_enemy = g_gameObjM->NewGameObject<Enemy>();
-	//		m_enemy->SetPosition(objData.position);
-	//		m_enemy->SetRotation(objData.rotation);
-	//		m_enemy->GetPlayer(m_player);
-	//		m_enemyList.push_back(m_enemy);
-	//		return true;
-	//	}
-	//	return false;
-	//});
-
-	//レベルを初期化。
 	m_level.Init(L"Assets/level/stage_02.tkl", nullptr);
 	m_level.Init(L"Assets/level/stage_02.tkl", [&](LevelObjectData& objData) {
 		if (objData.EqualName(L"plpath") == true) {

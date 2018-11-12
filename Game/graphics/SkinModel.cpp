@@ -98,8 +98,8 @@ void SkinModel::InitConstantBuffer()
 void SkinModel::InitDirectionLight()
 {
 	m_light.directionLight.direction = { 0.0f, -1.0f,0.0f, 0.0f };
-	m_light.directionLight.color = { 1.0f, 0.0f, 1.0f, 1.0f };
-	m_light.specPow = 10.0f;
+	m_light.directionLight.color = { 1.0f, 1.0f, 1.0f, 1.0f };
+	m_light.specPow = 100.0f;
 }
 void SkinModel::InitSamplerState()
 {
@@ -133,7 +133,6 @@ void SkinModel::UpdateWorldMatrix(CVector3 position, CQuaternion rotation, CVect
 	//順番を間違えたら結果が変わるよ。
 	m_worldMatrix.Mul(scaleMatrix, rotMatrix);
 	m_worldMatrix.Mul(m_worldMatrix, transMatrix);
-
 	//スケルトンの更新。
 	m_skeleton.Update(m_worldMatrix);
 }
@@ -151,7 +150,6 @@ void SkinModel::Draw(CMatrix viewMatrix, CMatrix projMatrix)
 	d3dDeviceContext->UpdateSubresource(m_cb, 0, nullptr, &vsCb, 0, 0);
 	//視点の更新と設定。(追加)
 	m_light.eyePos = g_camera3D.GetPosition();
-	InitDirectionLight();
 	//ライト用の定数バッファを更新。(追加)
 	d3dDeviceContext->UpdateSubresource(m_lightCb, 0, nullptr, &m_light, 0, 0);
 	//定数バッファをシェーダースロットに設定。(追加)

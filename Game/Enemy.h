@@ -33,6 +33,10 @@ public:
 	{
 		selectModel = s;
 	}
+	float GetPlLen()
+	{
+		return toPlayerLen;
+	}
 private:
 	enum MoveState {
 		idle,
