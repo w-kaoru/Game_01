@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "PlStateRun.h"
-#include "../Player.h"
+#include "Player.h"
 
 PlStateRun::PlStateRun(Player *pl, PlStateMachine *psm)
 	:IPlState(pl,psm)

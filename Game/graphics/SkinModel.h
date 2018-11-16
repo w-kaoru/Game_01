@@ -2,6 +2,7 @@
 
 #include "Skeleton.h"
 
+const int NumDirection = 4;
 /*!
 *@brief	FBXの上方向。
 */
@@ -101,8 +102,8 @@ private:
 private:
 	//ディレクションライト（追加）
 	struct SDirectionLight {
-		CVector4 direction;		//ライトの方向。
-		CVector4 color;			//ライトのカラー。
+		CVector4 direction[NumDirection];		//ライトの方向。
+		CVector4 color[NumDirection];			//ライトのカラー。
 	};
 	//ライトの構造体（追加）
 	struct SLight {

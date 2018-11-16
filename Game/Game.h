@@ -1,7 +1,7 @@
 #pragma once
 
 #include "gameObject\IGameObject.h"
-#include "Player.h"
+#include "Player\Player.h"
 #include "level/Level.h"
 #include "GameCamera.h"
 #include "Enemy.h"
@@ -23,7 +23,7 @@ public:
 private:
 	Player* m_player = nullptr;				//プレイヤー
 	Enemy* m_enemy = nullptr;				//エネミー
-	GameCamera m_gameCamera;				//ゲームカメラ。
+	GameCamera* m_gameCamera= nullptr;		//ゲームカメラ。
 	Level m_level;							//レベルを初期化。
 	//Level* m_level = nullptr;				//レベルを初期化。
 	std::vector< Enemy* > m_enemyList;		//エネミーのリスト。

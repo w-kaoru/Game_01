@@ -128,11 +128,11 @@
     <ClCompile Include="physics\RigidBody.cpp" />
     <ClCompile Include="physics\CapsuleCollider.cpp" />
     <ClCompile Include="physics\PhysicsStaticObject.cpp" />
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="PlayerState\IPlState.cpp" />
-    <ClCompile Include="PlayerState\PlStateIdle.cpp" />
-    <ClCompile Include="PlayerState\PlStateMachine.cpp" />
-    <ClCompile Include="PlayerState\PlStateRun.cpp" />
+    <ClCompile Include="Player\IPlState.cpp" />
+    <ClCompile Include="Player\Player.cpp" />
+    <ClCompile Include="Player\PlStateIdle.cpp" />
+    <ClCompile Include="Player\PlStateMachine.cpp" />
+    <ClCompile Include="Player\PlStateRun.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -172,12 +172,12 @@
     <ClInclude Include="physics\CapsuleCollider.h" />
     <ClInclude Include="physics\CollisionAttr.h" />
     <ClInclude Include="physics\PhysicsStaticObject.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="PlayerState\IPlState.h" />
-    <ClInclude Include="PlayerState\PlayerState.h" />
-    <ClInclude Include="PlayerState\PlStateIdle.h" />
-    <ClInclude Include="PlayerState\PlStateMachine.h" />
-    <ClInclude Include="PlayerState\PlStateRun.h" />
+    <ClInclude Include="Player\IPlState.h" />
+    <ClInclude Include="Player\Player.h" />
+    <ClInclude Include="Player\PlayerState.h" />
+    <ClInclude Include="Player\PlStateIdle.h" />
+    <ClInclude Include="Player\PlStateMachine.h" />
+    <ClInclude Include="Player\PlStateRun.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="system\system.h" />
     <ClInclude Include="Title.h" />

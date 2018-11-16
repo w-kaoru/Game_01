@@ -38,12 +38,8 @@ public:
 		return toPlayerLen;
 	}
 private:
-	enum MoveState {
-		idle,
-		move
-	};
 	Player* m_player = nullptr;							//プレイヤー
-	MoveState movestate = idle;
+	//MoveState movestate = idle;
 	CVector3 m_position = CVector3::Zero();				//座標。
 	CVector3 m_moveSpeed = CVector3::Zero();			//移動速度。
 	SkinModel m_model;									//モデル。

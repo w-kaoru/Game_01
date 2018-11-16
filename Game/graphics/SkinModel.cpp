@@ -97,9 +97,19 @@ void SkinModel::InitConstantBuffer()
 //ディレクションライトの初期化。(追加)
 void SkinModel::InitDirectionLight()
 {
-	m_light.directionLight.direction = { 0.0f, -1.0f,0.0f, 0.0f };
-	m_light.directionLight.color = { 1.0f, 1.0f, 1.0f, 1.0f };
-	m_light.specPow = 100.0f;
+	m_light.directionLight.direction[0] = { 1.0f, -1.0f, 0.0f, 0.0f };
+	m_light.directionLight.color[0] = { 1.0f, 1.0f, 1.0f, 1.0f };
+
+	m_light.directionLight.direction[1] = { -1.0f, -1.0f, 0.0f, 0.0f };
+	m_light.directionLight.color[1] = { 1.0f, 1.0f, 1.0f, 1.0f };
+
+	m_light.directionLight.direction[2] = { -1.0f, -0.5f, 0.0f, 0.0f };
+	m_light.directionLight.color[2] = { 0.0f, 0.0f, 0.0f, 1.0f };
+
+	m_light.directionLight.direction[3] = { 1.0f, -0.5f, 0.0f, 0.0f };
+	m_light.directionLight.color[3] = { 0.0f, 0.0f, 0.0f, 1.0f };
+
+	m_light.specPow =10.0f;
 }
 void SkinModel::InitSamplerState()
 {

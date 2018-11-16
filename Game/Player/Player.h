@@ -1,7 +1,7 @@
 #pragma once
 #include "character/CharacterController.h"
-#include "PlayerState\PlayerState.h"
-#include "PlayerState\PlStateMachine.h"
+#include "PlayerState.h"
+#include "PlStateMachine.h"
 
 class GameCamera;
 class Player:public IGameObject

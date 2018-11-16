@@ -1,7 +1,7 @@
 #pragma once
 class Player;
 
-class GameCamera
+class GameCamera:public IGameObject
 {
 public:
 	GameCamera();

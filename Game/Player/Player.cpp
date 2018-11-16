@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Player.h"
-#include "PlayerState\PlStateMachine.h"
+#include "PlStateMachine.h"
 
 
 Player::Player() :m_stMa(this)

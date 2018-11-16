@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Game.h"
-#include "Player.h"
+#include "Player\Player.h"
 #include "level/Level.h"
 #include "GameCamera.h"
 #include "Title.h"
@@ -42,7 +42,8 @@ Game::Game()
 		}
 		return false;
 	});
-	m_gameCamera.SetPlayer(m_player);
+	m_gameCamera=g_gameObjM->NewGameObject<GameCamera>(10);
+	m_gameCamera->SetPlayer(m_player);
 }
 
 
@@ -60,7 +61,7 @@ void Game::Update()
 {
 	//プレイヤーの更新。
 
-	m_gameCamera.Update();
+	//m_gameCamera.Update();
 	//m_player->Update();
 	////Enemyを更新。
 	//for (auto& enemy : m_enemyList) {

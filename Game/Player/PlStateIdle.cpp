@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "PlStateIdle.h"
-#include "../Player.h"
+#include "Player.h"
 #include "PlStateMachine.h"
 
 

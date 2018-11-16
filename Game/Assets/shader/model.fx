@@ -27,15 +27,18 @@ cbuffer VSPSCb : register(b0){
 	float4x4 mView;
 	float4x4 mProj;
 };
+static const int NumDirection = 4
+;
 
 //ディレクションライト。
 struct SDirectionLight {
-	float3 direction;
-	float4 color;
+	float4 direction[NumDirection];
+	float4 color[NumDirection];
 };
 //ライト用の定数バッファ
 cbuffer LightCb:register(b0) {
 	SDirectionLight		directionLight;		//ディレクションライト。
+	//float4		      	ambinetLight;		//環境光
 	float3				eyePos;				//カメラの視点。
 	float				specPow;			//スペキュラライトの絞り。
 };
@@ -143,6 +146,8 @@ PSInput VSMainSkin( VSInputNmTxWeights In )
 		//mulは乗算命令。
 	    pos = mul(skinning, In.Position);
 	}
+	//鏡面反射の計算のために、ワールド座標をピクセルシェーダーに渡す。(追加)
+	psInput.worldPos = pos;
 	psInput.Normal = normalize( mul(skinning, In.Normal) );
 	psInput.Tangent = normalize( mul(skinning, In.Tangent) );
 	
@@ -160,28 +165,24 @@ float4 PSMain( PSInput In ) : SV_Target0
 	//albedoテクスチャからカラーをフェッチする。
 	float4 albedoColor = albedoTexture.Sample(Sampler, In.TexCoord);
 	//ディレクションライトの拡散反射光を計算する。
-	float3 lig = max(0.0f, dot(In.Normal * -1.0f, directionLight.direction)) * directionLight.color.xyz;
-	//ディレクションライトの鏡面反射光を計算する。
-	{
+	float4 lig = 0.0f;
+	for (int i = 0; i < NumDirection; i++) {
+		lig += max(0.0f, dot(In.Normal * -1.0f, directionLight.direction[i])) * directionLight.color[i];
 		//ライトを当てるピクセルのワールド座標から視点に伸びるベクトルtoEyeDirを求める。
-		//	 視点の座標は定数バッファで渡されている。LightCbを参照するように。
-		float3 toEyeDir = normalize(eyePos - In.worldPos);
-
+		// 視点の座標は定数バッファで渡されている。LightCbを参照するように。
+		float3 toEyeDir = In.worldPos - eyePos;
+		toEyeDir = normalize(toEyeDir);
 		//求めたtoEyeDirの反射ベクトルを求める。
-		float3 Reflection = -toEyeDir + 2 * dot(In.Normal, toEyeDir) * In.Normal;
-
+		float3 rVec = reflect(toEyeDir, In.Normal);
 		//求めた反射ベクトルとディレクションライトの方向との内積を取って、スペキュラの強さを計算する。
-		float3 t = max(0.0f, dot(-directionLight.direction, Reflection));
-
+		float t = max(0.0f, dot(-directionLight.direction[i] ,rVec ));
 		//pow関数を使って、スペキュラを絞る。絞りの強さは定数バッファで渡されている。
-		float3 specLig = pow(t, specPow) * directionLight.color.xyz;
-
+		float4 specLig = pow(t, specPow) * directionLight.color[i];
 		//スペキュラ反射が求まったら、ligに加算する。
 		//鏡面反射を反射光に加算する。
-		lig += specLig;
+		lig.xyz += specLig * 1.0f;
 	}
 	float4 finalColor = float4(0.0f, 0.0f, 0.0f, 1.0f);
-	//float3 lig = max(0.0f, dot(In.Normal * -1.0f, directionLight.direction)) * directionLight.color.xyz;
-	finalColor.xyz = albedoColor.xyz * lig + albedoColor.xyz*0.5;
+	finalColor.xyz = albedoColor.xyz * lig;
 	return finalColor;
 }

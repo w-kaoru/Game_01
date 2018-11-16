@@ -16,11 +16,11 @@
     <Filter Include="graphics\animation">
       <UniqueIdentifier>{d83ac002-5cd8-4ff4-977a-e7b5ebce5263}</UniqueIdentifier>
     </Filter>
-    <Filter Include="level">
-      <UniqueIdentifier>{73eacaf4-a5db-4539-ab55-83b9c5d4807c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="HID">
       <UniqueIdentifier>{bbdeed04-d9d3-4ff9-bb44-9d888be6899a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="level">
+      <UniqueIdentifier>{73eacaf4-a5db-4539-ab55-83b9c5d4807c}</UniqueIdentifier>
     </Filter>
     <Filter Include="math">
       <UniqueIdentifier>{39e7f303-3dac-4bde-bedf-33a5497f262e}</UniqueIdentifier>
@@ -33,36 +33,17 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="math\Vector.cpp">
-      <Filter>math</Filter>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="GameCamera.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Title.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="character\CharacterController.cpp">
+      <Filter>character</Filter>
     </ClCompile>
-    <ClCompile Include="math\kMath.cpp">
-      <Filter>math</Filter>
-    </ClCompile>
-    <ClCompile Include="math\Matrix.cpp">
-      <Filter>math</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\GraphicsEngine.cpp">
-      <Filter>graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\SkinModel.cpp">
-      <Filter>graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\SkinModelDataManager.cpp">
-      <Filter>graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\Skeleton.cpp">
-      <Filter>graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\SkinModelEffect.cpp">
-      <Filter>graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\Shader.cpp">
-      <Filter>graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\ShaderResources.cpp">
-      <Filter>graphics</Filter>
-    </ClCompile>
+    <ClCompile Include="gameObject\GameObjectManager.cpp" />
+    <ClCompile Include="gameObject\IGameObject.cpp" />
     <ClCompile Include="graphics\animation\Animation.cpp">
       <Filter>graphics\animation</Filter>
     </ClCompile>
@@ -72,29 +53,32 @@
     <ClCompile Include="graphics\animation\AnimationPlayController.cpp">
       <Filter>graphics\animation</Filter>
     </ClCompile>
-    <ClCompile Include="system\system.cpp">
-      <Filter>system</Filter>
-    </ClCompile>
     <ClCompile Include="graphics\Camera.cpp">
       <Filter>graphics</Filter>
     </ClCompile>
-    <ClCompile Include="physics\RigidBody.cpp">
-      <Filter>physics</Filter>
+    <ClCompile Include="graphics\GraphicsEngine.cpp">
+      <Filter>graphics</Filter>
     </ClCompile>
-    <ClCompile Include="physics\Physics.cpp">
-      <Filter>physics</Filter>
+    <ClCompile Include="graphics\Shader.cpp">
+      <Filter>graphics</Filter>
     </ClCompile>
-    <ClCompile Include="physics\MeshCollider.cpp">
-      <Filter>physics</Filter>
+    <ClCompile Include="graphics\ShaderResources.cpp">
+      <Filter>graphics</Filter>
     </ClCompile>
-    <ClCompile Include="physics\CapsuleCollider.cpp">
-      <Filter>physics</Filter>
+    <ClCompile Include="graphics\Skeleton.cpp">
+      <Filter>graphics</Filter>
     </ClCompile>
-    <ClCompile Include="physics\PhysicsStaticObject.cpp">
-      <Filter>physics</Filter>
+    <ClCompile Include="graphics\SkinModel.cpp">
+      <Filter>graphics</Filter>
     </ClCompile>
-    <ClCompile Include="character\CharacterController.cpp">
-      <Filter>character</Filter>
+    <ClCompile Include="graphics\SkinModelDataManager.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\SkinModelEffect.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="level\HID\Pad.cpp">
+      <Filter>HID</Filter>
     </ClCompile>
     <ClCompile Include="level\Level.cpp">
       <Filter>level</Filter>
@@ -102,57 +86,50 @@
     <ClCompile Include="level\MapChip.cpp">
       <Filter>level</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="stdafx.cpp" />
-    <ClCompile Include="GameCamera.cpp" />
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="Title.cpp" />
-    <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="gameObject\GameObjectManager.cpp" />
-    <ClCompile Include="gameObject\IGameObject.cpp" />
-    <ClCompile Include="level\HID\Pad.cpp">
-      <Filter>HID</Filter>
+    <ClCompile Include="math\kMath.cpp">
+      <Filter>math</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerState\IPlState.cpp" />
-    <ClCompile Include="PlayerState\PlStateIdle.cpp" />
-    <ClCompile Include="PlayerState\PlStateMachine.cpp" />
-    <ClCompile Include="PlayerState\PlStateRun.cpp" />
+    <ClCompile Include="math\Matrix.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="math\Vector.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="physics\CapsuleCollider.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
+    <ClCompile Include="physics\MeshCollider.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
+    <ClCompile Include="physics\Physics.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
+    <ClCompile Include="physics\PhysicsStaticObject.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
+    <ClCompile Include="physics\RigidBody.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
+    <ClCompile Include="system\system.cpp">
+      <Filter>system</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\Player.cpp" />
+    <ClCompile Include="Player\PlStateIdle.cpp" />
+    <ClCompile Include="Player\PlStateMachine.cpp" />
+    <ClCompile Include="Player\PlStateRun.cpp" />
+    <ClCompile Include="Player\IPlState.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="math\Vector.h">
-      <Filter>math</Filter>
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="GameCamera.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="Title.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="character\CharacterController.h">
+      <Filter>character</Filter>
     </ClInclude>
-    <ClInclude Include="math\kMath.h">
-      <Filter>math</Filter>
-    </ClInclude>
-    <ClInclude Include="math\Matrix.h">
-      <Filter>math</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\GraphicsEngine.h">
-      <Filter>graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\SkinModel.h">
-      <Filter>graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\SkinModelDataManager.h">
-      <Filter>graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\Skeleton.h">
-      <Filter>graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\SkinModelEffect.h">
-      <Filter>graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\Shader.h">
-      <Filter>graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\SkinModelShaderConst.h">
-      <Filter>graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\ShaderResources.h">
-      <Filter>graphics</Filter>
-    </ClInclude>
+    <ClInclude Include="gameObject\GameObjectManager.h" />
+    <ClInclude Include="gameObject\IGameObject.h" />
     <ClInclude Include="graphics\animation\Animation.h">
       <Filter>graphics\animation</Filter>
     </ClInclude>
@@ -162,16 +139,55 @@
     <ClInclude Include="graphics\animation\AnimationPlayController.h">
       <Filter>graphics\animation</Filter>
     </ClInclude>
-    <ClInclude Include="system\system.h">
-      <Filter>system</Filter>
-    </ClInclude>
     <ClInclude Include="graphics\Camera.h">
       <Filter>graphics</Filter>
     </ClInclude>
-    <ClInclude Include="physics\RigidBody.h">
+    <ClInclude Include="graphics\GraphicsEngine.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\Shader.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\ShaderResources.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\Skeleton.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\SkinModel.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\SkinModelDataManager.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\SkinModelEffect.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\SkinModelShaderConst.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="level\HID\Pad.h">
+      <Filter>HID</Filter>
+    </ClInclude>
+    <ClInclude Include="level\Level.h">
+      <Filter>level</Filter>
+    </ClInclude>
+    <ClInclude Include="level\MapChip.h">
+      <Filter>level</Filter>
+    </ClInclude>
+    <ClInclude Include="math\kMath.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="math\Matrix.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="math\Vector.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="physics\CapsuleCollider.h">
       <Filter>physics</Filter>
     </ClInclude>
-    <ClInclude Include="physics\Physics.h">
+    <ClInclude Include="physics\CollisionAttr.h">
       <Filter>physics</Filter>
     </ClInclude>
     <ClInclude Include="physics\ICollider.h">
@@ -180,40 +196,24 @@
     <ClInclude Include="physics\MeshCollider.h">
       <Filter>physics</Filter>
     </ClInclude>
-    <ClInclude Include="physics\CapsuleCollider.h">
-      <Filter>physics</Filter>
-    </ClInclude>
-    <ClInclude Include="physics\CollisionAttr.h">
+    <ClInclude Include="physics\Physics.h">
       <Filter>physics</Filter>
     </ClInclude>
     <ClInclude Include="physics\PhysicsStaticObject.h">
       <Filter>physics</Filter>
     </ClInclude>
-    <ClInclude Include="character\CharacterController.h">
-      <Filter>character</Filter>
+    <ClInclude Include="physics\RigidBody.h">
+      <Filter>physics</Filter>
     </ClInclude>
-    <ClInclude Include="level\Level.h">
-      <Filter>level</Filter>
+    <ClInclude Include="system\system.h">
+      <Filter>system</Filter>
     </ClInclude>
-    <ClInclude Include="level\MapChip.h">
-      <Filter>level</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="stdafx.h" />
-    <ClInclude Include="GameCamera.h" />
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="Title.h" />
-    <ClInclude Include="Enemy.h" />
-    <ClInclude Include="gameObject\GameObjectManager.h" />
-    <ClInclude Include="gameObject\IGameObject.h" />
-    <ClInclude Include="level\HID\Pad.h">
-      <Filter>HID</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerState\IPlState.h" />
-    <ClInclude Include="PlayerState\PlayerState.h" />
-    <ClInclude Include="PlayerState\PlStateIdle.h" />
-    <ClInclude Include="PlayerState\PlStateMachine.h" />
-    <ClInclude Include="PlayerState\PlStateRun.h" />
+    <ClInclude Include="Player\Player.h" />
+    <ClInclude Include="Player\PlayerState.h" />
+    <ClInclude Include="Player\PlStateIdle.h" />
+    <ClInclude Include="Player\PlStateMachine.h" />
+    <ClInclude Include="Player\PlStateRun.h" />
+    <ClInclude Include="Player\IPlState.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\background.FBX">

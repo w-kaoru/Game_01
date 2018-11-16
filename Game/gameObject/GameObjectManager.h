@@ -7,16 +7,16 @@ class GameObjectManager
 public:
 	GameObjectManager()
 	{
-		m_gameObjectList.resize(1);
+		m_gameObjectList.resize(11);
 	}
 	~GameObjectManager();
 	//é¿çs
 	void Execute();
 	template<class T>
-	T* NewGameObject()
+	T* NewGameObject(int i=0)
 	{
 		T* newObj = new T;
-		m_gameObjectList[0].push_back(newObj);
+		m_gameObjectList[i].push_back(newObj);
 		return newObj;
 	}
 
