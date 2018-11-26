@@ -7,13 +7,13 @@ class GameObjectManager
 public:
 	GameObjectManager()
 	{
-		m_gameObjectList.resize(11);
+		m_gameObjectList.resize(5);
 	}
 	~GameObjectManager();
 	//é¿çs
 	void Execute();
 	template<class T>
-	T* NewGameObject(int i=0)
+	T* NewGameObject(int i = 0)
 	{
 		T* newObj = new T;
 		m_gameObjectList[i].push_back(newObj);
@@ -24,10 +24,12 @@ public:
 	{
 		if (gameObject != nullptr) {
 			gameObject->Destroy();
-			m_gameObjectList[0].erase(
-				std::remove(m_gameObjectList[0].begin(), m_gameObjectList[0].end(), gameObject),
-				m_gameObjectList[0].end()
-			);
+			for (int i = 0; i < 5; i++) {
+				m_gameObjectList[i].erase(
+					std::remove(m_gameObjectList[i].begin(), m_gameObjectList[i].end(), gameObject),
+					m_gameObjectList[i].end()
+				);
+			}
 		}
 		delete gameObject;
 

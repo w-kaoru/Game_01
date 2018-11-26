@@ -1,5 +1,6 @@
 #pragma once
 #include "character/CharacterController.h"
+#include "enemyState\EnStateMachine.h"
 
 class Player;
 class Enemy:public IGameObject
@@ -10,12 +11,15 @@ public:
 	bool Start();
 	void Update();
 	void Draw();
-	void Move();
-	bool Search();
+	//void Move();
+	void Search();
 	void PlLen();
 	void SetPosition(CVector3 pos)
 	{
 		m_position = pos;
+	}
+	void SetMoveSpeed(CVector3 ms) {
+		m_moveSpeed = ms;
 	}
 	void SetRotation(CQuaternion rot)
 	{
@@ -37,6 +41,12 @@ public:
 	{
 		return toPlayerLen;
 	}
+	CVector3 GetMoveSpeed() {
+		return m_moveSpeed;
+	}
+	CQuaternion GetRotation() {
+		return m_rotation;
+	}
 private:
 	Player* m_player = nullptr;							//プレイヤー
 	//MoveState movestate = idle;
@@ -45,6 +55,7 @@ private:
 	SkinModel m_model;									//モデル。
 	CQuaternion m_rotation = CQuaternion::Identity();	//回転。
 	CharacterController m_charaCon;						//キャラクターコントローラーを追加。
+	EnStateMachine m_ensm;
 	int m_currentPointNo = 0;
 	float toPlayerLen;
 	bool isDead = false;

@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "PlStateIdle.h"
 #include "Player.h"
-#include "PlStateMachine.h"
 
 
 PlStateIdle::PlStateIdle(Player *pl, PlStateMachine *psm):

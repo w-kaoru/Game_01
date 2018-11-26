@@ -7,8 +7,8 @@ class IPlState:public IGameObject
 public:
 	IPlState(Player *pl,PlStateMachine *psm);
 	~IPlState();
-	bool Start() = 0;
-	void Update() = 0;
+	virtual bool Start() = 0;
+	virtual void Update() = 0;
 protected:
 	PlStateMachine * m_plstma = nullptr;
 	Player * m_player = nullptr;

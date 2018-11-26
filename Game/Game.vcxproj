@@ -101,6 +101,10 @@
   <ItemGroup>
     <ClCompile Include="character\CharacterController.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="enemyState\EnStateIdle.cpp" />
+    <ClCompile Include="enemyState\EnStateMachine.cpp" />
+    <ClCompile Include="enemyState\EnStateMove.cpp" />
+    <ClCompile Include="enemyState\IEnState.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameCamera.cpp" />
     <ClCompile Include="gameObject\GameObjectManager.cpp" />
@@ -143,6 +147,11 @@
   <ItemGroup>
     <ClInclude Include="character\CharacterController.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="enemyState\EnemyState.h" />
+    <ClInclude Include="enemyState\EnStateIdle.h" />
+    <ClInclude Include="enemyState\EnStateMachine.h" />
+    <ClInclude Include="enemyState\EnStateMove.h" />
+    <ClInclude Include="enemyState\IEnState.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameCamera.h" />
     <ClInclude Include="gameObject\GameObjectManager.h" />

@@ -118,6 +118,10 @@
     <ClCompile Include="Player\PlStateMachine.cpp" />
     <ClCompile Include="Player\PlStateRun.cpp" />
     <ClCompile Include="Player\IPlState.cpp" />
+    <ClCompile Include="enemyState\EnStateIdle.cpp" />
+    <ClCompile Include="enemyState\EnStateMachine.cpp" />
+    <ClCompile Include="enemyState\EnStateMove.cpp" />
+    <ClCompile Include="enemyState\IEnState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -214,6 +218,11 @@
     <ClInclude Include="Player\PlStateMachine.h" />
     <ClInclude Include="Player\PlStateRun.h" />
     <ClInclude Include="Player\IPlState.h" />
+    <ClInclude Include="enemyState\EnemyState.h" />
+    <ClInclude Include="enemyState\EnStateIdle.h" />
+    <ClInclude Include="enemyState\EnStateMachine.h" />
+    <ClInclude Include="enemyState\EnStateMove.h" />
+    <ClInclude Include="enemyState\IEnState.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\background.FBX">

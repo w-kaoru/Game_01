@@ -11,8 +11,7 @@ public:
 	~Player();
 	bool Start();
 	void Move();
-	/*void Idle();
-	void Jump();
+	/*void Jump();
 	void Attack();*/
 	void Update();
 	void Draw();
@@ -33,14 +32,6 @@ public:
 		return m_moveSpeed;
 	}
 private:
-	//enum AniMove {
-	//	idle,		//待機
-	//	run,		//走る
-	//	jump,		//ジャンプ
-	//	attack,		//攻撃
-	//	num			//AniMoveの数	
-	//};
-	//enum AniMove animove = idle;
 	SkinModel m_model;									//スキンモデル。
 	Animation m_animation;								//アニメーション。
 	AnimationClip m_animationClips[PlayerState::num];	//アニメーションクリップ。

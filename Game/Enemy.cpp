@@ -3,7 +3,7 @@
 #include "Player\Player.h"
 
 
-Enemy::Enemy()
+Enemy::Enemy():m_ensm(this)
 {
 }
 
@@ -26,6 +26,7 @@ bool Enemy::Start()
 	m_position.y = 200.0f;
 	//キャラクターコントローラーの初期化。
 	m_charaCon.Init(40.0f, 50.0f, m_position);
+	m_ensm.Start();
 	return true;
 }
 
@@ -39,7 +40,7 @@ void Enemy::PlLen()
 	m_moveSpeed.Normalize();
 }
 
-bool Enemy::Search()
+void Enemy::Search()
 {
 	PlLen();
 	CVector3 enemyForward = CVector3::AxisZ();
@@ -55,15 +56,15 @@ bool Enemy::Search()
 		&& toPlayerLen < 300.0f
 		) {
 		//見つけた。
-		return true;
+		m_ensm.Change(EnemyState::MoveState::move);
 	}
-	else if (toPlayerLen > 600.0) {
+	else {
 		//見つけていない。
-		return false;
+		m_ensm.Change(EnemyState::MoveState::idle);
 	}
 }
 //エネミー追跡状態。
-void Enemy::Move()
+/*void Enemy::Move()
 {
 	PlLen();
 	if (Search()==true) {
@@ -81,15 +82,19 @@ void Enemy::Move()
 
 	}
 	m_moveSpeed.y -= 9800.0f * (1.0f / 60.0f);
-}
+}*/
 
 void Enemy::Update()
 {
-	Move();
+	//Move();
+	Search();
+	m_ensm.Update();
 	if (toPlayerLen < 40) {
 		isDead = true;
 		m_charaCon.RemoveRigidBoby();
 	}
+	//重力加速度
+	m_moveSpeed.y -= 9800.0f * (1.0f / 60.0f);
 	//キャラコンを使って移動する。
 	m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
 	//ワールド行列を求める。

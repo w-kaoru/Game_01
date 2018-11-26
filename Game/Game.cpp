@@ -42,7 +42,7 @@ Game::Game()
 		}
 		return false;
 	});
-	m_gameCamera=g_gameObjM->NewGameObject<GameCamera>(10);
+	m_gameCamera=g_gameObjM->NewGameObject<GameCamera>(4);
 	m_gameCamera->SetPlayer(m_player);
 }
 
@@ -54,25 +54,11 @@ Game::~Game()
 	for (auto& enemy : m_enemyList) {
 		g_gameObjM->DeleteGameObject(enemy);
 	}
-
+	g_gameObjM->DeleteGameObject(m_gameCamera);
 }
 
 void Game::Update()
 {
-	//プレイヤーの更新。
-
-	//m_gameCamera.Update();
-	//m_player->Update();
-	////Enemyを更新。
-	//for (auto& enemy : m_enemyList) {
-	//	enemy->Update();
-	//	if (enemy->GetEnemydead() == true) {
-	//		m_enemyList.erase(
-	//			std::remove(m_enemyList.begin(), m_enemyList.end(), enemy),
-	//			m_enemyList.end()
-	//		);
-	//	}
-	//}
 	if (g_pad[0].IsTrigger(enButtonB)) {
 		g_gameObjM->DeleteGameObject(this);
 		//タイトルシーンの作成。
@@ -82,14 +68,8 @@ void Game::Update()
 
 void Game::Draw()
 {
-	//プレイヤーの描画。
-	//m_player->Draw();
 	//レベルを描画。
 	m_level.Draw();
-	//エネミーを描画。
-	//for (auto& enemy : m_enemyList) {
-	//	enemy->Draw();
-	//}
 }
 
 void Game::Destroy()

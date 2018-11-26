@@ -6,19 +6,19 @@
 Player::Player() :m_stMa(this)
 {
 	//cmoファイルの読み込み。
-	m_model.Init(L"Assets/modelData/Thethief_H.cmo", enFbxUpAxisZ);
+	m_model.Init(L"Assets/modelData/ToonRTS_demo_Knight.cmo", enFbxUpAxisZ);
 
 	//tkaファイルの読み込み。
-	m_animationClips[PlayerState::idle].Load(L"Assets/animData/idle.tka");
+	m_animationClips[PlayerState::idle].Load(L"Assets/animData/plidle.tka");
 	m_animationClips[PlayerState::idle].SetLoopFlag(true);
 
-	m_animationClips[PlayerState::run].Load(L"Assets/animData/run.tka");
+	m_animationClips[PlayerState::run].Load(L"Assets/animData/plrun.tka");
 	m_animationClips[PlayerState::run].SetLoopFlag(true);
 
-	m_animationClips[PlayerState::jump].Load(L"Assets/animData/jump.tka");
-	m_animationClips[PlayerState::jump].SetLoopFlag(false);
+	//m_animationClips[PlayerState::jump].Load(L"Assets/animData/jump.tka");
+	//m_animationClips[PlayerState::jump].SetLoopFlag(false);
 
-	m_animationClips[PlayerState::attack].Load(L"Assets/animData/attack.tka");
+	m_animationClips[PlayerState::attack].Load(L"Assets/animData/plattack.tka");
 	m_animationClips[PlayerState::attack].SetLoopFlag(false);
 
 	//アニメーションの初期化。
@@ -28,7 +28,7 @@ Player::Player() :m_stMa(this)
 		m_animationClips,	//アニメーションクリップの配列。
 		4					//アニメーションクリップの数。
 	);
-	m_scale *= 4;
+	//m_scale *= 4;
 }
 Player::~Player()
 {
@@ -78,45 +78,8 @@ void Player::Move()
 	if (m_charaCon.IsJump() == true && m_charaCon.IsOnGround() == false) {
 		m_moveSpeed.y += 450.0f;
 	}
-	/*else {
-		animove = idle;
-	}
-	if (g_pad[0].IsTrigger(enButtonX) == true
-		&& m_charaCon.IsOnGround() == true
-		) {
-		animove = attack;
-	}*/
 }
-//待機
-//void Player::Idle()
-//{
-//	//スティックの入力量を受け取る。
-//	float lStick_x = g_pad[0].GetLStickXF();
-//	float lStick_y = g_pad[0].GetLStickYF();
-//	//XZ成分の移動速度をクリア。
-//	m_moveSpeed.x = 0.0f;
-//	m_moveSpeed.z = 0.0f;
-//	m_moveSpeed.z += lStick_y * 400.0f;	//奥方向への移動速度を代入。
-//	m_moveSpeed.x += lStick_x * 400.0f;		//右方向への移動速度を加算。
-//	m_moveSpeed.y -= 980.0f * (1.0f / 60.0f);
-//	//キャラコンを使って移動する。
-//	m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
-//	if (fabsf(m_moveSpeed.x) > 0.1f 
-//		|| fabsf(m_moveSpeed.z) > 0.1f
-//		) {
-//		animove = run;
-//	}
-//	if (g_pad[0].IsTrigger(enButtonA) == true
-//		&& m_charaCon.IsOnGround() == true
-//		) {
-//		animove = jump;
-//	}
-//	if (g_pad[0].IsTrigger(enButtonX) == true
-//		&& m_charaCon.IsOnGround() == true
-//		) {
-//		animove = attack;
-//	}
-//}
+
 
 //ジャンプ
 //void Player::Jump()
@@ -162,30 +125,10 @@ void Player::Update()
 {	
 	Move();
 	m_stMa.Update();
-
-	/*switch (animove)
-	{
-	case idle:
-		Idle();
-		m_animation.Play(idle, 0.2f);
-		break;
-	case run:
-		Run();
-		m_animation.Play(run, 0.2f);
-		break;
-	case jump:
-		Jump();
-		m_animation.Play(jump, 0.2f);
-		break;
-	case attack:
-		Attack();
-		m_animation.Play(attack, 0.2f);
-		break;
-	}*/
 	//ワールド行列の更新。
 	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
 	//アニメーションを流す。
-	m_animation.Update(1.0f / 60.0f);
+	m_animation.Update(1.0f / 30.0f);
 }
 
 void Player::Draw()
