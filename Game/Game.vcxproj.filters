@@ -38,7 +38,6 @@
     <ClCompile Include="GameCamera.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Title.cpp" />
-    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="character\CharacterController.cpp">
       <Filter>character</Filter>
     </ClCompile>
@@ -118,17 +117,17 @@
     <ClCompile Include="Player\PlStateMachine.cpp" />
     <ClCompile Include="Player\PlStateRun.cpp" />
     <ClCompile Include="Player\IPlState.cpp" />
-    <ClCompile Include="enemyState\EnStateIdle.cpp" />
-    <ClCompile Include="enemyState\EnStateMachine.cpp" />
-    <ClCompile Include="enemyState\EnStateMove.cpp" />
-    <ClCompile Include="enemyState\IEnState.cpp" />
+    <ClCompile Include="Enemy\EnStateIdle.cpp" />
+    <ClCompile Include="Enemy\EnStateMachine.cpp" />
+    <ClCompile Include="Enemy\EnStateMove.cpp" />
+    <ClCompile Include="Enemy\IEnState.cpp" />
+    <ClCompile Include="Enemy\Enemy.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="GameCamera.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Title.h" />
-    <ClInclude Include="Enemy.h" />
     <ClInclude Include="character\CharacterController.h">
       <Filter>character</Filter>
     </ClInclude>
@@ -218,11 +217,12 @@
     <ClInclude Include="Player\PlStateMachine.h" />
     <ClInclude Include="Player\PlStateRun.h" />
     <ClInclude Include="Player\IPlState.h" />
-    <ClInclude Include="enemyState\EnemyState.h" />
-    <ClInclude Include="enemyState\EnStateIdle.h" />
-    <ClInclude Include="enemyState\EnStateMachine.h" />
-    <ClInclude Include="enemyState\EnStateMove.h" />
-    <ClInclude Include="enemyState\IEnState.h" />
+    <ClInclude Include="Enemy\EnemyState.h" />
+    <ClInclude Include="Enemy\EnStateIdle.h" />
+    <ClInclude Include="Enemy\EnStateMachine.h" />
+    <ClInclude Include="Enemy\EnStateMove.h" />
+    <ClInclude Include="Enemy\IEnState.h" />
+    <ClInclude Include="Enemy\Enemy.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\background.FBX">

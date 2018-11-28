@@ -4,7 +4,7 @@
 #include "Player\Player.h"
 #include "level/Level.h"
 #include "GameCamera.h"
-#include "Enemy.h"
+#include "Enemy\Enemy.h"
 
 //‚±‚ê‚ç‚Í‘O•ûéŒ¾‚Å‚æ‚¢I
 struct PathPoint;

@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "EnStateIdle.h"
-#include "../Enemy.h"
+#include "Enemy.h"
 #include "EnStateMachine.h"
 
 EnStateIdle::EnStateIdle(Enemy * en, EnStateMachine * estm)

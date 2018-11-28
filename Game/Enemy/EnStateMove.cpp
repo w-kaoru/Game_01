@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "EnStateMove.h"
-#include "../Enemy.h"
+#include "Enemy.h"
 #include "EnStateMachine.h"
 
 EnStateMove::EnStateMove(Enemy* en, EnStateMachine* enstm)
