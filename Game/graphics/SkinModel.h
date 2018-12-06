@@ -1,7 +1,8 @@
 #pragma once
 
 #include "Skeleton.h"
-
+#include "SkinModelEffect.h"
+#include "../Render/ShadowMap.h"
 const int NumDirection = 4;
 /*!
 *@brief	FBXの上方向。
@@ -53,7 +54,7 @@ public:
 	*@param[in]	projMatrix		プロジェクション行列。
 	*  カメラ座標系の3Dモデルをスクリーン座標系に変換する行列です。
 	*/
-	void Draw( CMatrix viewMatrix, CMatrix projMatrix );
+	void Draw( EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projMatrix );
 	/*!
 	*@brief	スケルトンの取得。
 	*/
@@ -80,6 +81,23 @@ public:
 		enSkinModelSRVReg_DiffuseTexture = 0,		//!<ディフューズテクスチャ。
 		enSkinModelSRVReg_BoneMatrix,				//!<ボーン行列。
 	};
+
+
+	// マテリアルに対してクエリを行う。
+	void QueryMaterials(std::function<void(SkinModelEffect*)> func)
+	{
+		m_modelDx->UpdateEffects([&](DirectX::IEffect* material) {
+			func(reinterpret_cast<SkinModelEffect*>(material));
+		});
+	}
+	//シャドウレシーバーのフラグを設定する。
+	void SetShadowReciever(bool flag)
+	{
+		m_isShadowReciever = flag;
+	}
+	void SetShadowMap(ShadowMap* shadowMap) {
+		m_shadowMap = shadowMap;
+	}
 private:
 	/*!
 	*@brief	サンプラステートの初期化。
@@ -116,6 +134,9 @@ private:
 		CMatrix mWorld;
 		CMatrix mView;
 		CMatrix mProj;
+		CMatrix mLightView;		//todo ライトビュー行列。
+		CMatrix mLightProj;		//todo ライトプロジェクション行列。
+		int isShadowReciever;	//todo シャドウレシーバーのフラグ。
 	};
 	EnFbxUpAxis			m_enFbxUpAxis = enFbxUpAxisZ;		//!<FBXの上方向。
 	ID3D11Buffer*		m_cb = nullptr;						//!<定数バッファ。
@@ -125,5 +146,7 @@ private:
 	CMatrix				m_worldMatrix;						//!<ワールド行列。
 	DirectX::Model*		m_modelDx;							//!<DirectXTKが提供するモデルクラス。
 	ID3D11SamplerState* m_samplerState = nullptr;			//!<サンプラステート。
+	bool m_isShadowReciever = false;						//シャドウレシーバーのフラグ。
+	ShadowMap*			m_shadowMap = nullptr;				//シャドウマップ。
 };
 

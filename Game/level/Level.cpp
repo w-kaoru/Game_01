@@ -11,7 +11,7 @@ Level::~Level()
 {
 }
 
-void Level::Init(const wchar_t* levelDataFilePath, Level::HookWhenBuildObjectFunc hookFunc)
+void Level::Init(const wchar_t* levelDataFilePath, ShadowMap* shadowMap, Level::HookWhenBuildObjectFunc hookFunc)
 {
 	//スケルトンをロードする。
 	Skeleton skeleton;
@@ -36,13 +36,15 @@ void Level::Init(const wchar_t* levelDataFilePath, Level::HookWhenBuildObjectFun
 			objData.name = bone->GetName();
 			bool isHook = false;
 			if (hookFunc != nullptr) {
+				//auto mapChip = std::make_unique<MapChip>(objData);
 				//hook関数が指定されているのでhook関数を呼び出す。
 				isHook = hookFunc(objData);
 			}
 			if (isHook == false) {
 				//フックされなかったので、マップチップを作成する。
 				auto mapChip = std::make_unique<MapChip>(objData);
-				m_mapChipArray.push_back(std::move(mapChip));
+				mapChip->SetShadowMap(shadowMap);
+				m_mapChipArray.push_back(std::move(mapChip));	
 			}
 		}
 	}

@@ -10,6 +10,7 @@ Background::Background()
 
 	//Hands-On 2 m_phyStaticObjectÇçÏê¨Ç∑ÇÈÅB
 	m_phyStaticObject.CreateMeshObject(m_model, CVector3::Zero(), CQuaternion::Identity());
+	m_model.SetShadowReciever(true);
 }
 
 
@@ -19,5 +20,9 @@ Background::~Background()
 
 void Background::Draw()
 {
-	m_model.Draw(g_camera3D.GetViewMatrix(), g_camera3D.GetProjectionMatrix());
+	m_model.Draw(
+		enRenderMode_Normal,
+		g_camera3D.GetViewMatrix(),
+		g_camera3D.GetProjectionMatrix()
+	);
 }

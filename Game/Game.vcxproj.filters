@@ -122,6 +122,8 @@
     <ClCompile Include="Enemy\EnStateMove.cpp" />
     <ClCompile Include="Enemy\IEnState.cpp" />
     <ClCompile Include="Enemy\Enemy.cpp" />
+    <ClCompile Include="Render\RenderTarget.cpp" />
+    <ClCompile Include="Render\ShadowMap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -223,6 +225,8 @@
     <ClInclude Include="Enemy\EnStateMove.h" />
     <ClInclude Include="Enemy\IEnState.h" />
     <ClInclude Include="Enemy\Enemy.h" />
+    <ClInclude Include="Render\RenderTarget.h" />
+    <ClInclude Include="Render\ShadowMap.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\background.FBX">

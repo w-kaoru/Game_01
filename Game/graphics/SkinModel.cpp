@@ -146,7 +146,7 @@ void SkinModel::UpdateWorldMatrix(CVector3 position, CQuaternion rotation, CVect
 	//スケルトンの更新。
 	m_skeleton.Update(m_worldMatrix);
 }
-void SkinModel::Draw(CMatrix viewMatrix, CMatrix projMatrix)
+void SkinModel::Draw( EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projMatrix)
 {
 	DirectX::CommonStates state(g_graphicsEngine->GetD3DDevice());
 
@@ -157,21 +157,38 @@ void SkinModel::Draw(CMatrix viewMatrix, CMatrix projMatrix)
 	vsCb.mWorld = m_worldMatrix;
 	vsCb.mProj = projMatrix;
 	vsCb.mView = viewMatrix;
+	//todo ライトカメラのビュー、プロジェクション行列を送る。
+	vsCb.mLightProj = m_shadowMap->GetLightProjMatrix();
+	vsCb.mLightView = m_shadowMap->GetLighViewMatrix();
+	if (m_isShadowReciever == true) {
+		vsCb.isShadowReciever = 1;
+	}
+	else {
+		vsCb.isShadowReciever = 0;
+	}
+
 	d3dDeviceContext->UpdateSubresource(m_cb, 0, nullptr, &vsCb, 0, 0);
 	//視点の更新と設定。(追加)
 	m_light.eyePos = g_camera3D.GetPosition();
 	//ライト用の定数バッファを更新。(追加)
 	d3dDeviceContext->UpdateSubresource(m_lightCb, 0, nullptr, &m_light, 0, 0);
 	//定数バッファをシェーダースロットに設定。(追加)
-	d3dDeviceContext->VSSetConstantBuffers(0, 1, &m_cb);
-	d3dDeviceContext->PSSetConstantBuffers(0, 1, &m_lightCb);
-	//定数バッファをGPUに転送。
 	//d3dDeviceContext->VSSetConstantBuffers(0, 1, &m_cb);
-	//d3dDeviceContext->PSSetConstantBuffers(0, 1, &m_cb);
+	//d3dDeviceContext->PSSetConstantBuffers(0, 1, &m_lightCb);
+	//定数バッファをGPUに転送。
+	d3dDeviceContext->VSSetConstantBuffers(0, 1, &m_cb);
+	d3dDeviceContext->PSSetConstantBuffers(0, 1, &m_cb);
+	d3dDeviceContext->PSSetConstantBuffers(1, 1, &m_lightCb);
 	//サンプラステートを設定。
 	d3dDeviceContext->PSSetSamplers(0, 1, &m_samplerState);
 	//ボーン行列をGPUに転送。
 	m_skeleton.SendBoneMatrixArrayToGPU();
+
+	//エフェクトにクエリを行う。
+	m_modelDx->UpdateEffects([&](DirectX::IEffect* material) {
+		auto modelMaterial = reinterpret_cast<SkinModelEffect*>(material);
+		modelMaterial->SetRenderMode(renderMode);
+	});
 
 	//描画。
 	m_modelDx->Draw(

@@ -14,6 +14,7 @@ protected:
 	Shader m_psShader;
 	bool isSkining;
 	ID3D11ShaderResourceView* m_albedoTex = nullptr;
+	EnRenderMode m_renderMode = enRenderMode_Invalid;	//レンダリングモード。
 
 public:
 	ModelEffect()
@@ -48,7 +49,11 @@ public:
 	{
 		return wcscmp(name, m_materialName.c_str()) == 0;
 	}
-	
+
+	void SetRenderMode(EnRenderMode renderMode)
+	{
+		m_renderMode = renderMode;
+	}
 };
 /*!
 *@brief

@@ -40,6 +40,7 @@ bool Player::Start()
 	//キャラクターコントローラーの初期化。
 	m_charaCon.Init(10.0f, 50.0f, m_position);
 	m_stMa.Start();
+	m_model.SetShadowMap(m_shadowMap);
 	return true;
 }
 //移動
@@ -125,6 +126,10 @@ void Player::Update()
 {	
 	Move();
 	m_stMa.Update();
+
+	//シャドウキャスターを登録。
+	m_shadowMap->RegistShadowCaster(&m_model);
+	m_model.SetShadowReciever(true);
 	//ワールド行列の更新。
 	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
 	//アニメーションを流す。
@@ -134,6 +139,7 @@ void Player::Update()
 void Player::Draw()
 {
 	m_model.Draw(
+		enRenderMode_Normal,
 		g_camera3D.GetViewMatrix(), 
 		g_camera3D.GetProjectionMatrix()
 	);

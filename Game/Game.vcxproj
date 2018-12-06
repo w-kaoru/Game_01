@@ -137,6 +137,8 @@
     <ClCompile Include="Player\PlStateIdle.cpp" />
     <ClCompile Include="Player\PlStateMachine.cpp" />
     <ClCompile Include="Player\PlStateRun.cpp" />
+    <ClCompile Include="Render\RenderTarget.cpp" />
+    <ClCompile Include="Render\ShadowMap.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -187,6 +189,8 @@
     <ClInclude Include="Player\PlStateIdle.h" />
     <ClInclude Include="Player\PlStateMachine.h" />
     <ClInclude Include="Player\PlStateRun.h" />
+    <ClInclude Include="Render\RenderTarget.h" />
+    <ClInclude Include="Render\ShadowMap.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="system\system.h" />
     <ClInclude Include="Title.h" />
