@@ -176,7 +176,7 @@ PSInput VSMainSkin( VSInputNmTxWeights In )
 	psInput.Position = pos;
 
 	if (isShadowReciever == 1) {
-		続いて、ライトビュープロジェクション空間に変換。
+		//続いて、ライトビュープロジェクション空間に変換。
 		psInput.posInLVP = mul(mLightView, psInput.worldPos);
 		psInput.posInLVP = mul(mLightProj, psInput.posInLVP);
 	}
