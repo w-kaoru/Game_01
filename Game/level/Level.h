@@ -2,7 +2,6 @@
 
 
 class MapChip;
-class ShadowMap;
 /*!
 * @brief	オブジェクト名。
 */
@@ -67,7 +66,7 @@ public :
 	*									フックしないならnullptrを指定すればよい、
 	*									詳細はHookWhenBuildObjectFuncのコメントを参照。
 	*/
-	void Init(const wchar_t* levelDataFilePath, ShadowMap* shadowMap, HookWhenBuildObjectFunc hookFunc);
+	void Init(const wchar_t* levelDataFilePath, HookWhenBuildObjectFunc hookFunc );
 	/*!
 	* @brief	レベルを描画。
 	*/

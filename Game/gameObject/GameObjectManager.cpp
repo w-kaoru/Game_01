@@ -16,10 +16,15 @@ void GameObjectManager::Execute()
 			obj->StartDed();
 		}
 	}
+	
 	for (GameObjectList objList : m_gameObjectList) {
 		for (IGameObject* obj:objList)	{
 			obj->UpdateStart();
 		}
+	}
+
+	if (g_graphicsEngine->GetShadowMap() != nullptr) {
+		g_graphicsEngine->GetShadowMap()->ShadowMapDraw();
 	}
 	for (GameObjectList objList : m_gameObjectList) {
 		for (IGameObject* obj : objList) {

@@ -27,7 +27,6 @@ bool Enemy::Start()
 	//キャラクターコントローラーの初期化。
 	m_charaCon.Init(40.0f, 50.0f, m_position);
 	m_ensm.Start();
-	m_model.SetShadowMap(m_shadowMap);
 	return true;
 }
 
@@ -99,7 +98,7 @@ void Enemy::Update()
 	//キャラコンを使って移動する。
 	m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
 	//シャドウキャスターを登録。
-	m_shadowMap->RegistShadowCaster(&m_model);
+	g_graphicsEngine->GetShadowMap()->RegistShadowCaster(&m_model);
 	m_model.SetShadowReciever(true);
 	//ワールド行列を求める。
 	m_model.UpdateWorldMatrix(m_position, m_rotation, { 3.0f, 3.0f, 3.0f });

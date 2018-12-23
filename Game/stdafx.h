@@ -30,6 +30,7 @@
 #include "math/Matrix.h"
 #include "graphics/GraphicsEngine.h"
 
+#include "Render\ShadowMap.h"
 #include "graphics/SkinModel.h"
 #include "graphics/Skeleton.h"
 

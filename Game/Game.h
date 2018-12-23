@@ -6,7 +6,6 @@
 //#include "GameCamera.h"
 #include "Enemy\Enemy.h"
 #include "Render\RenderTarget.h"
-#include "Render\ShadowMap.h"
 #include "graphics\SkinModel.h"
 
 //これらは前方宣言でよい！
@@ -20,8 +19,8 @@ class Game : public IGameObject
 {
 public:
 	Game();
-	~Game();
-	//bool Start();
+	~Game(); 
+	bool Start();
 	void Update() override;
 	void Draw() override;
 	void Destroy();
@@ -39,6 +38,7 @@ private:
 	std::vector< Enemy* > m_enemyList;		//エネミーのリスト。
 
 	ShadowMap m_shadowMap;					//シャドウマップ。
+	SkinModelEffect *m_skinmodeleffect = nullptr;
 };
 
 //グローバルなアクセスポイントをグローバル変数として提供する。

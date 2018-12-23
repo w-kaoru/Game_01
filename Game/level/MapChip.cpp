@@ -10,13 +10,12 @@ MapChip::MapChip(const LevelObjectData& objData)
 	m_model.UpdateWorldMatrix(objData.position, objData.rotation, CVector3::One());
 	//静的物理オブジェクトをメッシュコライダーから作成する。
 	m_physicsStaticObject.CreateMeshObject(m_model, objData.position, objData.rotation);
+	m_model.SetShadowReciever(true);
 }
 
 void MapChip::Draw()
 {
-	m_model.SetShadowMap(m_shadowMap);
-	m_model.SetShadowReciever(true);
-	m_shadowMap->RegistShadowCaster(&m_model);
+	g_graphicsEngine->GetShadowMap()->RegistShadowCaster(&m_model);
 	m_model.Draw(
 		enRenderMode_Normal,
 		g_camera3D.GetViewMatrix(),

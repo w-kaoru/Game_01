@@ -47,9 +47,9 @@ cbuffer LightCb:register(b1) {
 	float				specPow;			//スペキュラライトの絞り。
 };
 /// シャドウマップ用の定数バッファ。
-cbuffer ShadowMapCb : register(b1) {
-	float4x4 lightViewProjMatrix;	//ライトビュープロジェクション行列。
-}
+//cbuffer ShadowMapCb : register(b1) {
+//	float4x4 lightViewProjMatrix;	//ライトビュープロジェクション行列。
+//}
 /////////////////////////////////////////////////////////////
 //各種構造体
 /////////////////////////////////////////////////////////////
@@ -193,7 +193,7 @@ float4 PSMain( PSInput In ) : SV_Target0
 	//ディレクションライトの拡散反射光を計算する。
 	float4 lig = 0.0f;
 	for (int i = 0; i < NumDirection; i++) {
-		lig += max(0.0f, dot(In.Normal * -1.0f, directionLight.direction[i])) * directionLight.color[i];
+		lig += max(0.5f, dot(In.Normal * -1.0f, directionLight.direction[i])) * directionLight.color[i];
 		//ライトを当てるピクセルのワールド座標から視点に伸びるベクトルtoEyeDirを求める。
 		// 視点の座標は定数バッファで渡されている。LightCbを参照するように。
 		float3 toEyeDir = In.worldPos - eyePos;
@@ -201,34 +201,34 @@ float4 PSMain( PSInput In ) : SV_Target0
 		//求めたtoEyeDirの反射ベクトルを求める。
 		float3 rVec = reflect(toEyeDir, In.Normal);
 		//求めた反射ベクトルとディレクションライトの方向との内積を取って、スペキュラの強さを計算する。
-		float t = max(0.0f, dot(-directionLight.direction[i] ,rVec));
+		float t = max(0.0f, dot(-directionLight.direction[i], rVec));
 		//pow関数を使って、スペキュラを絞る。絞りの強さは定数バッファで渡されている。
 		float4 specLig = pow(t, specPow) * directionLight.color[i];
 		//スペキュラ反射が求まったら、ligに加算する。
 		//鏡面反射を反射光に加算する。
 		lig.xyz += specLig * 1.0f;
-	}
 
-	if (isShadowReciever == 1) {	//シャドウレシーバー。
-									//LVP空間から見た時の最も手前の深度値をシャドウマップから取得する。
-		float2 shadowMapUV = In.posInLVP.xy / In.posInLVP.w;
-		shadowMapUV *= float2(0.5f, -0.5f);
-		shadowMapUV += 0.5f;
-		//シャドウマップの範囲内かどうかを判定する。
-		if (shadowMapUV.x < 1.0f
-			&& shadowMapUV.x > 0.0f
-			&& shadowMapUV.y < 1.0f
-			&& shadowMapUV.y > 0.0f
-			) {
+		if (isShadowReciever == 1) {	//シャドウレシーバー。
+			//LVP空間から見た時の最も手前の深度値をシャドウマップから取得する。
+			float2 shadowMapUV = In.posInLVP.xy / In.posInLVP.w;
+			shadowMapUV *= float2(0.5f, -0.5f);
+			shadowMapUV += 0.5f;
+			//シャドウマップの範囲内かどうかを判定する。
+			if (shadowMapUV.x < 1.0f
+				&& shadowMapUV.x > 0.0f
+				&& shadowMapUV.y < 1.0f
+				&& shadowMapUV.y > 0.0f
+				) {
 
-			///LVP空間での深度値を計算。
-			float zInLVP = In.posInLVP.z / In.posInLVP.w;
-			//シャドウマップに書き込まれている深度値を取得。
-			float zInShadowMap = g_shadowMap.Sample(Sampler, shadowMapUV);
+				///LVP空間での深度値を計算。
+				float zInLVP = In.posInLVP.z / In.posInLVP.w;
+				//シャドウマップに書き込まれている深度値を取得。
+				float zInShadowMap = g_shadowMap.Sample(Sampler, shadowMapUV);
 
-			if (zInLVP > zInShadowMap + 0.01f) {
-				//影が落ちているので、光を弱くする
-				lig *= 0.5f;
+				if (zInLVP > zInShadowMap + 0.01f) {
+					//影が落ちているので、光を弱くする
+					lig *= 0.5f;
+				}
 			}
 		}
 	}

@@ -4,7 +4,6 @@
 
 class Level;
 struct LevelObjectData;
-class ShadowMap;
 
 /*!
 * @brief	マップチップ。
@@ -20,11 +19,7 @@ public:
 	* @brief	描画。
 	*/
 	void Draw();
-	void SetShadowMap(ShadowMap* shadowMap) {
-		m_shadowMap = shadowMap;
-	}
 private:
 	SkinModel m_model;		//!<モデル。
 	PhysicsStaticObject m_physicsStaticObject;	//!<静的物理オブジェクト。
-	ShadowMap* m_shadowMap = nullptr;
 };

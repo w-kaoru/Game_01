@@ -2,7 +2,6 @@
 
 #include "Skeleton.h"
 #include "SkinModelEffect.h"
-#include "../Render/ShadowMap.h"
 const int NumDirection = 4;
 /*!
 *@brief	FBXの上方向。
@@ -95,9 +94,7 @@ public:
 	{
 		m_isShadowReciever = flag;
 	}
-	void SetShadowMap(ShadowMap* shadowMap) {
-		m_shadowMap = shadowMap;
-	}
+	
 private:
 	/*!
 	*@brief	サンプラステートの初期化。
@@ -147,6 +144,6 @@ private:
 	DirectX::Model*		m_modelDx;							//!<DirectXTKが提供するモデルクラス。
 	ID3D11SamplerState* m_samplerState = nullptr;			//!<サンプラステート。
 	bool m_isShadowReciever = false;						//シャドウレシーバーのフラグ。
-	ShadowMap*			m_shadowMap = nullptr;				//シャドウマップ。
+	ModelEffect* effect = nullptr;
 };
 

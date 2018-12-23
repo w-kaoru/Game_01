@@ -1,6 +1,7 @@
 #pragma once
 
 #include "graphics/Shader.h"
+#include "../Render/ShadowMap.h"
 
 /*!
 *@brief	モデルエフェクト。
@@ -12,20 +13,25 @@ protected:
 	Shader* m_pPSShader = nullptr;
 	Shader m_vsShader;
 	Shader m_psShader;
+	Shader m_vsShadowMap;			//シャドウマップ生成用の頂点シェーダー。
+	Shader m_psShadowMap;		//シャドウマップ生成用のピクセルシェーダー。
 	bool isSkining;
 	ID3D11ShaderResourceView* m_albedoTex = nullptr;
 	EnRenderMode m_renderMode = enRenderMode_Invalid;	//レンダリングモード。
-
 public:
 	ModelEffect()
 	{
+		//頂点シェーダーをロード。
+		m_vsShader.Load("Assets/shader/model.fx", "VSMain", Shader::EnType::VS);
 		m_psShader.Load("Assets/shader/model.fx", "PSMain", Shader::EnType::PS);
-		
+		//todo シャドウマップ用のシェーダーをロード。
+		m_psShadowMap.Load("Assets/shader/model.fx", "PSMain_ShadowMap", Shader::EnType::PS);
+		m_vsShadowMap.Load("Assets/shader/model.fx", "VSMain_ShadowMap", Shader::EnType::VS);
 		m_pPSShader = &m_psShader;
 	}
 	virtual ~ModelEffect()
 	{
-		if (m_albedoTex) {
+		if (m_albedoTex != nullptr) {
 			m_albedoTex->Release();
 		}
 	}

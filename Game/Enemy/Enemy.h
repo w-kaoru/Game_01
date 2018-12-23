@@ -2,7 +2,6 @@
 #include "character/CharacterController.h"
 #include "EnStateMachine.h"
 class Player;
-class ShadowMap;
 class Enemy:public IGameObject
 {
 public:
@@ -47,9 +46,6 @@ public:
 	CQuaternion GetRotation() {
 		return m_rotation;
 	}
-	void SetShadow(ShadowMap* shadowMap) {
-		m_shadowMap = shadowMap;
-	}
 private:
 	Player* m_player = nullptr;							//プレイヤー
 	//MoveState movestate = idle;
@@ -63,7 +59,5 @@ private:
 	float toPlayerLen;
 	bool isDead = false;
 	int selectModel = 0;
-
-	ShadowMap* m_shadowMap = nullptr;					//シャドウマップ。
 };
 

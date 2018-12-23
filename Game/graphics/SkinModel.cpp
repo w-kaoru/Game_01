@@ -31,7 +31,8 @@ void SkinModel::Init(const wchar_t* filePath, EnFbxUpAxis enFbxUpAxis)
 	//ディレクションライトの初期化。
 	InitDirectionLight();
 
-
+	//エフェクトファクトリを作成
+	SkinModelEffectFactory effectFactory(g_graphicsEngine->GetD3DDevice());
 	//SkinModelDataManagerを使用してCMOファイルのロード。
 	m_modelDx = g_skinModelDataManager.Load(filePath, m_skeleton);
 
@@ -101,7 +102,7 @@ void SkinModel::InitDirectionLight()
 	m_light.directionLight.color[0] = { 1.0f, 1.0f, 1.0f, 1.0f };
 
 	m_light.directionLight.direction[1] = { -1.0f, -1.0f, 0.0f, 0.0f };
-	m_light.directionLight.color[1] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	m_light.directionLight.color[1] = { 0.0f, 0.0f, 0.0f, 1.0f };
 
 	m_light.directionLight.direction[2] = { -1.0f, -0.5f, 0.0f, 0.0f };
 	m_light.directionLight.color[2] = { 0.0f, 0.0f, 0.0f, 1.0f };
@@ -109,7 +110,7 @@ void SkinModel::InitDirectionLight()
 	m_light.directionLight.direction[3] = { 1.0f, -0.5f, 0.0f, 0.0f };
 	m_light.directionLight.color[3] = { 0.0f, 0.0f, 0.0f, 1.0f };
 
-	m_light.specPow =10.0f;
+	m_light.specPow =5.0f;
 }
 void SkinModel::InitSamplerState()
 {
@@ -157,9 +158,9 @@ void SkinModel::Draw( EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projM
 	vsCb.mWorld = m_worldMatrix;
 	vsCb.mProj = projMatrix;
 	vsCb.mView = viewMatrix;
-	//todo ライトカメラのビュー、プロジェクション行列を送る。
-	vsCb.mLightProj = m_shadowMap->GetLightProjMatrix();
-	vsCb.mLightView = m_shadowMap->GetLighViewMatrix();
+	//todo ライトカメラのビュー、プロジェクション行列を送る。(追加)
+	vsCb.mLightProj = g_graphicsEngine->GetShadowMap()->GetLightProjMatrix();
+	vsCb.mLightView = g_graphicsEngine->GetShadowMap()->GetLighViewMatrix();
 	if (m_isShadowReciever == true) {
 		vsCb.isShadowReciever = 1;
 	}
@@ -178,6 +179,7 @@ void SkinModel::Draw( EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projM
 	//定数バッファをGPUに転送。
 	d3dDeviceContext->VSSetConstantBuffers(0, 1, &m_cb);
 	d3dDeviceContext->PSSetConstantBuffers(0, 1, &m_cb);
+	//追加
 	d3dDeviceContext->PSSetConstantBuffers(1, 1, &m_lightCb);
 	//サンプラステートを設定。
 	d3dDeviceContext->PSSetSamplers(0, 1, &m_samplerState);
@@ -189,7 +191,6 @@ void SkinModel::Draw( EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projM
 		auto modelMaterial = reinterpret_cast<SkinModelEffect*>(material);
 		modelMaterial->SetRenderMode(renderMode);
 	});
-
 	//描画。
 	m_modelDx->Draw(
 		d3dDeviceContext,

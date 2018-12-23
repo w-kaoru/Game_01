@@ -4,7 +4,6 @@
 #include "PlStateMachine.h"
 
 class GameCamera;
-class ShadowMap;
 class Player :public IGameObject
 {
 public:
@@ -32,9 +31,6 @@ public:
 	{
 		return m_moveSpeed;
 	}
-	void SetShadow(ShadowMap* shadowMap) {
-		m_shadowMap = shadowMap;
-	}
 private:
 	SkinModel m_model;									//スキンモデル。
 	Animation m_animation;								//アニメーション。
@@ -45,5 +41,4 @@ private:
 	CQuaternion m_rotation = CQuaternion::Identity();	//回転。
 	CharacterController m_charaCon;						//キャラクターコントローラーを追加。
 	PlStateMachine m_stMa;
-	ShadowMap* m_shadowMap = nullptr;
 };
