@@ -13,6 +13,7 @@ public:
 	//void Move();
 	void Search();
 	void PlLen();
+	void Attack();
 	void SetPosition(CVector3 pos)
 	{
 		m_position = pos;
@@ -59,5 +60,9 @@ private:
 	float toPlayerLen;
 	bool isDead = false;
 	int selectModel = 0;
+	//エネミーのステイタス
+	float m_hp = 0.0f;			//体力
+	float m_atk = 0.0f;			//攻撃力
+	float m_def = 0.0f;			//防御力
+	float m_agi = 0.0f;			//素早さ
 };
-

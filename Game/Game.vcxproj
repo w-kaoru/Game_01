@@ -134,6 +134,7 @@
     <ClCompile Include="physics\PhysicsStaticObject.cpp" />
     <ClCompile Include="Player\IPlState.cpp" />
     <ClCompile Include="Player\Player.cpp" />
+    <ClCompile Include="Player\PlStateAttack.cpp" />
     <ClCompile Include="Player\PlStateIdle.cpp" />
     <ClCompile Include="Player\PlStateMachine.cpp" />
     <ClCompile Include="Player\PlStateRun.cpp" />
@@ -186,6 +187,7 @@
     <ClInclude Include="Player\IPlState.h" />
     <ClInclude Include="Player\Player.h" />
     <ClInclude Include="Player\PlayerState.h" />
+    <ClInclude Include="Player\PlStateAttack.h" />
     <ClInclude Include="Player\PlStateIdle.h" />
     <ClInclude Include="Player\PlStateMachine.h" />
     <ClInclude Include="Player\PlStateRun.h" />

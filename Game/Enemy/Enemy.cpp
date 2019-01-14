@@ -16,7 +16,11 @@ Enemy::~Enemy()
 bool Enemy::Start()
 {
 	//m_model.Init(L"Assets/modelData/enemy.cmo");
-	
+
+	m_hp = 200.0f;
+	m_atk = 20.0f;
+	m_def = 30.0f;
+	m_agi = 300.0f;
 	if (selectModel == 1) {
 		m_model.Init(L"Assets/modelData/enemy.cmo");
 	}
@@ -53,7 +57,7 @@ void Enemy::Search()
 	//fabsfは絶対値を求める関数！
 	//角度はマイナスが存在するから、絶対値にする。
 	if (fabsf(angle) < CMath::DegToRad(45.0f)
-		&& toPlayerLen < 300.0f
+		&& toPlayerLen < 600.0f
 		) {
 		//見つけた。
 		m_ensm.Change(EnemyState::MoveState::move);
@@ -62,6 +66,10 @@ void Enemy::Search()
 		//見つけていない。
 		m_ensm.Change(EnemyState::MoveState::idle);
 	}
+}
+void Enemy::Attack()
+{
+
 }
 //エネミー追跡状態。
 /*void Enemy::Move()

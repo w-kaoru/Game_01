@@ -21,9 +21,4 @@ bool PlStateIdle::Start()
 
 void PlStateIdle::Update()
 {
-	if (fabsf(m_player->GetmoveSpeed().x) > 0.1f 
-		|| fabsf(m_player->GetmoveSpeed().z) > 0.1f) {
-		m_plstma->Change(PlayerState::run);
-	}
-
 }

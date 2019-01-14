@@ -47,8 +47,9 @@ void ShadowMap::UpdateFromLightDirection(CVector3 lightCameraPos, CVector3 light
 }
 void ShadowMap::UpdateFromLightTarget(CVector3 lightCameraPos, CVector3 lightCameraTarget)
 {
-	m_lightCameraTarget = lightCameraTarget;
-	m_lightCameraPosition = lightCameraPos;
+	//デバック
+	m_lightCameraTarget = /*lightCameraTarget*/{0.0f,1.0f,0.0f};
+	m_lightCameraPosition = /*lightCameraPos*/{ 0.0f,1000.0f,0.0f };
 	//ライトの方向を計算する。
 	auto lightDir = m_lightCameraTarget - m_lightCameraPosition;
 	if (lightDir.Length() < 0.0001f) {

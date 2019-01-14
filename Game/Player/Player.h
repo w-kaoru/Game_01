@@ -2,6 +2,7 @@
 #include "character/CharacterController.h"
 #include "PlayerState.h"
 #include "PlStateMachine.h"
+//#include "../BattleController.h"
 
 class GameCamera;
 class Player :public IGameObject
@@ -11,8 +12,8 @@ public:
 	~Player();
 	bool Start();
 	void Move();
-	/*void Jump();
-	void Attack();*/
+	//void Jump();
+	void Attack();
 	void Update();
 	void Draw();
 	void SetPosition(CVector3 pos)
@@ -41,4 +42,12 @@ private:
 	CQuaternion m_rotation = CQuaternion::Identity();	//回転。
 	CharacterController m_charaCon;						//キャラクターコントローラーを追加。
 	PlStateMachine m_stMa;
+	//BattleController* m_battle = nullptr;
+	bool m_atkFlag = false;
+	//プレイヤーのステイタス
+	//int Lv = 0;				//レベル
+	float m_hp = 0.0f;			//体力
+	float m_atk = 0.0f;			//攻撃力
+	float m_def = 0.0f;			//防御力
+	float m_agi = 0.0f;			//素早さ
 };

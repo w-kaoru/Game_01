@@ -36,10 +36,19 @@ Player::~Player()
 }
 bool Player::Start()
 {
+	//ステータス設定
+	//m_status.Lv = 1;
+	m_hp = 500.0f;			//体力
+	m_atk =  70.0f;			//攻撃力
+	m_def = 50.0f;			//防御力
+	m_agi = 400.0f;			//素早さ
 	m_position.y = 200.0f;
 	//キャラクターコントローラーの初期化。
 	m_charaCon.Init(10.0f, 50.0f, m_position);
 	m_stMa.Start();
+	/*m_battle->SetHP(m_hp);
+	m_battle->SetATK(m_atk);
+	m_battle->SetDEF(m_def);*/
 	return true;
 }
 //移動
@@ -59,8 +68,8 @@ void Player::Move()
 	//XZ成分の移動速度をクリア。
 	m_moveSpeed.x = 0.0f;
 	m_moveSpeed.z = 0.0f;
-	m_moveSpeed += cameraForward * lStick_y * 400.0f;	//奥方向への移動速度を代入。
-	m_moveSpeed += cameraRight * lStick_x * 400.0f;		//右方向への移動速度を加算。
+	m_moveSpeed += cameraForward * lStick_y * m_agi;	//奥方向への移動速度を代入。
+	m_moveSpeed += cameraRight * lStick_x * m_agi;		//右方向への移動速度を加算。
 	m_moveSpeed.y -= 980.0f * (1.0f / 60.0f);
 	//キャラコンを使って移動する。
 	m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
@@ -69,11 +78,10 @@ void Player::Move()
 		|| fabsf(m_moveSpeed.z) > 0.1f) {
 		auto angle = atan2f(m_moveSpeed.x, m_moveSpeed.z);
 		m_rotation.SetRotation(CVector3::AxisY(), angle);
+		m_stMa.Change(PlayerState::AniMove::run);
 	}
-	if (g_pad[0].IsTrigger(enButtonA) == true
-		&& m_charaCon.IsOnGround() == true
-		) {
-		PlayerState::AniMove::jump;
+	else {
+		m_stMa.Change(PlayerState::AniMove::idle);
 	}
 	if (m_charaCon.IsJump() == true && m_charaCon.IsOnGround() == false) {
 		m_moveSpeed.y += 450.0f;
@@ -106,26 +114,28 @@ void Player::Move()
 //	}
 //}
 //攻撃
-//void Player::Attack()
-//{
-//	if (m_animation.IsPlaying() == false) {
-//		if (fabsf(m_moveSpeed.x) > 0.1f
-//			|| fabsf(m_moveSpeed.z) > 0.1f
-//			) {
-//			animove = run;
-//		}
-//		else {
-//
-//			animove = idle;
-//		}
-//	}
-//}
+void Player::Attack()
+{
+	m_stMa.Change(PlayerState::AniMove::attack);
+}
 
 void Player::Update()
 {	
-	Move();
 	m_stMa.Update();
+	if (g_pad[0].IsTrigger(enButtonA)) {
+		m_atkFlag = true;
+		Attack();
+	}
 
+	if (m_atkFlag == true ) {
+		if (!m_animation.IsPlaying()) {
+			m_atkFlag = false;
+		}
+	}
+	else
+	{
+		Move();
+	}
 	//シャドウキャスターを登録。
 	g_graphicsEngine->GetShadowMap()->RegistShadowCaster(&m_model);
 	m_model.SetShadowReciever(true);

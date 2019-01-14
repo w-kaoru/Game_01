@@ -124,6 +124,7 @@
     <ClCompile Include="Enemy\Enemy.cpp" />
     <ClCompile Include="Render\RenderTarget.cpp" />
     <ClCompile Include="Render\ShadowMap.cpp" />
+    <ClCompile Include="Player\PlStateAttack.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -227,6 +228,7 @@
     <ClInclude Include="Enemy\Enemy.h" />
     <ClInclude Include="Render\RenderTarget.h" />
     <ClInclude Include="Render\ShadowMap.h" />
+    <ClInclude Include="Player\PlStateAttack.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\background.FBX">

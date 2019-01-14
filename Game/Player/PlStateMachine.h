@@ -1,6 +1,7 @@
 #pragma once
 #include "PlStateIdle.h"
 #include "PlStateRun.h"
+#include "PlStateAttack.h"
 #include "PlayerState.h"
 
 
@@ -16,6 +17,7 @@ public:
 private:
 	PlStateIdle m_plIdle;
 	PlStateRun m_plRun;
+	PlStateAttack m_plAttack;
 	IPlState *m_ips = nullptr;
 	PlayerState::AniMove m_state = PlayerState::nostate;
 };
