@@ -107,7 +107,7 @@ void Enemy::Update()
 	m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
 	//シャドウキャスターを登録。
 	g_graphicsEngine->GetShadowMap()->RegistShadowCaster(&m_model);
-	m_model.SetShadowReciever(true);
+	//m_model.SetShadowReciever(true);
 	//ワールド行列を求める。
 	m_model.UpdateWorldMatrix(m_position, m_rotation, { 3.0f, 3.0f, 3.0f });
 }

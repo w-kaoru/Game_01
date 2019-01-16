@@ -138,7 +138,7 @@ void Player::Update()
 	}
 	//シャドウキャスターを登録。
 	g_graphicsEngine->GetShadowMap()->RegistShadowCaster(&m_model);
-	m_model.SetShadowReciever(true);
+	//m_model.SetShadowReciever(true);
 	//ワールド行列の更新。
 	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
 	//アニメーションを流す。
