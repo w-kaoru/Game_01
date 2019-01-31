@@ -130,6 +130,8 @@
     <ClCompile Include="sound\SoundSource.cpp" />
     <ClCompile Include="sound\WaveFile.cpp" />
     <ClCompile Include="sound\WaveFileBank.cpp" />
+    <ClCompile Include="Bullet\Bullet.cpp" />
+    <ClCompile Include="Bullet\BulletManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -239,6 +241,8 @@
     <ClInclude Include="sound\SoundSource.h" />
     <ClInclude Include="sound\WaveFile.h" />
     <ClInclude Include="sound\WaveFileBank.h" />
+    <ClInclude Include="Bullet\Bullet.h" />
+    <ClInclude Include="Bullet\BulletManager.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\background.FBX">

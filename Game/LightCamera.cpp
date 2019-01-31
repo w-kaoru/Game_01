@@ -19,7 +19,7 @@ void LightCamera::Update()
 	auto newTarget = m_player->GetPosition();
 	//シャドウマップを更新。
 	g_graphicsEngine->GetShadowMap()->UpdateFromLightTarget(
-		{ 1000.0f, 1000.0f, 1000.0f },
+		{ 700.0f, 700.0f, 700.0f },
 		newTarget
 	);
 }

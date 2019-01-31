@@ -140,6 +140,10 @@ void Player::Update()
 	g_graphicsEngine->GetShadowMap()->RegistShadowCaster(&m_model);
 	//m_model.SetShadowReciever(true);
 	//ワールド行列の更新。
+	m_rotM.MakeRotationFromQuaternion(m_rotation);
+	m_right =	{ m_rotM.m[0][0],m_rotM.m[0][1],m_rotM.m[0][2] };
+	m_up =		{ m_rotM.m[1][0],m_rotM.m[1][1],m_rotM.m[1][2] };
+	m_forward = { m_rotM.m[2][0],m_rotM.m[2][1],m_rotM.m[2][2] };
 	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
 	//アニメーションを流す。
 	m_animation.Update(1.0f / 30.0f);

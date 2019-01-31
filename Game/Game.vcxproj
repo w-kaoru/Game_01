@@ -99,6 +99,8 @@
     </MeshContentTask>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Bullet\Bullet.cpp" />
+    <ClCompile Include="Bullet\BulletManager.cpp" />
     <ClCompile Include="character\CharacterController.cpp" />
     <ClCompile Include="Enemy\Enemy.cpp" />
     <ClCompile Include="Enemy\EnStateIdle.cpp" />
@@ -153,6 +155,8 @@
     <ClCompile Include="Title.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bullet\Bullet.h" />
+    <ClInclude Include="Bullet\BulletManager.h" />
     <ClInclude Include="character\CharacterController.h" />
     <ClInclude Include="Enemy\Enemy.h" />
     <ClInclude Include="Enemy\EnemyState.h" />
