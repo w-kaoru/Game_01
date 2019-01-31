@@ -23,9 +23,11 @@ void GameObjectManager::Execute()
 		}
 	}
 
+	// /*
 	if (g_graphicsEngine->GetShadowMap() != nullptr) {
 		g_graphicsEngine->GetShadowMap()->ShadowMapDraw();
 	}
+	// */
 	for (GameObjectList objList : m_gameObjectList) {
 		for (IGameObject* obj : objList) {
 			obj->DrawStart();

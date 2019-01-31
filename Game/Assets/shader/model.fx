@@ -194,18 +194,20 @@ float4 PSMain( PSInput In ) : SV_Target0
 		lig += max(0.5f, dot(In.Normal * -1.0f, directionLight.direction[i])) * directionLight.color[i];
 		//ライトを当てるピクセルのワールド座標から視点に伸びるベクトルtoEyeDirを求める。
 		// 視点の座標は定数バッファで渡されている。LightCbを参照するように。
-		float3 toEyeDir = In.worldPos - eyePos;
-		toEyeDir = normalize(toEyeDir);
-		//求めたtoEyeDirの反射ベクトルを求める。
-		float3 rVec = reflect(toEyeDir, In.Normal);
-		//求めた反射ベクトルとディレクションライトの方向との内積を取って、スペキュラの強さを計算する。
-		float t = max(0.0f, dot(-directionLight.direction[i], rVec));
-		//pow関数を使って、スペキュラを絞る。絞りの強さは定数バッファで渡されている。
-		float4 specLig = pow(t, specPow) * directionLight.color[i];
-		//スペキュラ反射が求まったら、ligに加算する。
-		//鏡面反射を反射光に加算する。
-		lig.xyz += specLig * 1.0f;
-
+		/*{
+			//スペキュラライトの処理
+			float3 toEyeDir = In.worldPos - eyePos;
+			toEyeDir = normalize(toEyeDir);
+			//求めたtoEyeDirの反射ベクトルを求める。
+			float3 rVec = reflect(toEyeDir, In.Normal);
+			//求めた反射ベクトルとディレクションライトの方向との内積を取って、スペキュラの強さを計算する。
+			float t = max(0.0f, dot(-directionLight.direction[i], rVec));
+			//pow関数を使って、スペキュラを絞る。絞りの強さは定数バッファで渡されている。
+			float4 specLig = pow(t, specPow) * directionLight.color[i];
+			//スペキュラ反射が求まったら、ligに加算する。
+			//鏡面反射を反射光に加算する。
+			lig.xyz += specLig * 1.0f;
+		}*/
 		if (isShadowReciever == 1) {	//シャドウレシーバー。
 			//LVP空間から見た時の最も手前の深度値をシャドウマップから取得する。
 			float2 shadowMapUV = In.posInLVP.xy / In.posInLVP.w;

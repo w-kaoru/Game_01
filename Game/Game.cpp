@@ -4,6 +4,7 @@
 #include "level/Level.h"
 #include "GameCamera.h"
 #include "Title.h"
+#include "LightCamera.h"
 
 //グローバルなアクセスポイントをグローバル変数として提供する。
 Game* g_game = nullptr;
@@ -22,6 +23,7 @@ Game::~Game()
 		g_gameObjM->DeleteGameObject(enemy);
 	}
 	g_gameObjM->DeleteGameObject(m_gameCamera);
+	g_gameObjM->DeleteGameObject(m_light);
 }
 
 bool Game::Start()
@@ -59,7 +61,15 @@ bool Game::Start()
 	});
 	m_gameCamera=g_gameObjM->NewGameObject<GameCamera>(4);
 	m_gameCamera->SetPlayer(m_player);
+	m_light = g_gameObjM->NewGameObject<LightCamera>(4);
+	m_light->SetPlayer(m_player);
 	g_game = this;
+
+	//サウンドエンジンを初期化。
+	m_soundEngine.Init();
+	//BGM
+	m_bgm.Init(L"Assets/sound/bgm_00.wav");
+	m_bgm.Play(true);
 	return false;
 }
 
@@ -67,19 +77,20 @@ void Game::Update()
 {
 	if (g_pad[0].IsTrigger(enButtonB)) {
 		g_gameObjM->DeleteGameObject(this);
-		//タイトルシーンの作成。
-		g_gameObjM->NewGameObject<Title>();
+			//タイトルシーンの作成。
+			g_gameObjM->NewGameObject<Title>();
+		}
 	}
-	//シャドウマップを更新。
-	m_shadowMap.UpdateFromLightTarget(
-		{ 0.0f, 1000.0f, 0.0f },
-		{ 0.0f, 0.0f, 0.0f }
-	);
-}
+
 
 void Game::Draw()
 {
 	m_level.Draw();
+	  /*
+	if (g_graphicsEngine->GetShadowMap() != nullptr) {
+		g_graphicsEngine->GetShadowMap()->ShadowMapDraw();
+	}
+	// */
 }
 
 void Game::Destroy()

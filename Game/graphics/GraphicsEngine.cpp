@@ -56,6 +56,11 @@ void GraphicsEngine::Release()
 		m_pd3dDevice->Release();
 		m_pd3dDevice = NULL;
 	}
+	 /*
+	if (m_shadowMap != nullptr) {
+		m_shadowMap = nullptr;
+	}
+	// */
 }
 void GraphicsEngine::Init(HWND hWnd)
 {

@@ -125,6 +125,11 @@
     <ClCompile Include="Render\RenderTarget.cpp" />
     <ClCompile Include="Render\ShadowMap.cpp" />
     <ClCompile Include="Player\PlStateAttack.cpp" />
+    <ClCompile Include="LightCamera.cpp" />
+    <ClCompile Include="sound\SoundEngine.cpp" />
+    <ClCompile Include="sound\SoundSource.cpp" />
+    <ClCompile Include="sound\WaveFile.cpp" />
+    <ClCompile Include="sound\WaveFileBank.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -229,6 +234,11 @@
     <ClInclude Include="Render\RenderTarget.h" />
     <ClInclude Include="Render\ShadowMap.h" />
     <ClInclude Include="Player\PlStateAttack.h" />
+    <ClInclude Include="LightCamera.h" />
+    <ClInclude Include="sound\SoundEngine.h" />
+    <ClInclude Include="sound\SoundSource.h" />
+    <ClInclude Include="sound\WaveFile.h" />
+    <ClInclude Include="sound\WaveFileBank.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\background.FBX">
