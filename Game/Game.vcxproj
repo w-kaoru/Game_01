@@ -99,8 +99,6 @@
     </MeshContentTask>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Bullet\Bullet.cpp" />
-    <ClCompile Include="Bullet\BulletManager.cpp" />
     <ClCompile Include="character\CharacterController.cpp" />
     <ClCompile Include="Enemy\Enemy.cpp" />
     <ClCompile Include="Enemy\EnStateIdle.cpp" />
@@ -141,8 +139,13 @@
     <ClCompile Include="Player\PlStateIdle.cpp" />
     <ClCompile Include="Player\PlStateMachine.cpp" />
     <ClCompile Include="Player\PlStateRun.cpp" />
+    <ClCompile Include="Render\Bloom.cpp" />
+    <ClCompile Include="Render\ConstantBufferGPU.cpp" />
+    <ClCompile Include="Render\GaussianBlur.cpp" />
+    <ClCompile Include="Render\PostEffect.cpp" />
     <ClCompile Include="Render\RenderTarget.cpp" />
     <ClCompile Include="Render\ShadowMap.cpp" />
+    <ClCompile Include="Render\Sprite.cpp" />
     <ClCompile Include="sound\SoundEngine.cpp" />
     <ClCompile Include="sound\SoundSource.cpp" />
     <ClCompile Include="sound\WaveFile.cpp" />
@@ -155,8 +158,6 @@
     <ClCompile Include="Title.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Bullet\Bullet.h" />
-    <ClInclude Include="Bullet\BulletManager.h" />
     <ClInclude Include="character\CharacterController.h" />
     <ClInclude Include="Enemy\Enemy.h" />
     <ClInclude Include="Enemy\EnemyState.h" />
@@ -187,6 +188,7 @@
     <ClInclude Include="math\kMath.h" />
     <ClInclude Include="math\Matrix.h" />
     <ClInclude Include="math\Vector.h" />
+    <ClInclude Include="Noncopyable.h" />
     <ClInclude Include="physics\ICollider.h" />
     <ClInclude Include="physics\MeshCollider.h" />
     <ClInclude Include="physics\Physics.h" />
@@ -201,8 +203,13 @@
     <ClInclude Include="Player\PlStateIdle.h" />
     <ClInclude Include="Player\PlStateMachine.h" />
     <ClInclude Include="Player\PlStateRun.h" />
+    <ClInclude Include="Render\Bloom.h" />
+    <ClInclude Include="Render\ConstantBufferGPU.h" />
+    <ClInclude Include="Render\GaussianBlur.h" />
+    <ClInclude Include="Render\PostEffect.h" />
     <ClInclude Include="Render\RenderTarget.h" />
     <ClInclude Include="Render\ShadowMap.h" />
+    <ClInclude Include="Render\Sprite.h" />
     <ClInclude Include="sound\SoundEngine.h" />
     <ClInclude Include="sound\SoundSource.h" />
     <ClInclude Include="sound\WaveFile.h" />

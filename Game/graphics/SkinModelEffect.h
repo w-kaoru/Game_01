@@ -1,7 +1,7 @@
 #pragma once
 
 #include "graphics/Shader.h"
-#include "../Render/ShadowMap.h"
+//#include "../Render/ShadowMap.h"
 
 /*!
 *@brief	モデルエフェクト。

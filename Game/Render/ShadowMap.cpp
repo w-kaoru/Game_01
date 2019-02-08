@@ -4,6 +4,13 @@
 
 ShadowMap::ShadowMap()
 {
+}
+ShadowMap::~ShadowMap()
+{
+}
+
+void ShadowMap::Init()
+{
 	//シャドウマップ生成用のレンダリングターゲットを作成。
 	//解像度は2048×2048。
 	//テクスチャのフォーマットはR成分のみの32bit浮動小数点型。
@@ -12,9 +19,6 @@ ShadowMap::ShadowMap()
 		2048,
 		DXGI_FORMAT_R32_FLOAT
 	);
-}
-ShadowMap::~ShadowMap()
-{
 }
 
 void ShadowMap::UpdateFromLightDirection(CVector3 lightCameraPos, CVector3 lightDir)

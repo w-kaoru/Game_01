@@ -130,8 +130,11 @@
     <ClCompile Include="sound\SoundSource.cpp" />
     <ClCompile Include="sound\WaveFile.cpp" />
     <ClCompile Include="sound\WaveFileBank.cpp" />
-    <ClCompile Include="Bullet\Bullet.cpp" />
-    <ClCompile Include="Bullet\BulletManager.cpp" />
+    <ClCompile Include="Render\Bloom.cpp" />
+    <ClCompile Include="Render\PostEffect.cpp" />
+    <ClCompile Include="Render\GaussianBlur.cpp" />
+    <ClCompile Include="Render\ConstantBufferGPU.cpp" />
+    <ClCompile Include="Render\Sprite.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -241,8 +244,12 @@
     <ClInclude Include="sound\SoundSource.h" />
     <ClInclude Include="sound\WaveFile.h" />
     <ClInclude Include="sound\WaveFileBank.h" />
-    <ClInclude Include="Bullet\Bullet.h" />
-    <ClInclude Include="Bullet\BulletManager.h" />
+    <ClInclude Include="Render\Bloom.h" />
+    <ClInclude Include="Render\PostEffect.h" />
+    <ClInclude Include="Render\GaussianBlur.h" />
+    <ClInclude Include="Render\ConstantBufferGPU.h" />
+    <ClInclude Include="Render\Sprite.h" />
+    <ClInclude Include="Noncopyable.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\background.FBX">

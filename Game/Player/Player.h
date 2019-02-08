@@ -42,11 +42,10 @@ private:
 	CQuaternion m_rotation = CQuaternion::Identity();	//回転。
 	CharacterController m_charaCon;						//キャラクターコントローラーを追加。
 	PlStateMachine m_stMa;
-	CMatrix m_rotM = CMatrix::Identity();
+	CMatrix m_rotMatrix = CMatrix::Identity();
 	CVector3 m_up = CVector3::Zero();
 	CVector3 m_forward = CVector3::Zero();		//前方。
 	CVector3 m_right = CVector3::Zero();		//右。
-};
 	//BattleController* m_battle = nullptr;
 	bool m_atkFlag = false;
 	//プレイヤーのステイタス

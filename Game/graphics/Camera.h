@@ -117,3 +117,4 @@ private:
 };
 
 extern Camera g_camera3D;		//!<3Dカメラ。
+extern Camera g_camera2D;		//!<2Dカメラ。

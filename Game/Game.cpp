@@ -28,9 +28,7 @@ Game::~Game()
 
 bool Game::Start()
 {
-	g_graphicsEngine->SetShadowMap(&m_shadowMap);
 	//ƒŒƒxƒ‹‚ð‰Šú‰»B
-	//m_level.Init(L"Assets/level/stage_02.tkl",&m_shadowMap, nullptr);
 	m_level.Init(L"Assets/level/stage_02.tkl", [&](LevelObjectData& objData) {
 		if (objData.EqualName(L"plpath") == true) {
 			m_player = g_gameObjM->NewGameObject<Player>();
@@ -82,15 +80,21 @@ void Game::Update()
 		}
 	}
 
+void Game::PreRender()
+{
+	//g_graphicsEngine->GetShadowMap()->RenderToShadowMap();
+}
 
 void Game::Draw()
 {
 	m_level.Draw();
-	  /*
-	if (g_graphicsEngine->GetShadowMap() != nullptr) {
-		g_graphicsEngine->GetShadowMap()->ShadowMapDraw();
-	}
-	// */
+	//g_graphicsEngine->GetPostEffect()->Draw();
+
+}
+
+void Game::PostRender()
+{
+
 }
 
 void Game::Destroy()

@@ -110,7 +110,7 @@ void SkinModel::InitDirectionLight()
 	m_light.directionLight.direction[3] = { 1.0f, -0.5f, 0.0f, 0.0f };
 	m_light.directionLight.color[3] = { 0.0f, 0.0f, 0.0f, 1.0f };
 
-	m_light.specPow = 1.0f/*5.0f*/;
+	m_light.specPow = 0.0f;
 }
 void SkinModel::InitSamplerState()
 {
@@ -152,7 +152,6 @@ void SkinModel::Draw( EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projM
 	DirectX::CommonStates state(g_graphicsEngine->GetD3DDevice());
 
 	ID3D11DeviceContext* d3dDeviceContext = g_graphicsEngine->GetD3DDeviceContext();
-
 	//定数バッファの内容を更新。
 	SVSConstantBuffer vsCb;
 	vsCb.mWorld = m_worldMatrix;

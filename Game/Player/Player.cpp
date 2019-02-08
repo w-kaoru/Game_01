@@ -49,6 +49,7 @@ bool Player::Start()
 	/*m_battle->SetHP(m_hp);
 	m_battle->SetATK(m_atk);
 	m_battle->SetDEF(m_def);*/
+
 	return true;
 }
 //移動
@@ -136,14 +137,34 @@ void Player::Update()
 	{
 		Move();
 	}
+
+	m_rotMatrix.MakeRotationFromQuaternion(m_rotation);
+	//x軸で右を求める。
+	m_right = {
+		m_rotMatrix.m[0][0],
+		m_rotMatrix.m[0][1],
+		m_rotMatrix.m[0][2] 
+	};
+	m_right.Normalize();
+	//y軸で上を求める。
+	m_up = {
+		m_rotMatrix.m[1][0],
+		m_rotMatrix.m[1][1],
+		m_rotMatrix.m[1][2]
+	};
+	m_up.Normalize();
+	//z軸で前を求める。
+	m_forward = {
+		m_rotMatrix.m[2][0],
+		m_rotMatrix.m[2][1],
+		m_rotMatrix.m[2][2]
+	};
+	m_forward.Normalize();
+
 	//シャドウキャスターを登録。
 	g_graphicsEngine->GetShadowMap()->RegistShadowCaster(&m_model);
 	//m_model.SetShadowReciever(true);
 	//ワールド行列の更新。
-	m_rotM.MakeRotationFromQuaternion(m_rotation);
-	m_right =	{ m_rotM.m[0][0],m_rotM.m[0][1],m_rotM.m[0][2] };
-	m_up =		{ m_rotM.m[1][0],m_rotM.m[1][1],m_rotM.m[1][2] };
-	m_forward = { m_rotM.m[2][0],m_rotM.m[2][1],m_rotM.m[2][2] };
 	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
 	//アニメーションを流す。
 	m_animation.Update(1.0f / 30.0f);

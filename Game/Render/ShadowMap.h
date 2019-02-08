@@ -22,7 +22,8 @@ public:
 	{
 		return m_lightProjMatrix;
 	}
-
+	//シャドウマップ生成用のレンダリングターゲットを作成。
+	void Init();
 	// 更新(ライトカメラの注視点を指定するバージョン。)
 	// ライトビュー行列や、ライトプロジェクション行列を
 	// 更新します。UpdateFromLightTargetかUpdateFromLightDirectionのどちらかを

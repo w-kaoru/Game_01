@@ -94,7 +94,6 @@ public:
 	{
 		m_isShadowReciever = flag;
 	}
-	
 private:
 	/*!
 	*@brief	サンプラステートの初期化。

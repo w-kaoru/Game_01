@@ -156,4 +156,43 @@ void GraphicsEngine::Init(HWND hWnd)
 	viewport.MaxDepth = 1.0f;
 	m_pd3dDeviceContext->RSSetViewports(1, &viewport);
 	m_pd3dDeviceContext->RSSetState(m_rasterizerState);
+	//メインレンダリングターゲット作成。
+	m_mainRenderTarget.Create(
+		FRAME_BUFFER_W,
+		FRAME_BUFFER_H,
+		DXGI_FORMAT_R16G16B16A16_FLOAT
+	);
+
+	//メインレンダリングターゲットに描かれた絵を
+	//フレームバッファにコピーするためのスプライトを初期化する。
+	m_copyMainRtToFrameBufferSprite.Init(
+		g_graphicsEngine->GetMainRenderTarget()->GetRenderTargetSRV(),
+		FRAME_BUFFER_W,
+		FRAME_BUFFER_H
+	);
+	//シャドウマップをよべー。
+	m_shadowMap.Init();
+	//ポストエフェクトをよべー。
+	m_postEffect.Init();
+}
+
+void GraphicsEngine::ChangeRenderTarget(RenderTarget* renderTarget, D3D11_VIEWPORT* viewport)
+{
+	ChangeRenderTarget(
+		renderTarget->GetRenderTargetView(),
+		renderTarget->GetDepthStensilView(),
+		viewport
+	);
+}
+void GraphicsEngine::ChangeRenderTarget(ID3D11RenderTargetView* renderTarget, ID3D11DepthStencilView* depthStensil, D3D11_VIEWPORT* viewport)
+{
+	ID3D11RenderTargetView* rtTbl[] = {
+		renderTarget
+	};
+	//レンダリングターゲットの切り替え。
+	m_pd3dDeviceContext->OMSetRenderTargets(1, rtTbl, depthStensil);
+	if (viewport != nullptr) {
+		//ビューポートが指定されていたら、ビューポートも変更する。
+		m_pd3dDeviceContext->RSSetViewports(1, viewport);
+	}
 }
