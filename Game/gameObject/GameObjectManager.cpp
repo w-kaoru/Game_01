@@ -54,7 +54,7 @@ void GameObjectManager::Execute()
 	float clearColor[] = { 0.0f, 0.0f, 0.0f, 1.0f };
 	g_graphicsEngine->GetMainRenderTarget()->ClearRenderTarget(clearColor);
 
-	//g_graphicsEngine->GetShadowMap()->RenderToShadowMap();
+	g_graphicsEngine->GetShadowMap()->RenderToShadowMap();
 
 
 
@@ -69,7 +69,7 @@ void GameObjectManager::Execute()
 			obj->DrawStart();
 		}
 	}
-	//g_graphicsEngine->GetPostEffect()->Draw();
+	g_graphicsEngine->GetPostEffect()->Draw();
 
 	for (GameObjectList objList : m_gameObjectList) {
 		for (IGameObject* obj : objList) {
