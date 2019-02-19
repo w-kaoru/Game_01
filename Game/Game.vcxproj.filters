@@ -76,9 +76,6 @@
     <ClCompile Include="graphics\SkinModelEffect.cpp">
       <Filter>graphics</Filter>
     </ClCompile>
-    <ClCompile Include="level\HID\Pad.cpp">
-      <Filter>HID</Filter>
-    </ClCompile>
     <ClCompile Include="level\Level.cpp">
       <Filter>level</Filter>
     </ClCompile>
@@ -135,6 +132,10 @@
     <ClCompile Include="Render\GaussianBlur.cpp" />
     <ClCompile Include="Render\ConstantBufferGPU.cpp" />
     <ClCompile Include="Render\Sprite.cpp" />
+    <ClCompile Include="BattleController.cpp" />
+    <ClCompile Include="HID\Pad.cpp">
+      <Filter>HID</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -181,9 +182,6 @@
     </ClInclude>
     <ClInclude Include="graphics\SkinModelShaderConst.h">
       <Filter>graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="level\HID\Pad.h">
-      <Filter>HID</Filter>
     </ClInclude>
     <ClInclude Include="level\Level.h">
       <Filter>level</Filter>
@@ -250,6 +248,10 @@
     <ClInclude Include="Render\ConstantBufferGPU.h" />
     <ClInclude Include="Render\Sprite.h" />
     <ClInclude Include="Noncopyable.h" />
+    <ClInclude Include="BattleController.h" />
+    <ClInclude Include="HID\Pad.h">
+      <Filter>HID</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\background.FBX">
@@ -260,5 +262,8 @@
     <MeshContentTask Include="Assets\modelData\enpath.FBX" />
     <MeshContentTask Include="Assets\modelData\ToonRTS_demo_Knight.FBX" />
     <MeshContentTask Include="Assets\modelData\enpath2.fbx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\kitune.png" />
   </ItemGroup>
 </Project>

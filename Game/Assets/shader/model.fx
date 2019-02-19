@@ -229,7 +229,7 @@ float4 PSMain( PSInput In ) : SV_Target0
 
 				if (zInLVP > zInShadowMap + 0.01f) {
 					//‰e‚ª—‚¿‚Ä‚¢‚é‚Ì‚ÅAŒõ‚ğã‚­‚·‚é
-					lig *= 0.5f;
+					lig *= 0.7f;
 				}
 			}
 		}

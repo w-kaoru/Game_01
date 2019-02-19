@@ -11,19 +11,11 @@ BattleController::~BattleController()
 {
 }
 
-bool BattleController::Start()
+void BattleController::Attack(float atk)
 {
-	return false;
-}
-
-void BattleController::Attack()
-{
+	
 }
 
 void BattleController::Damage()
-{
-}
-
-void BattleController::Update()
 {
 }

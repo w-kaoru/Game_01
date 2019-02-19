@@ -26,8 +26,8 @@ public:
 	bool Start();
 	void Update() override;
 	void Draw() override;
-	void PreRender() override;
-	void PostRender() override;
+	void PreDraw() override;
+	void PostDraw() override;
 	void Destroy();
 private:
 	Player* m_player = nullptr;				//プレイヤー
@@ -38,18 +38,9 @@ private:
 	//Level* m_level = nullptr;				//レベルを初期化。
 	std::vector< Enemy* > m_enemyList;		//エネミーのリスト。
 
-	//SkinModelEffect *m_skinmodeleffect = nullptr;
-
 	CSoundEngine m_soundEngine;				//サウンドエンジン。
 	CSoundSource m_bgm;						//BGM。
-
-
-	D3D11_VIEWPORT m_frameBufferViewports;			//フレームバッファのビューポート。
-	ID3D11RenderTargetView* m_frameBufferRenderTargetView = nullptr;	//フレームバッファのレンダリングターゲットビュー。
-	ID3D11DepthStencilView* m_frameBufferDepthStencilView = nullptr;	//フレームバッファのデプスステンシルビュー。
 };
 
 //グローバルなアクセスポイントをグローバル変数として提供する。
 //extern Game* g_game;
-
-

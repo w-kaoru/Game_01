@@ -82,7 +82,6 @@ void PostEffect::InitFullScreenQuadPrimitive()
 	g_graphicsEngine->GetD3DDevice()->CreateBuffer(&bd, &InitData, &m_vertexBuffer);
 }
 
-
 void PostEffect::DrawFullScreenQuadPrimitive(ID3D11DeviceContext* deviceContext, Shader& vsShader, Shader& psShader)
 {
 	//プリミティブのトポロジーとして、トライアングルストリップを設定する。

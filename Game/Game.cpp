@@ -66,7 +66,7 @@ bool Game::Start()
 	//サウンドエンジンを初期化。
 	m_soundEngine.Init();
 	//BGM
-	m_bgm.Init(L"Assets/sound/bgm_00.wav");
+	//m_bgm.Init(L"Assets/sound/bgm_00.wav");
 	m_bgm.Play(true);
 	return false;
 }
@@ -75,24 +75,21 @@ void Game::Update()
 {
 	if (g_pad[0].IsTrigger(enButtonB)) {
 		g_gameObjM->DeleteGameObject(this);
-			//タイトルシーンの作成。
-			g_gameObjM->NewGameObject<Title>();
-		}
+		//タイトルシーンの作成。
+		g_gameObjM->NewGameObject<Title>();
 	}
+}
 
-void Game::PreRender()
+void Game::PreDraw()
 {
-	//g_graphicsEngine->GetShadowMap()->RenderToShadowMap();
 }
 
 void Game::Draw()
 {
 	m_level.Draw();
-	//g_graphicsEngine->GetPostEffect()->Draw();
-
 }
 
-void Game::PostRender()
+void Game::PostDraw()
 {
 
 }

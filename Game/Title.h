@@ -1,11 +1,11 @@
 #pragma once
 #include "gameObject\IGameObject.h"
-
 class Title:public IGameObject
 {
 public:
 	Title();
 	~Title();
+	bool Start();
 	//オーバーライドした関数にはoverride修飾子をつけていると幸せになれる。
 	void Update() override;
 	//オーバーライドした関数にはoverride修飾子をつけていると幸せになれる。
@@ -14,4 +14,5 @@ public:
 	//void Drow() override;
 	void Draw() override;
 private:
+	Sprite m_titelSprite;
 };

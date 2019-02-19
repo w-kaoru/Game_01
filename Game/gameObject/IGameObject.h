@@ -11,35 +11,35 @@ public:
 	virtual void Destroy() {};
 
 	//Draw関数が実行される前に呼ばれる描画処理。
-	virtual void PreRender() {};
+	virtual void PreDraw() {};
 	//Draw関数が実行された後で呼ばれる描画処理。
-	virtual void PostRender() {};
+	virtual void PostDraw() {};
 	friend class GameObjectManager;
 
-	void StartDed(){
+	void StartWrapper(){
 		if (startDed == false) {
 			Start();
 			startDed = true;
 		}
 	}
-	void UpdateStart() {
+	void UpdateWrapper() {
 		if (startDed == true) {
 			Update();
 		}
 	}
-	void PreRenderStart() {
-		if (startDed == true) {
-			PreRender();
-		}
-	}
-	void PostRenderStart() {
-		if (startDed == true) {
-			PostRender();
-		}
-	}
-	void DrawStart() {
+	void DrawWrapper() {
 		if (startDed == true) {
 			Draw();
+		}
+	}
+	void PreDrawWrapper() {
+		if (startDed == true) {
+			PreDraw();
+		}
+	}
+	void PostDrawWrapper() {
+		if (startDed == true) {
+			PostDraw();
 		}
 	}
 private:

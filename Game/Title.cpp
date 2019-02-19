@@ -11,6 +11,13 @@ Title::Title()
 Title::~Title()
 {
 }
+bool Title::Start()
+{
+	//2D‚ð‰Šú‰»B
+
+	m_titelSprite.Init(L"Assets/sprite/kitune.dds",1.0f,1.0f);
+	return false;
+}
 void Title::Update()
 {
 	if (g_pad[0].IsTrigger(enButtonB) == true) {
@@ -18,7 +25,9 @@ void Title::Update()
 		g_gameObjM->NewGameObject<Game>();
 		g_gameObjM->DeleteGameObject(this);
 	}
+	m_titelSprite.Update(CVector3::Zero(), CQuaternion::Identity(), CVector3::One());
 }
 void Title::Draw()
 {
+	m_titelSprite.Draw();
 }

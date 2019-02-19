@@ -112,6 +112,5 @@ void GaussianBlur::Execute(PostEffect& postEffect)
 		postEffect.DrawFullScreenQuadPrimitive(
 			deviceContext, m_vsYBlur, m_psBlur
 		);
-
 	}
 }

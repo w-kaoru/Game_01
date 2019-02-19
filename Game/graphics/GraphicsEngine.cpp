@@ -20,6 +20,16 @@ void GraphicsEngine::BegineRender()
 	//バックバッファを灰色で塗りつぶす。
 	m_pd3dDeviceContext->ClearRenderTargetView(m_backBuffer, ClearColor);
 	m_pd3dDeviceContext->ClearDepthStencilView(m_depthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
+
+	//フレームバッファののレンダリングターゲットをバックアップしておく。
+	m_pd3dDeviceContext->OMGetRenderTargets(
+		1,
+		&m_frameBufferRenderTargetView,
+		&m_frameBufferDepthStencilView
+	);
+	//ビューポートもバックアップを取っておく。
+	unsigned int numViewport = 1;
+	m_pd3dDeviceContext->RSGetViewports(&numViewport, &m_frameBufferViewports);
 }
 void GraphicsEngine::EndRender()
 {
@@ -156,6 +166,7 @@ void GraphicsEngine::Init(HWND hWnd)
 	viewport.MaxDepth = 1.0f;
 	m_pd3dDeviceContext->RSSetViewports(1, &viewport);
 	m_pd3dDeviceContext->RSSetState(m_rasterizerState);
+
 	//メインレンダリングターゲット作成。
 	m_mainRenderTarget.Create(
 		FRAME_BUFFER_W,
@@ -165,7 +176,7 @@ void GraphicsEngine::Init(HWND hWnd)
 
 	//メインレンダリングターゲットに描かれた絵を
 	//フレームバッファにコピーするためのスプライトを初期化する。
-	m_copyMainRtToFrameBufferSprite.Init(
+	m_sprite.Init(
 		g_graphicsEngine->GetMainRenderTarget()->GetRenderTargetSRV(),
 		FRAME_BUFFER_W,
 		FRAME_BUFFER_H
@@ -195,4 +206,30 @@ void GraphicsEngine::ChangeRenderTarget(ID3D11RenderTargetView* renderTarget, ID
 		//ビューポートが指定されていたら、ビューポートも変更する。
 		m_pd3dDeviceContext->RSSetViewports(1, viewport);
 	}
+}
+
+void GraphicsEngine::ShadowDraw()
+{
+	m_shadowMap.RenderToShadowMap();
+	ChangeRenderTarget(
+		m_frameBufferRenderTargetView,
+		m_frameBufferDepthStencilView,
+		&m_frameBufferViewports
+	);
+	float clearColor[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+	m_mainRenderTarget.ClearRenderTarget(clearColor);
+}
+
+void GraphicsEngine::PostEffectDraw()
+{
+	m_postEffect.Draw();
+	ChangeRenderTarget(
+		m_frameBufferRenderTargetView,
+		m_frameBufferDepthStencilView,
+		&m_frameBufferViewports);
+	m_sprite.Draw();
+	/*
+	m_frameBufferRenderTargetView->Release();
+	m_frameBufferDepthStencilView->Release();
+	*/
 }

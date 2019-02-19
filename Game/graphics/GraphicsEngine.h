@@ -69,9 +69,9 @@ public:
 	{
 		return &m_mainRenderTarget;
 	}
-	Sprite* GetCopyMainRtToFrameBufferSprite()
+	Sprite* GetSprite()
 	{
-		return &m_copyMainRtToFrameBufferSprite;
+		return &m_sprite;
 	}
 	/*void SetPostEffect(PostEffect pe)
 	{
@@ -82,6 +82,8 @@ public:
 		return &m_postEffect;
 	}
 
+	void ShadowDraw();
+	void PostEffectDraw();
 private:
 	D3D_FEATURE_LEVEL		m_featureLevel;					//Direct3D デバイスのターゲットとなる機能セット。
 	ID3D11Device*			m_pd3dDevice = NULL;			//D3D11デバイス。
@@ -92,10 +94,13 @@ private:
 	ID3D11Texture2D*		m_depthStencil = NULL;			//デプスステンシル。
 	ID3D11DepthStencilView* m_depthStencilView = NULL;		//デプスステンシルビュー。
 	RenderTarget			m_mainRenderTarget;				//メインレンダリングターゲット。
-	Sprite					m_copyMainRtToFrameBufferSprite;//メインレンダリングターゲットに描かれた絵をフレームバッファにコピーするためのスプライト。
+	Sprite					m_sprite;//メインレンダリングターゲットに描かれた絵をフレームバッファにコピーするためのスプライト。
 	ShadowMap				m_shadowMap;					//シャドウマップ。
 	PostEffect				m_postEffect;					//ポストエフェクト。
 
+	D3D11_VIEWPORT m_frameBufferViewports;			//フレームバッファのビューポート。
+	ID3D11RenderTargetView* m_frameBufferRenderTargetView = nullptr;	//フレームバッファのレンダリングターゲットビュー。
+	ID3D11DepthStencilView* m_frameBufferDepthStencilView = nullptr;	//フレームバッファのデプスステンシルビュー。
 };
 
 extern GraphicsEngine* g_graphicsEngine;			//グラフィックスエンジン

@@ -29,10 +29,6 @@ void RenderGame()
 	//描画開始。
 	g_graphicsEngine->BegineRender();
 	g_gameObjM->Execute();
-
-	//現在のシーンの描画。
-	//g_gameObjM->Draw();
-	//g_gameObjM->ExecuteDraw();
 	//描画終了。
 	g_graphicsEngine->EndRender();
 }

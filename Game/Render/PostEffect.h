@@ -33,6 +33,7 @@ private:
 	/// フルスクリーン描画用の四角形プリミティブの初期化。
 	/// </summary>
 	void InitFullScreenQuadPrimitive();
+
 private:
 	Bloom	m_bloom;	//ブルーム。
 	//フルスクリーン描画用のメンバ変数。
