@@ -37,5 +37,6 @@ public:
 private:
 	typedef std::list<IGameObject*>	GameObjectList;
 	std::vector<GameObjectList>	m_gameObjectList;					//ゲームオブジェクトのリスト。
+	bool startDed = false;
 };
 extern GameObjectManager* g_gameObjM;

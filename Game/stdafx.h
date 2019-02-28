@@ -22,6 +22,7 @@
 
 #include "btBulletDynamicsCommon.h"
 #include "BulletCollision\CollisionDispatch\btGhostObject.h"
+#include "Noncopyable.h"
 
 //DirectXTKのインクルードファイル。
 #include "DirectXTK/Inc/Model.h"
@@ -46,6 +47,9 @@
 #include "graphics/animation/Animation.h"
 #include "graphics/animation/AnimationClip.h"
 #include "graphics/Camera.h"
+#include "BattleController.h"
+
+extern BattleController* g_battleController; 
 
 const float FRAME_BUFFER_W = 1280.0f;				//フレームバッファの幅。
 const float FRAME_BUFFER_H = 720.0f;				//フレームバッファの高さ。

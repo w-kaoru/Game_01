@@ -132,10 +132,11 @@
     <ClCompile Include="Render\GaussianBlur.cpp" />
     <ClCompile Include="Render\ConstantBufferGPU.cpp" />
     <ClCompile Include="Render\Sprite.cpp" />
-    <ClCompile Include="BattleController.cpp" />
     <ClCompile Include="HID\Pad.cpp">
       <Filter>HID</Filter>
     </ClCompile>
+    <ClCompile Include="BattleController.cpp" />
+    <ClCompile Include="BattleHit.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -248,10 +249,11 @@
     <ClInclude Include="Render\ConstantBufferGPU.h" />
     <ClInclude Include="Render\Sprite.h" />
     <ClInclude Include="Noncopyable.h" />
-    <ClInclude Include="BattleController.h" />
     <ClInclude Include="HID\Pad.h">
       <Filter>HID</Filter>
     </ClInclude>
+    <ClInclude Include="BattleController.h" />
+    <ClInclude Include="BattleHit.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\background.FBX">

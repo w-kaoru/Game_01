@@ -140,25 +140,13 @@ void Player::Update()
 
 	m_rotMatrix.MakeRotationFromQuaternion(m_rotation);
 	//x軸で右を求める。
-	m_right = {
-		m_rotMatrix.m[0][0],
-		m_rotMatrix.m[0][1],
-		m_rotMatrix.m[0][2] 
-	};
+	m_right = CVector3::AxisX();
 	m_right.Normalize();
 	//y軸で上を求める。
-	m_up = {
-		m_rotMatrix.m[1][0],
-		m_rotMatrix.m[1][1],
-		m_rotMatrix.m[1][2]
-	};
+	m_up = CVector3::AxisY();
 	m_up.Normalize();
 	//z軸で前を求める。
-	m_forward = {
-		m_rotMatrix.m[2][0],
-		m_rotMatrix.m[2][1],
-		m_rotMatrix.m[2][2]
-	};
+	m_forward = CVector3::AxisX();
 	m_forward.Normalize();
 
 	//シャドウキャスターを登録。

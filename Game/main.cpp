@@ -43,12 +43,13 @@ void TermnateGame()
 ///////////////////////////////////////////////////////////////////
 // ウィンドウプログラムのメイン関数。
 ///////////////////////////////////////////////////////////////////
+BattleController* g_battleController;
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow)
 {
 	//ゲームの初期化。
 	InitGame(hInstance, hPrevInstance, lpCmdLine, nCmdShow, "Game");
 	//タイトルシーンの作成。
-
+	g_battleController = new BattleController;
 	g_gameObjM->NewGameObject<Title>();
 
 	//ゲームループ。
