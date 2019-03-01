@@ -30,9 +30,12 @@ public:
 					m_gameObjectList[i].end()
 				);
 			}
-		}
+		//m_gameObjectList.clear();
 		delete gameObject;
-
+		}
+		else {
+			return;
+		}
 	}
 private:
 	typedef std::list<IGameObject*>	GameObjectList;

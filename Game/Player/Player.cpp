@@ -32,6 +32,7 @@ Player::Player() :m_stMa(this)
 }
 Player::~Player()
 {
+	g_graphicsEngine->GetShadowMap()->UnregistShadowCaster(&m_model);
 	m_charaCon.RemoveRigidBoby();
 }
 bool Player::Start()
