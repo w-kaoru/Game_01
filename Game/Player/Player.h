@@ -32,6 +32,10 @@ public:
 	{
 		return m_moveSpeed;
 	}
+	CVector3 GetForward() 
+	{
+		return m_forward;
+	}
 private:
 	SkinModel m_model;									//スキンモデル。
 	Animation m_animation;								//アニメーション。
@@ -47,7 +51,7 @@ private:
 	CVector3 m_forward = CVector3::Zero();		//前方。
 	CVector3 m_right = CVector3::Zero();		//右。
 	//BattleController* m_battle = nullptr;
-	bool m_atkFlag = false;
+	bool atk = false;
 	//プレイヤーのステイタス
 	//int Lv = 0;				//レベル
 	float m_hp = 0.0f;			//体力

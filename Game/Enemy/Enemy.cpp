@@ -10,6 +10,7 @@ Enemy::Enemy():m_ensm(this)
 
 Enemy::~Enemy()
 {
+	g_graphicsEngine->GetShadowMap()->UnregistShadowCaster(&m_model);
 	m_charaCon.RemoveRigidBoby();
 }
 
@@ -71,26 +72,11 @@ void Enemy::Attack()
 {
 
 }
-//エネミー追跡状態。
-/*void Enemy::Move()
-{
-	PlLen();
-	if (Search()==true) {
-		m_moveSpeed.x *= 200.0f;
-		m_moveSpeed.z *= 200.0f;
-		//向きも変える。
-		if (fabsf(m_moveSpeed.x) > 0.1f || fabsf(m_moveSpeed.z) > 0.1f) {
-			auto angle = atan2f(m_moveSpeed.x, m_moveSpeed.z);
-			m_rotation.SetRotation(CVector3::AxisY(), angle);
-		}
-	}
-	else {
-		m_moveSpeed.x *= 0.0f;
-		m_moveSpeed.z *= 0.0f;
 
-	}
-	m_moveSpeed.y -= 9800.0f * (1.0f / 60.0f);
-}*/
+void Enemy::Damage()
+{
+	m_hp -= 30.0f;
+}
 
 void Enemy::Update()
 {
@@ -105,12 +91,21 @@ void Enemy::Update()
 	m_moveSpeed.y -= 9800.0f * (1.0f / 60.0f);
 	//キャラコンを使って移動する。
 	m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
+	m_hit = g_battleController->Create(
+		&m_position, 300.0f,
+		[&]() {Damage(); },
+		BattleHit::enemy
+	);
 	//シャドウキャスターを登録。
 	g_graphicsEngine->GetShadowMap()->RegistShadowCaster(&m_model);
 	//m_model.SetShadowReciever(true);
 	//ワールド行列を求める。
 	m_model.UpdateWorldMatrix(m_position, m_rotation, { 3.0f, 3.0f, 3.0f });
+	if (m_hp <= 0.01f) {
+		g_gameObjM->DeleteGameObject(this);
+	}
 }
+
 void Enemy::Draw()
 {
 	m_model.Draw(

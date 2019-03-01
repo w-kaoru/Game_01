@@ -71,7 +71,7 @@ void Player::Move()
 	m_moveSpeed.z = 0.0f;
 	m_moveSpeed += cameraForward * lStick_y * m_agi;	//奥方向への移動速度を代入。
 	m_moveSpeed += cameraRight * lStick_x * m_agi;		//右方向への移動速度を加算。
-	m_moveSpeed.y -= 980.0f * (1.0f / 60.0f);
+	//m_moveSpeed.y -= 980.0f * (1.0f / 60.0f);
 	//キャラコンを使って移動する。
 	m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
 	//向きも変える。
@@ -84,9 +84,10 @@ void Player::Move()
 	else {
 		m_stMa.Change(PlayerState::AniMove::idle);
 	}
-	if (m_charaCon.IsJump() == true && m_charaCon.IsOnGround() == false) {
+
+	/*if (m_charaCon.IsJump() == true && m_charaCon.IsOnGround() == false) {
 		m_moveSpeed.y += 450.0f;
-	}
+	}*/
 }
 
 
@@ -121,23 +122,21 @@ void Player::Attack()
 }
 
 void Player::Update()
-{	
+{
 	m_stMa.Update();
+
 	if (g_pad[0].IsTrigger(enButtonA)) {
-		m_atkFlag = true;
+		atk = true;
 		Attack();
 	}
-
-	if (m_atkFlag == true ) {
-		if (!m_animation.IsPlaying()) {
-			m_atkFlag = false;
+	if (atk == true) {
+		if (m_animation.IsPlaying() == false) {
+			atk = false;
 		}
 	}
-	else
-	{
+	else {
 		Move();
 	}
-
 	m_rotMatrix.MakeRotationFromQuaternion(m_rotation);
 	//x軸で右を求める。
 	m_right = CVector3::AxisX();
@@ -153,6 +152,7 @@ void Player::Update()
 	g_graphicsEngine->GetShadowMap()->RegistShadowCaster(&m_model);
 	//m_model.SetShadowReciever(true);
 	//ワールド行列の更新。
+	m_moveSpeed.y -= 980.0f * (1.0f / 60.0f);
 	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
 	//アニメーションを流す。
 	m_animation.Update(1.0f / 30.0f);

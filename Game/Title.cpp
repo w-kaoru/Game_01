@@ -15,12 +15,12 @@ bool Title::Start()
 {
 	//2Dを初期化。
 
-	m_titelSprite.Init(L"Assets/sprite/kitune.dds",1.0f,1.0f);
+	m_titelSprite.Init(L"Assets/sprite/Titel.dds",2.0f,2.0f);
 	return false;
 }
 void Title::Update()
 {
-	if (g_pad[0].IsTrigger(enButtonB) == true) {
+	if (g_pad[0].IsTrigger(enButtonA) == true) {
 		//ゲームシーンを作成して、自分は死ぬ。
 		g_gameObjM->NewGameObject<Game>();
 		g_gameObjM->DeleteGameObject(this);

@@ -73,11 +73,11 @@ bool Game::Start()
 
 void Game::Update()
 {
-	if (g_pad[0].IsTrigger(enButtonB)) {
-		g_gameObjM->DeleteGameObject(this);
-		//タイトルシーンの作成。
-		g_gameObjM->NewGameObject<Title>();
-	}
+	//if (g_pad[0].IsTrigger(enButtonB)) {
+	//	g_gameObjM->DeleteGameObject(this);
+	//	//タイトルシーンの作成。
+	//	g_gameObjM->NewGameObject<Title>();
+	//}
 }
 
 void Game::PreDraw()

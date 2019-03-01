@@ -2,6 +2,7 @@
 #include "character/CharacterController.h"
 #include "EnStateMachine.h"
 class Player;
+class BattleHit;
 class Enemy:public IGameObject
 {
 public:
@@ -14,6 +15,7 @@ public:
 	void Search();
 	void PlLen();
 	void Attack();
+	void Damage();
 	void SetPosition(CVector3 pos)
 	{
 		m_position = pos;
@@ -56,6 +58,7 @@ private:
 	CQuaternion m_rotation = CQuaternion::Identity();	//回転。
 	CharacterController m_charaCon;						//キャラクターコントローラーを追加。
 	EnStateMachine m_ensm;
+	const BattleHit* m_hit;
 	int m_currentPointNo = 0;
 	float toPlayerLen;
 	bool isDead = false;

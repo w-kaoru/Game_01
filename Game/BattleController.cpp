@@ -11,12 +11,12 @@ BattleController::~BattleController()
 {
 }
 
-const BattleHit * BattleController::Create(const CVector3 * pos, float radius, std::function<void()> objict, BattleHit::objict_Name name)
+const BattleHit * BattleController::Create(const CVector3 * pos, float radius, std::function<void()> object, BattleHit::objict_Name name)
 {
-	auto hitter = new BattleHit;
-	hitter->Create(pos, radius, objict, name);
-	m_controller.push_back(hitter);
-	return hitter;
+	auto hit = new BattleHit;
+	hit->Create(pos, radius, object, name);
+	m_controller.push_back(hit);
+	return hit;
 }
 
 bool BattleController::Hit(CVector3 pos, BattleHit::objict_Name name)
@@ -31,8 +31,8 @@ bool BattleController::Hit(CVector3 pos, BattleHit::objict_Name name)
 	return false;
 }
 
-void BattleController::Deleteobjict(const BattleHit * objict)
+void BattleController::Deleteobjict(const BattleHit * object)
 {
-	m_controller.erase(std::find(m_controller.begin(), m_controller.end(), objict));
-	delete objict;
+	m_controller.erase(std::find(m_controller.begin(), m_controller.end(), object));
+	delete object;
 }

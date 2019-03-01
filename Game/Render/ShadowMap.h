@@ -54,7 +54,20 @@ public:
 	{
 		m_shadowCasters.push_back(shadowCaster);
 	}
-
+	// シャドウキャスターをリストから除外する。
+	void UnregistShadowCaster(SkinModel* shadowCaster)
+	{
+		//shadowCasterのインスタンスをリストから検索する。
+		auto it = std::find(
+			m_shadowCasters.begin(),
+			m_shadowCasters.end(),
+			shadowCaster
+		);
+		if (it != m_shadowCasters.end()) {
+			//見つかったのでコンテナから除外する。
+			m_shadowCasters.erase(it);
+		}
+	}
 	// シャドウマップのSRVを取得。
 	// <returns>シャドウマップのSRV</returns>
 	ID3D11ShaderResourceView* GetShadowMapSRV()

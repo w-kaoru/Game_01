@@ -266,6 +266,6 @@
     <MeshContentTask Include="Assets\modelData\enpath2.fbx" />
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\sprite\kitune.png" />
+    <ImageContentTask Include="Assets\sprite\Titel.png" />
   </ItemGroup>
 </Project>
