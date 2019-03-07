@@ -14,8 +14,8 @@ Title::~Title()
 bool Title::Start()
 {
 	//2D‚ð‰Šú‰»B
-
-	m_titelSprite.Init(L"Assets/sprite/Titel.dds",2.0f,2.0f);
+	m_titelSprite.Init(L"Assets/sprite/Titel12.dds",1280.0f,720.0f);
+	m_titelSprite1.Init(L"Assets/sprite/Titel1.dds", 1280.0f, 720.0f);
 	return false;
 }
 void Title::Update()
@@ -25,9 +25,11 @@ void Title::Update()
 		g_gameObjM->NewGameObject<Game>();
 		g_gameObjM->DeleteGameObject(this);
 	}
+	m_titelSprite1.Update(CVector3::Zero(), CQuaternion::Identity(), CVector3::One());
 	m_titelSprite.Update(CVector3::Zero(), CQuaternion::Identity(), CVector3::One());
 }
-void Title::Draw()
+void Title::PostDraw()
 {
 	m_titelSprite.Draw();
+	m_titelSprite1.Draw();
 }

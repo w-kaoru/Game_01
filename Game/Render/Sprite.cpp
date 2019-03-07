@@ -9,6 +9,7 @@ struct SVertex {
 
 Sprite::Sprite()
 {
+
 }
 
 
@@ -211,6 +212,32 @@ void Sprite::Draw()
 	
 	unsigned int vertexSize = sizeof(SVertex);	//頂点のサイズ。
 	unsigned int offset = 0;
+
+	//シェーダーを設定。
+	d3dDeviceContext->VSSetShader(
+		(ID3D11VertexShader*)m_vs.GetBody(),
+		nullptr,
+		0
+	);
+	d3dDeviceContext->PSSetShader(
+		(ID3D11PixelShader*)m_ps.GetBody(),
+		nullptr,
+		0
+	);
+	//テクスチャを設定。
+	d3dDeviceContext->PSSetShaderResources(0, 1, &m_texture);
+	//サンプラステートを設定。
+	//d3dDeviceContext->PSSetSamplers(0, 1, &m_samplerState);
+	//ワールドビュープロジェクション行列を作成。
+	ConstantBuffer cb;
+	cb.WVP = m_world;
+	cb.WVP.Mul(cb.WVP, g_camera2D.GetViewMatrix());
+	cb.WVP.Mul(cb.WVP, g_camera2D.GetProjectionMatrix());
+	cb.alpha = m_alpha;
+
+	d3dDeviceContext->UpdateSubresource(m_cb, 0, NULL, &cb, 0, 0);
+	d3dDeviceContext->VSSetConstantBuffers(0, 1, &m_cb);
+	d3dDeviceContext->PSSetConstantBuffers(0, 1, &m_cb);
 	d3dDeviceContext->IASetVertexBuffers(	//頂点バッファを設定。
 		0,					//StartSlot番号。今は0でいい。
 		1,					//バッファの数。今は1でいい。
@@ -224,33 +251,7 @@ void Sprite::Draw()
 								//今回は32bitなので、DXGI_FORMAT_R32_UINTでいい。
 		0						//オフセット0でいい。
 	);
-	//シェーダーを設定。
-	d3dDeviceContext->VSSetShader(
-		(ID3D11VertexShader*)m_vs.GetBody(),
-		nullptr,
-		0
-	);
-	d3dDeviceContext->PSSetShader(
-		(ID3D11PixelShader*)m_ps.GetBody(),
-		nullptr,
-		0
-	);
 	d3dDeviceContext->IASetInputLayout(m_vs.GetInputLayout());
-	//テクスチャを設定。
-	d3dDeviceContext->PSSetShaderResources(0, 1, &m_texture);
-	//サンプラステートを設定。
-	d3dDeviceContext->PSSetSamplers(0, 1, &m_samplerState);
-	//ワールドビュープロジェクション行列を作成。
-	ConstantBuffer cb;
-	cb.WVP = m_world;
-	cb.WVP.Mul(cb.WVP, g_camera2D.GetViewMatrix());
-	cb.WVP.Mul(cb.WVP, g_camera2D.GetProjectionMatrix());
-	cb.alpha = m_alpha;
-
-	d3dDeviceContext->UpdateSubresource(m_cb, 0, NULL, &cb, 0, 0);
-	d3dDeviceContext->VSSetConstantBuffers(0, 1, &m_cb);
-	d3dDeviceContext->PSSetConstantBuffers(0, 1, &m_cb);
-	
 	//プリミティブのトポロジーは
 	//トライアングルストリップを設定する。
 	d3dDeviceContext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);

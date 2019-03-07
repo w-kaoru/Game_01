@@ -33,15 +33,15 @@ public:
 	}
 	bool GetEnemydead()
 	{
-		return isDead;
+		return m_isDead;
 	}
 	void SetEnemySelect(int s)
 	{
-		selectModel = s;
+		m_selectModel = s;
 	}
 	float GetPlLen()
 	{
-		return toPlayerLen;
+		return m_toPlayerLen;
 	}
 	CVector3 GetMoveSpeed() {
 		return m_moveSpeed;
@@ -60,9 +60,10 @@ private:
 	EnStateMachine m_ensm;
 	const BattleHit* m_hit;
 	int m_currentPointNo = 0;
-	float toPlayerLen;
-	bool isDead = false;
-	int selectModel = 0;
+	float m_toPlayerLen;
+	bool m_isDead = false;
+	int m_selectModel = 0;
+	int m_damageTiming = 0;
 	//エネミーのステイタス
 	float m_hp = 0.0f;			//体力
 	float m_atk = 0.0f;			//攻撃力

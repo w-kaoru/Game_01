@@ -88,11 +88,27 @@ void Bloom::InitRenderTarget()
 void Bloom::InitAlphaBlendState()
 {
 	CD3D11_DEFAULT defaultSettings;
-	//デフォルトセッティングで初期化する。
+	////デフォルトセッティングで初期化する。
+	//CD3D11_BLEND_DESC blendDesc(defaultSettings);
+	//auto device = g_graphicsEngine->GetD3DDevice();
+
+	//device->CreateBlendState(&blendDesc, &m_disableBlendState);
+	//CD3D11_DEFAULT defaultSettings;
+	//エンジンに合わせた初期化をする。
 	CD3D11_BLEND_DESC blendDesc(defaultSettings);
 	auto device = g_graphicsEngine->GetD3DDevice();
-
-	device->CreateBlendState(&blendDesc, &m_disableBlendState);
+	D3D11_BLEND_DESC BLEND_DETE;
+	BLEND_DETE.AlphaToCoverageEnable = false;
+	BLEND_DETE.IndependentBlendEnable = false;
+	BLEND_DETE.RenderTarget[0].BlendEnable = true;
+	BLEND_DETE.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
+	BLEND_DETE.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+	BLEND_DETE.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+	BLEND_DETE.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_SRC_ALPHA;
+	BLEND_DETE.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_INV_SRC_ALPHA;
+	BLEND_DETE.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	BLEND_DETE.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+	device->CreateBlendState(&BLEND_DETE, &m_disableBlendState);
 
 	//最終合成用のブレンドステートを作成する。
 	//最終合成は加算合成。
@@ -149,6 +165,7 @@ void Bloom::Draw(PostEffect& postEffect)
 	}
 	//最後にぼかした絵を加算合成でメインレンダリングターゲットに合成して終わり。
 	{
+		g_graphicsEngine->BeginGPUEvent(L"Bloom::Draw Start Final Combine\n");
 		auto mainRT = g_graphicsEngine->GetMainRenderTarget();
 		g_graphicsEngine->ChangeRenderTarget(mainRT, mainRT->GetViewport());
 
@@ -165,6 +182,6 @@ void Bloom::Draw(PostEffect& postEffect)
 		//ブレンディングステートを戻す。
 		deviceContext->OMSetBlendState(m_disableBlendState, blendFactor, 0xffffffff);
 
+		g_graphicsEngine->EndGPUEvent();
 	}
-
 }

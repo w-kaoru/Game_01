@@ -12,13 +12,21 @@ void Camera::Update()
 		m_target,
 		m_up
 	);
-	//プロジェクション行列を計算。
-	m_projMatrix.MakeProjectionMatrix(
-		m_viewAngle,					//画角。
-		FRAME_BUFFER_W / FRAME_BUFFER_H,	//アスペクト比。
-		m_near,
-		m_far
-	);
+	if (m_updateProjMatrixFunc == enUpdateProjMatrixFunc_Perspective) {
+
+		//プロジェクション行列を計算。
+		m_projMatrix.MakeProjectionMatrix(
+			m_viewAngle,					//画角。
+			FRAME_BUFFER_W / FRAME_BUFFER_H,	//アスペクト比。
+			m_near,
+			m_far
+		);
+	}
+	else {
+		m_projMatrix.MakeOrthoProjectionMatrix(
+			m_width, m_height, m_near, m_far
+		);
+	}
 	//ビュー行列の逆行列を計算。(追加)
 	m_viewMatrixInv.Inverse(m_viewMatrix);
 	//カメラの前、右を取得。(追加)

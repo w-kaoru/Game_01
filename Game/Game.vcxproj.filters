@@ -267,5 +267,7 @@
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\Titel.png" />
+    <ImageContentTask Include="Assets\sprite\Titel1.png" />
+    <ImageContentTask Include="Assets\sprite\Titel12.png" />
   </ItemGroup>
 </Project>

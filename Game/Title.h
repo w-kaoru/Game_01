@@ -12,7 +12,8 @@ public:
 	//why?
 	//下の関数のようにタイプミスをしたときにコンパイルエラーになって教えてくれる。
 	//void Drow() override;
-	void Draw() override;
+	void PostDraw() override;
 private:
 	Sprite m_titelSprite;
+	Sprite m_titelSprite1;
 };

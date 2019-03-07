@@ -29,12 +29,13 @@ void GameObjectManager::Execute()
 		}
 	}
 	g_graphicsEngine->ShadowDraw();
+	//g_graphicsEngine->ChangeMainRenderTarget();
 	for (GameObjectList objList : m_gameObjectList) {
 		for (IGameObject* obj : objList) {
 			obj->DrawWrapper();
 		}
 	}
-	//g_graphicsEngine->PostEffectDraw();
+	g_graphicsEngine->PostEffectDraw();
 	for (GameObjectList objList : m_gameObjectList) {
 		for (IGameObject* obj : objList) {
 			obj->PostDrawWrapper();

@@ -36,10 +36,9 @@ void RenderTarget::Release()
 }
 void RenderTarget::Create(unsigned int w, unsigned int h, DXGI_FORMAT texFormat)
 {
+
 	m_width = (float)w;
 	m_height = (float)h;
-	m_format = texFormat;
-	
 	//D3Dデバイスを取得。
 	auto d3dDevice = g_graphicsEngine->GetD3DDevice();
 	//1.レンダリングターゲットとなるテクスチャを作成。

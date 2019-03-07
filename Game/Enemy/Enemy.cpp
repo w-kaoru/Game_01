@@ -22,10 +22,10 @@ bool Enemy::Start()
 	m_atk = 20.0f;
 	m_def = 30.0f;
 	m_agi = 300.0f;
-	if (selectModel == 1) {
+	if (m_selectModel == 1) {
 		m_model.Init(L"Assets/modelData/enemy.cmo");
 	}
-	if (selectModel == 2) {
+	if (m_selectModel == 2) {
 		m_model.Init(L"Assets/modelData/ToonRTS_demo_Knight.cmo");
 	}
 	m_position.y = 200.0f;
@@ -40,7 +40,7 @@ void Enemy::PlLen()
 	//エネミーからプレイヤーに伸びるベクトルを求める。
 	m_moveSpeed = m_player->GetPosition() - m_position;
 	//正規化を行う前に、プレイヤーまでの距離を求めておく。
-	toPlayerLen = m_moveSpeed.Length();
+	m_toPlayerLen = m_moveSpeed.Length();
 	//正規化！
 	m_moveSpeed.Normalize();
 }
@@ -58,7 +58,7 @@ void Enemy::Search()
 	//fabsfは絶対値を求める関数！
 	//角度はマイナスが存在するから、絶対値にする。
 	if (fabsf(angle) < CMath::DegToRad(45.0f)
-		&& toPlayerLen < 600.0f
+		&& m_toPlayerLen < 600.0f
 		) {
 		//見つけた。
 		m_ensm.Change(EnemyState::MoveState::move);
@@ -75,17 +75,20 @@ void Enemy::Attack()
 
 void Enemy::Damage()
 {
-	m_hp -= 30.0f;
+	m_damageTiming++;
+	if (m_damageTiming == 15) {
+		m_hp -= 30.0f;
+	}
 }
 
 void Enemy::Update()
 {
+	m_damageTiming = 0;
 	//Move();
 	Search();
 	m_ensm.Update();
-	if (toPlayerLen < 40) {
-		isDead = true;
-		m_charaCon.RemoveRigidBoby();
+	if (m_toPlayerLen < 40) {
+		m_isDead = true;
 	}
 	//重力加速度
 	m_moveSpeed.y -= 9800.0f * (1.0f / 60.0f);

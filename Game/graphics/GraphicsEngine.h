@@ -81,9 +81,25 @@ public:
 	{
 		return &m_postEffect;
 	}
-
+	void BeginGPUEvent(const wchar_t* eventName)
+	{
+#ifdef _DEBUG
+		if (m_userAnnoation != nullptr) {
+			m_userAnnoation->BeginEvent(eventName);
+		}
+#endif
+	}
+	void EndGPUEvent()
+	{
+#ifdef _DEBUG
+		if (m_userAnnoation != nullptr) {
+			m_userAnnoation->EndEvent();
+		}
+#endif
+	}
 	void ShadowDraw();
 	void PostEffectDraw();
+	void ChangeMainRenderTarget();
 private:
 	D3D_FEATURE_LEVEL		m_featureLevel;					//Direct3D デバイスのターゲットとなる機能セット。
 	ID3D11Device*			m_pd3dDevice = NULL;			//D3D11デバイス。
@@ -97,7 +113,7 @@ private:
 	Sprite					m_sprite;//メインレンダリングターゲットに描かれた絵をフレームバッファにコピーするためのスプライト。
 	ShadowMap				m_shadowMap;					//シャドウマップ。
 	PostEffect				m_postEffect;					//ポストエフェクト。
-
+	ID3DUserDefinedAnnotation*		m_userAnnoation = nullptr;
 	D3D11_VIEWPORT m_frameBufferViewports;			//フレームバッファのビューポート。
 	ID3D11RenderTargetView* m_frameBufferRenderTargetView = nullptr;	//フレームバッファのレンダリングターゲットビュー。
 	ID3D11DepthStencilView* m_frameBufferDepthStencilView = nullptr;	//フレームバッファのデプスステンシルビュー。
