@@ -231,9 +231,6 @@
     <MeshContentTask Include="Assets\modelData\ToonRTS_demo_Knight.FBX" />
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\sprite\Titel.png" />
-  </ItemGroup>
-  <ItemGroup>
     <ImageContentTask Include="Assets\sprite\Titel1.png" />
   </ItemGroup>
   <ItemGroup>
