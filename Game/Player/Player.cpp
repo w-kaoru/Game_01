@@ -126,6 +126,15 @@ void Player::Update()
 {
 	m_stMa.Update();
 
+	m_right = CVector3::AxisX();
+	m_right.Normalize();
+	//y軸で上を求める。
+	m_up = CVector3::AxisY();
+	m_up.Normalize();
+	//z軸で前を求める。
+	m_forward = CVector3::AxisZ();
+	m_forward.Normalize();
+
 	if (g_pad[0].IsTrigger(enButtonA)) {
 		atk = true;
 		Attack();
@@ -139,15 +148,6 @@ void Player::Update()
 		Move();
 	}
 	m_rotMatrix.MakeRotationFromQuaternion(m_rotation);
-	//x軸で右を求める。
-	m_right = CVector3::AxisX();
-	m_right.Normalize();
-	//y軸で上を求める。
-	m_up = CVector3::AxisY();
-	m_up.Normalize();
-	//z軸で前を求める。
-	m_forward = CVector3::AxisX();
-	m_forward.Normalize();
 
 	//シャドウキャスターを登録。
 	g_graphicsEngine->GetShadowMap()->RegistShadowCaster(&m_model);

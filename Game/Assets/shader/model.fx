@@ -197,8 +197,9 @@ float4 PSMain( PSInput In ) : SV_Target0
 		 /*
 		{
 			//スペキュラライトの処理
-			float3 toEyeDir = In.worldPos - eyePos;
-			toEyeDir = normalize(toEyeDir);
+			//float3 toEyeDir = In.worldPos - eyePos;
+			//toEyeDir = normalize(toEyeDir);
+			float3 toEyeDir = normalize(eyePos - In.worldPos);
 			//求めたtoEyeDirの反射ベクトルを求める。
 			float3 rVec = reflect(toEyeDir, In.Normal);
 			//求めた反射ベクトルとディレクションライトの方向との内積を取って、スペキュラの強さを計算する。
@@ -210,6 +211,7 @@ float4 PSMain( PSInput In ) : SV_Target0
 			lig.xyz += specLig * 1.0f;
 		}
 		// */
+		
 		if (isShadowReciever == 1) {	//シャドウレシーバー。
 			//LVP空間から見た時の最も手前の深度値をシャドウマップから取得する。
 			float2 shadowMapUV = In.posInLVP.xy / In.posInLVP.w;

@@ -8,7 +8,7 @@ class PostEffect;
 /// <summary>
 /// ƒuƒ‹[ƒ€
 /// </summary>
-class Bloom
+class Bloom :public Noncopyable
 {
 public:
 	/// <summary>

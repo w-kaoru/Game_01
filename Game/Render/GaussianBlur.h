@@ -8,7 +8,7 @@ class PostEffect;
 /// <summary>
 /// ガウシアンブラー
 /// </summary>
-class GaussianBlur
+class GaussianBlur :public Noncopyable
 {
 public:
 	/// <summary>

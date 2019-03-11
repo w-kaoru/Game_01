@@ -2,7 +2,7 @@
 /// <summary>
 /// GPU上の定数バッファ。
 /// </summary>
-class ConstantBufferGPU
+class ConstantBufferGPU :public Noncopyable
 {
 public:
 	/// <summary>

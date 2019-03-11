@@ -36,6 +36,10 @@ public:
 	{
 		return m_forward;
 	}
+	CQuaternion GetRotation()
+	{
+		return m_rotation;
+	}
 private:
 	SkinModel m_model;									//スキンモデル。
 	Animation m_animation;								//アニメーション。

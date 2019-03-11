@@ -1,5 +1,5 @@
 #pragma once
-class RenderTarget
+class RenderTarget :public Noncopyable
 {
 public:
 	RenderTarget();

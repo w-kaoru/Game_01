@@ -5,7 +5,7 @@
 /// <summary>
 /// スプライトクラス。
 /// </summary>
-class Sprite
+class Sprite :public Noncopyable
 {
 public:
 	/// <summary>

@@ -2,7 +2,7 @@
 #include "RenderTarget.h"
 
 class SkinModel;
-class ShadowMap
+class ShadowMap :public Noncopyable
 {
 public:
 	// コンストラクタ。
