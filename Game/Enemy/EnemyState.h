@@ -6,6 +6,7 @@ public:
 		//search,
 		idle,
 		move,
+		attack,
 		num,
 		noState
 	};

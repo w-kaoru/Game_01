@@ -137,6 +137,7 @@
     </ClCompile>
     <ClCompile Include="BattleController.cpp" />
     <ClCompile Include="BattleHit.cpp" />
+    <ClCompile Include="Enemy\EnStateAttack.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -254,6 +255,7 @@
     </ClInclude>
     <ClInclude Include="BattleController.h" />
     <ClInclude Include="BattleHit.h" />
+    <ClInclude Include="Enemy\EnStateAttack.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\background.FBX">
@@ -264,9 +266,12 @@
     <MeshContentTask Include="Assets\modelData\enpath.FBX" />
     <MeshContentTask Include="Assets\modelData\ToonRTS_demo_Knight.FBX" />
     <MeshContentTask Include="Assets\modelData\enpath2.fbx" />
+    <MeshContentTask Include="Assets\modelData\Dungeon.FBX" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\Titel1.png" />
     <ImageContentTask Include="Assets\sprite\Titel12.png" />
+    <ImageContentTask Include="Assets\sprite\hp_gauge.png" />
+    <ImageContentTask Include="Assets\sprite\hp_frame.png" />
   </ItemGroup>
 </Project>

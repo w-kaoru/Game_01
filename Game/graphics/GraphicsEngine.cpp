@@ -273,7 +273,10 @@ void GraphicsEngine::PostEffectDraw()
 		&m_frameBufferViewports
 	);
 	//g_camera2D.Update();
-	m_sprite.Draw();
+	m_sprite.Draw(
+		g_camera2D.GetViewMatrix(),
+		g_camera2D.GetProjectionMatrix()
+	);
 	// /*
 	m_frameBufferRenderTargetView->Release();
 	m_frameBufferDepthStencilView->Release();

@@ -30,6 +30,12 @@ void Title::Update()
 }
 void Title::PostDraw()
 {
-	m_titelSprite.Draw();
-	m_titelSprite1.Draw();
+	m_titelSprite.Draw(
+		g_camera2D.GetViewMatrix(),
+		g_camera2D.GetProjectionMatrix()
+	);
+	m_titelSprite1.Draw(
+		g_camera2D.GetViewMatrix(),
+		g_camera2D.GetProjectionMatrix()
+	);
 }

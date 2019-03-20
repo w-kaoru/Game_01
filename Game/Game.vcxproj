@@ -103,6 +103,7 @@
     <ClCompile Include="BattleHit.cpp" />
     <ClCompile Include="character\CharacterController.cpp" />
     <ClCompile Include="Enemy\Enemy.cpp" />
+    <ClCompile Include="Enemy\EnStateAttack.cpp" />
     <ClCompile Include="Enemy\EnStateIdle.cpp" />
     <ClCompile Include="Enemy\EnStateMachine.cpp" />
     <ClCompile Include="Enemy\EnStateMove.cpp" />
@@ -165,6 +166,7 @@
     <ClInclude Include="character\CharacterController.h" />
     <ClInclude Include="Enemy\Enemy.h" />
     <ClInclude Include="Enemy\EnemyState.h" />
+    <ClInclude Include="Enemy\EnStateAttack.h" />
     <ClInclude Include="Enemy\EnStateIdle.h" />
     <ClInclude Include="Enemy\EnStateMachine.h" />
     <ClInclude Include="Enemy\EnStateMove.h" />
@@ -224,6 +226,7 @@
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\background.FBX" />
+    <MeshContentTask Include="Assets\modelData\Dungeon.FBX" />
     <MeshContentTask Include="Assets\modelData\enemy.FBX" />
     <MeshContentTask Include="Assets\modelData\enpath.FBX" />
     <MeshContentTask Include="Assets\modelData\enpath2.fbx" />
@@ -235,6 +238,12 @@
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\Titel12.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\hp_gauge.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\hp_frame.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -28,7 +28,9 @@ Player::Player() :m_stMa(this)
 		m_animationClips,	//アニメーションクリップの配列。
 		4					//アニメーションクリップの数。
 	);
-	//m_scale *= 4;
+	//m_scale *= 0.1f;
+	m_hpSprite.Init(L"Assets/sprite/hp_gauge.dds", 100.0f, 10.0f);
+	m_hpFrameSprite.Init(L"Assets/sprite/hp_frame.dds", 100.0f, 10.0f);
 }
 Player::~Player()
 {
@@ -39,8 +41,9 @@ bool Player::Start()
 {
 	//ステータス設定
 	//m_status.Lv = 1;
-	m_hp = 500.0f;			//体力
-	m_atk =  70.0f;			//攻撃力
+	m_hp =  6.0f;			//体力
+	m_hpFrame = m_hp;
+	m_atk = 70.0f;			//攻撃力
 	m_def = 50.0f;			//防御力
 	m_agi = 400.0f;			//素早さ
 	m_position.y = 200.0f;
@@ -122,18 +125,57 @@ void Player::Attack()
 	m_stMa.Change(PlayerState::AniMove::attack);
 }
 
+void Player::HP_Gauge()
+{
+	m_hpFrameSprite.Update(
+		{ -640.0f,360.0f, 0.0f },
+		CQuaternion::Identity(),
+		{ m_hpFrame, 1.5f, 1.0f },
+		{0.0f,1.0f}
+	);
+	m_hpSprite.Update(
+		{ -640.0f,360.0f, 0.0f },
+		CQuaternion::Identity(),
+		{ m_hp, 1.5f, 1.0f },
+		{ 0.0f,1.0f }
+	);
+	m_hpFrameSprite.Draw(
+		g_camera2D.GetViewMatrix(),
+		g_camera2D.GetProjectionMatrix()
+	);
+	m_hpSprite.Draw(
+		g_camera2D.GetViewMatrix(),
+		g_camera2D.GetProjectionMatrix()
+	);
+}
+
+void Player::Damage()
+{
+	m_damageTiming++;
+	if (m_damageTiming == 50) {
+		m_hp -= 0.1f;
+	}
+}
+
 void Player::Update()
 {
+	m_damageTiming = 0.0f;
 	m_stMa.Update();
-
-	m_right = CVector3::AxisX();
-	m_right.Normalize();
-	//y軸で上を求める。
-	m_up = CVector3::AxisY();
-	m_up.Normalize();
+	//m_right = CVector3::AxisX();
+	//m_right.Normalize();
+	////y軸で上を求める。
+	//m_up = CVector3::AxisY();
+	//m_up.Normalize();
 	//z軸で前を求める。
-	m_forward = CVector3::AxisZ();
+	m_forward = CVector3::AxisY();
 	m_forward.Normalize();
+	
+	//当たった？
+	m_hit = g_battleController->Create(
+		&m_position, 300.0f,
+		[&]() {Damage(); },
+		BattleHit::player
+	);
 
 	if (g_pad[0].IsTrigger(enButtonA)) {
 		atk = true;
@@ -148,7 +190,10 @@ void Player::Update()
 		Move();
 	}
 	m_rotMatrix.MakeRotationFromQuaternion(m_rotation);
-
+	m_forward.x = m_rotMatrix.m[2][0];
+	m_forward.y = m_rotMatrix.m[2][1];
+	m_forward.z = m_rotMatrix.m[2][2];
+	m_forward.Normalize();
 	//シャドウキャスターを登録。
 	g_graphicsEngine->GetShadowMap()->RegistShadowCaster(&m_model);
 	//m_model.SetShadowReciever(true);
@@ -166,4 +211,9 @@ void Player::Draw()
 		g_camera3D.GetViewMatrix(), 
 		g_camera3D.GetProjectionMatrix()
 	);
+}
+
+void Player::PostDraw()
+{
+	HP_Gauge();
 }

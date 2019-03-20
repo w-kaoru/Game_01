@@ -29,13 +29,36 @@ Game::~Game()
 bool Game::Start()
 {
 	//レベルを初期化。
-	m_level.Init(L"Assets/level/stage_02.tkl", [&](LevelObjectData& objData) {
+	m_level.Init(
+		L"Assets/level/Dungeon_01.tkl",
+		[&](LevelObjectData& objData) {
+		//else if (objData.EqualName(L"enpath2") == true) {
+		//	//エネミー！！！
+		//	m_enemy = g_gameObjM->NewGameObject<Enemy>();
+		//	m_enemy->SetEnemySelect(2);
+		//	m_enemy->SetPosition(objData.position);
+		//	m_enemy->SetRotation(objData.rotation);
+		//	m_enemy->GetPlayer(m_player);
+		//	m_enemyList.push_back(m_enemy);
+		//	return true;
+		//}
+		return false;
+	});
+	//レベルを初期化。
+	m_level.Init(
+		L"Assets/level/player_01.tkl",
+		[&](LevelObjectData& objData) {
 		if (objData.EqualName(L"plpath") == true) {
 			m_player = g_gameObjM->NewGameObject<Player>();
 			m_player->SetPosition(objData.position);
 			return true;
 		}
-		else if (objData.EqualName(L"enpath") == true) {
+		return false;
+	});
+	m_level.Init(
+		L"Assets/level/enemy_01.tkl",
+		[&](LevelObjectData& objData) {
+		if (objData.EqualName(L"enpath") == true) {
 			//エネミー！！！
 			m_enemy = g_gameObjM->NewGameObject<Enemy>();
 			m_enemy->SetEnemySelect(1);
@@ -45,19 +68,9 @@ bool Game::Start()
 			m_enemyList.push_back(m_enemy);
 			return true;
 		}
-		else if (objData.EqualName(L"enpath2") == true) {
-			//エネミー！！！
-			m_enemy = g_gameObjM->NewGameObject<Enemy>();
-			m_enemy->SetEnemySelect(2);
-			m_enemy->SetPosition(objData.position);
-			m_enemy->SetRotation(objData.rotation);
-			m_enemy->GetPlayer(m_player);
-			m_enemyList.push_back(m_enemy);
-			return true;
-		}
 		return false;
 	});
-	m_gameCamera=g_gameObjM->NewGameObject<GameCamera>(4);
+	m_gameCamera = g_gameObjM->NewGameObject<GameCamera>(4);
 	m_gameCamera->SetPlayer(m_player);
 	m_light = g_gameObjM->NewGameObject<LightCamera>(4);
 	m_light->SetPlayer(m_player);

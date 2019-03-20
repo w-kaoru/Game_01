@@ -15,13 +15,14 @@ EnStateMove::~EnStateMove()
 
 bool EnStateMove::Start()
 {
-	m_moveSpeed = m_enemy->GetMoveSpeed();
-	m_rotation = m_enemy->GetRotation();
 	return false;
 }
 
 void EnStateMove::Update()
 {
+	m_enemy->SetAnimation(EnemyState::move);
+	m_moveSpeed = m_enemy->GetMoveSpeed();
+	m_rotation = m_enemy->GetRotation();
 	m_moveSpeed.x *= 200.0f;
 	m_moveSpeed.z *= 200.0f;
 	//Œü‚«‚à•Ï‚¦‚éB

@@ -3,7 +3,7 @@
 
 
 EnStateMachine::EnStateMachine(Enemy * en)
-	:m_enMove(en,this),m_enIdle(en,this)
+	:m_enMove(en,this),m_enIdle(en,this),m_enAttack(en,this)
 {
 }
 
@@ -34,6 +34,9 @@ void EnStateMachine::Change(EnemyState::MoveState state)
 		break;
 	case EnemyState::MoveState::idle:
 		m_iens = &m_enIdle;
+		break;
+	case EnemyState::MoveState::attack:
+		m_iens = &m_enAttack;
 		break;
 	}
 	m_iens->Start();

@@ -43,8 +43,8 @@ void ShadowMap::UpdateFromLightDirection(CVector3 lightCameraPos, CVector3 light
 	//ライトプロジェクション行列を作成する。
 	//太陽光からの影を落としたいなら、平行投影行列を作成する。
 	m_lightProjMatrix.MakeOrthoProjectionMatrix(
-		3000,
-		3000,
+		3000.0f,
+		3000.0f,
 		0.1f,
 		5000.0f
 	);
@@ -91,38 +91,4 @@ void ShadowMap::RenderToShadowMap()
 	}
 	//キャスターをクリア。
 	m_shadowCasters.clear();
-}
-
-void ShadowMap::ShadowMapDraw()
-{
-	///////////////////////////////////////////////
-	//シャドウマップにレンダリング
-	///////////////////////////////////////////////
-	auto d3dDeviceContext = g_graphicsEngine->GetD3DDeviceContext();
-	//現在のレンダリングターゲットをバックアップしておく。
-	ID3D11RenderTargetView* oldRenderTargetView;
-	ID3D11DepthStencilView* oldDepthStencilView;
-	d3dDeviceContext->OMGetRenderTargets(
-		1,
-		&oldRenderTargetView,
-		&oldDepthStencilView
-	);
-	//ビューポートもバックアップを取っておく。
-	unsigned int numViewport = 1;
-	D3D11_VIEWPORT oldViewports;
-	d3dDeviceContext->RSGetViewports(&numViewport, &oldViewports);
-
-	//シャドウマップにレンダリング
-	RenderToShadowMap();
-
-	//元に戻す。
-	d3dDeviceContext->OMSetRenderTargets(
-		1,
-		&oldRenderTargetView,
-		oldDepthStencilView
-	);
-	d3dDeviceContext->RSSetViewports(numViewport, &oldViewports);
-	//レンダリングターゲットとデプスステンシルの参照カウンタを下す。
-	oldRenderTargetView->Release();
-	oldDepthStencilView->Release();
 }

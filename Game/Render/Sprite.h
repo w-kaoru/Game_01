@@ -48,7 +48,7 @@ public:
 	/// <summary>
 	/// •`‰æ
 	/// </summary>
-	void Draw();
+	void Draw(const CMatrix& viewMatrix, const CMatrix& projMatrix);
 	/// <summary>
 	/// ƒ¿‚ð•ÏˆÊ‚³‚¹‚é
 	/// </summary>

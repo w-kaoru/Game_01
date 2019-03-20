@@ -277,7 +277,6 @@ PSInput_ShadowMap VSMainSkin_ShadowMap(VSInputNmTxWeights In)
 	//頂点座標にスキン行列を乗算して、頂点をワールド空間に変換。
 	//mulは乗算命令。
 	pos = mul(skinning, In.Position);
-
 	pos = mul(mView, pos);
 	pos = mul(mProj, pos);
 	psInput.Position = pos;
