@@ -12,6 +12,8 @@ public:
 	~GameObjectManager();
 	//実行
 	void Execute();
+	void DeleteExecute();
+
 	template<class T>
 	T* NewGameObject(int i = 0)
 	{
@@ -20,26 +22,32 @@ public:
 		return newObj;
 	}
 
-	void DeleteGameObject(IGameObject* gameObject)
+	bool DeleteGameObject(IGameObject* gameObject);
+
+	bool DeleteGameobject(IGameObject* gameObject)
 	{
+		//*
 		if (gameObject != nullptr) {
-			gameObject->Destroy();
-			for (int i = 0; i < 5; i++) {
+			for (int i = 0; i < m_gameObjectList.size(); i++)
+			{
 				m_gameObjectList[i].erase(
 					std::remove(m_gameObjectList[i].begin(), m_gameObjectList[i].end(), gameObject),
 					m_gameObjectList[i].end()
 				);
-			}
-		//m_gameObjectList.clear();
-		delete gameObject;
-		}
-		else {
-			return;
-		}
+				
+			}	
+			delete gameObject;
+			return true;
+			//m_gameObjectList.clear();
+		}//*/
+		return false;
 	}
 private:
-	typedef std::list<IGameObject*>	GameObjectList;
-	std::vector<GameObjectList>	m_gameObjectList;					//ゲームオブジェクトのリスト。
+	//ゲームオブジェクトのリスト。 
+	//typedef std::list<IGameObject*>	GameObjectList;
+	std::vector<std::list<IGameObject*>>	m_gameObjectList;
+	std::list<IGameObject*>	m_deleteList[2];
 	bool startDed = false;
+	int m_deleteNo = 0;
 };
 extern GameObjectManager* g_gameObjM;

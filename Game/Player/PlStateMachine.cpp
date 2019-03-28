@@ -12,7 +12,7 @@ PlStateMachine::~PlStateMachine()
 
 bool PlStateMachine::Start()
 {
-	Change(PlayerState::AniMove::idle);
+	Change(PlayerState::AnimState::idle);
 	return false;
 }
 
@@ -21,20 +21,20 @@ void PlStateMachine::Update()
 	m_ips->Update();
 }
 
-void PlStateMachine::Change(PlayerState::AniMove state)
+void PlStateMachine::Change(PlayerState::AnimState state)
 {
 	if (state == m_state) {
 		return;
 	}
 	switch (state)
 	{
-	case PlayerState::AniMove::idle:
+	case PlayerState::AnimState::idle:
 		m_ips = &m_plIdle;
 		break;
-	case PlayerState::AniMove::run:
+	case PlayerState::AnimState::run:
 		m_ips = &m_plRun;
 		break;
-	case PlayerState::AniMove::attack:
+	case PlayerState::AnimState::attack:
 		m_ips = &m_plAttack;
 		break;
 	}

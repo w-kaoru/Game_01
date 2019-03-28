@@ -2,7 +2,7 @@
 class PlayerState
 {
 public:
-	enum AniMove {
+	enum AnimState {
 		idle,		//‘Ò‹@
 		run,		//‘–‚é
 		jump,		//ƒWƒƒƒ“ƒv
@@ -10,4 +10,8 @@ public:
 		num,		//AniMove‚Ì”	
 		nostate
 	};
+	/*enum MoveState {
+		num,		//AniMove‚Ì”	
+		nostate
+	};*/
 };

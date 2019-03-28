@@ -17,13 +17,16 @@ Game::Game()
 
 Game::~Game()
 {
+}
+void Game::Destroy()
+{
+	g_gameObjM->DeleteGameObject(m_gameCamera);
+	g_gameObjM->DeleteGameObject(m_light);
 	g_gameObjM->DeleteGameObject(m_player);
 	//動的に確保したインスタンスを破棄。
 	for (auto& enemy : m_enemyList) {
 		g_gameObjM->DeleteGameObject(enemy);
 	}
-	g_gameObjM->DeleteGameObject(m_gameCamera);
-	g_gameObjM->DeleteGameObject(m_light);
 }
 
 bool Game::Start()
@@ -32,16 +35,6 @@ bool Game::Start()
 	m_level.Init(
 		L"Assets/level/Dungeon_01.tkl",
 		[&](LevelObjectData& objData) {
-		//else if (objData.EqualName(L"enpath2") == true) {
-		//	//エネミー！！！
-		//	m_enemy = g_gameObjM->NewGameObject<Enemy>();
-		//	m_enemy->SetEnemySelect(2);
-		//	m_enemy->SetPosition(objData.position);
-		//	m_enemy->SetRotation(objData.rotation);
-		//	m_enemy->GetPlayer(m_player);
-		//	m_enemyList.push_back(m_enemy);
-		//	return true;
-		//}
 		return false;
 	});
 	//レベルを初期化。
@@ -49,7 +42,7 @@ bool Game::Start()
 		L"Assets/level/player_01.tkl",
 		[&](LevelObjectData& objData) {
 		if (objData.EqualName(L"plpath") == true) {
-			m_player = g_gameObjM->NewGameObject<Player>();
+			m_player = g_gameObjM->NewGameObject<Player>(0);
 			m_player->SetPosition(objData.position);
 			return true;
 		}
@@ -60,7 +53,7 @@ bool Game::Start()
 		[&](LevelObjectData& objData) {
 		if (objData.EqualName(L"enpath") == true) {
 			//エネミー！！！
-			m_enemy = g_gameObjM->NewGameObject<Enemy>();
+			m_enemy = g_gameObjM->NewGameObject<Enemy>(0);
 			m_enemy->SetEnemySelect(1);
 			m_enemy->SetPosition(objData.position);
 			m_enemy->SetRotation(objData.rotation);
@@ -70,9 +63,9 @@ bool Game::Start()
 		}
 		return false;
 	});
-	m_gameCamera = g_gameObjM->NewGameObject<GameCamera>(4);
+	m_gameCamera = g_gameObjM->NewGameObject<GameCamera>(1);
 	m_gameCamera->SetPlayer(m_player);
-	m_light = g_gameObjM->NewGameObject<LightCamera>(4);
+	m_light = g_gameObjM->NewGameObject<LightCamera>(1);
 	m_light->SetPlayer(m_player);
 	g_game = this;
 
@@ -86,11 +79,11 @@ bool Game::Start()
 
 void Game::Update()
 {
-	//if (g_pad[0].IsTrigger(enButtonB)) {
-	//	g_gameObjM->DeleteGameObject(this);
-	//	//タイトルシーンの作成。
-	//	g_gameObjM->NewGameObject<Title>();
-	//}
+	if (g_pad[0].IsTrigger(enButtonB)) {
+		g_gameObjM->DeleteGameObject(this);
+		//タイトルシーンの作成。
+		g_gameObjM->NewGameObject<Title>();
+	}
 }
 
 void Game::PreDraw()
@@ -104,9 +97,5 @@ void Game::Draw()
 
 void Game::PostDraw()
 {
-
 }
 
-void Game::Destroy()
-{
-}

@@ -13,11 +13,11 @@ public:
 	~PlStateMachine();
 	bool Start();
 	void Update();
-	void Change(PlayerState::AniMove state);
+	void Change(PlayerState::AnimState state);
 private:
 	PlStateIdle m_plIdle;
 	PlStateRun m_plRun;
 	PlStateAttack m_plAttack;
 	IPlState *m_ips = nullptr;
-	PlayerState::AniMove m_state = PlayerState::nostate;
+	PlayerState::AnimState m_state = PlayerState::nostate;
 };

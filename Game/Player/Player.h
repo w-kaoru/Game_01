@@ -28,9 +28,9 @@ public:
 	{
 		return m_position;
 	}
-	void SetAnimation(PlayerState::AniMove state)
+	void SetAnimation(PlayerState::AnimState state)
 	{
-		m_animation.Play(state, 0.2);
+		m_animation.Play(state, 0.2f);
 	}
 	CVector3 GetmoveSpeed()
 	{
@@ -44,11 +44,16 @@ public:
 	{
 		return m_rotation;
 	}
+	Animation GetAnimation()
+	{
+		return m_animation;
+	}
 private:
 	SkinModel m_model;									//スキンモデル。
 	Animation m_animation;								//アニメーション。
 	AnimationClip m_animationClips[PlayerState::num];	//アニメーションクリップ。
 	CVector3 m_position = CVector3::Zero();				//座標。
+	CVector3 m_respawnPosition = CVector3::Zero();		//リスポーン座標。
 	CVector3 m_scale = CVector3::One();					//拡大率。
 	CVector3 m_moveSpeed = CVector3::Zero();			//移動速度。
 	CQuaternion m_rotation = CQuaternion::Identity();	//回転。
@@ -67,8 +72,7 @@ private:
 	//プレイヤーのステイタス
 	//int Lv = 0;				//レベル
 	float m_hp = 0.0f;			//体力
+	float m_maxHp = 0.0f;
 	float m_hpFrame = 0.0f;		//体力の枠
-	float m_atk = 0.0f;			//攻撃力
-	float m_def = 0.0f;			//防御力
 	float m_agi = 0.0f;			//素早さ
 };

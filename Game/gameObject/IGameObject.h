@@ -42,6 +42,12 @@ public:
 			PostDraw();
 		}
 	}
+	//オブジェクト
+	int GetPriority()
+	{
+		return m_priority;
+	}
 private:
 	bool startDed = false;
+	int m_priority = 0;					//優先度
 };

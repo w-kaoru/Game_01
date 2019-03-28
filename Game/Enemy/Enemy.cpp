@@ -19,8 +19,6 @@ bool Enemy::Start()
 	//m_model.Init(L"Assets/modelData/enemy.cmo");
 
 	m_hp = 1.0f;
-	m_atk = 0.05f;
-	m_def = 0.03f;
 	m_agi = 300.0f;
 	if (m_selectModel == 1) {
 		m_model.Init(L"Assets/modelData/ToonRTS_demo_Knight.cmo");
@@ -75,8 +73,11 @@ void Enemy::Search()
 	//視野角判定
 	//fabsfは絶対値を求める関数！
 	//角度はマイナスが存在するから、絶対値にする。
-	 /*
+	// /*
 	if (fabsf(angle) < CMath::DegToRad(60.0f)) {
+		if (m_toPlayerLen <= 150.0) {
+			Attack();
+		}
 	}
 	// */
 	if (attackFlag == true) {
@@ -92,19 +93,16 @@ void Enemy::Search()
 		else {
 			m_ensm.Change(EnemyState::MoveState::idle);
 		}
-		if (m_toPlayerLen <= 150.0) {
-			Attack();
-		}
 	}
 }
  // /*
 void Enemy::Attack()
 {
 	m_AttackTiming++;
-	if (m_AttackTiming == 150.0f) {
+	if (m_AttackTiming == 70.0f) {
 		m_ensm.Change(EnemyState::MoveState::attack);
 		attackFlag = true;
-		m_AttackTiming = 0.0f;
+		m_AttackTiming = 0;
 	}
 }
 //*/
