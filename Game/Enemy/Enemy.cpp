@@ -21,20 +21,20 @@ bool Enemy::Start()
 	m_hp = 1.0f;
 	m_agi = 300.0f;
 	if (m_selectModel == 1) {
-		m_model.Init(L"Assets/modelData/ToonRTS_demo_Knight.cmo");
+		m_model.Init(L"Assets/modelData/enemy_01.cmo");
 	}
 	if (m_selectModel == 2) {
-		m_model.Init(L"Assets/modelData/ToonRTS_demo_Knight.cmo");
+		m_model.Init(L"Assets/modelData/enemy_01.cmo");
 	}
 
 	//tkaファイルの読み込み。
-	m_animationClips[EnemyState::idle].Load(L"Assets/animData/plidle.tka");
+	m_animationClips[EnemyState::idle].Load(L"Assets/animData/enidle.tka");
 	m_animationClips[EnemyState::idle].SetLoopFlag(true);
 
-	m_animationClips[EnemyState::move].Load(L"Assets/animData/plrun.tka");
+	m_animationClips[EnemyState::move].Load(L"Assets/animData/enwalk.tka");
 	m_animationClips[EnemyState::move].SetLoopFlag(true);
 
-	m_animationClips[EnemyState::attack].Load(L"Assets/animData/plattack.tka");
+	m_animationClips[EnemyState::attack].Load(L"Assets/animData/enattack.tka");
 	m_animationClips[EnemyState::attack].SetLoopFlag(false);
 	//アニメーションの初期化。
 	m_animation.Init(
@@ -46,8 +46,9 @@ bool Enemy::Start()
 	m_hpSprite.Init(L"Assets/sprite/hp_gauge.dds", 100.0f, 10.0f);
 	m_position.y = 200.0f;
 	//キャラクターコントローラーの初期化。
-	m_charaCon.Init(40.0f, 50.0f, m_position);
+	m_charaCon.Init(40.0f, 70.0f, m_position);
 	m_ensm.Start();
+	m_scale *= 2.0f;
 	return true;
 }
 
@@ -107,11 +108,11 @@ void Enemy::Attack()
 }
 //*/
 
-void Enemy::Damage()
+void Enemy::Damage(float damage)
 {
 	m_damageTiming++;
 	if (m_damageTiming == 50) {
-		m_hp -= 0.1f;
+		m_hp -= damage;
 	}
 }
 
@@ -152,15 +153,15 @@ void Enemy::Update()
 	m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
 	//当たった？
 	m_hit = g_battleController->Create(
-		&m_position, 300.0f,
-		[&]() {Damage(); },
+		&m_position, 150.0f,
+		[&](float damage) {Damage(damage); },
 		BattleHit::enemy
 	);
 	//シャドウキャスターを登録。
 	g_graphicsEngine->GetShadowMap()->RegistShadowCaster(&m_model);
 	//m_model.SetShadowReciever(true);
 	//ワールド行列を求める。
-	m_model.UpdateWorldMatrix(m_position, m_rotation, { 1.0f, 1.0f, 1.0f });
+	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
 	//アニメーションを流す。
 	m_animation.Update(1.0f / 30.0f);
 	if (m_hp <= 0.01f) {

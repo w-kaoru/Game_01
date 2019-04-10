@@ -19,7 +19,7 @@ bool EnStateAttack::Start()
 	CVector3 hit = m_enemy->GetPosition();
 	hit.y += 50.0f;
 	hit += m_enemy->GetForward() * 50.0f;
-	g_battleController->Hit(hit, BattleHit::player);
+	g_battleController->Hit(hit, 0.3f, BattleHit::player);
 	return false;
 }
 

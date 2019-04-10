@@ -15,11 +15,11 @@ PlStateAttack::~PlStateAttack()
 bool PlStateAttack::Start()
 {
 	m_player->SetAnimation(PlayerState::attack);
-	// /*
+	/*
 	CVector3 hit = m_player->GetPosition();
 	hit.y += 25.0f;
 	hit += m_player->GetForward() * 25.0f;
-	g_battleController->Hit(hit, BattleHit::enemy);
+	g_battleController->Hit(hit, 0.3f, BattleHit::enemy);
 	//*/
 	return false;
 }

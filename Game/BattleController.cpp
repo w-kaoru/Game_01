@@ -11,7 +11,7 @@ BattleController::~BattleController()
 {
 }
 
-const BattleHit * BattleController::Create(const CVector3 * pos, float radius, std::function<void()> object, BattleHit::objict_Name name)
+const BattleHit * BattleController::Create(const CVector3 * pos, float radius, std::function<void(float damage)> object, BattleHit::objict_Name name)
 {
 	auto hit = new BattleHit;
 	hit->Create(pos, radius, object, name);
@@ -19,12 +19,12 @@ const BattleHit * BattleController::Create(const CVector3 * pos, float radius, s
 	return hit;
 }
 
-bool BattleController::Hit(CVector3 pos, BattleHit::objict_Name name)
+bool BattleController::Hit(CVector3 pos, float damage, BattleHit::objict_Name name)
 {
 	for (auto hitter : m_controller)
 	{
 		if (hitter->Getobjict_Name() == name) {
-			if (hitter->Hit(pos))
+			if (hitter->Hit(pos, damage))
 				return true;
 		}
 	}

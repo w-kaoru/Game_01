@@ -16,7 +16,7 @@ public:
 	void Search();
 	void PlLen();
 	void Attack();
-	void Damage();
+	void Damage(float damage);
 	void HP_Gauge();
 	void SetPosition(CVector3 pos)
 	{
@@ -64,9 +64,10 @@ private:
 	//MoveState movestate = idle;
 	CVector3 m_position = CVector3::Zero();				//座標。
 	CVector3 m_moveSpeed = CVector3::Zero();			//移動速度。
-	CVector3 m_forward = CVector3::Zero();		//前方。
+	CVector3 m_forward = CVector3::Zero();				//前方。
 	SkinModel m_model;									//モデル。
 	CQuaternion m_rotation = CQuaternion::Identity();	//回転。
+	CVector3 m_scale = CVector3::One();					//拡大率。
 	CharacterController m_charaCon;						//キャラクターコントローラーを追加。
 	Animation m_animation;								//アニメーション。
 	AnimationClip m_animationClips[EnemyState::num];	//アニメーションクリップ。
@@ -75,7 +76,6 @@ private:
 	CVector3 m_Sprite_Front = CVector3::AxisZ()*-1;	    //テクスチャの前方向
 	CQuaternion m_Sprite_angle = CQuaternion::Identity();	//テクスチャの回転角度
 	const BattleHit* m_hit;
-	int m_currentPointNo = 0;
 	float m_toPlayerLen;		//プレイヤーとの距離
 	int m_selectModel = 0;		//モデルの選択
 	int m_damageTiming = 0;		//ダメージを受けるタイミング

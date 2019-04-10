@@ -19,7 +19,7 @@ public:
 	//void Jump();
 	void Attack();
 	void HP_Gauge();
-	void Damage();
+	void Damage(float Enatk);
 	void SetPosition(CVector3 pos)
 	{
 		m_position = pos;
@@ -50,6 +50,7 @@ public:
 	}
 private:
 	SkinModel m_model;									//スキンモデル。
+	//SkinModel m_model_01;									//スキンモデル。
 	Animation m_animation;								//アニメーション。
 	AnimationClip m_animationClips[PlayerState::num];	//アニメーションクリップ。
 	CVector3 m_position = CVector3::Zero();				//座標。
@@ -63,6 +64,7 @@ private:
 	CVector3 m_up = CVector3::Zero();
 	CVector3 m_forward = CVector3::Zero();		//前方。
 	CVector3 m_right = CVector3::Zero();		//右。
+	CVector3 m_attckPos = CVector3::Zero();		//攻撃の場所。
 	Sprite m_hpSprite;		//hpゲージ
 	Sprite m_hpFrameSprite;	//hpゲージの枠
 	const BattleHit* m_hit;

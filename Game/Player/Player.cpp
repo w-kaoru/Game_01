@@ -7,7 +7,7 @@ Player::Player() :m_stMa(this)
 {
 	//cmoファイルの読み込み。
 	m_model.Init(L"Assets/modelData/ToonRTS_demo_Knight.cmo", enFbxUpAxisZ);
-
+	//m_model_01.Init(L"Assets/modelData/plpath.cmo", enFbxUpAxisZ);
 	//tkaファイルの読み込み。
 	m_animationClips[PlayerState::AnimState::idle].Load(L"Assets/animData/plidle.tka");
 	m_animationClips[PlayerState::AnimState::idle].SetLoopFlag(true);
@@ -42,17 +42,14 @@ bool Player::Start()
 	//ステータス設定
 	//m_status.Lv = 1;
 	m_maxHp =  6.0f;		//体力
-	m_hpFrame = m_hp;
+	m_hpFrame = m_maxHp;
 	m_hp = m_maxHp;
 	m_agi = 1000.0f; //400.0f;			//素早さ
 	m_position.y = 200.0f;
 	m_respawnPosition = m_position;
 	//キャラクターコントローラーの初期化。
-	m_charaCon.Init(10.0f, 50.0f, m_position);
+	m_charaCon.Init(40.0f, 70.0f, m_position);
 	m_stMa.Start();
-	/*m_battle->SetHP(m_hp);
-	m_battle->SetATK(m_atk);
-	m_battle->SetDEF(m_def);*/
 	return true;
 }
 //移動
@@ -97,23 +94,7 @@ void Player::Move()
 void Player::Attack()
 {
 	m_stMa.Change(PlayerState::AnimState::attack);
-	 /*
-	m_forward = CVector3::AxisZ();
-	m_rotation.Multiply(m_forward);
-	//m_forwardとm_moveSpeedとの内積を計算する。
-	float d = m_forward.Dot(m_moveSpeed);
-	//内積の結果をacos関数に渡して、enemyForwardとm_moveSpeedのなす角を求める。
-	float angle = acos(d);
-	//視野角判定
-	//fabsfは絶対値を求める関数！
-	//角度はマイナスが存在するから、絶対値にする。
-	CVector3 hit = m_position;
-	hit.y += 25.0f;
-	hit += m_forward * 25.0f;
-	g_battleController->Hit(hit, BattleHit::enemy);
-	if (fabsf(angle) < CMath::DegToRad(60.0f)) {
-		g_battleController->Hit(hit, BattleHit::enemy);
-	}
+		g_battleController->Hit(m_attckPos, 0.3f, BattleHit::enemy);
 	// */
 }
 
@@ -141,23 +122,24 @@ void Player::HP_Gauge()
 	);
 }
 
-void Player::Damage()
+void Player::Damage(float Enatk)
 {
 	m_damageTiming++;
 	if (m_damageTiming == 50) {
-		m_hp -= 0.3f;
+		m_hp -= Enatk;
 	}
 }
 
 void Player::Update()
 {
+
 	m_damageTiming = 0.0f;
 	m_stMa.Update();
 	
 	//当たった？
 	m_hit = g_battleController->Create(
-		&m_position, 300.0f,
-		[&]() {Damage(); },
+		&m_position, 150.0f,
+		[&](float damage) {Damage(damage); },
 		BattleHit::player
 	);
 
@@ -181,10 +163,12 @@ void Player::Update()
 	if (m_hp <= 0.0f) {
 		m_hp = m_maxHp;
 		m_position = m_respawnPosition;
+		m_charaCon.SetPosition(m_position);
 	}
 	//ワールド行列の更新。
 	m_moveSpeed.y -= 980.0f * (1.0f / 60.0f);
 	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
+	//m_model_01.UpdateWorldMatrix(m_attckPos, CQuaternion::Identity(), CVector3::One());
 	//アニメーションを流す。
 	m_animation.Update(1.0f / 30.0f);
 
@@ -193,6 +177,9 @@ void Player::Update()
 	m_forward.y = m_rotMatrix.m[2][1];
 	m_forward.z = m_rotMatrix.m[2][2];
 	m_forward.Normalize();
+	m_attckPos.x = m_position.x + m_forward.x * 60.0f;
+	m_attckPos.z = m_position.z + m_forward.z * 60.0f;
+	m_attckPos.y = 100.0f;
 }
 
 void Player::Draw()
@@ -202,6 +189,11 @@ void Player::Draw()
 		g_camera3D.GetViewMatrix(), 
 		g_camera3D.GetProjectionMatrix()
 	);
+	/*m_model_01.Draw(
+		enRenderMode_Normal,
+		g_camera3D.GetViewMatrix(),
+		g_camera3D.GetProjectionMatrix()
+	);*/
 }
 
 void Player::PostDraw()

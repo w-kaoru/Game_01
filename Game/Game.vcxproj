@@ -102,6 +102,12 @@
     <ClCompile Include="BattleController.cpp" />
     <ClCompile Include="BattleHit.cpp" />
     <ClCompile Include="character\CharacterController.cpp" />
+    <ClCompile Include="EnemyBos\EnemyBos.cpp" />
+    <ClCompile Include="EnemyBos\EnemyBosStateAttack.cpp" />
+    <ClCompile Include="EnemyBos\EnemyBosStateIdle.cpp" />
+    <ClCompile Include="EnemyBos\EnemyBosStateMachine.cpp" />
+    <ClCompile Include="EnemyBos\EnemyBosStateMove.cpp" />
+    <ClCompile Include="EnemyBos\IEnemyBosState.cpp" />
     <ClCompile Include="Enemy\Enemy.cpp" />
     <ClCompile Include="Enemy\EnStateAttack.cpp" />
     <ClCompile Include="Enemy\EnStateIdle.cpp" />
@@ -164,6 +170,13 @@
     <ClInclude Include="BattleController.h" />
     <ClInclude Include="BattleHit.h" />
     <ClInclude Include="character\CharacterController.h" />
+    <ClInclude Include="EnemyBos\EnemyBos.h" />
+    <ClInclude Include="EnemyBos\EnemyBosState.h" />
+    <ClInclude Include="EnemyBos\EnemyBosStateAttack.h" />
+    <ClInclude Include="EnemyBos\EnemyBosStateIdle.h" />
+    <ClInclude Include="EnemyBos\EnemyBosStateMachine.h" />
+    <ClInclude Include="EnemyBos\EnemyBosStateMove.h" />
+    <ClInclude Include="EnemyBos\IEnemyBosState.h" />
     <ClInclude Include="Enemy\Enemy.h" />
     <ClInclude Include="Enemy\EnemyState.h" />
     <ClInclude Include="Enemy\EnStateAttack.h" />
@@ -228,6 +241,8 @@
     <MeshContentTask Include="Assets\modelData\background.FBX" />
     <MeshContentTask Include="Assets\modelData\Dungeon.FBX" />
     <MeshContentTask Include="Assets\modelData\enemy.FBX" />
+    <MeshContentTask Include="Assets\modelData\enemy_01.FBX" />
+    <MeshContentTask Include="Assets\modelData\enemy_Bos.FBX" />
     <MeshContentTask Include="Assets\modelData\enpath.FBX" />
     <MeshContentTask Include="Assets\modelData\enpath2.fbx" />
     <MeshContentTask Include="Assets\modelData\plpath.FBX" />

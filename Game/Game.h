@@ -5,6 +5,7 @@
 #include "level/Level.h"
 //#include "GameCamera.h"
 #include "Enemy\Enemy.h"
+#include "EnemyBos/EnemyBos.h"
 #include "Render\RenderTarget.h"
 #include "graphics\SkinModel.h"
 #include "sound/SoundEngine.h"
@@ -13,6 +14,7 @@
 //これらは前方宣言でよい！
 struct PathPoint;
 class Enemy;
+class EnemyBos;
 class Player;
 class GameCamera;
 class LightCamera;
@@ -32,6 +34,7 @@ public:
 private:
 	Player* m_player = nullptr;				//プレイヤー
 	Enemy* m_enemy = nullptr;				//エネミー
+	EnemyBos* m_enemyBos = nullptr;			//エネミーボス
 	GameCamera* m_gameCamera= nullptr;		//ゲームカメラ。
 	LightCamera* m_light = nullptr;			//ライト
 	Level m_level;							//レベルを初期化。
