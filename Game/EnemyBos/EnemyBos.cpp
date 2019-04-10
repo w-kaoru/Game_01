@@ -43,6 +43,12 @@ bool EnemyBos::Start()
 	//キャラクターコントローラーの初期化。
 	m_charaCon.Init(40.0f, 50.0f, m_position);
 	m_enbos_stm.Start();
+	//当たった？
+	m_hit = g_battleController->Create(
+		&m_position, 150.0f,
+		[&](float damage) {Damage(damage); },
+		BattleHit::enemy
+	);
 	return true;
 }
 
@@ -104,10 +110,7 @@ void EnemyBos::Attack()
 
 void EnemyBos::Damage(float damage)
 {
-	m_damageTiming++;
-	if (m_damageTiming == 50) {
-		m_hp -= damage;
-	}
+	m_hp -= damage;
 }
 
 void EnemyBos::HP_Gauge()
@@ -145,12 +148,6 @@ void EnemyBos::Update()
 	m_moveSpeed.y -= 9800.0f * (1.0f / 60.0f);
 	//キャラコンを使って移動する。
 	m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
-	//当たった？
-	m_hit = g_battleController->Create(
-		&m_position, 150.0f,
-		[&](float damage) {Damage(damage); },
-		BattleHit::enemy
-	);
 	//シャドウキャスターを登録。
 	g_graphicsEngine->GetShadowMap()->RegistShadowCaster(&m_model);
 	//m_model.SetShadowReciever(true);

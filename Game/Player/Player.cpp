@@ -29,8 +29,8 @@ Player::Player() :m_stMa(this)
 		4					//アニメーションクリップの数。
 	);
 	//m_scale *= 0.1f;
-	m_hpSprite.Init(L"Assets/sprite/hp_gauge.dds", 100.0f, 10.0f);
-	m_hpFrameSprite.Init(L"Assets/sprite/hp_frame.dds", 100.0f, 10.0f);
+	m_hpSprite.Init(L"Assets/sprite/hp_gauge.dds", m_HpScaleX, m_HpScaleY);
+	m_hpFrameSprite.Init(L"Assets/sprite/hp_frame.dds", m_HpScaleX, m_HpScaleY);
 }
 Player::~Player()
 {
@@ -50,6 +50,13 @@ bool Player::Start()
 	//キャラクターコントローラーの初期化。
 	m_charaCon.Init(40.0f, 70.0f, m_position);
 	m_stMa.Start();
+
+	//当たった？
+	m_hit = g_battleController->Create(
+		&m_position, 150.0f,
+		[&](float damage) {Damage(damage); },
+		BattleHit::player
+	);
 	return true;
 }
 //移動
@@ -124,10 +131,7 @@ void Player::HP_Gauge()
 
 void Player::Damage(float Enatk)
 {
-	m_damageTiming++;
-	if (m_damageTiming == 50) {
-		m_hp -= Enatk;
-	}
+	m_hp -= Enatk;
 }
 
 void Player::Update()
@@ -135,13 +139,7 @@ void Player::Update()
 
 	m_damageTiming = 0.0f;
 	m_stMa.Update();
-	
-	//当たった？
-	m_hit = g_battleController->Create(
-		&m_position, 150.0f,
-		[&](float damage) {Damage(damage); },
-		BattleHit::player
-	);
+
 
 	if (g_pad[0].IsTrigger(enButtonA) && atk == false) {
 		atk = true;

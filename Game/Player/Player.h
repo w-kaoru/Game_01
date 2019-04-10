@@ -77,4 +77,6 @@ private:
 	float m_maxHp = 0.0f;
 	float m_hpFrame = 0.0f;		//‘Ì—Í‚Ì˜g
 	float m_agi = 0.0f;			//‘f‘‚³
+	float m_HpScaleX = 100.0f;
+	float m_HpScaleY = 30.0f;
 };

@@ -12,6 +12,7 @@ Enemy::~Enemy()
 {
 	g_graphicsEngine->GetShadowMap()->UnregistShadowCaster(&m_model);
 	m_charaCon.RemoveRigidBoby();
+	g_battleController->Deleteobjict(m_hit);
 }
 
 bool Enemy::Start()
@@ -19,7 +20,7 @@ bool Enemy::Start()
 	//m_model.Init(L"Assets/modelData/enemy.cmo");
 
 	m_hp = 1.0f;
-	m_agi = 300.0f;
+	m_agi = 400.0f;
 	if (m_selectModel == 1) {
 		m_model.Init(L"Assets/modelData/enemy_01.cmo");
 	}
@@ -49,6 +50,12 @@ bool Enemy::Start()
 	m_charaCon.Init(40.0f, 70.0f, m_position);
 	m_ensm.Start();
 	m_scale *= 2.0f;
+	//当たった？
+	m_hit = g_battleController->Create(
+		&m_position, 150.0f,
+		[&](float damage) {Damage(damage); },
+		BattleHit::enemy
+	);
 	return true;
 }
 
@@ -110,16 +117,13 @@ void Enemy::Attack()
 
 void Enemy::Damage(float damage)
 {
-	m_damageTiming++;
-	if (m_damageTiming == 50) {
-		m_hp -= damage;
-	}
+	m_hp -= damage;
 }
 
 void Enemy::HP_Gauge()
 {
 	auto pos = m_position;
-	pos.y += 170.0f;
+	pos.y += 200.0f;
 	CVector3 hp_angle;
 	hp_angle = g_camera3D.GetPosition() - m_position;
 	hp_angle.y = 0;
@@ -151,12 +155,7 @@ void Enemy::Update()
 	m_moveSpeed.y -= 9800.0f * (1.0f / 60.0f);
 	//キャラコンを使って移動する。
 	m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
-	//当たった？
-	m_hit = g_battleController->Create(
-		&m_position, 150.0f,
-		[&](float damage) {Damage(damage); },
-		BattleHit::enemy
-	);
+
 	//シャドウキャスターを登録。
 	g_graphicsEngine->GetShadowMap()->RegistShadowCaster(&m_model);
 	//m_model.SetShadowReciever(true);
