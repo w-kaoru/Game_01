@@ -27,6 +27,7 @@ void Game::Destroy()
 	for (auto& enemy : m_enemyList) {
 		g_gameObjM->DeleteGameObject(enemy);
 	}
+	g_gameObjM->DeleteGameObject(m_enemyBos);
 }
 
 bool Game::Start()

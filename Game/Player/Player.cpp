@@ -101,7 +101,7 @@ void Player::Move()
 void Player::Attack()
 {
 	m_stMa.Change(PlayerState::AnimState::attack);
-		g_battleController->Hit(m_attckPos, 0.3f, BattleHit::enemy);
+		g_battleController->Hit(m_attckPos, 0.2f, BattleHit::enemy);
 	// */
 }
 
