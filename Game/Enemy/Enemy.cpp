@@ -10,8 +10,11 @@ Enemy::Enemy():m_ensm(this)
 
 Enemy::~Enemy()
 {
+	//影を除外する。
 	g_graphicsEngine->GetShadowMap()->UnregistShadowCaster(&m_model);
+	//キャラクターコントローラーを消去する。
 	m_charaCon.RemoveRigidBoby();
+	//当たり判定を消去。
 	g_battleController->Deleteobjict(m_hit);
 }
 
@@ -19,7 +22,7 @@ bool Enemy::Start()
 {
 	//m_model.Init(L"Assets/modelData/enemy.cmo");
 
-	m_hp = 1.0f;
+	m_hp = 10.0f;
 	m_agi = 400.0f;
 	if (m_selectModel == 1) {
 		m_model.Init(L"Assets/modelData/enemy_01.cmo");
@@ -29,12 +32,13 @@ bool Enemy::Start()
 	}
 
 	//tkaファイルの読み込み。
+	//待機アニメーション
 	m_animationClips[EnemyState::idle].Load(L"Assets/animData/enidle.tka");
 	m_animationClips[EnemyState::idle].SetLoopFlag(true);
-
+	//歩きアニメーション
 	m_animationClips[EnemyState::move].Load(L"Assets/animData/enwalk.tka");
 	m_animationClips[EnemyState::move].SetLoopFlag(true);
-
+	//攻撃アニメーション
 	m_animationClips[EnemyState::attack].Load(L"Assets/animData/enattack.tka");
 	m_animationClips[EnemyState::attack].SetLoopFlag(false);
 	//アニメーションの初期化。
@@ -44,13 +48,17 @@ bool Enemy::Start()
 		m_animationClips,	//アニメーションクリップの配列。
 		4					//アニメーションクリップの数。
 	);
+	//hpバーのスプライト。
 	m_hpSprite.Init(L"Assets/sprite/hp_gauge.dds", 100.0f, 10.0f);
 	m_position.y = 200.0f;
 	//キャラクターコントローラーの初期化。
 	m_charaCon.Init(40.0f, 70.0f, m_position);
+	//エネミーのステートマシンのスタート関数を呼ぶ。
+	//ステートマシンの初期化。
 	m_ensm.Start();
+	//エネミーの大きさ。
 	m_scale *= 2.0f;
-	//当たった？
+	//当たり判定の作成。
 	m_hit = g_battleController->Create(
 		&m_position, 150.0f,
 		[&](float damage) {Damage(damage); },
@@ -59,6 +67,7 @@ bool Enemy::Start()
 	return true;
 }
 
+//プレイヤーに向かうベクトルと長さの取得。
 void Enemy::PlLen()
 {
 	//エネミーからプレイヤーに伸びるベクトルを求める。
@@ -72,6 +81,7 @@ void Enemy::PlLen()
 void Enemy::Search()
 {
 	PlLen();
+	//前方向の取得。
 	m_forward = CVector3::AxisZ();
 	m_rotation.Multiply(m_forward);
 	//enemyForwardとm_moveSpeedとの内積を計算する。
@@ -81,53 +91,74 @@ void Enemy::Search()
 	//視野角判定
 	//fabsfは絶対値を求める関数！
 	//角度はマイナスが存在するから、絶対値にする。
-	// /*
 	if (fabsf(angle) < CMath::DegToRad(60.0f)) {
 		if (m_toPlayerLen <= 150.0) {
+			//プレイヤーとの距離が一定以下で
+			//攻撃関数をよべー。
 			Attack();
 		}
 	}
-	// */
 	if (attackFlag == true) {
+		//攻撃アニメーションが終了したら。
 		if (m_animation.IsPlaying() == false) {
 			attackFlag = false;
+			m_AttackTiming = 0;
 		}
 	}
 	else
 	{
+		//攻撃アニメーションが再生されてない時
 		if (m_toPlayerLen > 150.0f && m_toPlayerLen < 600.0f) {
+			//歩きアニメーションの再生するためにステートの変更
 			m_ensm.Change(EnemyState::MoveState::move);
 		}
 		else {
+			//待機アニメーションの再生するためにステートの変更
 			m_ensm.Change(EnemyState::MoveState::idle);
 		}
 	}
 }
- // /*
+ //攻撃
 void Enemy::Attack()
 {
 	m_AttackTiming++;
-	if (m_AttackTiming == 70.0f) {
+	//攻撃の間隔
+	if (m_AttackTiming == 70) {
+		//攻撃アニメーションの再生するためにステートの変更
 		m_ensm.Change(EnemyState::MoveState::attack);
 		attackFlag = true;
+	}
+	//攻撃されてからあたったタイミングで攻撃したい（簡易版）
+	if (m_AttackTiming == 85) {
+		//当たったと思われるタイミングで
+		CVector3 hit = m_position;
+		hit.y += 50.0f;
+		hit += m_forward * 50.0f;
+		//攻撃をヒットさせる。
+		g_battleController->Hit(hit, 1.5f, BattleHit::player);
+		//攻撃の間隔を0に戻す。
 		m_AttackTiming = 0;
 	}
 }
-//*/
-
+//ダメージ
 void Enemy::Damage(float damage)
 {
+	//攻撃をくらったのでHPからくらった分を引く
 	m_hp -= damage;
 }
 
+//HPを表示するスプライトのための関係。
 void Enemy::HP_Gauge()
 {
+	//ポジションを頭の上付近にする。
 	auto pos = m_position;
 	pos.y += 200.0f;
+	//カメラのポジション向きのベクトルを取得。
 	CVector3 hp_angle;
 	hp_angle = g_camera3D.GetPosition() - m_position;
 	hp_angle.y = 0;
 	hp_angle.Normalize();
+	//HPの画像がカメラに向かって前を向くようにする。
 	float angle = acos(hp_angle.Dot(m_Sprite_Front));
 	angle = CMath::RadToDeg(angle);
 	CVector3 hp_axis;
@@ -138,7 +169,9 @@ void Enemy::HP_Gauge()
 	else {
 		m_Sprite_angle.SetRotationDeg(CVector3::AxisY()*-1, angle);
 	}
-	m_hpSprite.Update(pos, m_Sprite_angle, { m_hp, 1.0f, 1.0f });
+	//HPスプライトの更新
+	m_hpSprite.Update(pos, m_Sprite_angle, { m_hp / 10, 1.0f, 1.0f });
+	//HPスプライトの表示
 	m_hpSprite.Draw(
 		g_camera3D.GetViewMatrix(),
 		g_camera3D.GetProjectionMatrix()
@@ -148,8 +181,8 @@ void Enemy::HP_Gauge()
 void Enemy::Update()
 {
 	m_damageTiming = 0;
-	//Move();
 	Search();
+	//ステートマシンの更新
 	m_ensm.Update();
 	//重力加速度
 	m_moveSpeed.y -= 9800.0f * (1.0f / 60.0f);
@@ -170,6 +203,7 @@ void Enemy::Update()
 
 void Enemy::Draw()
 {
+	//モデルを表示する。
 	m_model.Draw(
 		enRenderMode_Normal,
 		g_camera3D.GetViewMatrix(),
@@ -179,5 +213,6 @@ void Enemy::Draw()
 
 void Enemy::PostDraw()
 {
+	//HPスプライトの表示をする。
 	HP_Gauge();
 }
