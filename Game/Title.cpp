@@ -14,8 +14,8 @@ Title::~Title()
 bool Title::Start()
 {
 	//2D‚ğ‰Šú‰»B
-	m_titelSprite.Init(L"Assets/sprite/Titel12.dds",1280.0f,720.0f);
-	m_titelSprite1.Init(L"Assets/sprite/Titel1.dds", 1280.0f, 720.0f);
+	m_titelSprite.Init(L"Assets/sprite/TitelBack.dds",1280.0f,720.0f);
+	m_titelSprite1.Init(L"Assets/sprite/Titel.dds", 1280.0f, 720.0f);
 	return false;
 }
 void Title::Update()

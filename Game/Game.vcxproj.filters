@@ -284,9 +284,9 @@
     <MeshContentTask Include="Assets\modelData\enemy_Bos.FBX" />
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\sprite\Titel1.png" />
-    <ImageContentTask Include="Assets\sprite\Titel12.png" />
     <ImageContentTask Include="Assets\sprite\hp_gauge.png" />
     <ImageContentTask Include="Assets\sprite\hp_frame.png" />
+    <ImageContentTask Include="Assets\sprite\Titel.png" />
+    <ImageContentTask Include="Assets\sprite\TitelBack.png" />
   </ItemGroup>
 </Project>
