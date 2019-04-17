@@ -15,14 +15,14 @@ public:
 	void DeleteExecute();
 
 	template<class T>
-	T* NewGameObject(int i = 0)
+	T* NewGO(int i = 0)
 	{
 		T* newObj = new T;
 		m_gameObjectList[i].push_back(newObj);
 		return newObj;
 	}
 
-	bool DeleteGameObject(IGameObject* gameObject);
+	bool DeleteGO(IGameObject* gameObject);
 
 	bool DeleteGameobject(IGameObject* gameObject)
 	{
@@ -41,6 +41,21 @@ public:
 			//m_gameObjectList.clear();
 		}//*/
 		return false;
+	}
+		// 名前を使ったインスタンス検索
+		//（複数ある場合は最初に積んだものが返ってくるので注意！！）
+		//（検索は重たいので注意！！）
+		// 検索したいオブジェクトにつけた名前
+		// 検索成功で検索したインスタンスのポインタ
+	template<class T>
+	T* FindGO()
+	{
+		for (auto& list : m_gameObjectList) {
+			for (auto& obj : list) {
+				return (T*)obj;
+			}
+		}
+		return nullptr;
 	}
 private:
 	//ゲームオブジェクトのリスト。 

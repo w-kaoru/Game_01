@@ -4,10 +4,11 @@
 #include "level/Level.h"
 #include "GameCamera.h"
 #include "Title.h"
+#include "GameEnd.h"
 #include "LightCamera.h"
 
 //グローバルなアクセスポイントをグローバル変数として提供する。
-Game* g_game = nullptr;
+//Game* g_game = nullptr;
 
 Game::Game()
 {
@@ -20,14 +21,14 @@ Game::~Game()
 }
 void Game::Destroy()
 {
-	g_gameObjM->DeleteGameObject(m_gameCamera);
-	g_gameObjM->DeleteGameObject(m_light);
-	g_gameObjM->DeleteGameObject(m_player);
+	g_gameObjM->DeleteGO(m_gameCamera);
+	g_gameObjM->DeleteGO(m_light);
+	g_gameObjM->DeleteGO(m_player);
 	//動的に確保したインスタンスを破棄。
 	for (auto& enemy : m_enemyList) {
-		g_gameObjM->DeleteGameObject(enemy);
+		g_gameObjM->DeleteGO(enemy);
 	}
-	g_gameObjM->DeleteGameObject(m_enemyBos);
+	g_gameObjM->DeleteGO(m_enemyBos);
 }
 
 bool Game::Start()
@@ -43,7 +44,7 @@ bool Game::Start()
 		L"Assets/level/player_01.tkl",
 		[&](LevelObjectData& objData) {
 		if (objData.EqualName(L"plpath") == true) {
-			m_player = g_gameObjM->NewGameObject<Player>(0);
+			m_player = g_gameObjM->NewGO<Player>(0);
 			m_player->SetPosition(objData.position);
 			return true;
 		}
@@ -54,7 +55,7 @@ bool Game::Start()
 		[&](LevelObjectData& objData) {
 		if (objData.EqualName(L"enpath") == true) {
 			//エネミー！！！
-			m_enemy = g_gameObjM->NewGameObject<Enemy>(0);
+			m_enemy = g_gameObjM->NewGO<Enemy>(0);
 			m_enemy->SetEnemySelect(1);
 			m_enemy->SetPosition(objData.position);
 			m_enemy->SetRotation(objData.rotation);
@@ -69,7 +70,7 @@ bool Game::Start()
 		[&](LevelObjectData& objData) {
 		if (objData.EqualName(L"enpath") == true) {
 			//エネミー！！！
-			m_enemyBos = g_gameObjM->NewGameObject<EnemyBos>(0);
+			m_enemyBos = g_gameObjM->NewGO<EnemyBos>(0);
 			m_enemyBos->SetPosition(objData.position);
 			m_enemyBos->SetRotation(objData.rotation);
 			m_enemyBos->GetPlayer(m_player);
@@ -77,26 +78,27 @@ bool Game::Start()
 		}
 		return false;
 	});
-	m_gameCamera = g_gameObjM->NewGameObject<GameCamera>(1);
+	m_gameCamera = g_gameObjM->NewGO<GameCamera>(1);
 	m_gameCamera->SetPlayer(m_player);
-	m_light = g_gameObjM->NewGameObject<LightCamera>(1);
+	m_light = g_gameObjM->NewGO<LightCamera>(1);
 	m_light->SetPlayer(m_player);
-	g_game = this;
+	// g_game = this;
 
 	//サウンドエンジンを初期化。
 	m_soundEngine.Init();
 	//BGM
-	//m_bgm.Init(L"Assets/sound/bgm_00.wav");
+	m_bgm.Init(L"Assets/sound/bgm_00.wav");
 	m_bgm.Play(true);
 	return false;
 }
 
 void Game::Update()
 {
-	if (g_pad[0].IsTrigger(enButtonB)) {
-		g_gameObjM->DeleteGameObject(this);
+	if (g_pad[0].IsTrigger(enButtonSelect)) {
+		g_gameObjM->DeleteGO(this);
 		//タイトルシーンの作成。
-		g_gameObjM->NewGameObject<Title>();
+		//g_gameObjM->NewGameObject<Title>();
+		g_gameObjM->NewGO<GameEnd>()->SetGameEnd(GameEnd::GameEndState::gameDefault);
 	}
 }
 
@@ -112,4 +114,3 @@ void Game::Draw()
 void Game::PostDraw()
 {
 }
-

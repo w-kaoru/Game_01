@@ -1,7 +1,8 @@
 #include "stdafx.h"
 #include "EnemyBos.h"
 #include "Player\Player.h"
-
+#include "../Game.h"
+#include "../GameEnd.h"
 
 EnemyBos::EnemyBos():m_enbos_stm(this)
 {
@@ -130,7 +131,7 @@ void EnemyBos::Attack()
 		hit.y += 50.0f;
 		hit += m_forward * 50.0f;
 		//攻撃をヒットさせる。
-		g_battleController->Hit(hit, 4.0f, BattleHit::player);
+		g_battleController->Hit(hit, 8.0f, BattleHit::player);
 		//攻撃の間隔を0に戻す。
 		m_AttackTiming = 0;
 	}
@@ -192,7 +193,8 @@ void EnemyBos::Update()
 	//アニメーションを流す。
 	m_animation.Update(1.0f / 30.0f);
 	if (m_hp <= 0.01f) {
-		g_gameObjM->DeleteGameObject(this);
+		g_gameObjM->DeleteGO(g_gameObjM->FindGO<Game>());
+		g_gameObjM->NewGO<GameEnd>()->SetGameEnd(GameEnd::GameEndState::gameCleared);
 	}
 }
 

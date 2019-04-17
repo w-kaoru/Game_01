@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "Player.h"
 #include "PlStateMachine.h"
+#include "../Game.h"
+#include "../GameEnd.h"
 
 
 Player::Player() :m_stMa(this)
@@ -56,7 +58,7 @@ bool Player::Start()
 	//キャラクターコントローラーの初期化。
 	m_charaCon.Init(40.0f, 70.0f, m_position);
 	m_stMa.Start();
-
+	m_rotation.SetRotationDeg(CVector3::AxisY(), 180.0f);
 	//当たり判定を作る。
 	m_hit = g_battleController->Create(
 		&m_position, 150.0f,
@@ -136,14 +138,14 @@ void Player::HP_Gauge()
 {
 	//スプライトの更新
 	m_hpFrameSprite.Update(
-		{ -640.0f,360.0f, 0.0f },
+		{ -640.0f,350.0f, 0.0f },
 		CQuaternion::Identity(),
 		{ m_hpFrame, 1.5f, 1.0f },
 		{ 0.0f,1.0f }
 	);
 	//スプライトの更新
 	m_hpSprite.Update(
-		{ -640.0f,360.0f, 0.0f },
+		{ -640.0f,350.0f, 0.0f },
 		CQuaternion::Identity(),
 		{ m_hp / 10, 1.5f, 1.0f },
 		{ 0.0f,1.0f }
@@ -175,12 +177,17 @@ void Player::Update()
 
 	//死亡の判定
 	if (m_hp <= 0.0f) {
-		//HPを初期の値に戻す。
-		m_hp = 60;
-		//リスポーン地点へ転送
-		m_position = m_respawnPosition;
-		//キャラコンにポジションを設定。
-		m_charaCon.SetPosition(m_position);
+		//if (ki <= 3) {
+		//	//HPを初期の値に戻す。
+		//	m_hp = 60;
+		//	//リスポーン地点へ転送
+		//	m_position = m_respawnPosition;
+		//	//キャラコンにポジションを設定。
+		//	m_charaCon.SetPosition(m_position);
+		//	ki++;
+		//}
+		g_gameObjM->DeleteGO(g_gameObjM->FindGO<Game>());
+		g_gameObjM->NewGO<GameEnd>()->SetGameEnd(GameEnd::GameEndState::gameOver);
 	}
 	//攻撃
 	Attack();

@@ -62,7 +62,7 @@ void GameObjectManager::DeleteExecute()
 	//*/
 }
 //*
-bool GameObjectManager::DeleteGameObject(IGameObject * gameObject)
+bool GameObjectManager::DeleteGO(IGameObject * gameObject)
 {
 	for (auto objedct1 : m_gameObjectList)
 	{

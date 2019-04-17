@@ -197,7 +197,7 @@ void Enemy::Update()
 	//アニメーションを流す。
 	m_animation.Update(1.0f / 30.0f);
 	if (m_hp <= 0.01f) {
-		g_gameObjM->DeleteGameObject(this);
+		g_gameObjM->DeleteGO(this);
 	}
 }
 

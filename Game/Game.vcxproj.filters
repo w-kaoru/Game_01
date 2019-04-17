@@ -144,6 +144,7 @@
     <ClCompile Include="EnemyBos\EnemyBosStateMachine.cpp" />
     <ClCompile Include="EnemyBos\EnemyBosStateMove.cpp" />
     <ClCompile Include="EnemyBos\IEnemyBosState.cpp" />
+    <ClCompile Include="GameEnd.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -269,6 +270,7 @@
     <ClInclude Include="EnemyBos\EnemyBosStateMachine.h" />
     <ClInclude Include="EnemyBos\EnemyBosStateMove.h" />
     <ClInclude Include="EnemyBos\IEnemyBosState.h" />
+    <ClInclude Include="GameEnd.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\background.FBX">
@@ -288,5 +290,9 @@
     <ImageContentTask Include="Assets\sprite\hp_frame.png" />
     <ImageContentTask Include="Assets\sprite\Titel.png" />
     <ImageContentTask Include="Assets\sprite\TitelBack.png" />
+    <ImageContentTask Include="Assets\sprite\GameCleared.png" />
+    <ImageContentTask Include="Assets\sprite\GameOver.png" />
+    <ImageContentTask Include="Assets\sprite\Yazirusi.png" />
+    <ImageContentTask Include="Assets\sprite\GameEnd.png" />
   </ItemGroup>
 </Project>

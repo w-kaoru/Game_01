@@ -116,6 +116,7 @@
     <ClCompile Include="Enemy\IEnState.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameCamera.cpp" />
+    <ClCompile Include="GameEnd.cpp" />
     <ClCompile Include="gameObject\GameObjectManager.cpp" />
     <ClCompile Include="gameObject\IGameObject.cpp" />
     <ClCompile Include="graphics\animation\Animation.cpp" />
@@ -186,6 +187,7 @@
     <ClInclude Include="Enemy\IEnState.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameCamera.h" />
+    <ClInclude Include="GameEnd.h" />
     <ClInclude Include="gameObject\GameObjectManager.h" />
     <ClInclude Include="gameObject\IGameObject.h" />
     <ClInclude Include="graphics\animation\Animation.h" />
@@ -259,6 +261,16 @@
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\TitelBack.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\GameCleared.png" />
+    <ImageContentTask Include="Assets\sprite\GameOver.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\Yazirusi.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\GameEnd.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

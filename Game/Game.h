@@ -25,12 +25,12 @@ class Game : public IGameObject
 public:
 	Game();
 	~Game(); 
-	bool Start();
+	bool Start() override;
 	void Update() override;
 	void Draw() override;
 	void PreDraw() override;
 	void PostDraw() override;
-	void Destroy();
+	void Destroy() override;
 private:
 	Player* m_player = nullptr;				//プレイヤー
 	Enemy* m_enemy = nullptr;				//エネミー

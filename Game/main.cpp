@@ -56,7 +56,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	InitGame(hInstance, hPrevInstance, lpCmdLine, nCmdShow, "Game");
 	//タイトルシーンの作成。
 	g_battleController = new BattleController;
-	g_gameObjM->NewGameObject<Title>();
+	g_gameObjM->NewGO<Title>();
 
 	//ゲームループ。
 	while (DispatchWindowMessage() == true)

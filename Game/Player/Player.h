@@ -10,10 +10,10 @@ class Player :public IGameObject
 public:
 	Player();
 	~Player();
-	bool Start();
-	void Update();
-	void Draw();
-	void PostDraw();
+	bool Start() override;
+	void Update() override;
+	void Draw() override;
+	void PostDraw() override;
 
 	void Move();
 	//void Jump();
@@ -29,6 +29,11 @@ public:
 	CVector3 GetPosition()
 	{
 		return m_position;
+	}
+	//ローテーションのゲッター。
+	void SetRotation(CQuaternion rot)
+	{
+		m_rotation = rot;
 	}
 	//アニメーションのステートのセッター。
 	void SetAnimation(PlayerState::AnimState state)
@@ -61,6 +66,7 @@ private:
 	float m_hp = 0.0f;			//体力
 	float m_hpFrame = 0.0f;		//体力の枠
 	float m_agi = 0.0f;			//素早さ
+	int ki = 0;
 	float m_HpScaleX = 100.0f;	//HPのスプライトの横幅
-	float m_HpScaleY = 30.0f;	//HPのスプライトの縦幅
+	float m_HpScaleY = 10.0f;	//HPのスプライトの縦幅
 };

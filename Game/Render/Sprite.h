@@ -64,7 +64,10 @@ public:
 			m_alpha = 0.0f;
 		}
 	}
-
+	void SetAlpha(float alpha)
+	{
+		m_alpha = alpha;
+	}
 private:
 	/// <summary>
 	/// ‰Šú‰»‚Ì‹¤’Êˆ—B
