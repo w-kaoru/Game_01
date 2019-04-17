@@ -8,8 +8,7 @@
 #include "EnemyBos/EnemyBos.h"
 #include "Render\RenderTarget.h"
 #include "graphics\SkinModel.h"
-#include "sound/SoundEngine.h"
-#include "sound/SoundSource.h"
+
 
 //これらは前方宣言でよい！
 struct PathPoint;
@@ -31,6 +30,11 @@ public:
 	void PreDraw() override;
 	void PostDraw() override;
 	void Destroy() override;
+
+	void EnemyDeath()
+	{
+		m_enemyDeath--;
+	}
 private:
 	Player* m_player = nullptr;				//プレイヤー
 	Enemy* m_enemy = nullptr;				//エネミー
@@ -40,8 +44,7 @@ private:
 	Level m_level;							//レベルを初期化。
 	//Level* m_level = nullptr;				//レベルを初期化。
 	std::vector< Enemy* > m_enemyList;		//エネミーのリスト。
-
-	CSoundEngine m_soundEngine;				//サウンドエンジン。
+	int m_enemyDeath = 0;
 	CSoundSource m_bgm;						//BGM。
 };
 

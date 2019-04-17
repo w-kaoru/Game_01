@@ -58,6 +58,9 @@ bool EnemyBos::Start()
 		[&](float damage) {Damage(damage); },
 		BattleHit::enemy
 	);
+	//SE
+	m_se_damade.Init(L"Assets/sound/se_damage.wav");
+	m_se_damade.SetVolume(1.0f);
 	return true;
 }
 
@@ -140,6 +143,7 @@ void EnemyBos::Attack()
 //ƒ_ƒ[ƒW
 void EnemyBos::Damage(float damage)
 {
+	m_se_damade.Play(false);
 	//UŒ‚‚ğ‚­‚ç‚Á‚½‚Ì‚ÅHP‚©‚ç‚­‚ç‚Á‚½•ª‚ğˆø‚­
 	m_hp -= damage;
 }

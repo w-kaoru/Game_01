@@ -2,7 +2,6 @@
 #include "character/CharacterController.h"
 #include "PlayerState.h"
 #include "PlStateMachine.h"
-//#include "../BattleController.h"
 
 class GameCamera;
 class Player :public IGameObject
@@ -69,4 +68,6 @@ private:
 	int ki = 0;
 	float m_HpScaleX = 100.0f;	//HPのスプライトの横幅
 	float m_HpScaleY = 10.0f;	//HPのスプライトの縦幅
+
+	CSoundSource m_se;						//SE。
 };

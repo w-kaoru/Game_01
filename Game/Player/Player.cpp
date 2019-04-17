@@ -65,6 +65,9 @@ bool Player::Start()
 		[&](float damage) {Damage(damage); },
 		BattleHit::player
 	);
+	//SE
+	m_se.Init(L"Assets/sound/se_damage.wav");
+	m_se.SetVolume(1.0f);
 	return true;
 }
 //移動
@@ -118,7 +121,7 @@ void Player::Attack()
 		//攻撃されてからあたったタイミングで攻撃したい（簡易版）
 		if (m_hitTiming == 12) {
 			//攻撃をヒットさせる。
-			g_battleController->Hit(m_attckPos, 1.0f, BattleHit::enemy);
+			g_battleController->Hit(m_attckPos, 3.5f, BattleHit::enemy);
 		}
 		if (m_animation.IsPlaying() == false) {
 			m_atkAnim = false;
@@ -165,6 +168,7 @@ void Player::HP_Gauge()
 //ダメージ
 void Player::Damage(float Enatk)
 {
+	m_se.Play(false);
 	//攻撃をくらったのでHPからくらった分を引く
 	m_hp -= Enatk;
 }
@@ -177,15 +181,6 @@ void Player::Update()
 
 	//死亡の判定
 	if (m_hp <= 0.0f) {
-		//if (ki <= 3) {
-		//	//HPを初期の値に戻す。
-		//	m_hp = 60;
-		//	//リスポーン地点へ転送
-		//	m_position = m_respawnPosition;
-		//	//キャラコンにポジションを設定。
-		//	m_charaCon.SetPosition(m_position);
-		//	ki++;
-		//}
 		g_gameObjM->DeleteGO(g_gameObjM->FindGO<Game>());
 		g_gameObjM->NewGO<GameEnd>()->SetGameEnd(GameEnd::GameEndState::gameOver);
 	}

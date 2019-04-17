@@ -3,6 +3,7 @@
 #include "Title.h"
 #include <algorithm>
 #include"gameObject/GameObjectManager.h"
+//#include "sound/SoundEngine.h"
 
 
 ///////////////////////////////////////////////////////////////////
@@ -54,6 +55,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	g_camera2D.Update();
 	//ゲームの初期化。
 	InitGame(hInstance, hPrevInstance, lpCmdLine, nCmdShow, "Game");
+	CSoundEngine soundEngine;				//サウンドエンジン。
+	soundEngine.Init();
 	//タイトルシーンの作成。
 	g_battleController = new BattleController;
 	g_gameObjM->NewGO<Title>();
@@ -63,6 +66,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	{
 		//ゲームの更新。
 		UpdateGame();
+		//音楽データの更新
+		soundEngine.Update();
 		//ゲームの描画処理。
 		RenderGame();
 	}

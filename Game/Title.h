@@ -1,5 +1,6 @@
 #pragma once
 #include "gameObject\IGameObject.h"
+
 class Title:public IGameObject
 {
 public:
@@ -15,4 +16,5 @@ public:
 private:
 	Sprite m_titelBackSprite;
 	Sprite m_titelSprite;
+	CSoundSource m_bgm;						//BGMÅB
 };

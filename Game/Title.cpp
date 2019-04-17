@@ -16,6 +16,11 @@ bool Title::Start()
 	//2D‚ğ‰Šú‰»B
 	m_titelBackSprite.Init(L"Assets/sprite/TitelBack.dds",1280.0f,720.0f);
 	m_titelSprite.Init(L"Assets/sprite/Titel.dds", 1280.0f, 720.0f);
+
+	//BGM
+	m_bgm.Init(L"Assets/sound/bgm_title.wav");
+	m_bgm.Play(true);
+	m_bgm.SetVolume(0.2f);
 	return false;
 }
 void Title::Update()

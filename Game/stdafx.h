@@ -47,6 +47,8 @@
 #include "graphics/animation/AnimationClip.h"
 #include "graphics/Camera.h"
 #include "BattleController.h"
+#include "sound/SoundEngine.h"
+#include "sound/SoundSource.h"
 
 extern BattleController* g_battleController; 
 

@@ -65,30 +65,45 @@ bool Game::Start()
 		}
 		return false;
 	});
-	m_level.Init(
-		L"Assets/level/enemyBos.tkl",
-		[&](LevelObjectData& objData) {
-		if (objData.EqualName(L"enpath") == true) {
-			//エネミー！！！
-			m_enemyBos = g_gameObjM->NewGO<EnemyBos>(0);
-			m_enemyBos->SetPosition(objData.position);
-			m_enemyBos->SetRotation(objData.rotation);
-			m_enemyBos->GetPlayer(m_player);
-			return true;
-		}
-		return false;
-	});
+	//m_level.Init(
+	//	L"Assets/level/enemyBos.tkl",
+	//	[&](LevelObjectData& objData) {
+	//	if (objData.EqualName(L"enpath") == true) {
+	//		//エネミー！！！
+	//		m_enemyBos = g_gameObjM->NewGO<EnemyBos>(0);
+	//		m_enemyBos->SetPosition(objData.position);
+	//		m_enemyBos->SetRotation(objData.rotation);
+	//		m_enemyBos->GetPlayer(m_player);
+	//		return true;
+	//	}
+	//	return false;
+	//});
 	m_gameCamera = g_gameObjM->NewGO<GameCamera>(1);
 	m_gameCamera->SetPlayer(m_player);
 	m_light = g_gameObjM->NewGO<LightCamera>(1);
 	m_light->SetPlayer(m_player);
 	// g_game = this;
-
-	//サウンドエンジンを初期化。
-	m_soundEngine.Init();
 	//BGM
-	m_bgm.Init(L"Assets/sound/bgm_00.wav");
+	m_bgm.Init(L"Assets/sound/bgm_Dungeon.wav");
 	m_bgm.Play(true);
+	m_bgm.SetVolume(0.17f);
+	m_enemyDeath = m_enemyList.size();
+	//if (m_enemyDeath == 0) {
+	//	m_level.Init(
+	//		L"Assets/level/enemyBos.tkl",
+	//		[&](LevelObjectData& objData) {
+	//		if (objData.EqualName(L"enpath") == true) {
+	//			//エネミー！！！
+	//			m_enemyBos = g_gameObjM->NewGO<EnemyBos>(0);
+	//			m_enemyBos->SetPosition(objData.position);
+	//			m_enemyBos->SetRotation(objData.rotation);
+	//			m_enemyBos->GetPlayer(m_player);
+	//			return true;
+	//		}
+	//		return false;
+	//	});
+	//	m_enemyDeath = 1000000;
+	//}
 	return false;
 }
 
@@ -99,6 +114,22 @@ void Game::Update()
 		//タイトルシーンの作成。
 		//g_gameObjM->NewGameObject<Title>();
 		g_gameObjM->NewGO<GameEnd>()->SetGameEnd(GameEnd::GameEndState::gameDefault);
+	}
+	if (m_enemyDeath <= 0) {
+		m_level.Init(
+			L"Assets/level/enemyBos.tkl",
+			[&](LevelObjectData& objData) {
+			if (objData.EqualName(L"enpath") == true) {
+				//エネミー！！！
+				m_enemyBos = g_gameObjM->NewGO<EnemyBos>(0);
+				m_enemyBos->SetPosition(objData.position);
+				m_enemyBos->SetRotation(objData.rotation);
+				m_enemyBos->GetPlayer(m_player);
+				return true;
+			}
+			return false;
+		});
+		m_enemyDeath = 1000000;
 	}
 }
 

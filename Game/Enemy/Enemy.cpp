@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Enemy.h"
 #include "Player\Player.h"
+#include "../Game.h"
 
 
 Enemy::Enemy():m_ensm(this)
@@ -64,6 +65,9 @@ bool Enemy::Start()
 		[&](float damage) {Damage(damage); },
 		BattleHit::enemy
 	);
+	//SE
+	m_se_damade.Init(L"Assets/sound/se_damage.wav");
+	m_se_damade.SetVolume(1.0f);
 	return true;
 }
 
@@ -108,7 +112,7 @@ void Enemy::Search()
 	else
 	{
 		//攻撃アニメーションが再生されてない時
-		if (m_toPlayerLen > 150.0f && m_toPlayerLen < 600.0f) {
+		if (m_toPlayerLen > 130.0f && m_toPlayerLen < 1200.0f) {
 			//歩きアニメーションの再生するためにステートの変更
 			m_ensm.Change(EnemyState::MoveState::move);
 		}
@@ -123,13 +127,13 @@ void Enemy::Attack()
 {
 	m_AttackTiming++;
 	//攻撃の間隔
-	if (m_AttackTiming == 70) {
+	if (m_AttackTiming == 30) {
 		//攻撃アニメーションの再生するためにステートの変更
 		m_ensm.Change(EnemyState::MoveState::attack);
 		attackFlag = true;
 	}
 	//攻撃されてからあたったタイミングで攻撃したい（簡易版）
-	if (m_AttackTiming == 85) {
+	if (m_AttackTiming == 45) {
 		//当たったと思われるタイミングで
 		CVector3 hit = m_position;
 		hit.y += 50.0f;
@@ -143,6 +147,7 @@ void Enemy::Attack()
 //ダメージ
 void Enemy::Damage(float damage)
 {
+	m_se_damade.Play(false);
 	//攻撃をくらったのでHPからくらった分を引く
 	m_hp -= damage;
 }
@@ -198,6 +203,7 @@ void Enemy::Update()
 	m_animation.Update(1.0f / 30.0f);
 	if (m_hp <= 0.01f) {
 		g_gameObjM->DeleteGO(this);
+		g_gameObjM->FindGO<Game>()->EnemyDeath();
 	}
 }
 
