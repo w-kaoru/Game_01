@@ -6,6 +6,7 @@ class GameCamera:public IGameObject
 public:
 	GameCamera();
 	~GameCamera();
+	bool Start()override;
 	void SetPlayer(Player* player)
 	{
 		m_player = player;

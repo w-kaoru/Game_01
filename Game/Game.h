@@ -33,7 +33,11 @@ public:
 
 	void EnemyDeath()
 	{
-		m_enemyDeath--;
+		m_enemyDeath++;
+	}
+	void SetGameEndFlag(bool flag)
+	{
+		m_endFlag = flag;
 	}
 private:
 	Player* m_player = nullptr;				//プレイヤー
@@ -44,9 +48,10 @@ private:
 	Level m_level;							//レベルを初期化。
 	//Level* m_level = nullptr;				//レベルを初期化。
 	std::vector< Enemy* > m_enemyList;		//エネミーのリスト。
-	int m_enemyDeath = 0;
+	int m_enemyDeath = 0;					//エネミーの死んだ数。
 	CSoundSource m_bgm;						//BGM。
 	CSoundSource m_bgm_bos;					//BOSのBGM
+	bool m_endFlag = false;					//ゲージの終了。
 };
 
 //グローバルなアクセスポイントをグローバル変数として提供する。

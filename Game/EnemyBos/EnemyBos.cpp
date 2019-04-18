@@ -24,7 +24,7 @@ bool EnemyBos::Start()
 	//m_model.Init(L"Assets/modelData/enemy.cmo");
 
 	m_hp = 20.0f;
-	m_agi = 300.0f;
+	m_atk = 15.0f;
 	m_model.Init(L"Assets/modelData/enemy_Bos.cmo");
 
 	//tkaファイルの読み込み。
@@ -106,7 +106,7 @@ void EnemyBos::Search()
 	else
 	{
 		//攻撃アニメーションが再生されてない時
-		if (m_toPlayerLen > 150.0f && m_toPlayerLen < 600.0f) {
+		if (m_toPlayerLen > 130.0f && m_toPlayerLen < 1300.0f) {
 			//歩きアニメーションの再生するためにステートの変更
 			m_enbos_stm.Change(EnemyBosState::MoveState::move);
 		}
@@ -122,19 +122,19 @@ void EnemyBos::Attack()
 {
 	m_AttackTiming++;
 	//攻撃の間隔
-	if (m_AttackTiming == 30) {
+	if (m_AttackTiming == 25) {
 		//攻撃アニメーションの再生するためにステートの変更
 		m_enbos_stm.Change(EnemyBosState::MoveState::attack);
 		attackFlag = true;
 	}
 	//攻撃されてからあたったタイミングで攻撃したい（簡易版）
-	if (m_AttackTiming == 65) {
+	if (m_AttackTiming == 60) {
 		//当たったと思われるタイミングで
 		CVector3 hit = m_position;
 		hit.y += 50.0f;
 		hit += m_forward * 50.0f;
 		//攻撃をヒットさせる。
-		g_battleController->Hit(hit, 8.0f, BattleHit::player);
+		g_battleController->Hit(hit, m_atk, BattleHit::player);
 		//攻撃の間隔を0に戻す。
 		m_AttackTiming = 0;
 	}
@@ -197,7 +197,7 @@ void EnemyBos::Update()
 	//アニメーションを流す。
 	m_animation.Update(1.0f / 30.0f);
 	if (m_hp <= 0.01f) {
-		g_gameObjM->DeleteGO(g_gameObjM->FindGO<Game>());
+		g_gameObjM->FindGO<Game>()->SetGameEndFlag(true);
 		g_gameObjM->NewGO<GameEnd>()->SetGameEnd(GameEnd::GameEndState::gameCleared);
 	}
 }

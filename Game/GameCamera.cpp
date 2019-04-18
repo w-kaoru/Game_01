@@ -4,16 +4,24 @@
 
 GameCamera::GameCamera()
 {
-	//カメラを初期化。
-	g_camera3D.SetPosition({ 0.0f, 200.0f, 370.0f });
-	g_camera3D.SetTarget({ 0.0f, 100.0f, 0.0f });
-	g_camera3D.SetFar(20000.0f);
 }
 
 
 GameCamera::~GameCamera()
 {
 	int u = 0;
+}
+bool GameCamera::Start()
+{
+	//カメラを初期化。
+	g_camera3D.SetPosition(
+		{ 0.0f,m_player->GetPosition().y + 200.0f,
+		m_player->GetPosition().z + 370.0f
+		}
+	);
+	g_camera3D.SetTarget(m_player->GetPosition());
+	g_camera3D.SetFar(20000.0f);
+	return false;
 }
 void GameCamera::Update()
 {

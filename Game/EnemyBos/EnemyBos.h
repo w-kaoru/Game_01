@@ -60,7 +60,7 @@ private:
 	//MoveState movestate = idle;
 	CVector3 m_position = CVector3::Zero();				//座標。
 	CVector3 m_moveSpeed = CVector3::Zero();			//移動速度。
-	CVector3 m_forward = CVector3::Zero();		//前方。
+	CVector3 m_forward = CVector3::Zero();				//前方。
 	SkinModel m_model;									//モデル。
 	CQuaternion m_rotation = CQuaternion::Identity();	//回転。
 	CharacterController m_charaCon;						//キャラクターコントローラーを追加。
@@ -78,5 +78,5 @@ private:
 	bool attackFlag = false;
 	//エネミーのステイタス
 	float m_hp = 0.0f;			//体力
-	float m_agi = 0.0f;			//素早さ
+	float m_atk = 0.0f;			//攻撃力
 };

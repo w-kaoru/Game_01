@@ -84,5 +84,5 @@ private:
 	bool attackFlag = false;
 	//エネミーのステイタス
 	float m_hp = 0.0f;			//体力
-	float m_agi = 0.0f;			//素早さ
+	float m_atk = 0.0f;			//攻撃力
 };

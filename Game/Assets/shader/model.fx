@@ -211,10 +211,7 @@ float4 PSMain( PSInput In ) : SV_Target0
 			lig.xyz += specLig * 1.0f;
 		}
 		// */
-		//*
-		{
-		}
-		//*/
+
 		if (isShadowReciever == 1) {	//シャドウレシーバー。
 			//LVP空間から見た時の最も手前の深度値をシャドウマップから取得する。
 			float2 shadowMapUV = In.posInLVP.xy / In.posInLVP.w;
@@ -239,6 +236,10 @@ float4 PSMain( PSInput In ) : SV_Target0
 			}
 		}
 	}
+	//フォグ
+	/*
+	{
+	}//*/
 
 	float4 finalColor = float4(0.0f, 0.0f, 0.0f, 1.0f);
 	finalColor.xyz = albedoColor.xyz * lig;

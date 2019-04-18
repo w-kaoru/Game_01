@@ -24,7 +24,7 @@ bool Enemy::Start()
 	//m_model.Init(L"Assets/modelData/enemy.cmo");
 
 	m_hp = 10.0f;
-	m_agi = 400.0f;
+	m_atk = 1.5f;
 	if (m_selectModel == 1) {
 		m_model.Init(L"Assets/modelData/enemy_01.cmo");
 	}
@@ -139,7 +139,7 @@ void Enemy::Attack()
 		hit.y += 50.0f;
 		hit += m_forward * 50.0f;
 		//UŒ‚‚ğƒqƒbƒg‚³‚¹‚éB
-		g_battleController->Hit(hit, 1.5f, BattleHit::player);
+		g_battleController->Hit(hit, m_atk, BattleHit::player);
 		//UŒ‚‚ÌŠÔŠu‚ğ0‚É–ß‚·B
 		m_AttackTiming = 0;
 	}

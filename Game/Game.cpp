@@ -26,9 +26,13 @@ void Game::Destroy()
 	g_gameObjM->DeleteGO(m_player);
 	//動的に確保したインスタンスを破棄。
 	for (auto& enemy : m_enemyList) {
-		g_gameObjM->DeleteGO(enemy);
+		if (m_enemy) {
+			g_gameObjM->DeleteGO(enemy);
+		}
 	}
-	g_gameObjM->DeleteGO(m_enemyBos);
+	if (m_enemyBos) {
+		g_gameObjM->DeleteGO(m_enemyBos);
+	}
 }
 
 bool Game::Start()
@@ -75,7 +79,7 @@ bool Game::Start()
 	m_bgm_bos.Init(L"Assets/sound/bgm_Bos.wav");
 	m_bgm.Play(true);
 	m_bgm.SetVolume(0.17f);
-	m_enemyDeath = m_enemyList.size();
+	//m_enemyDeath = m_enemyList.size();
 	return false;
 }
 
@@ -87,7 +91,13 @@ void Game::Update()
 		//g_gameObjM->NewGameObject<Title>();
 		g_gameObjM->NewGO<GameEnd>()->SetGameEnd(GameEnd::GameEndState::gameDefault);
 	}
-	if (m_enemyDeath <= 0) {
+	if (m_endFlag == true) {
+		g_gameObjM->DeleteGO(this);
+		//タイトルシーンの作成。
+		//g_gameObjM->NewGameObject<Title>();
+		g_gameObjM->NewGO<GameEnd>()->SetGameEnd(GameEnd::GameEndState::gameOver);
+	}
+	if (m_enemyDeath >= m_enemyList.size()) {
 		m_bgm.Stop();
 		m_bgm_bos.Play(true);
 		m_level.Init(
@@ -103,7 +113,7 @@ void Game::Update()
 			}
 			return false;
 		});
-		m_enemyDeath = 1000000;
+		m_enemyDeath = 0;
 	}
 }
 
