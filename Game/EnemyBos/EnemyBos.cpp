@@ -122,13 +122,13 @@ void EnemyBos::Attack()
 {
 	m_AttackTiming++;
 	//攻撃の間隔
-	if (m_AttackTiming == 70) {
+	if (m_AttackTiming == 30) {
 		//攻撃アニメーションの再生するためにステートの変更
 		m_enbos_stm.Change(EnemyBosState::MoveState::attack);
 		attackFlag = true;
 	}
 	//攻撃されてからあたったタイミングで攻撃したい（簡易版）
-	if (m_AttackTiming == 105) {
+	if (m_AttackTiming == 65) {
 		//当たったと思われるタイミングで
 		CVector3 hit = m_position;
 		hit.y += 50.0f;

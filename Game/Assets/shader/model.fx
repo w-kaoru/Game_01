@@ -213,10 +213,6 @@ float4 PSMain( PSInput In ) : SV_Target0
 		// */
 		//*
 		{
-			float3 toEyeDir = In.worldPos - eyePos;
-			if (toEyeDir.z > 100.0f) {
-				lig.xyz =eyePos.z * 0.5f;
-			}
 		}
 		//*/
 		if (isShadowReciever == 1) {	//シャドウレシーバー。

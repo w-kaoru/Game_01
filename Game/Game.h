@@ -46,6 +46,7 @@ private:
 	std::vector< Enemy* > m_enemyList;		//エネミーのリスト。
 	int m_enemyDeath = 0;
 	CSoundSource m_bgm;						//BGM。
+	CSoundSource m_bgm_bos;					//BOSのBGM
 };
 
 //グローバルなアクセスポイントをグローバル変数として提供する。
