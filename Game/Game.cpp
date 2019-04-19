@@ -79,6 +79,7 @@ bool Game::Start()
 	m_bgm_bos.Init(L"Assets/sound/bgm_Bos.wav");
 	m_bgm.Play(true);
 	m_bgm.SetVolume(0.17f);
+	m_bgm_bos.SetVolume(0.17f);
 	//m_enemyDeath = m_enemyList.size();
 	return false;
 }
