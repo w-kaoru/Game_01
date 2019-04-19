@@ -197,7 +197,7 @@ void EnemyBos::Update()
 	//アニメーションを流す。
 	m_animation.Update(1.0f / 30.0f);
 	if (m_hp <= 0.01f) {
-		g_gameObjM->FindGO<Game>()->SetGameEndFlag(true);
+		g_gameObjM->DeleteGO(g_gameObjM->FindGO<Game>());
 		g_gameObjM->NewGO<GameEnd>()->SetGameEnd(GameEnd::GameEndState::gameCleared);
 	}
 }

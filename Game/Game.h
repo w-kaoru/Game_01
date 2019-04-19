@@ -35,10 +35,6 @@ public:
 	{
 		m_enemyDeath++;
 	}
-	void SetGameEndFlag(bool flag)
-	{
-		m_endFlag = flag;
-	}
 private:
 	Player* m_player = nullptr;				//プレイヤー
 	Enemy* m_enemy = nullptr;				//エネミー
@@ -51,7 +47,6 @@ private:
 	int m_enemyDeath = 0;					//エネミーの死んだ数。
 	CSoundSource m_bgm;						//BGM。
 	CSoundSource m_bgm_bos;					//BOSのBGM
-	bool m_endFlag = false;					//ゲージの終了。
 };
 
 //グローバルなアクセスポイントをグローバル変数として提供する。

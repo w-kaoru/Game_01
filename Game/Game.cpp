@@ -26,7 +26,7 @@ void Game::Destroy()
 	g_gameObjM->DeleteGO(m_player);
 	//動的に確保したインスタンスを破棄。
 	for (auto& enemy : m_enemyList) {
-		if (m_enemy) {
+		if (enemy) {
 			g_gameObjM->DeleteGO(enemy);
 		}
 	}
@@ -90,12 +90,6 @@ void Game::Update()
 		//タイトルシーンの作成。
 		//g_gameObjM->NewGameObject<Title>();
 		g_gameObjM->NewGO<GameEnd>()->SetGameEnd(GameEnd::GameEndState::gameDefault);
-	}
-	if (m_endFlag == true) {
-		g_gameObjM->DeleteGO(this);
-		//タイトルシーンの作成。
-		//g_gameObjM->NewGameObject<Title>();
-		g_gameObjM->NewGO<GameEnd>()->SetGameEnd(GameEnd::GameEndState::gameOver);
 	}
 	if (m_enemyDeath >= m_enemyList.size()) {
 		m_bgm.Stop();
