@@ -26,7 +26,7 @@ void Game::Destroy()
 	g_gameObjM->DeleteGO(m_player);
 	//動的に確保したインスタンスを破棄。
 	for (auto& enemy : m_enemyList) {
-		if (enemy) {
+		if (m_enemy) {
 			g_gameObjM->DeleteGO(enemy);
 		}
 	}
