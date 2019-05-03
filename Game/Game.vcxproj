@@ -249,6 +249,7 @@
     <MeshContentTask Include="Assets\modelData\enpath2.fbx" />
     <MeshContentTask Include="Assets\modelData\plpath.FBX" />
     <MeshContentTask Include="Assets\modelData\ToonRTS_demo_Knight.FBX" />
+    <MeshContentTask Include="Assets\modelData\TrollGiant.fbx" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\hp_gauge.png" />

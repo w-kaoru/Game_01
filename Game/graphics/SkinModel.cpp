@@ -29,7 +29,7 @@ void SkinModel::Init(const wchar_t* filePath, EnFbxUpAxis enFbxUpAxis)
 	InitSamplerState();
 
 	//ディレクションライトの初期化。
-	InitDirectionLight();
+	InitLight();
 
 	//エフェクトファクトリを作成
 	SkinModelEffectFactory effectFactory(g_graphicsEngine->GetD3DDevice());
@@ -96,21 +96,13 @@ void SkinModel::InitConstantBuffer()
 	g_graphicsEngine->GetD3DDevice()->CreateBuffer(&bufferDesclight, NULL, &m_lightCb);
 }
 //ディレクションライトの初期化。(追加)
-void SkinModel::InitDirectionLight()
+void SkinModel::InitLight()
 {
-	m_light.directionLight.direction[0] = { -1.0f, -1.0f, -1.0f, 0.0f };
-	m_light.directionLight.color[0] = { 1.5f, 1.5f, 1.5f, 1.0f };
-
-	m_light.directionLight.direction[1] = { -1.0f, -1.0f, -1.0f, 0.0f };
-	m_light.directionLight.color[1] = { 1.0f, 1.0f, 1.0f, 1.0f };
-
-	m_light.directionLight.direction[2] = { -1.0f, -0.5f, 0.0f, 0.0f };
-	m_light.directionLight.color[2] = { 0.0f, 0.0f, 0.0f, 1.0f };
-
-	m_light.directionLight.direction[3] = { 1.0f, -0.5f, 0.0f, 0.0f };
-	m_light.directionLight.color[3] = { 0.0f, 0.0f, 0.0f, 1.0f };
-
-	m_light.specPow = 0.0f;
+	memset(&m_light, 0, sizeof(m_light));
+	//全体のディレクションライト
+	m_light.direction[0] = { 0.0f, -1.0f, 0.0f, 0.0f };
+	m_light.color[0] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	m_light.ambinetLight = { 0.6f,0.6f,0.6f,1.0f };
 }
 void SkinModel::InitSamplerState()
 {
@@ -166,6 +158,27 @@ void SkinModel::Draw( EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projM
 	else {
 		vsCb.isShadowReciever = 0;
 	}
+	//todo 法線マップを使用するかどうかのフラグを送る。
+	if (m_normalMapSRV != nullptr) {
+		vsCb.isHasNormalMap = true;
+	}
+	else {
+		vsCb.isHasNormalMap = false;
+	}
+	//スペキュラマップを使用するかどうかのフラグを送る。
+	if (m_specularMapSRV != nullptr) {
+		vsCb.isHasSpecuraMap = true;
+	}
+	else {
+		vsCb.isHasSpecuraMap = false;
+	}
+	//AOマップを使用するかどうかのフラグを送る。
+	if (m_aoMapSRV != nullptr) {
+		vsCb.isHasAoMap = true;
+	}
+	else {
+		vsCb.isHasAoMap = false;
+	}
 
 	d3dDeviceContext->UpdateSubresource(m_cb, 0, nullptr, &vsCb, 0, 0);
 	//視点の更新と設定。(追加)
@@ -173,12 +186,8 @@ void SkinModel::Draw( EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projM
 	//ライト用の定数バッファを更新。(追加)
 	d3dDeviceContext->UpdateSubresource(m_lightCb, 0, nullptr, &m_light, 0, 0);
 	//定数バッファをシェーダースロットに設定。(追加)
-	//d3dDeviceContext->VSSetConstantBuffers(0, 1, &m_cb);
-	//d3dDeviceContext->PSSetConstantBuffers(0, 1, &m_lightCb);
-	//定数バッファをGPUに転送。
 	d3dDeviceContext->VSSetConstantBuffers(0, 1, &m_cb);
 	d3dDeviceContext->PSSetConstantBuffers(0, 1, &m_cb);
-	//追加
 	d3dDeviceContext->PSSetConstantBuffers(1, 1, &m_lightCb);
 	//サンプラステートを設定。
 	d3dDeviceContext->PSSetSamplers(0, 1, &m_samplerState);
@@ -190,6 +199,17 @@ void SkinModel::Draw( EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projM
 		auto modelMaterial = reinterpret_cast<SkinModelEffect*>(material);
 		modelMaterial->SetRenderMode(renderMode);
 	});
+	if (m_normalMapSRV != nullptr) {
+		//法線マップが設定されていたらをレジスタt2に設定する。
+		d3dDeviceContext->PSSetShaderResources(2, 1, &m_normalMapSRV);
+	}
+	if (m_specularMapSRV != nullptr) {
+		//スペキュラマップが設定されていたらレジスタt3に設定する。
+		d3dDeviceContext->PSSetShaderResources(3, 1, &m_specularMapSRV);
+	}
+	if (m_aoMapSRV != nullptr) {
+		d3dDeviceContext->PSSetShaderResources(4, 1, &m_aoMapSRV);
+	}
 	//描画。
 	m_modelDx->Draw(
 		d3dDeviceContext,

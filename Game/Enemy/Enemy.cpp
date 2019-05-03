@@ -23,25 +23,43 @@ bool Enemy::Start()
 {
 	//m_model.Init(L"Assets/modelData/enemy.cmo");
 
-	m_hp = 10.0f;
-	m_atk = 1.5f;
-	if (m_selectModel == 1) {
+	m_spd = 500.0f;
+	switch (m_type)
+	{
+	case type_skeleton:
 		m_model.Init(L"Assets/modelData/enemy_01.cmo");
+		//tkaファイルの読み込み。
+		//待機アニメーション
+		m_animationClips[EnemyState::idle].Load(L"Assets/animData/enidle.tka");
+		m_animationClips[EnemyState::idle].SetLoopFlag(true);
+		//歩きアニメーション
+		m_animationClips[EnemyState::move].Load(L"Assets/animData/enwalk.tka");
+		m_animationClips[EnemyState::move].SetLoopFlag(true);
+		//攻撃アニメーション
+		m_animationClips[EnemyState::attack].Load(L"Assets/animData/enattack.tka");
+		m_animationClips[EnemyState::attack].SetLoopFlag(false);
+		//エネミーの大きさ。
+		m_scale *= 2.0f;
+		//攻撃を当てるタイミング
+		m_atkHit = 45;
+		break;
+	case type_troll:
+		m_model.Init(L"Assets/modelData/TrollGiant.cmo");
+		//tkaファイルの読み込み。
+		//待機アニメーション
+		m_animationClips[EnemyState::idle].Load(L"Assets/animData/troll_anim/troll_idle.tka");
+		m_animationClips[EnemyState::idle].SetLoopFlag(true);
+		//歩きアニメーション
+		m_animationClips[EnemyState::move].Load(L"Assets/animData/troll_anim/troll_walk.tka");
+		m_animationClips[EnemyState::move].SetLoopFlag(true);
+		//攻撃アニメーション
+		m_animationClips[EnemyState::attack].Load(L"Assets/animData/troll_anim/troll_attack.tka");
+		m_animationClips[EnemyState::attack].SetLoopFlag(false);
+		m_scale *= 90.0f;
+		//攻撃を当てるタイミング
+		m_atkHit = 40;
+		break;
 	}
-	if (m_selectModel == 2) {
-		m_model.Init(L"Assets/modelData/enemy_01.cmo");
-	}
-
-	//tkaファイルの読み込み。
-	//待機アニメーション
-	m_animationClips[EnemyState::idle].Load(L"Assets/animData/enidle.tka");
-	m_animationClips[EnemyState::idle].SetLoopFlag(true);
-	//歩きアニメーション
-	m_animationClips[EnemyState::move].Load(L"Assets/animData/enwalk.tka");
-	m_animationClips[EnemyState::move].SetLoopFlag(true);
-	//攻撃アニメーション
-	m_animationClips[EnemyState::attack].Load(L"Assets/animData/enattack.tka");
-	m_animationClips[EnemyState::attack].SetLoopFlag(false);
 	//アニメーションの初期化。
 	m_animation.Init(
 		m_model,			//アニメーションを流すスキンモデル。
@@ -57,8 +75,6 @@ bool Enemy::Start()
 	//エネミーのステートマシンのスタート関数を呼ぶ。
 	//ステートマシンの初期化。
 	m_ensm.Start();
-	//エネミーの大きさ。
-	m_scale *= 2.0f;
 	//当たり判定の作成。
 	m_hit = g_battleController->Create(
 		&m_position, 150.0f,
@@ -127,13 +143,13 @@ void Enemy::Attack()
 {
 	m_AttackTiming++;
 	//攻撃の間隔
-	if (m_AttackTiming == 30) {
+	if (m_AttackTiming == m_atkAnimStart) {
 		//攻撃アニメーションの再生するためにステートの変更
 		m_ensm.Change(EnemyState::MoveState::attack);
 		attackFlag = true;
 	}
 	//攻撃されてからあたったタイミングで攻撃したい（簡易版）
-	if (m_AttackTiming == 45) {
+	if (m_AttackTiming == m_atkHit) {
 		//当たったと思われるタイミングで
 		CVector3 hit = m_position;
 		hit.y += 50.0f;
@@ -185,25 +201,31 @@ void Enemy::HP_Gauge()
 
 void Enemy::Update()
 {
-	m_damageTiming = 0;
-	Search();
-	//ステートマシンの更新
-	m_ensm.Update();
-	//重力加速度
-	m_moveSpeed.y -= 9800.0f * (1.0f / 60.0f);
-	//キャラコンを使って移動する。
-	m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
+	if (m_isDeath == false) {
+		m_damageTiming = 0;
+		Search();
+		//ステートマシンの更新
+		m_ensm.Update();
+		
+		if (m_hp <= 0.01f) {
+			m_isDeath = true;
+			m_position.y = -1000.0f;
+			m_charaCon.SetPosition(m_position);
+			g_gameObjM->FindGO<Game>()->EnemyDeath();
+		}
+		//重力加速度
+		m_moveSpeed.y -= 9800.0f * (1.0f / 60.0f);
+		//キャラコンを使って移動する。
+		m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
 
-	//シャドウキャスターを登録。
-	g_graphicsEngine->GetShadowMap()->RegistShadowCaster(&m_model);
-	//m_model.SetShadowReciever(true);
-	//ワールド行列を求める。
-	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
-	//アニメーションを流す。
-	m_animation.Update(1.0f / 30.0f);
-	if (m_hp <= 0.01f) {
-		g_gameObjM->DeleteGO(this);
-		g_gameObjM->FindGO<Game>()->EnemyDeath();
+		//シャドウキャスターを登録。
+		g_graphicsEngine->GetShadowMap()->RegistShadowCaster(&m_model);
+		//m_model.SetShadowReciever(true);
+		//ワールド行列を求める。
+		m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
+		//アニメーションを流す。
+		m_animation.Update(1.0f / 30.0f);
+	
 	}
 }
 

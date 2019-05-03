@@ -26,9 +26,7 @@ void Game::Destroy()
 	g_gameObjM->DeleteGO(m_player);
 	//動的に確保したインスタンスを破棄。
 	for (auto& enemy : m_enemyList) {
-		if (m_enemy) {
-			g_gameObjM->DeleteGO(enemy);
-		}
+		g_gameObjM->DeleteGO(enemy);
 	}
 	if (m_enemyBos) {
 		g_gameObjM->DeleteGO(m_enemyBos);
@@ -60,10 +58,29 @@ bool Game::Start()
 		if (objData.EqualName(L"enpath") == true) {
 			//エネミー！！！
 			m_enemy = g_gameObjM->NewGO<Enemy>(0);
-			m_enemy->SetEnemySelect(1);
+			m_enemy->SetEnemyType(Enemy::EnemyType::type_skeleton);
 			m_enemy->SetPosition(objData.position);
 			m_enemy->SetRotation(objData.rotation);
-			m_enemy->GetPlayer(m_player);
+			m_enemy->SetHP(10.0f);
+			m_enemy->SetATK(1.5f);
+			m_enemy->SetPlayer(m_player);
+			m_enemyList.push_back(m_enemy);
+			return true;
+		}
+		return false;
+	});
+	m_level.Init(
+		L"Assets/level/enemy_02.tkl",
+		[&](LevelObjectData& objData) {
+		if (objData.EqualName(L"enpath") == true) {
+			//エネミー！！！
+			m_enemy = g_gameObjM->NewGO<Enemy>(0);
+			m_enemy->SetEnemyType(Enemy::EnemyType::type_troll);
+			m_enemy->SetPosition(objData.position);
+			m_enemy->SetRotation(objData.rotation);
+			m_enemy->SetHP(15.0f);
+			m_enemy->SetATK(2.0f);
+			m_enemy->SetPlayer(m_player);
 			m_enemyList.push_back(m_enemy);
 			return true;
 		}
@@ -73,7 +90,6 @@ bool Game::Start()
 	m_gameCamera->SetPlayer(m_player);
 	m_light = g_gameObjM->NewGO<LightCamera>(1);
 	m_light->SetPlayer(m_player);
-	// g_game = this;
 	//BGM
 	m_bgm.Init(L"Assets/sound/bgm_Dungeon.wav");
 	m_bgm_bos.Init(L"Assets/sound/bgm_Bos.wav");

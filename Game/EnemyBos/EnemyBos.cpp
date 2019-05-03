@@ -17,6 +17,12 @@ EnemyBos::~EnemyBos()
 	m_charaCon.RemoveRigidBoby();
 	//当たり判定を消去。
 	g_battleController->Deleteobjict(m_hit);
+	//法線マップをロード。
+	//ファイル名を使って、テクスチャをロードして、ShaderResrouceViewを作成する。
+	DirectX::CreateDDSTextureFromFileEx(
+		g_graphicsEngine->GetD3DDevice(), L"Assets/modelData/mutant_Bos/Mutant_normal.dds", 0,
+		D3D11_USAGE_DEFAULT, D3D11_BIND_SHADER_RESOURCE, 0, 0,
+		false, nullptr, &m_normalMapSRV);
 }
 
 bool EnemyBos::Start()
@@ -26,7 +32,7 @@ bool EnemyBos::Start()
 	m_hp = 20.0f;
 	m_atk = 15.0f;
 	m_model.Init(L"Assets/modelData/enemy_Bos.cmo");
-
+	m_model.SetNormalMap(m_normalMapSRV);
 	//tkaファイルの読み込み。
 	//待機アニメーション
 	m_animationClips[EnemyBosState::idle].Load(L"Assets/animData/enBosidle.tka");

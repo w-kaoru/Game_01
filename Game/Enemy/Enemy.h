@@ -6,6 +6,11 @@ class BattleHit;
 class Enemy:public IGameObject
 {
 public:
+	enum EnemyType {
+		type_skeleton,
+		type_troll,
+		type_num
+	};
 	Enemy();
 	~Enemy();
 	bool Start();
@@ -29,19 +34,27 @@ public:
 	{
 		m_rotation = rot;
 	}
-	void GetPlayer(Player* pl)
+	void SetPlayer(Player* pl)
 	{
 		m_player = pl;
 	}
-
 	void SetAnimation(EnemyState::MoveState state)
 	{
 		m_animation.Play(state, 0.2f);
 	}
-	void SetEnemySelect(int s)
+	void SetEnemyType(EnemyType type)
 	{
-		m_selectModel = s;
+		m_type = type;
 	}
+	void SetATK(float atk)
+	{
+		m_atk = atk;
+	}
+	void SetHP(float hp)
+	{
+		m_hp = hp;
+	}
+
 	float GetPlLen()
 	{
 		return m_toPlayerLen;
@@ -58,6 +71,10 @@ public:
 	CVector3 GetForward()
 	{
 		return m_forward;
+	}
+	float GetSPD()
+	{
+		return m_spd;
 	}
 private:
 	Player* m_player = nullptr;							//プレイヤー
@@ -77,12 +94,16 @@ private:
 	CQuaternion m_Sprite_angle = CQuaternion::Identity();	//テクスチャの回転角度
 	const BattleHit* m_hit;
 	CSoundSource m_se_damade;							//SE
+	EnemyType m_type = type_num;
 	float m_toPlayerLen;		//プレイヤーとの距離
-	int m_selectModel = 0;		//モデルの選択
 	int m_damageTiming = 0;		//ダメージを受けるタイミング
 	int m_AttackTiming = 0;		//攻撃するタイミング
 	bool attackFlag = false;
+	bool m_isDeath = false;
 	//エネミーのステイタス
-	float m_hp = 0.0f;			//体力
+	float m_hp = 10.0f;			//体力
 	float m_atk = 0.0f;			//攻撃力
+	float m_spd = 0.0f;
+	int m_atkAnimStart = 30;
+	int m_atkHit = 0;
 };

@@ -72,6 +72,7 @@ private:
 	CQuaternion m_Sprite_angle = CQuaternion::Identity();	//テクスチャの回転角度
 	const BattleHit* m_hit;
 	CSoundSource m_se_damade;							//SE
+	ID3D11ShaderResourceView* m_normalMapSRV = nullptr;
 	float m_toPlayerLen;		//プレイヤーとの距離
 	int m_damageTiming = 0;		//ダメージを受けるタイミング
 	int m_AttackTiming = 0;		//攻撃するタイミング

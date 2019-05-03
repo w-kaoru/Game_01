@@ -2,7 +2,7 @@
 
 #include "Skeleton.h"
 #include "SkinModelEffect.h"
-const int NumDirection = 4;
+const int NUM_DIRECTION_LIG = 4;
 /*!
 *@brief	FBXの上方向。
 */
@@ -22,7 +22,7 @@ public:
 	*@brief	デストラクタ。
 	*/
 	~SkinModel();
-	
+
 	/*!
 	*@brief	初期化。
 	*@param[in]	filePath		ロードするcmoファイルのファイルパス。
@@ -53,7 +53,7 @@ public:
 	*@param[in]	projMatrix		プロジェクション行列。
 	*  カメラ座標系の3Dモデルをスクリーン座標系に変換する行列です。
 	*/
-	void Draw( EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projMatrix );
+	void Draw(EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projMatrix);
 	/*!
 	*@brief	スケルトンの取得。
 	*/
@@ -104,7 +104,7 @@ private:
 	*/
 	void InitConstantBuffer();
 	//ディレクションライトの初期化。
-	void InitDirectionLight();
+	void InitLight();
 	/*!
 	*@brief	スケルトンの初期化。
 	*@param[in]	filePath		ロードするcmoファイルのファイルパス。
@@ -115,16 +115,18 @@ private:
 	int Raundup16(int n);
 private:
 	//ディレクションライト（追加）
-	struct SDirectionLight {
-		CVector4 direction[NumDirection];		//ライトの方向。
-		CVector4 color[NumDirection];			//ライトのカラー。
+	struct SLight {
+		CVector4 direction[NUM_DIRECTION_LIG];				//ライトの方向。
+		CVector4 color[NUM_DIRECTION_LIG];					//ライトのカラー。
+		CVector4 ambinetLight;								//アンビエントライト。
+		CVector3 eyePos;									//視点の座標。
 	};
 	//ライトの構造体（追加）
-	struct SLight {
-		SDirectionLight		directionLight;		//ディレクションライト
-		CVector3			eyePos;				//視点の座標。
-		float				specPow;			//鏡面反射の絞り。
-	};
+	//struct SLight {
+	//	SDirectionLight		directionLight;		//ディレクションライト
+	//	CVector3			eyePos;				//視点の座標。
+	//	float				specPow;			//鏡面反射の絞り。
+	//};
 	//定数バッファ。
 	struct SVSConstantBuffer {
 		CMatrix mWorld;
@@ -132,7 +134,10 @@ private:
 		CMatrix mProj;
 		CMatrix mLightView;		//todo ライトビュー行列。
 		CMatrix mLightProj;		//todo ライトプロジェクション行列。
-		int isShadowReciever;	//todo シャドウレシーバーのフラグ。
+		int isShadowReciever;	//シャドウレシーバーのフラグ。
+		int isHasNormalMap;		//法線マップを保持している？
+		int isHasSpecuraMap;	//スペキュラマップを保持している？
+		int isHasAoMap;			//AOマップを保持している？
 	};
 	EnFbxUpAxis			m_enFbxUpAxis = enFbxUpAxisZ;		//!<FBXの上方向。
 	ID3D11Buffer*		m_cb = nullptr;						//!<定数バッファ。
@@ -143,6 +148,68 @@ private:
 	DirectX::Model*		m_modelDx;							//!<DirectXTKが提供するモデルクラス。
 	ID3D11SamplerState* m_samplerState = nullptr;			//!<サンプラステート。
 	bool m_isShadowReciever = false;						//シャドウレシーバーのフラグ。
+	ID3D11ShaderResourceView* m_normalMapSRV = nullptr;		//線マップのSRV
+	ID3D11ShaderResourceView* m_specularMapSRV = nullptr;	//スペキュラマップのSRV
+	ID3D11ShaderResourceView* m_aoMapSRV = nullptr;			//AOマップ。
 	ModelEffect* effect = nullptr;
+public:
+	/// <summary>
+	/// ディレクションライトのカラーを設定
+	/// </summary>
+	/// <param name="ligNo">ライトの番号</param>
+	/// <param name="color">ライトのカラー</param>
+	void SetDirectionLightColor(int ligNo, CVector4 color)
+	{
+		if (ligNo < NUM_DIRECTION_LIG) {
+			m_light.color[ligNo] = color;
+		}
+		else {
+			std::abort();
+		}
+	}
+	/// <summary>
+	/// ディレクションライトの方向を設定。
+	/// </summary>
+	/// <param name="ligNo">ライトの番号</param>
+	/// <param name="dir">ライトの方向</param>
+	void SetDirectionLightDirection(int ligNo, CVector4 dir)
+	{
+		if (ligNo < NUM_DIRECTION_LIG) {
+			m_light.direction[ligNo] = dir;
+		}
+		else {
+			std::abort();
+		}
+	}
+	/// <summary>
+	/// 環境光の設定。
+	/// </summary>
+	/// <param name="ambinetLight"></param>
+	void SetAmbientLight(CVector3 ambinetLight)
+	{
+		m_light.ambinetLight = ambinetLight;
+	}
+	/// <summary>
+	/// 法線マップの設定。
+	/// </summary>
+	void SetNormalMap(ID3D11ShaderResourceView* srv)
+	{
+		m_normalMapSRV = srv;
+	}
+	/// <summary>
+	/// スペキュラマップを設定。
+	/// </summary>
+	/// <param name="srv"></param>
+	void SetSpecularMap(ID3D11ShaderResourceView* srv)
+	{
+		m_specularMapSRV = srv;
+	}
+	/// <summary>
+	/// AOマップを設定。
+	/// </summary>
+	/// <param name="srv"></param>
+	void SetAOMap(ID3D11ShaderResourceView* srv)
+	{
+		m_aoMapSRV = srv;
+	}
 };
-
