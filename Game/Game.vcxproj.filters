@@ -276,7 +276,6 @@
     <MeshContentTask Include="Assets\modelData\background.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\enemy.FBX" />
     <MeshContentTask Include="Assets\modelData\plpath.FBX" />
     <MeshContentTask Include="Assets\modelData\enpath.FBX" />
     <MeshContentTask Include="Assets\modelData\ToonRTS_demo_Knight.FBX" />
