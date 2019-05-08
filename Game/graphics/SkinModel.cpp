@@ -95,14 +95,14 @@ void SkinModel::InitConstantBuffer()
 	//作成。
 	g_graphicsEngine->GetD3DDevice()->CreateBuffer(&bufferDesclight, NULL, &m_lightCb);
 }
-//ディレクションライトの初期化。(追加)
+//ライトの初期化。(追加)
 void SkinModel::InitLight()
 {
 	memset(&m_light, 0, sizeof(m_light));
 	//全体のディレクションライト
-	m_light.direction[0] = { 0.0f, -1.0f, 0.0f, 0.0f };
-	m_light.color[0] = { 1.0f, 1.0f, 1.0f, 1.0f };
-	m_light.ambinetLight = { 0.6f,0.6f,0.6f,1.0f };
+	m_light.direction[0] = { -1.0f, -1.0f, -1.0f, 0.0f };
+	m_light.color[0] = { 1.5f, 1.5f, 1.5f, 1.0f };
+	m_light.ambinetLight = { 1.4f,1.4f,1.4f,1.0f };
 }
 void SkinModel::InitSamplerState()
 {

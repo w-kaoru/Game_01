@@ -11,6 +11,8 @@ MapChip::MapChip(const LevelObjectData& objData)
 	//静的物理オブジェクトをメッシュコライダーから作成する。
 	m_physicsStaticObject.CreateMeshObject(m_model, objData.position, objData.rotation);
 	m_model.SetShadowReciever(true);
+	m_model.SetDirectionLightDirection(0, { 0.0f, -1.0f, 0.0f, 0.0f });
+	m_model.SetDirectionLightColor(0, { 1.0f, 1.0f, 1.0f, 1.0f });
 }
 
 void MapChip::Draw()

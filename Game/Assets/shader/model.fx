@@ -39,9 +39,9 @@ static const int NUM_DIRECTION_LIG = 4;
 /// ライト用の定数バッファ。
 /// </summary>
 cbuffer LightCb : register(b1) {
-	float3 dligDirection[NUM_DIRECTION_LIG];
+	float4 dligDirection[NUM_DIRECTION_LIG];
 	float4 dligColor[NUM_DIRECTION_LIG];
-	float3 ambientLight;		//アンビエントライト。
+	float4 ambientLight;		//アンビエントライト。
 	float3 eyePos;				//カメラの視点。
 };
 
@@ -192,9 +192,10 @@ float3 CalcDiffuseLight(float3 normal)
 float3 CalcSpecularLight(float3 normal, float3 worldPos, float2 uv)
 {
 	float3 lig = 0.0f;
-	float3 specLig = 0.0f;
-	for (int i = 0; i < NUM_DIRECTION_LIG; i++) {
-		if (isHasSpecularMap) {
+	if (isHasSpecularMap) {
+		float3 specLig = 0.0f;
+		for (int i = 0; i < NUM_DIRECTION_LIG; i++) {
+
 			//ライトを当てる面から視点に伸びるベクトルtoEyeDirを求める。
 			//視点の座標は定数バッファで渡されている。LightCbを参照するように。
 			float3 toEyeDir = normalize(eyePos - worldPos);
@@ -210,10 +211,11 @@ float3 CalcSpecularLight(float3 normal, float3 worldPos, float2 uv)
 			specColor = g_specularMap.Sample(g_sampler, uv).r;
 
 			specLig = pow(t, 2.0f) * specColor * dligColor[i] * 7.0f;
+
+			//スペキュラ反射が求まったら、ligに加算する。
+			//鏡面反射を反射光に加算する。
+			lig += specLig;
 		}
-		//スペキュラ反射が求まったら、ligに加算する。
-		//鏡面反射を反射光に加算する。
-		lig += specLig;
 	}
 	return lig;
 }
@@ -243,7 +245,7 @@ void CalcShadow(inout float3 lig, float4 posInLvp)
 
 			if (zInLVP > zInShadowMap + 0.01f) {
 				//影が落ちているので、光を弱くする
-				lig *= 0.7f;
+				lig *= 0.5f;
 			}
 		}
 	}
@@ -277,7 +279,7 @@ float3 CalcAmbientLight(float4 albedoColor, float2 uv)
 	if (isHasAoMap) {
 		ao = g_aoMap.Sample(g_sampler, uv).xyz;
 	}
-	return albedoColor.xyz * ambientLight * ao;
+	return albedoColor.xyz * ambientLight.xyz * ao;
 }
 
 /// <summary>

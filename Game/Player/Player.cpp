@@ -68,6 +68,7 @@ bool Player::Start()
 	//SE
 	m_se.Init(L"Assets/sound/se_damage.wav");
 	m_se.SetVolume(1.0f);
+	m_model.SetShadowReciever(true);
 	return true;
 }
 //ˆÚ“®
