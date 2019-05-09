@@ -13,6 +13,7 @@ public:
 	};
 	Enemy();
 	~Enemy();
+	void Destroy() override;
 	bool Start();
 	void Update();
 	void Draw();
@@ -106,4 +107,8 @@ private:
 	float m_spd = 0.0f;
 	int m_atkAnimStart = 30;
 	int m_atkHit = 0;
+
+	CVector3 m_effectPos = CVector3::Zero();
+	Effekseer::Effect* m_effect = nullptr;
+	Effekseer::Handle m_playEffectHandle=-1;
 };

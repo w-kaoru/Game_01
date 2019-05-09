@@ -17,6 +17,13 @@ Enemy::~Enemy()
 	m_charaCon.RemoveRigidBoby();
 	//当たり判定を消去。
 	g_battleController->Deleteobjict(m_hit);
+
+	m_effect->Release();
+	g_graphicsEngine->GetEffekseerManager()->StopEffect(m_playEffectHandle);
+}
+
+void Enemy::Destroy()
+{
 }
 
 bool Enemy::Start()
@@ -83,7 +90,17 @@ bool Enemy::Start()
 	);
 	//SE
 	m_se_damade.Init(L"Assets/sound/se_damage.wav");
-	m_se_damade.SetVolume(1.0f);
+	m_se_damade.SetVolume(1.0f);	
+	m_effect = Effekseer::Effect::Create(
+		g_graphicsEngine->GetEffekseerManager(),
+		(const EFK_CHAR*)L"Assets/effect/test.efk"
+	);
+	m_effect = Effekseer::Effect::Create(
+		g_graphicsEngine->GetEffekseerManager(),
+		(const EFK_CHAR*)L"Assets/effect/death.efk"
+	);
+
+
 	return true;
 }
 
@@ -207,9 +224,20 @@ void Enemy::Update()
 		//ステートマシンの更新
 		m_ensm.Update();
 		
-		if (m_hp <= 0.01f) {
+		if (m_hp <= 0.01f&&m_isDeath == false) {
 			m_isDeath = true;
-			m_position.y = -1000.0f;
+			m_effectPos = m_position;
+			//再生中のエフェクトを止める。
+			//g_graphicsEngine->GetEffekseerManager()->StopEffect(m_playEffectHandle);
+			//再生。
+			m_playEffectHandle = g_graphicsEngine->GetEffekseerManager()->Play(
+				m_effect, m_effectPos.x, m_effectPos.y+100.0f, m_effectPos.z
+			);
+			g_graphicsEngine->GetEffekseerManager()->SetScale(
+				m_playEffectHandle,
+				20.0f, 20.0f, 20.0f
+			);
+			m_position.y = -10000.0f;
 			m_charaCon.SetPosition(m_position);
 			g_gameObjM->FindGO<Game>()->EnemyDeath();
 		}
@@ -226,6 +254,9 @@ void Enemy::Update()
 		//アニメーションを流す。
 		m_animation.Update(1.0f / 30.0f);
 	
+	}
+	else
+	{
 	}
 }
 
