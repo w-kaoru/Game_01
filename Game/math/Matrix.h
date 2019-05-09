@@ -43,22 +43,18 @@ public:
 	{
 
 	}
-	CMatrix(const DirectX::XMFLOAT4X4& m) 
-	{
-		mat = m;
-	}
 	/// <summary>
 	/// Effekseerの行列型の変数に行列の各要素をコピーする。
 	/// </summary>
 	/// <param name="efMat">コピー先</param>
-	/*void CopyTo(Effekseer::Matrix44& efMat) const
+	void CopyTo(Effekseer::Matrix44& efMat) const
 	{
 		memcpy(efMat.Values, m, sizeof(efMat.Values));
 	}
-	CMatrix(const DirectX::XMFLOAT4X4& m)
+	CMatrix(const DirectX::XMFLOAT4X4& m) 
 	{
 		mat = m;
-	}*/
+	}
 	/*!
 	*@brief	代入演算子。
 	*/

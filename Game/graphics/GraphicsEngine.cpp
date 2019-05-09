@@ -71,11 +71,16 @@ void GraphicsEngine::Release()
 		m_pd3dDevice->Release();
 		m_pd3dDevice = NULL;
 	}
-	 /*
-	if (m_shadowMap != nullptr) {
-		m_shadowMap = nullptr;
+	if (m_effekseerManager != NULL)
+	{
+		m_effekseerManager->Release();
+		//m_shadowMap = NULL;
 	}
-	// */
+	if (m_effekseerRenderer != NULL)
+	{
+		m_effekseerRenderer->Destroy();
+		m_effekseerRenderer = NULL;
+	}
 }
 void GraphicsEngine::Init(HWND hWnd)
 {
@@ -211,6 +216,28 @@ void GraphicsEngine::Init(HWND hWnd)
 		m_pd3dDeviceContext->OMSetDepthStencilState(depthStencilState, 0);
 		MemoryBarrier();
 	}
+	{
+		//レンダラーを初期化。
+		m_effekseerRenderer = EffekseerRendererDX11::Renderer::Create(
+			g_graphicsEngine->GetD3DDevice(),			//D3Dデバイス。
+			g_graphicsEngine->GetD3DDeviceContext(),	//D3Dデバイスコンテキスト。
+			20000										//板ポリの最大数。
+		);
+		//エフェクトマネージャを初期化。
+		m_effekseerManager = Effekseer::Manager::Create(10000);
+
+		// 描画用インスタンスから描画機能を設定
+		m_effekseerManager->SetSpriteRenderer(m_effekseerRenderer->CreateSpriteRenderer());
+		m_effekseerManager->SetRibbonRenderer(m_effekseerRenderer->CreateRibbonRenderer());
+		m_effekseerManager->SetRingRenderer(m_effekseerRenderer->CreateRingRenderer());
+		m_effekseerManager->SetTrackRenderer(m_effekseerRenderer->CreateTrackRenderer());
+		m_effekseerManager->SetModelRenderer(m_effekseerRenderer->CreateModelRenderer());
+
+		// 描画用インスタンスからテクスチャの読込機能を設定
+		// 独自拡張可能、現在はファイルから読み込んでいる。
+		m_effekseerManager->SetTextureLoader(m_effekseerRenderer->CreateTextureLoader());
+		m_effekseerManager->SetModelLoader(m_effekseerRenderer->CreateModelLoader());
+	}
 	//メインレンダリングターゲット作成。
 	m_mainRenderTarget.Create(
 		FRAME_BUFFER_W,
@@ -281,6 +308,23 @@ void GraphicsEngine::PostEffectDraw()
 	m_frameBufferRenderTargetView->Release();
 	m_frameBufferDepthStencilView->Release();
 	// */
+}
+void GraphicsEngine::EffectDraw()
+{
+	//まずはEffeseerの行列型の変数に、カメラ行列とプロジェクション行列をコピー。
+	Effekseer::Matrix44 efCameraMat;
+	g_camera3D.GetViewMatrix().CopyTo(efCameraMat);
+	Effekseer::Matrix44 efProjMat;
+	g_camera3D.GetProjectionMatrix().CopyTo(efProjMat);
+	//カメラ行列とプロジェクション行列を設定。
+	m_effekseerRenderer->SetCameraMatrix(efCameraMat);
+	m_effekseerRenderer->SetProjectionMatrix(efProjMat);
+	//Effekseerを更新。
+	m_effekseerManager->Update();
+	//エフェクトは不透明オブジェクトを描画した後で描画する。
+	m_effekseerRenderer->BeginRendering();
+	m_effekseerManager->Draw();
+	m_effekseerRenderer->EndRendering();
 }
 
 void GraphicsEngine::ChangeMainRenderTarget()

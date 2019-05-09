@@ -48,9 +48,14 @@ public:
 	 *@brief	描画終了。
 	 */
 	void EndRender();
-	/*void SetShadowMap(ShadowMap shadowMap) {
-		m_shadowMap = shadowMap;
-	}*/
+	// エフェクトのマネージャークラスの取得
+	// エフェクトのマネージャークラス（Effekseer::Manager*）
+	Effekseer::Manager* GetEffekseerManager()
+	{
+		return m_effekseerManager;
+	}
+	void EffectDraw();
+
 	ShadowMap* GetShadowMap() {
 		return &m_shadowMap;
 	}
@@ -117,6 +122,10 @@ private:
 	D3D11_VIEWPORT m_frameBufferViewports;			//フレームバッファのビューポート。
 	ID3D11RenderTargetView* m_frameBufferRenderTargetView = nullptr;	//フレームバッファのレンダリングターゲットビュー。
 	ID3D11DepthStencilView* m_frameBufferDepthStencilView = nullptr;	//フレームバッファのデプスステンシルビュー。
+
+	Effekseer::Manager*	m_effekseerManager = nullptr;	//エフェクトマネージャークラス
+	EffekseerRenderer::Renderer*	m_effekseerRenderer = nullptr;  //エフェクトレンダラークラス
+
 };
 
 extern GraphicsEngine* g_graphicsEngine;			//グラフィックスエンジン
