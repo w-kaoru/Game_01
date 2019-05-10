@@ -1,6 +1,7 @@
 #pragma once
 #include "character/CharacterController.h"
 #include "EnStateMachine.h"
+#include "CharacterStatus.h"
 class Player;
 class BattleHit;
 class Enemy:public IGameObject
@@ -47,15 +48,6 @@ public:
 	{
 		m_type = type;
 	}
-	void SetATK(float atk)
-	{
-		m_atk = atk;
-	}
-	void SetHP(float hp)
-	{
-		m_hp = hp;
-	}
-
 	float GetPlLen()
 	{
 		return m_toPlayerLen;
@@ -75,7 +67,7 @@ public:
 	}
 	float GetSPD()
 	{
-		return m_spd;
+		return m_status.GetAgi();
 	}
 private:
 	Player* m_player = nullptr;							//プレイヤー
@@ -102,9 +94,10 @@ private:
 	bool attackFlag = false;
 	bool m_isDeath = false;
 	//エネミーのステイタス
-	float m_hp = 10.0f;			//体力
-	float m_atk = 0.0f;			//攻撃力
-	float m_spd = 0.0f;
+	CharacterStatus m_status;
+	//float m_hp = 10.0f;			//体力
+	//float m_atk = 0.0f;			//攻撃力
+	//float m_spd = 0.0f;
 	int m_atkAnimStart = 30;
 	int m_atkHit = 0;
 

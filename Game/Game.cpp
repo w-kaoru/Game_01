@@ -61,8 +61,6 @@ bool Game::Start()
 			m_enemy->SetEnemyType(Enemy::EnemyType::type_skeleton);
 			m_enemy->SetPosition(objData.position);
 			m_enemy->SetRotation(objData.rotation);
-			m_enemy->SetHP(10.0f);
-			m_enemy->SetATK(1.5f);
 			m_enemy->SetPlayer(m_player);
 			m_enemyList.push_back(m_enemy);
 			return true;
@@ -78,8 +76,6 @@ bool Game::Start()
 			m_enemy->SetEnemyType(Enemy::EnemyType::type_troll);
 			m_enemy->SetPosition(objData.position);
 			m_enemy->SetRotation(objData.rotation);
-			m_enemy->SetHP(15.0f);
-			m_enemy->SetATK(2.0f);
 			m_enemy->SetPlayer(m_player);
 			m_enemyList.push_back(m_enemy);
 			return true;

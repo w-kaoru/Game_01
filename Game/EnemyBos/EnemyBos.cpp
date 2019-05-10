@@ -29,8 +29,12 @@ bool EnemyBos::Start()
 {
 	//m_model.Init(L"Assets/modelData/enemy.cmo");
 
-	m_hp = 20.0f;
-	m_atk = 15.0f;
+	//ステータスの設定
+	m_status.SetLv(1);
+	m_status.SetHp(20.0f);
+	m_status.SetAgi(500.0f);
+	m_status.SetDef(3.0f);
+	m_status.SetAtk(15.0f);
 	m_model.Init(L"Assets/modelData/enemy_Bos.cmo");
 	m_model.SetNormalMap(m_normalMapSRV);
 	//tkaファイルの読み込み。
@@ -140,7 +144,7 @@ void EnemyBos::Attack()
 		hit.y += 50.0f;
 		hit += m_forward * 50.0f;
 		//攻撃をヒットさせる。
-		g_battleController->Hit(hit, m_atk, BattleHit::player);
+		g_battleController->Hit(hit, m_status.GetAtk(), BattleHit::player);
 		//攻撃の間隔を0に戻す。
 		m_AttackTiming = 0;
 	}
@@ -151,7 +155,9 @@ void EnemyBos::Damage(float damage)
 {
 	m_se_damade.Play(false);
 	//攻撃をくらったのでHPからくらった分を引く
-	m_hp -= damage;
+	float hp = m_status.GetHp();
+	hp = (hp + m_status.GetDef()) - damage;
+	m_status.SetHp(hp);
 }
 
 //HPを表示するスプライトのための関係。
@@ -177,7 +183,7 @@ void EnemyBos::HP_Gauge()
 		m_Sprite_angle.SetRotationDeg(CVector3::AxisY()*-1, angle);
 	}
 	//HPスプライトの更新
-	m_hpSprite.Update(pos, m_Sprite_angle, { m_hp / 10, 1.0f, 1.0f });
+	m_hpSprite.Update(pos, m_Sprite_angle, { m_status.GetHp() / 10, 1.0f, 1.0f });
 	//HPスプライトの表示
 	m_hpSprite.Draw(
 		g_camera3D.GetViewMatrix(),
@@ -202,7 +208,7 @@ void EnemyBos::Update()
 	m_model.UpdateWorldMatrix(m_position, m_rotation, { 1.0f, 1.0f, 1.0f });
 	//アニメーションを流す。
 	m_animation.Update(1.0f / 30.0f);
-	if (m_hp <= 0.01f) {
+	if (m_status.GetHp() <= 0.01f) {
 		g_gameObjM->DeleteGO(g_gameObjM->FindGO<Game>());
 		g_gameObjM->NewGO<GameEnd>()->SetGameEnd(GameEnd::GameEndState::gameCleared);
 	}

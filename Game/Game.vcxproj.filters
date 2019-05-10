@@ -145,6 +145,7 @@
     <ClCompile Include="EnemyBos\EnemyBosStateMove.cpp" />
     <ClCompile Include="EnemyBos\IEnemyBosState.cpp" />
     <ClCompile Include="GameEnd.cpp" />
+    <ClCompile Include="CharacterStatus.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -271,6 +272,7 @@
     <ClInclude Include="EnemyBos\EnemyBosStateMove.h" />
     <ClInclude Include="EnemyBos\IEnemyBosState.h" />
     <ClInclude Include="GameEnd.h" />
+    <ClInclude Include="CharacterStatus.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\background.FBX">

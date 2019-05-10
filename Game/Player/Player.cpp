@@ -47,10 +47,13 @@ Player::~Player()
 bool Player::Start()
 {
 	//ステータスの設定
-	//m_status.Lv = 1;
 	m_hpFrame = 6;
-	m_hp = 60;
-	m_agi = 1000.0f; //400.0f;			//素早さ
+	m_status.SetLv(1);
+	m_status.SetHp(60);
+	m_status.SetAgi(1000.0f);
+	m_status.SetDef(1.0f);
+	m_status.SetAtk(3.5f);
+	m_maxHp = m_status.GetHp();
 	//ポジションを少し上にしておく。
 	m_position.y = 200.0f;
 	//初期のポジションを設定してリスポーン地点にする。
@@ -89,9 +92,9 @@ void Player::Move()
 	m_moveSpeed.x = 0.0f;
 	m_moveSpeed.z = 0.0f;
 	//奥方向への移動速度を代入。
-	m_moveSpeed += cameraForward * lStick_y * m_agi;
+	m_moveSpeed += cameraForward * lStick_y * m_status.GetAgi();
 	//右方向への移動速度を加算。
-	m_moveSpeed += cameraRight * lStick_x * m_agi;
+	m_moveSpeed += cameraRight * lStick_x * m_status.GetAgi();
 	//キャラコンを使って移動する。
 	m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
 	//向きを変える。
@@ -122,7 +125,7 @@ void Player::Attack()
 		//攻撃されてからあたったタイミングで攻撃したい（簡易版）
 		if (m_hitTiming == 12) {
 			//攻撃をヒットさせる。
-			g_battleController->Hit(m_attckPos, 3.5f, BattleHit::enemy);
+			g_battleController->Hit(m_attckPos, m_status.GetAtk(), BattleHit::enemy);
 		}
 		if (m_animation.IsPlaying() == false) {
 			m_atkAnim = false;
@@ -151,7 +154,7 @@ void Player::HP_Gauge()
 	m_hpSprite.Update(
 		{ -640.0f,350.0f, 0.0f },
 		CQuaternion::Identity(),
-		{ m_hp / 10, 1.5f, 1.0f },
+		{ m_status.GetHp() / 10, 1.5f, 1.0f },
 		{ 0.0f,1.0f }
 	);
 	//スプライトを２次元で表示をする。
@@ -171,17 +174,27 @@ void Player::Damage(float Enatk)
 {
 	m_se.Play(false);
 	//攻撃をくらったのでHPからくらった分を引く
-	m_hp -= Enatk;
+	float hp = m_status.GetHp();
+	hp = (hp + m_status.GetDef()) - Enatk;
+	m_status.SetHp(hp);
 }
 
 void Player::Update()
 {
+	if (m_exp > 2 * m_status.GetLv()) {
+		m_status.SetHp(m_maxHp);
+		int lv = m_status.GetLv();
+		lv++;
+		m_status.SetLv(lv);
+		m_status.LvUp();
+		m_exp = 0;
+	}
 	//ステートマシンの更新。
 	m_stMa.Update();
 	//m_model.SetShadowReciever(true);
 
 	//死亡の判定
-	if (m_hp <= 0.0f) {
+	if (m_status.GetHp() <= 0.0f) {
 		g_gameObjM->DeleteGO(g_gameObjM->FindGO<Game>());
 		g_gameObjM->NewGO<GameEnd>()->SetGameEnd(GameEnd::GameEndState::gameOver);
 	}

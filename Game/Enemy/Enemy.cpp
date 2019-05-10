@@ -30,7 +30,7 @@ bool Enemy::Start()
 {
 	//m_model.Init(L"Assets/modelData/enemy.cmo");
 
-	m_spd = 500.0f;
+	//m_spd = 500.0f;
 	switch (m_type)
 	{
 	case type_skeleton:
@@ -49,6 +49,12 @@ bool Enemy::Start()
 		m_scale *= 2.0f;
 		//攻撃を当てるタイミング
 		m_atkHit = 45;
+		//ステータスの設定
+		m_status.SetLv(5);
+		m_status.SetHp(10.0f);
+		m_status.SetAgi(550.0f);
+		m_status.SetDef(1.0f);
+		m_status.SetAtk(1.5f);
 		break;
 	case type_troll:
 		m_model.Init(L"Assets/modelData/TrollGiant.cmo");
@@ -65,8 +71,15 @@ bool Enemy::Start()
 		m_scale *= 90.0f;
 		//攻撃を当てるタイミング
 		m_atkHit = 40;
+		//ステータスの設定
+		m_status.SetLv(1);
+		m_status.SetHp(15.0f);
+		m_status.SetAgi(550.0f);
+		m_status.SetDef(1.0f);
+		m_status.SetAtk(2.0f);
 		break;
 	}
+	m_status.LvUp();
 	//アニメーションの初期化。
 	m_animation.Init(
 		m_model,			//アニメーションを流すスキンモデル。
@@ -99,8 +112,6 @@ bool Enemy::Start()
 		g_graphicsEngine->GetEffekseerManager(),
 		(const EFK_CHAR*)L"Assets/effect/death.efk"
 	);
-
-
 	return true;
 }
 
@@ -172,7 +183,7 @@ void Enemy::Attack()
 		hit.y += 50.0f;
 		hit += m_forward * 50.0f;
 		//攻撃をヒットさせる。
-		g_battleController->Hit(hit, m_atk, BattleHit::player);
+		g_battleController->Hit(hit, m_status.GetAtk(), BattleHit::player);
 		//攻撃の間隔を0に戻す。
 		m_AttackTiming = 0;
 	}
@@ -182,7 +193,9 @@ void Enemy::Damage(float damage)
 {
 	m_se_damade.Play(false);
 	//攻撃をくらったのでHPからくらった分を引く
-	m_hp -= damage;
+	float hp = m_status.GetHp();
+	hp = (hp + m_status.GetDef()) - damage;
+	m_status.SetHp(hp);
 }
 
 //HPを表示するスプライトのための関係。
@@ -208,7 +221,7 @@ void Enemy::HP_Gauge()
 		m_Sprite_angle.SetRotationDeg(CVector3::AxisY()*-1, angle);
 	}
 	//HPスプライトの更新
-	m_hpSprite.Update(pos, m_Sprite_angle, { m_hp / 10, 1.0f, 1.0f });
+	m_hpSprite.Update(pos, m_Sprite_angle, { m_status.GetHp() / 10, 1.0f, 1.0f });
 	//HPスプライトの表示
 	m_hpSprite.Draw(
 		g_camera3D.GetViewMatrix(),
@@ -224,15 +237,14 @@ void Enemy::Update()
 		//ステートマシンの更新
 		m_ensm.Update();
 		
-		if (m_hp <= 0.01f&&m_isDeath == false) {
+		if (m_status.GetHp() <= 0.01f&&m_isDeath == false) {
 			m_isDeath = true;
 			m_effectPos = m_position;
-			//再生中のエフェクトを止める。
-			//g_graphicsEngine->GetEffekseerManager()->StopEffect(m_playEffectHandle);
-			//再生。
+			//エフェクトの再生。
 			m_playEffectHandle = g_graphicsEngine->GetEffekseerManager()->Play(
 				m_effect, m_effectPos.x, m_effectPos.y+100.0f, m_effectPos.z
 			);
+			//エフェクトの拡大率。
 			g_graphicsEngine->GetEffekseerManager()->SetScale(
 				m_playEffectHandle,
 				20.0f, 20.0f, 20.0f
@@ -240,6 +252,7 @@ void Enemy::Update()
 			m_position.y = -10000.0f;
 			m_charaCon.SetPosition(m_position);
 			g_gameObjM->FindGO<Game>()->EnemyDeath();
+			m_player->EXP();
 		}
 		//重力加速度
 		m_moveSpeed.y -= 9800.0f * (1.0f / 60.0f);

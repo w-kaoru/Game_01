@@ -1,6 +1,7 @@
 #pragma once
 #include "character/CharacterController.h"
 #include "EnemyBosStateMachine.h"
+#include "../CharacterStatus.h"
 class Player;
 class BattleHit;
 class EnemyBos :public IGameObject
@@ -55,6 +56,10 @@ public:
 	{
 		return m_forward;
 	}
+	float GetAgi() 
+	{
+		return m_status.GetAgi();
+	}
 private:
 	Player* m_player = nullptr;							//プレイヤー
 	//MoveState movestate = idle;
@@ -78,6 +83,7 @@ private:
 	int m_AttackTiming = 0;		//攻撃するタイミング
 	bool attackFlag = false;
 	//エネミーのステイタス
-	float m_hp = 0.0f;			//体力
-	float m_atk = 0.0f;			//攻撃力
+	CharacterStatus m_status;
+	//float m_hp = 0.0f;			//体力
+	//float m_atk = 0.0f;			//攻撃力
 };

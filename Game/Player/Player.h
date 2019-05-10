@@ -2,8 +2,8 @@
 #include "character/CharacterController.h"
 #include "PlayerState.h"
 #include "PlStateMachine.h"
+#include "CharacterStatus.h"
 
-class GameCamera;
 class Player :public IGameObject
 {
 public:
@@ -39,6 +39,10 @@ public:
 	{
 		m_animation.Play(state, 0.2f);
 	}
+	void EXP()
+	{
+		m_exp++;
+	}
 private:
 	SkinModel m_model;									//スキンモデル。
 	//SkinModel m_model_01;									//スキンモデル。
@@ -57,17 +61,14 @@ private:
 	Sprite m_hpSprite;		//hpゲージ
 	Sprite m_hpFrameSprite;	//hpゲージの枠
 	const BattleHit* m_hit;
-	//BattleController* m_battle = nullptr;
 	bool m_atkAnim = false;
 	int m_hitTiming = 0;		//ダメージを受けるタイミング
-	//プレイヤーのステイタス
-	//int Lv = 0;				//レベル
-	float m_hp = 0.0f;			//体力
+	CharacterStatus m_status;	//プレイヤーのステイタス
+	float m_maxHp = 0.0f;
 	float m_hpFrame = 0.0f;		//体力の枠
-	float m_agi = 0.0f;			//素早さ
-	int ki = 0;
 	float m_HpScaleX = 100.0f;	//HPのスプライトの横幅
 	float m_HpScaleY = 10.0f;	//HPのスプライトの縦幅
+	int m_exp = 0.0f;
 
 	CSoundSource m_se;						//SE。
 };
