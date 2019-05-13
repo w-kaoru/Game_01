@@ -226,7 +226,9 @@
     <ClCompile Include="sound\WaveFileBank.cpp">
       <Filter>sound</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\font.cpp" />
+    <ClCompile Include="graphics\font.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -422,7 +424,9 @@
     <ClInclude Include="sound\WaveFileBank.h">
       <Filter>sound</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\font.h" />
+    <ClInclude Include="graphics\font.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\enpath2.fbx">
