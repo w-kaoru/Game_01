@@ -61,7 +61,7 @@ private:
 	CVector3 m_attckPos = CVector3::Zero();		//攻撃の場所。
 	Sprite m_hpSprite;		//hpゲージ
 	Sprite m_hpFrameSprite;	//hpゲージの枠
-	float m_HpScaleX = 100.0f;	//HPのスプライトの横幅
+	float m_HpScaleX = 40.0f;	//HPのスプライトの横幅
 	float m_HpScaleY = 15.0f;	//HPのスプライトの縦幅
 	const BattleHit* m_hit;
 	bool m_atkAnim = false;

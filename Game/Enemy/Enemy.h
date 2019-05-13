@@ -69,6 +69,10 @@ public:
 	{
 		return m_status.GetAgi();
 	}
+	//ステータスのセッター
+	void SetLv(int lv) {
+		m_status.SetLv(lv);
+	}
 private:
 	Player* m_player = nullptr;							//プレイヤー
 	//MoveState movestate = idle;

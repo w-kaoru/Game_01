@@ -425,9 +425,6 @@
     <ClInclude Include="graphics\font.h" />
   </ItemGroup>
   <ItemGroup>
-    <MeshContentTask Include="Assets\modelData\background.FBX">
-      <Filter>Assets\modelData</Filter>
-    </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\enpath2.fbx">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>

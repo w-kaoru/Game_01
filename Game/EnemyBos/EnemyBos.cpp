@@ -30,7 +30,6 @@ bool EnemyBos::Start()
 	//m_model.Init(L"Assets/modelData/enemy.cmo");
 
 	//ステータスの設定
-	m_status.SetLv(4);
 	m_status.SetHp(20.0f);
 	m_status.SetAgi(500.0f);
 	m_status.SetDef(3.0f);
@@ -99,12 +98,10 @@ void EnemyBos::Search()
 	//fabsfは絶対値を求める関数！
 	//角度はマイナスが存在するから、絶対値にする。
 	// /*
-	if (fabsf(angle) < CMath::DegToRad(60.0f)) {
-		if (m_toPlayerLen <= 150.0) {
-			//プレイヤーとの距離が一定以下で
-			//攻撃関数をよべー。
-			Attack();
-		}
+	if (m_toPlayerLen <= 170.0) {
+		//プレイヤーとの距離が一定以下で
+		//攻撃関数をよべー。
+		Attack();
 	}
 	// */
 	if (attackFlag == true) {
@@ -117,7 +114,7 @@ void EnemyBos::Search()
 	else
 	{
 		//攻撃アニメーションが再生されてない時
-		if (m_toPlayerLen > 130.0f && m_toPlayerLen < 1300.0f) {
+		if (m_toPlayerLen > 150.0f && m_toPlayerLen < 1300.0f) {
 			//歩きアニメーションの再生するためにステートの変更
 			m_enbos_stm.Change(EnemyBosState::MoveState::move);
 		}

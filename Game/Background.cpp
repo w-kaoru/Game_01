@@ -4,7 +4,7 @@
 
 Background::Background()
 {
-	m_model.Init(L"Assets/modelData/background.cmo");
+	m_model.Init(L"Assets/modelData/Dungeon.cmo");
 	
 	m_model.UpdateWorldMatrix(CVector3::Zero(), CQuaternion::Identity(), CVector3::One());
 

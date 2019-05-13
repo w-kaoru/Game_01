@@ -19,6 +19,7 @@ public:
 		else {
 			m_lvUp * 1.0f;
 		}
+		m_hp = m_standardHp * m_lvUp;
 		m_atk = m_standardAtk * m_lvUp;
 		m_def = m_standardDef * m_lvUp;
 		//m_agi = m_standardAgi * m_lvUp;
@@ -37,6 +38,7 @@ public:
 	void SetHp(float hp)
 	{
 		m_hp = hp;
+		m_standardHp = hp;
 	}
 	void SetAtk(float atk)
 	{
@@ -92,6 +94,7 @@ private:
 	float	m_lvUp = 0.0f;	
 	int		m_maxLv = 100.0f;//レベルの最大値
 	//基準のステータス
+	float	m_standardHp = 0.0f;	//体力
 	float	m_standardAtk = 0.0f;	//攻撃力
 	float	m_standardDef = 0.0f;	//硬さ
 	float	m_standardAgi = 0.0f;	//素早さ

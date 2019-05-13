@@ -49,11 +49,10 @@ bool Enemy::Start()
 		m_scale *= 2.0f;
 		//攻撃を当てるタイミング
 		m_atkHit = 45;
-		//ステータスの設定
-		m_status.SetLv(3);
+		//エネミーの基礎ステータス。
 		m_status.SetHp(10.0f);
 		m_status.SetAgi(550.0f);
-		m_status.SetDef(1.3f);
+		m_status.SetDef(1.5f);
 		m_status.SetAtk(3.0f);
 		break;
 	case type_troll:
@@ -71,11 +70,10 @@ bool Enemy::Start()
 		m_scale *= 90.0f;
 		//攻撃を当てるタイミング
 		m_atkHit = 40;
-		//ステータスの設定
-		m_status.SetLv(3);
+		//エネミーの基礎ステータス。
 		m_status.SetHp(15.0f);
 		m_status.SetAgi(550.0f);
-		m_status.SetDef(1.5f);
+		m_status.SetDef(2.0f);
 		m_status.SetAtk(4.0f);
 		break;
 	}
@@ -139,12 +137,10 @@ void Enemy::Search()
 	//視野角判定
 	//fabsfは絶対値を求める関数！
 	//角度はマイナスが存在するから、絶対値にする。
-	if (fabsf(angle) < CMath::DegToRad(60.0f)) {
-		if (m_toPlayerLen <= 150.0) {
-			//プレイヤーとの距離が一定以下で
-			//攻撃関数をよべー。
-			Attack();
-		}
+	if (m_toPlayerLen <= 160.0) {
+		//プレイヤーとの距離が一定以下で
+		//攻撃関数をよべー。
+		Attack();
 	}
 	if (attackFlag == true) {
 		//攻撃アニメーションが終了したら。

@@ -63,6 +63,20 @@ bool Game::Start()
 			m_enemy->SetRotation(objData.rotation);
 			m_enemy->SetPlayer(m_player);
 			m_enemyList.push_back(m_enemy);
+			//エネミーのレベル
+			m_enemy->SetLv(3);
+			return true;
+		}
+		if (objData.EqualName(L"enpath2") == true) {
+			//エネミー！！！
+			m_enemy = g_gameObjM->NewGO<Enemy>(0);
+			m_enemy->SetEnemyType(Enemy::EnemyType::type_troll);
+			m_enemy->SetPosition(objData.position);
+			m_enemy->SetRotation(objData.rotation);
+			m_enemy->SetPlayer(m_player);
+			m_enemyList.push_back(m_enemy);
+			//エネミーのレベル
+			m_enemy->SetLv(3);
 			return true;
 		}
 		return false;
@@ -73,11 +87,25 @@ bool Game::Start()
 		if (objData.EqualName(L"enpath") == true) {
 			//エネミー！！！
 			m_enemy = g_gameObjM->NewGO<Enemy>(0);
+			m_enemy->SetEnemyType(Enemy::EnemyType::type_skeleton);
+			m_enemy->SetPosition(objData.position);
+			m_enemy->SetRotation(objData.rotation);
+			m_enemy->SetPlayer(m_player);
+			m_enemyList.push_back(m_enemy);
+			//エネミーのレベル
+			m_enemy->SetLv(7);
+			return true;
+		}
+		if (objData.EqualName(L"enpath2") == true) {
+			//エネミー！！！
+			m_enemy = g_gameObjM->NewGO<Enemy>(0);
 			m_enemy->SetEnemyType(Enemy::EnemyType::type_troll);
 			m_enemy->SetPosition(objData.position);
 			m_enemy->SetRotation(objData.rotation);
 			m_enemy->SetPlayer(m_player);
 			m_enemyList.push_back(m_enemy);
+			//エネミーのレベル
+			m_enemy->SetLv(6);
 			return true;
 		}
 		return false;
@@ -92,7 +120,6 @@ bool Game::Start()
 	m_bgm.Play(true);
 	m_bgm.SetVolume(0.17f);
 	m_bgm_bos.SetVolume(0.17f);
-	//m_enemyDeath = m_enemyList.size();
 	return false;
 }
 
@@ -116,6 +143,7 @@ void Game::Update()
 				m_enemyBos->SetPosition(objData.position);
 				m_enemyBos->SetRotation(objData.rotation);
 				m_enemyBos->GetPlayer(m_player);
+				m_enemyBos->SetLv(7);
 				return true;
 			}
 			return false;

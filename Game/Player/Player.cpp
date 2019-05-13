@@ -53,8 +53,9 @@ bool Player::Start()
 	m_status.SetAgi(1000.0f);
 	m_status.SetDef(1.0f);
 	m_status.SetAtk(4.5f);
-	m_status.SetMaxLv(5);
+	m_status.SetMaxLv(9);
 	m_maxHp = m_status.GetHp();
+	m_status.StatusUp();
 	//ポジションを少し上にしておく。
 	m_position.y = 200.0f;
 	//初期のポジションを設定してリスポーン地点にする。
@@ -144,7 +145,7 @@ void Player::Attack()
 //HPを表示するスプライトのための関係。
 void Player::HP_Gauge()
 {
-	float w = -530.0f;
+	float w = -500.0f;
 	float h = 350.0f;
 	//スプライトの更新
 	m_hpFrameSprite.Update(
@@ -186,13 +187,14 @@ void Player::Update()
 {
 	int lv = m_status.GetLv();
 	//経験値
-	int exp = 3 * lv;
-	if (m_exp > exp) {
+	int exp = lv;
+	if (m_exp >= exp) {
 		if (lv < m_status.GetMaxLv()) {
 			m_status.SetHp(m_maxHp);
 			m_status.SetLv(lv);
 			m_status.LvUp();
 			m_status.StatusUp();
+			m_hpFrame = m_status.GetHp()/10;
 			m_exp = 0;
 		}
 	}
@@ -248,16 +250,30 @@ void Player::Draw()
 void Player::PostDraw()
 {
 	m_font.BeginDraw();	//フォントの描画開始。
-	wchar_t Seconds[256];
-	swprintf_s(Seconds, L"Lv.%d", m_status.GetLv());
-	m_font.Draw(
-		Seconds,
-		{ -640.0f, 360.0f },
-		{ 0.0f,1.0f,0.0f,1.0f },
-		0.0f,
-		1.0f,
-		{ 1.0f, 1.0f }
-	);
+	if (m_status.GetLv() < m_status.GetMaxLv()) {
+		wchar_t Seconds[256];
+		swprintf_s(Seconds, L"Lv.%d", m_status.GetLv());
+		m_font.Draw(
+			Seconds,
+			{ -640.0f, 360.0f },
+			{ 0.0f,1.0f,0.0f,1.0f },
+			0.0f,
+			1.0f,
+			{ 1.0f, 1.0f }
+		);
+	}
+	else {
+		wchar_t Seconds[256];
+		swprintf_s(Seconds, L"Lv.Max");
+		m_font.Draw(
+			Seconds,
+			{ -640.0f, 360.0f },
+			{ 0.0f,1.0f,0.0f,1.0f },
+			0.0f,
+			1.0f,
+			{ 1.0f, 1.0f }
+		);
+	}
 	m_font.EndDraw();
 	//スプライトの描画。
 	HP_Gauge();

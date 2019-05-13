@@ -244,7 +244,6 @@
     <ClInclude Include="Title.h" />
   </ItemGroup>
   <ItemGroup>
-    <MeshContentTask Include="Assets\modelData\background.FBX" />
     <MeshContentTask Include="Assets\modelData\Dungeon.FBX" />
     <MeshContentTask Include="Assets\modelData\enemy_01.FBX" />
     <MeshContentTask Include="Assets\modelData\enemy_Bos.FBX" />
