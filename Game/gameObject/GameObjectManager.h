@@ -1,6 +1,6 @@
 #pragma once
 #include "IGameObject.h"
-#include "../Render/Sprite.h"
+#include "../graphics/Sprite.h"
 
 class GameObjectManager
 {

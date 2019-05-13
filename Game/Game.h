@@ -6,7 +6,7 @@
 //#include "GameCamera.h"
 #include "Enemy\Enemy.h"
 #include "EnemyBos/EnemyBos.h"
-#include "Render\RenderTarget.h"
+#include "graphics\RenderTarget.h"
 #include "graphics\SkinModel.h"
 
 

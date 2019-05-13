@@ -1,7 +1,7 @@
 #pragma once
-#include "../Render\ShadowMap.h"
-#include "../Render/PostEffect.h"
-#include "../Render/Sprite.h"
+#include "ShadowMap.h"
+#include "PostEffect.h"
+#include "Sprite.h"
 // レンダリングモード。
 enum EnRenderMode {
 	enRenderMode_Invalid,			//不正なレンダリングモード。

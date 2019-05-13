@@ -31,6 +31,24 @@
     <Filter Include="system">
       <UniqueIdentifier>{48b58c60-bbe2-40d8-9d2f-e81d065b6820}</UniqueIdentifier>
     </Filter>
+    <Filter Include="EnemyBos">
+      <UniqueIdentifier>{77b38996-6843-413d-8561-3ff3101de746}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\sprite">
+      <UniqueIdentifier>{9e6c9fb4-1863-4f8c-8677-8598c6fb5528}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gameObject">
+      <UniqueIdentifier>{88ac6501-2b82-4e7b-806a-92c54b4eb2f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EnemyBos\Enemy">
+      <UniqueIdentifier>{1a3c95c4-de7a-4f08-8fc2-863e430a23d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EnemyBos\Enemy\Player">
+      <UniqueIdentifier>{cdca7448-da27-409c-8d4d-ba6dc025f327}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sound">
+      <UniqueIdentifier>{7ebc0864-61f7-48ec-98fc-a892180bc442}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -41,8 +59,6 @@
     <ClCompile Include="character\CharacterController.cpp">
       <Filter>character</Filter>
     </ClCompile>
-    <ClCompile Include="gameObject\GameObjectManager.cpp" />
-    <ClCompile Include="gameObject\IGameObject.cpp" />
     <ClCompile Include="graphics\animation\Animation.cpp">
       <Filter>graphics\animation</Filter>
     </ClCompile>
@@ -109,43 +125,107 @@
     <ClCompile Include="system\system.cpp">
       <Filter>system</Filter>
     </ClCompile>
-    <ClCompile Include="Player\Player.cpp" />
-    <ClCompile Include="Player\PlStateIdle.cpp" />
-    <ClCompile Include="Player\PlStateMachine.cpp" />
-    <ClCompile Include="Player\PlStateRun.cpp" />
-    <ClCompile Include="Player\IPlState.cpp" />
-    <ClCompile Include="Enemy\EnStateIdle.cpp" />
-    <ClCompile Include="Enemy\EnStateMachine.cpp" />
-    <ClCompile Include="Enemy\EnStateMove.cpp" />
-    <ClCompile Include="Enemy\IEnState.cpp" />
-    <ClCompile Include="Enemy\Enemy.cpp" />
-    <ClCompile Include="Render\RenderTarget.cpp" />
-    <ClCompile Include="Render\ShadowMap.cpp" />
-    <ClCompile Include="Player\PlStateAttack.cpp" />
     <ClCompile Include="LightCamera.cpp" />
-    <ClCompile Include="sound\SoundEngine.cpp" />
-    <ClCompile Include="sound\SoundSource.cpp" />
-    <ClCompile Include="sound\WaveFile.cpp" />
-    <ClCompile Include="sound\WaveFileBank.cpp" />
-    <ClCompile Include="Render\Bloom.cpp" />
-    <ClCompile Include="Render\PostEffect.cpp" />
-    <ClCompile Include="Render\GaussianBlur.cpp" />
-    <ClCompile Include="Render\ConstantBufferGPU.cpp" />
-    <ClCompile Include="Render\Sprite.cpp" />
     <ClCompile Include="HID\Pad.cpp">
       <Filter>HID</Filter>
     </ClCompile>
     <ClCompile Include="BattleController.cpp" />
     <ClCompile Include="BattleHit.cpp" />
-    <ClCompile Include="Enemy\EnStateAttack.cpp" />
-    <ClCompile Include="EnemyBos\EnemyBos.cpp" />
-    <ClCompile Include="EnemyBos\EnemyBosStateAttack.cpp" />
-    <ClCompile Include="EnemyBos\EnemyBosStateIdle.cpp" />
-    <ClCompile Include="EnemyBos\EnemyBosStateMachine.cpp" />
-    <ClCompile Include="EnemyBos\EnemyBosStateMove.cpp" />
-    <ClCompile Include="EnemyBos\IEnemyBosState.cpp" />
     <ClCompile Include="GameEnd.cpp" />
     <ClCompile Include="CharacterStatus.cpp" />
+    <ClCompile Include="Enemy\Enemy.cpp">
+      <Filter>EnemyBos\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\EnStateAttack.cpp">
+      <Filter>EnemyBos\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\EnStateIdle.cpp">
+      <Filter>EnemyBos\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\EnStateMachine.cpp">
+      <Filter>EnemyBos\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\EnStateMove.cpp">
+      <Filter>EnemyBos\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyBos\EnemyBos.cpp">
+      <Filter>EnemyBos</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyBos\EnemyBosStateAttack.cpp">
+      <Filter>EnemyBos</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyBos\EnemyBosStateIdle.cpp">
+      <Filter>EnemyBos</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyBos\EnemyBosStateMachine.cpp">
+      <Filter>EnemyBos</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyBos\EnemyBosStateMove.cpp">
+      <Filter>EnemyBos</Filter>
+    </ClCompile>
+    <ClCompile Include="gameObject\GameObjectManager.cpp">
+      <Filter>gameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="gameObject\IGameObject.cpp">
+      <Filter>gameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\Player.cpp">
+      <Filter>EnemyBos\Enemy\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\PlStateAttack.cpp">
+      <Filter>EnemyBos\Enemy\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\PlStateIdle.cpp">
+      <Filter>EnemyBos\Enemy\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\PlStateMachine.cpp">
+      <Filter>EnemyBos\Enemy\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\PlStateRun.cpp">
+      <Filter>EnemyBos\Enemy\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\Bloom.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\ConstantBufferGPU.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\GaussianBlur.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\PostEffect.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\RenderTarget.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\ShadowMap.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\Sprite.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\IPlState.cpp">
+      <Filter>EnemyBos\Enemy\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\IEnState.cpp">
+      <Filter>EnemyBos\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyBos\IEnemyBosState.cpp">
+      <Filter>EnemyBos</Filter>
+    </ClCompile>
+    <ClCompile Include="sound\SoundEngine.cpp">
+      <Filter>sound</Filter>
+    </ClCompile>
+    <ClCompile Include="sound\SoundSource.cpp">
+      <Filter>sound</Filter>
+    </ClCompile>
+    <ClCompile Include="sound\WaveFile.cpp">
+      <Filter>sound</Filter>
+    </ClCompile>
+    <ClCompile Include="sound\WaveFileBank.cpp">
+      <Filter>sound</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -155,8 +235,6 @@
     <ClInclude Include="character\CharacterController.h">
       <Filter>character</Filter>
     </ClInclude>
-    <ClInclude Include="gameObject\GameObjectManager.h" />
-    <ClInclude Include="gameObject\IGameObject.h" />
     <ClInclude Include="graphics\animation\Animation.h">
       <Filter>graphics\animation</Filter>
     </ClInclude>
@@ -232,69 +310,171 @@
     <ClInclude Include="system\system.h">
       <Filter>system</Filter>
     </ClInclude>
-    <ClInclude Include="Player\Player.h" />
-    <ClInclude Include="Player\PlayerState.h" />
-    <ClInclude Include="Player\PlStateIdle.h" />
-    <ClInclude Include="Player\PlStateMachine.h" />
-    <ClInclude Include="Player\PlStateRun.h" />
-    <ClInclude Include="Player\IPlState.h" />
-    <ClInclude Include="Enemy\EnemyState.h" />
-    <ClInclude Include="Enemy\EnStateIdle.h" />
-    <ClInclude Include="Enemy\EnStateMachine.h" />
-    <ClInclude Include="Enemy\EnStateMove.h" />
-    <ClInclude Include="Enemy\IEnState.h" />
-    <ClInclude Include="Enemy\Enemy.h" />
-    <ClInclude Include="Render\RenderTarget.h" />
-    <ClInclude Include="Render\ShadowMap.h" />
-    <ClInclude Include="Player\PlStateAttack.h" />
     <ClInclude Include="LightCamera.h" />
-    <ClInclude Include="sound\SoundEngine.h" />
-    <ClInclude Include="sound\SoundSource.h" />
-    <ClInclude Include="sound\WaveFile.h" />
-    <ClInclude Include="sound\WaveFileBank.h" />
-    <ClInclude Include="Render\Bloom.h" />
-    <ClInclude Include="Render\PostEffect.h" />
-    <ClInclude Include="Render\GaussianBlur.h" />
-    <ClInclude Include="Render\ConstantBufferGPU.h" />
-    <ClInclude Include="Render\Sprite.h" />
     <ClInclude Include="Noncopyable.h" />
     <ClInclude Include="HID\Pad.h">
       <Filter>HID</Filter>
     </ClInclude>
     <ClInclude Include="BattleController.h" />
     <ClInclude Include="BattleHit.h" />
-    <ClInclude Include="Enemy\EnStateAttack.h" />
-    <ClInclude Include="EnemyBos\EnemyBos.h" />
-    <ClInclude Include="EnemyBos\EnemyBosState.h" />
-    <ClInclude Include="EnemyBos\EnemyBosStateAttack.h" />
-    <ClInclude Include="EnemyBos\EnemyBosStateIdle.h" />
-    <ClInclude Include="EnemyBos\EnemyBosStateMachine.h" />
-    <ClInclude Include="EnemyBos\EnemyBosStateMove.h" />
-    <ClInclude Include="EnemyBos\IEnemyBosState.h" />
     <ClInclude Include="GameEnd.h" />
     <ClInclude Include="CharacterStatus.h" />
+    <ClInclude Include="Enemy\Enemy.h">
+      <Filter>EnemyBos\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\EnemyState.h">
+      <Filter>EnemyBos\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\EnStateAttack.h">
+      <Filter>EnemyBos\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\EnStateIdle.h">
+      <Filter>EnemyBos\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\EnStateMachine.h">
+      <Filter>EnemyBos\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\EnStateMove.h">
+      <Filter>EnemyBos\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyBos\EnemyBos.h">
+      <Filter>EnemyBos</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyBos\EnemyBosState.h">
+      <Filter>EnemyBos</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyBos\EnemyBosStateAttack.h">
+      <Filter>EnemyBos</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyBos\EnemyBosStateIdle.h">
+      <Filter>EnemyBos</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyBos\EnemyBosStateMachine.h">
+      <Filter>EnemyBos</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyBos\EnemyBosStateMove.h">
+      <Filter>EnemyBos</Filter>
+    </ClInclude>
+    <ClInclude Include="gameObject\GameObjectManager.h">
+      <Filter>gameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="gameObject\IGameObject.h">
+      <Filter>gameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\Player.h">
+      <Filter>EnemyBos\Enemy\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\PlayerState.h">
+      <Filter>EnemyBos\Enemy\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\PlStateAttack.h">
+      <Filter>EnemyBos\Enemy\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\PlStateIdle.h">
+      <Filter>EnemyBos\Enemy\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\PlStateMachine.h">
+      <Filter>EnemyBos\Enemy\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\PlStateRun.h">
+      <Filter>EnemyBos\Enemy\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\Bloom.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\ConstantBufferGPU.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\GaussianBlur.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\PostEffect.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\RenderTarget.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\ShadowMap.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\Sprite.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\IPlState.h">
+      <Filter>EnemyBos\Enemy\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\IEnState.h">
+      <Filter>EnemyBos\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyBos\IEnemyBosState.h">
+      <Filter>EnemyBos</Filter>
+    </ClInclude>
+    <ClInclude Include="sound\SoundEngine.h">
+      <Filter>sound</Filter>
+    </ClInclude>
+    <ClInclude Include="sound\SoundSource.h">
+      <Filter>sound</Filter>
+    </ClInclude>
+    <ClInclude Include="sound\WaveFile.h">
+      <Filter>sound</Filter>
+    </ClInclude>
+    <ClInclude Include="sound\WaveFileBank.h">
+      <Filter>sound</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\background.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\plpath.FBX" />
-    <MeshContentTask Include="Assets\modelData\enpath.FBX" />
-    <MeshContentTask Include="Assets\modelData\ToonRTS_demo_Knight.FBX" />
-    <MeshContentTask Include="Assets\modelData\enpath2.fbx" />
-    <MeshContentTask Include="Assets\modelData\Dungeon.FBX" />
-    <MeshContentTask Include="Assets\modelData\enemy_01.FBX" />
-    <MeshContentTask Include="Assets\modelData\enemy_Bos.FBX" />
-    <MeshContentTask Include="Assets\modelData\TrollGiant.fbx" />
+    <MeshContentTask Include="Assets\modelData\enpath2.fbx">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\enpath.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\enemy_Bos.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\enemy_01.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\Dungeon.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\ToonRTS_demo_Knight.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\TrollGiant.fbx">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\plpath.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\sprite\hp_gauge.png" />
-    <ImageContentTask Include="Assets\sprite\hp_frame.png" />
-    <ImageContentTask Include="Assets\sprite\Titel.png" />
-    <ImageContentTask Include="Assets\sprite\TitelBack.png" />
-    <ImageContentTask Include="Assets\sprite\GameCleared.png" />
-    <ImageContentTask Include="Assets\sprite\GameOver.png" />
-    <ImageContentTask Include="Assets\sprite\Yazirusi.png" />
-    <ImageContentTask Include="Assets\sprite\GameEnd.png" />
+    <ImageContentTask Include="Assets\sprite\hp_frame.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\hp_gauge.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Titel.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\TitelBack.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Yazirusi.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\GameEnd.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\GameCleared.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\GameOver.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
   </ItemGroup>
 </Project>
