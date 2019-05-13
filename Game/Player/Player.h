@@ -3,6 +3,7 @@
 #include "PlayerState.h"
 #include "PlStateMachine.h"
 #include "CharacterStatus.h"
+#include "../graphics/font.h"
 
 class Player :public IGameObject
 {
@@ -39,9 +40,9 @@ public:
 	{
 		m_animation.Play(state, 0.2f);
 	}
-	void EXP()
+	void EXP(int exp)
 	{
-		m_exp++;
+		m_exp += exp;
 	}
 private:
 	SkinModel m_model;									//スキンモデル。
@@ -60,15 +61,15 @@ private:
 	CVector3 m_attckPos = CVector3::Zero();		//攻撃の場所。
 	Sprite m_hpSprite;		//hpゲージ
 	Sprite m_hpFrameSprite;	//hpゲージの枠
+	float m_HpScaleX = 100.0f;	//HPのスプライトの横幅
+	float m_HpScaleY = 15.0f;	//HPのスプライトの縦幅
 	const BattleHit* m_hit;
 	bool m_atkAnim = false;
 	int m_hitTiming = 0;		//ダメージを受けるタイミング
 	CharacterStatus m_status;	//プレイヤーのステイタス
 	float m_maxHp = 0.0f;
 	float m_hpFrame = 0.0f;		//体力の枠
-	float m_HpScaleX = 100.0f;	//HPのスプライトの横幅
-	float m_HpScaleY = 10.0f;	//HPのスプライトの縦幅
 	int m_exp = 0.0f;
-
+	Font m_font;
 	CSoundSource m_se;						//SE。
 };

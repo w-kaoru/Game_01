@@ -30,11 +30,12 @@ bool EnemyBos::Start()
 	//m_model.Init(L"Assets/modelData/enemy.cmo");
 
 	//ステータスの設定
-	m_status.SetLv(1);
+	m_status.SetLv(4);
 	m_status.SetHp(20.0f);
 	m_status.SetAgi(500.0f);
 	m_status.SetDef(3.0f);
 	m_status.SetAtk(15.0f);
+	m_status.StatusUp();
 	m_model.Init(L"Assets/modelData/enemy_Bos.cmo");
 	m_model.SetNormalMap(m_normalMapSRV);
 	//tkaファイルの読み込み。

@@ -86,6 +86,25 @@ public:
 	{
 		return &m_postEffect;
 	}
+
+	// ラスタライザステートのゲット
+	// ラスタライザステート
+	ID3D11RasterizerState* GetRasterizerState()
+	{
+		return m_rasterizerState;
+	}
+	// ゲームでデフォルトのフォントを取得
+	// フォントデータ
+	DirectX::SpriteFont* GetSpriteFont()
+	{
+		return m_SpriteFont;
+	}
+	// フォント表示に必要なクラスを取得
+	// フォント表示に必要なクラス
+	DirectX::SpriteBatch* GetSpriteBatch()
+	{
+		return m_SpriteBatch;
+	}
 	void BeginGPUEvent(const wchar_t* eventName)
 	{
 #ifdef _DEBUG
@@ -122,6 +141,9 @@ private:
 	D3D11_VIEWPORT m_frameBufferViewports;			//フレームバッファのビューポート。
 	ID3D11RenderTargetView* m_frameBufferRenderTargetView = nullptr;	//フレームバッファのレンダリングターゲットビュー。
 	ID3D11DepthStencilView* m_frameBufferDepthStencilView = nullptr;	//フレームバッファのデプスステンシルビュー。
+
+	DirectX::SpriteFont*    m_SpriteFont = NULL;		//ゲームのデフォルトのフォントデータ
+	DirectX::SpriteBatch*   m_SpriteBatch = NULL;		//ゲームのデフォルトのフォント表示用データ
 
 	Effekseer::Manager*	m_effekseerManager = nullptr;	//エフェクトマネージャークラス
 	EffekseerRenderer::Renderer*	m_effekseerRenderer = nullptr;  //エフェクトレンダラークラス

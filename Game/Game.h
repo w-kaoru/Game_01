@@ -1,9 +1,7 @@
 #pragma once
 
 #include "gameObject\IGameObject.h"
-//#include "Player\Player.h"
 #include "level/Level.h"
-//#include "GameCamera.h"
 #include "Enemy\Enemy.h"
 #include "EnemyBos/EnemyBos.h"
 #include "graphics\RenderTarget.h"

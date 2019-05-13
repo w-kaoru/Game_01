@@ -4,11 +4,17 @@ class CharacterStatus
 public:
 	CharacterStatus();
 	~CharacterStatus();
-	void LvUp() 
+	void StatusUp()
 	{
 		if (m_lv > 0) {
-			m_lvUp = m_lv / 10.0f;
-			m_lvUp += 1.2;
+			if (m_lv <= m_maxLv) {
+				m_lvUp = m_lv / 10.0f;
+				m_lvUp += 1.2;
+			}
+			else
+			{
+				m_lv = m_maxLv;
+			}
 		}
 		else {
 			m_lvUp * 1.0f;
@@ -17,7 +23,12 @@ public:
 		m_def = m_standardDef * m_lvUp;
 		//m_agi = m_standardAgi * m_lvUp;
 	}
-
+	void LvUp()
+	{
+		if (m_lv < m_maxLv) {
+			m_lv++;
+		}
+	}
 	//セッター
 	void SetLv(int lv)
 	{
@@ -42,6 +53,10 @@ public:
 		m_agi = agi;
 		m_standardAgi = agi;
 	}
+	void SetMaxLv(int MaxLv)
+	{
+		m_maxLv = MaxLv;
+	}
 	//ゲッター
 	int GetLv()
 	{
@@ -63,6 +78,10 @@ public:
 	{
 		return m_agi;
 	}
+	int GetMaxLv()
+	{
+		return m_maxLv;
+	}
 private:
 	//キャラクターのステータス
 	int		m_lv = 0;		//レベル
@@ -70,7 +89,8 @@ private:
 	float	m_atk = 0.0f;	//攻撃力
 	float	m_def = 0.0f;	//硬さ
 	float	m_agi = 0.0f;	//素早さ
-	float	m_lvUp = 0.0f;
+	float	m_lvUp = 0.0f;	
+	int		m_maxLv = 100.0f;//レベルの最大値
 	//基準のステータス
 	float	m_standardAtk = 0.0f;	//攻撃力
 	float	m_standardDef = 0.0f;	//硬さ

@@ -81,6 +81,16 @@ void GraphicsEngine::Release()
 		m_effekseerRenderer->Destroy();
 		m_effekseerRenderer = NULL;
 	}
+	if (m_SpriteBatch != NULL)
+	{
+		delete m_SpriteBatch;
+		m_SpriteBatch = NULL;
+	}
+	if (m_SpriteFont != NULL)
+	{
+		delete m_SpriteFont;
+		m_SpriteFont = NULL;
+	}
 }
 void GraphicsEngine::Init(HWND hWnd)
 {
@@ -237,6 +247,10 @@ void GraphicsEngine::Init(HWND hWnd)
 		// 独自拡張可能、現在はファイルから読み込んでいる。
 		m_effekseerManager->SetTextureLoader(m_effekseerRenderer->CreateTextureLoader());
 		m_effekseerManager->SetModelLoader(m_effekseerRenderer->CreateModelLoader());
+	}
+	{
+		m_SpriteBatch = new DirectX::SpriteBatch(m_pd3dDeviceContext);
+		m_SpriteFont = new DirectX::SpriteFont(m_pd3dDevice, L"Assets/font/myfile.spritefont");
 	}
 	//メインレンダリングターゲット作成。
 	m_mainRenderTarget.Create(

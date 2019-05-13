@@ -50,11 +50,11 @@ bool Enemy::Start()
 		//攻撃を当てるタイミング
 		m_atkHit = 45;
 		//ステータスの設定
-		m_status.SetLv(5);
+		m_status.SetLv(3);
 		m_status.SetHp(10.0f);
 		m_status.SetAgi(550.0f);
-		m_status.SetDef(1.0f);
-		m_status.SetAtk(1.5f);
+		m_status.SetDef(1.3f);
+		m_status.SetAtk(3.0f);
 		break;
 	case type_troll:
 		m_model.Init(L"Assets/modelData/TrollGiant.cmo");
@@ -72,14 +72,14 @@ bool Enemy::Start()
 		//攻撃を当てるタイミング
 		m_atkHit = 40;
 		//ステータスの設定
-		m_status.SetLv(1);
+		m_status.SetLv(3);
 		m_status.SetHp(15.0f);
 		m_status.SetAgi(550.0f);
-		m_status.SetDef(1.0f);
-		m_status.SetAtk(2.0f);
+		m_status.SetDef(1.5f);
+		m_status.SetAtk(4.0f);
 		break;
 	}
-	m_status.LvUp();
+	m_status.StatusUp();
 	//アニメーションの初期化。
 	m_animation.Init(
 		m_model,			//アニメーションを流すスキンモデル。
@@ -252,7 +252,7 @@ void Enemy::Update()
 			m_position.y = -10000.0f;
 			m_charaCon.SetPosition(m_position);
 			g_gameObjM->FindGO<Game>()->EnemyDeath();
-			m_player->EXP();
+			m_player->EXP(1);
 		}
 		//重力加速度
 		m_moveSpeed.y -= 9800.0f * (1.0f / 60.0f);
