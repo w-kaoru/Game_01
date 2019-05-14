@@ -8,19 +8,19 @@
 Player::Player() :m_stMa(this)
 {
 	//cmoファイルの読み込み。
-	m_model.Init(L"Assets/modelData/ToonRTS_demo_Knight.cmo", enFbxUpAxisZ);
+	m_model.Init(L"Assets/modelData/paladin.cmo", enFbxUpAxisZ);
 	//m_model_01.Init(L"Assets/modelData/plpath.cmo", enFbxUpAxisZ);
 	//tkaファイルの読み込み。
 	//待機アニメーション
-	m_animationClips[PlayerState::AnimState::idle].Load(L"Assets/animData/plidle.tka");
+	m_animationClips[PlayerState::AnimState::idle].Load(L"Assets/animData/Player/plidle.tka");
 	m_animationClips[PlayerState::AnimState::idle].SetLoopFlag(true);
 
 	//走りアニメーション
-	m_animationClips[PlayerState::AnimState::run].Load(L"Assets/animData/plrun.tka");
+	m_animationClips[PlayerState::AnimState::run].Load(L"Assets/animData/Player/plwalk.tka");
 	m_animationClips[PlayerState::AnimState::run].SetLoopFlag(true);
 
 	//攻撃アニメーション
-	m_animationClips[PlayerState::AnimState::attack].Load(L"Assets/animData/plattack.tka");
+	m_animationClips[PlayerState::AnimState::attack].Load(L"Assets/animData/Player/plattack.tka");
 	m_animationClips[PlayerState::AnimState::attack].SetLoopFlag(false);
 
 	//アニメーションの初期化。
@@ -125,7 +125,7 @@ void Player::Attack()
 	if (m_atkAnim == true) {
 		m_hitTiming++;
 		//攻撃されてからあたったタイミングで攻撃したい（簡易版）
-		if (m_hitTiming == 12) {
+		if (m_hitTiming == 15) {
 			//攻撃をヒットさせる。
 			g_battleController->Hit(m_attckPos, m_status.GetAtk(), BattleHit::enemy);
 		}

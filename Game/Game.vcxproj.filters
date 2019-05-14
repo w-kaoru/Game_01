@@ -40,14 +40,14 @@
     <Filter Include="gameObject">
       <UniqueIdentifier>{88ac6501-2b82-4e7b-806a-92c54b4eb2f4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="EnemyBos\Enemy">
-      <UniqueIdentifier>{1a3c95c4-de7a-4f08-8fc2-863e430a23d0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="EnemyBos\Enemy\Player">
-      <UniqueIdentifier>{cdca7448-da27-409c-8d4d-ba6dc025f327}</UniqueIdentifier>
-    </Filter>
     <Filter Include="sound">
       <UniqueIdentifier>{7ebc0864-61f7-48ec-98fc-a892180bc442}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enemy">
+      <UniqueIdentifier>{1a3c95c4-de7a-4f08-8fc2-863e430a23d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player">
+      <UniqueIdentifier>{cdca7448-da27-409c-8d4d-ba6dc025f327}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -134,19 +134,19 @@
     <ClCompile Include="GameEnd.cpp" />
     <ClCompile Include="CharacterStatus.cpp" />
     <ClCompile Include="Enemy\Enemy.cpp">
-      <Filter>EnemyBos\Enemy</Filter>
+      <Filter>Enemy</Filter>
     </ClCompile>
     <ClCompile Include="Enemy\EnStateAttack.cpp">
-      <Filter>EnemyBos\Enemy</Filter>
+      <Filter>Enemy</Filter>
     </ClCompile>
     <ClCompile Include="Enemy\EnStateIdle.cpp">
-      <Filter>EnemyBos\Enemy</Filter>
+      <Filter>Enemy</Filter>
     </ClCompile>
     <ClCompile Include="Enemy\EnStateMachine.cpp">
-      <Filter>EnemyBos\Enemy</Filter>
+      <Filter>Enemy</Filter>
     </ClCompile>
     <ClCompile Include="Enemy\EnStateMove.cpp">
-      <Filter>EnemyBos\Enemy</Filter>
+      <Filter>Enemy</Filter>
     </ClCompile>
     <ClCompile Include="EnemyBos\EnemyBos.cpp">
       <Filter>EnemyBos</Filter>
@@ -170,19 +170,19 @@
       <Filter>gameObject</Filter>
     </ClCompile>
     <ClCompile Include="Player\Player.cpp">
-      <Filter>EnemyBos\Enemy\Player</Filter>
+      <Filter>Player</Filter>
     </ClCompile>
     <ClCompile Include="Player\PlStateAttack.cpp">
-      <Filter>EnemyBos\Enemy\Player</Filter>
+      <Filter>Player</Filter>
     </ClCompile>
     <ClCompile Include="Player\PlStateIdle.cpp">
-      <Filter>EnemyBos\Enemy\Player</Filter>
+      <Filter>Player</Filter>
     </ClCompile>
     <ClCompile Include="Player\PlStateMachine.cpp">
-      <Filter>EnemyBos\Enemy\Player</Filter>
+      <Filter>Player</Filter>
     </ClCompile>
     <ClCompile Include="Player\PlStateRun.cpp">
-      <Filter>EnemyBos\Enemy\Player</Filter>
+      <Filter>Player</Filter>
     </ClCompile>
     <ClCompile Include="graphics\Bloom.cpp">
       <Filter>graphics</Filter>
@@ -206,10 +206,10 @@
       <Filter>graphics</Filter>
     </ClCompile>
     <ClCompile Include="Player\IPlState.cpp">
-      <Filter>EnemyBos\Enemy\Player</Filter>
+      <Filter>Player</Filter>
     </ClCompile>
     <ClCompile Include="Enemy\IEnState.cpp">
-      <Filter>EnemyBos\Enemy</Filter>
+      <Filter>Enemy</Filter>
     </ClCompile>
     <ClCompile Include="EnemyBos\IEnemyBosState.cpp">
       <Filter>EnemyBos</Filter>
@@ -323,22 +323,22 @@
     <ClInclude Include="GameEnd.h" />
     <ClInclude Include="CharacterStatus.h" />
     <ClInclude Include="Enemy\Enemy.h">
-      <Filter>EnemyBos\Enemy</Filter>
+      <Filter>Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Enemy\EnemyState.h">
-      <Filter>EnemyBos\Enemy</Filter>
+      <Filter>Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Enemy\EnStateAttack.h">
-      <Filter>EnemyBos\Enemy</Filter>
+      <Filter>Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Enemy\EnStateIdle.h">
-      <Filter>EnemyBos\Enemy</Filter>
+      <Filter>Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Enemy\EnStateMachine.h">
-      <Filter>EnemyBos\Enemy</Filter>
+      <Filter>Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Enemy\EnStateMove.h">
-      <Filter>EnemyBos\Enemy</Filter>
+      <Filter>Enemy</Filter>
     </ClInclude>
     <ClInclude Include="EnemyBos\EnemyBos.h">
       <Filter>EnemyBos</Filter>
@@ -365,22 +365,22 @@
       <Filter>gameObject</Filter>
     </ClInclude>
     <ClInclude Include="Player\Player.h">
-      <Filter>EnemyBos\Enemy\Player</Filter>
+      <Filter>Player</Filter>
     </ClInclude>
     <ClInclude Include="Player\PlayerState.h">
-      <Filter>EnemyBos\Enemy\Player</Filter>
+      <Filter>Player</Filter>
     </ClInclude>
     <ClInclude Include="Player\PlStateAttack.h">
-      <Filter>EnemyBos\Enemy\Player</Filter>
+      <Filter>Player</Filter>
     </ClInclude>
     <ClInclude Include="Player\PlStateIdle.h">
-      <Filter>EnemyBos\Enemy\Player</Filter>
+      <Filter>Player</Filter>
     </ClInclude>
     <ClInclude Include="Player\PlStateMachine.h">
-      <Filter>EnemyBos\Enemy\Player</Filter>
+      <Filter>Player</Filter>
     </ClInclude>
     <ClInclude Include="Player\PlStateRun.h">
-      <Filter>EnemyBos\Enemy\Player</Filter>
+      <Filter>Player</Filter>
     </ClInclude>
     <ClInclude Include="graphics\Bloom.h">
       <Filter>graphics</Filter>
@@ -404,10 +404,10 @@
       <Filter>graphics</Filter>
     </ClInclude>
     <ClInclude Include="Player\IPlState.h">
-      <Filter>EnemyBos\Enemy\Player</Filter>
+      <Filter>Player</Filter>
     </ClInclude>
     <ClInclude Include="Enemy\IEnState.h">
-      <Filter>EnemyBos\Enemy</Filter>
+      <Filter>Enemy</Filter>
     </ClInclude>
     <ClInclude Include="EnemyBos\IEnemyBosState.h">
       <Filter>EnemyBos</Filter>
@@ -444,15 +444,13 @@
     <MeshContentTask Include="Assets\modelData\Dungeon.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\ToonRTS_demo_Knight.FBX">
-      <Filter>Assets\modelData</Filter>
-    </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\TrollGiant.fbx">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\plpath.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\paladin.fbx" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\hp_frame.png">
