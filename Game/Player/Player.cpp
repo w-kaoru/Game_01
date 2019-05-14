@@ -34,6 +34,18 @@ Player::Player() :m_stMa(this)
 	//HPの画像の読み込み
 	m_hpSprite.Init(L"Assets/sprite/hp_gauge.dds", m_HpScaleX, m_HpScaleY);
 	m_hpFrameSprite.Init(L"Assets/sprite/hp_frame.dds", m_HpScaleX, m_HpScaleY);
+
+	//法線マップをロード。
+	//ファイル名を使って、テクスチャをロードして、ShaderResrouceViewを作成する。
+	DirectX::CreateDDSTextureFromFileEx(
+		g_graphicsEngine->GetD3DDevice(), L"Assets/sprite/Paladin_normal.dds", 0,
+		D3D11_USAGE_DEFAULT, D3D11_BIND_SHADER_RESOURCE, 0, 0,
+		false, nullptr, &m_normalMapSRV);
+	//スペキュラマップをロード。
+	DirectX::CreateDDSTextureFromFileEx(
+		g_graphicsEngine->GetD3DDevice(), L"Assets/sprite/Paladin_specular.dds", 0,
+		D3D11_USAGE_DEFAULT, D3D11_BIND_SHADER_RESOURCE, 0, 0,
+		false, nullptr, &m_specularMapSRV);
 }
 Player::~Player()
 {
@@ -50,12 +62,16 @@ bool Player::Start()
 	m_hpFrame = 6;
 	m_status.SetLv(1);
 	m_status.SetHp(60);
-	m_status.SetAgi(1000.0f);
+	m_status.SetAgi(1150.0f);
 	m_status.SetDef(1.0f);
 	m_status.SetAtk(4.5f);
 	m_status.SetMaxLv(9);
 	m_maxHp = m_status.GetHp();
 	m_status.StatusUp();
+	m_hpFrame = m_status.GetHp();
+	//ノーマルマップをセットする。
+	m_model.SetNormalMap(m_normalMapSRV);
+	m_model.SetSpecularMap(m_specularMapSRV);
 	//ポジションを少し上にしておく。
 	m_position.y = 200.0f;
 	//初期のポジションを設定してリスポーン地点にする。
@@ -151,7 +167,7 @@ void Player::HP_Gauge()
 	m_hpFrameSprite.Update(
 		{ w, h, 0.0f },
 		CQuaternion::Identity(),
-		{ m_hpFrame, 1.5f, 1.0f },
+		{ m_hpFrame / 10, 1.5f, 1.0f },
 		{ 0.0f,1.0f }
 	);
 	//スプライトの更新
@@ -187,6 +203,7 @@ void Player::Update()
 {
 	int lv = m_status.GetLv();
 	//経験値
+	//レベルアップの条件
 	int exp = lv;
 	if (m_exp >= exp) {
 		if (lv < m_status.GetMaxLv()) {
@@ -194,7 +211,7 @@ void Player::Update()
 			m_status.SetLv(lv);
 			m_status.LvUp();
 			m_status.StatusUp();
-			m_hpFrame = m_status.GetHp()/10;
+			m_hpFrame = m_status.GetHp();
 			m_exp = 0;
 		}
 	}

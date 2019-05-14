@@ -72,4 +72,6 @@ private:
 	int m_exp = 0.0f;
 	Font m_font;
 	CSoundSource m_se;						//SE。
+	ID3D11ShaderResourceView* m_normalMapSRV = nullptr;	//ノーマルマップのSRV
+	ID3D11ShaderResourceView* m_specularMapSRV = nullptr;	//ノーマルマップのSRV
 };

@@ -86,7 +86,7 @@ bool Enemy::Start()
 		4					//アニメーションクリップの数。
 	);
 	//hpバーのスプライト。
-	m_hpSprite.Init(L"Assets/sprite/hp_gauge.dds", 100.0f, 10.0f);
+	m_hpSprite.Init(L"Assets/sprite/hp_gauge.dds", 40.0f, 10.0f);
 	m_position.y = 200.0f;
 	//キャラクターコントローラーの初期化。
 	m_charaCon.Init(40.0f, 70.0f, m_position);
@@ -190,7 +190,12 @@ void Enemy::Damage(float damage)
 	m_se_damade.Play(false);
 	//攻撃をくらったのでHPからくらった分を引く
 	float hp = m_status.GetHp();
-	hp = (hp + m_status.GetDef()) - damage;
+
+	float Damage = damage - m_status.GetDef();
+	if (Damage <= 0.0f) {
+		Damage = 0.0f;
+	}
+	hp -= Damage;
 	m_status.SetHp(hp);
 }
 

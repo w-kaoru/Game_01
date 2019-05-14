@@ -6,7 +6,7 @@ public:
 	~CharacterStatus();
 	void StatusUp()
 	{
-		if (m_lv > 0) {
+		if (m_lv > 1) {
 			if (m_lv <= m_maxLv) {
 				m_lvUp = m_lv / 10.0f;
 				m_lvUp += 1.2;
@@ -17,7 +17,7 @@ public:
 			}
 		}
 		else {
-			m_lvUp * 1.0f;
+			m_lvUp = 1.0f;
 		}
 		m_hp = m_standardHp * m_lvUp;
 		m_atk = m_standardAtk * m_lvUp;

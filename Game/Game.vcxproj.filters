@@ -49,6 +49,12 @@
     <Filter Include="Player">
       <UniqueIdentifier>{cdca7448-da27-409c-8d4d-ba6dc025f327}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\modelData\mutant_Bos">
+      <UniqueIdentifier>{7f6dae54-585d-4a10-8531-231a8859300d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\modelData\Player">
+      <UniqueIdentifier>{25303143-a55f-49b0-a304-28a7f9188bd4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -450,7 +456,9 @@
     <MeshContentTask Include="Assets\modelData\plpath.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\paladin.fbx" />
+    <MeshContentTask Include="Assets\modelData\paladin.fbx">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\hp_frame.png">
@@ -476,6 +484,15 @@
     </ImageContentTask>
     <ImageContentTask Include="Assets\sprite\GameOver.png">
       <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Mutant_normal.png">
+      <Filter>Assets\modelData\mutant_Bos</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Paladin_specular.png">
+      <Filter>Assets\modelData\Player</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Paladin_normal.png">
+      <Filter>Assets\modelData\Player</Filter>
     </ImageContentTask>
   </ItemGroup>
 </Project>

@@ -275,6 +275,11 @@
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\GameEnd.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\Mutant_normal.png" />
+    <ImageContentTask Include="Assets\sprite\Paladin_normal.png" />
+    <ImageContentTask Include="Assets\sprite\Paladin_specular.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\ImageContentTask.targets" />
