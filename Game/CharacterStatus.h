@@ -6,10 +6,11 @@ public:
 	~CharacterStatus();
 	void StatusUp()
 	{
+		//ステータスをUPさせる計算
 		if (m_lv > 1) {
 			if (m_lv <= m_maxLv) {
-				m_lvUp = m_lv / 10.0f;
-				m_lvUp += 1.2;
+				m_lvUp = (float(m_lv)) / 10.0f;
+				m_lvUp += 1.2f;
 			}
 			else
 			{
@@ -28,6 +29,9 @@ public:
 	{
 		if (m_lv < m_maxLv) {
 			m_lv++;
+		}
+		if (m_lv < 1) {
+			m_lv = 1;
 		}
 	}
 	//セッター
@@ -92,7 +96,7 @@ private:
 	float	m_def = 0.0f;	//硬さ
 	float	m_agi = 0.0f;	//素早さ
 	float	m_lvUp = 0.0f;	
-	int		m_maxLv = 100.0f;//レベルの最大値
+	int		m_maxLv = 100;//レベルの最大値
 	//基準のステータス
 	float	m_standardHp = 0.0f;	//体力
 	float	m_standardAtk = 0.0f;	//攻撃力

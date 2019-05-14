@@ -69,7 +69,7 @@ private:
 	CharacterStatus m_status;	//プレイヤーのステイタス
 	float m_maxHp = 0.0f;
 	float m_hpFrame = 0.0f;		//体力の枠
-	int m_exp = 0.0f;
+	int m_exp = 0;
 	Font m_font;
 	CSoundSource m_se;						//SE。
 	ID3D11ShaderResourceView* m_normalMapSRV = nullptr;	//ノーマルマップのSRV
