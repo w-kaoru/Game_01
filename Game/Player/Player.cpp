@@ -132,7 +132,7 @@ void Player::Move()
 //攻撃
 void Player::Attack()
 {
-	if (g_pad[0].IsTrigger(enButtonA) && m_atkAnim == false) {
+	if (g_pad[0].IsTrigger(enButtonX) && m_atkAnim == false) {
 		//Aボタンが押されて攻撃モーションをしてない時。
 		m_atkAnim = true;
 		//攻撃アニメーションの再生するためにステートの変更

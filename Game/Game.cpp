@@ -159,19 +159,19 @@ void Game::Update()
 //スプライトの描画
 void Game::SpriteDraw()
 {
-	m_spriteRot.SetRotationDeg(CVector3::AxisZ(), -10.0f);
+	m_spriteRot.SetRotationDeg(CVector3::AxisZ(), -5.0f);
 	//スプライトの更新
 	m_ui_01.Update(
-		{ 500, -220, 0.0f },
+		{ -610, 300, 0.0f },
 		CQuaternion::Identity(),
 		{ 1.0f, 1.0f, 1.0f },
 		{ 0.0f,1.0f }
 	);
 	//スプライトの更新
 	m_ui_02.Update(
-		{ 535, -300, 0.0f },
+		{ -630, 270, 0.0f },
 		m_spriteRot,
-		{ 0.4f, 0.4f, 1.0f },
+		{ 0.3f, 0.3f, 1.0f },
 		{ 0.0f,1.0f }
 	);
 	//スプライトを２次元で表示をする。

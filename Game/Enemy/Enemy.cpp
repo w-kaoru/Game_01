@@ -19,7 +19,6 @@ Enemy::~Enemy()
 	g_battleController->Deleteobjict(m_hit);
 
 	m_effect->Release();
-	g_graphicsEngine->GetEffekseerManager()->StopEffect(m_playEffectHandle);
 }
 
 void Enemy::Destroy()
@@ -102,10 +101,6 @@ bool Enemy::Start()
 	//SE
 	m_se_damade.Init(L"Assets/sound/se_damage.wav");
 	m_se_damade.SetVolume(1.0f);	
-	m_effect = Effekseer::Effect::Create(
-		g_graphicsEngine->GetEffekseerManager(),
-		(const EFK_CHAR*)L"Assets/effect/test.efk"
-	);
 	m_effect = Effekseer::Effect::Create(
 		g_graphicsEngine->GetEffekseerManager(),
 		(const EFK_CHAR*)L"Assets/effect/death.efk"

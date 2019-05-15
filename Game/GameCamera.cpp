@@ -15,7 +15,7 @@ bool GameCamera::Start()
 {
 	//ƒJƒƒ‰‚ð‰Šú‰»B
 	g_camera3D.SetPosition(
-		{ 0.0f,m_player->GetPosition().y + 250.0f,
+		{ 0.0f,m_player->GetPosition().y + 280.0f,
 		m_player->GetPosition().z + 250.0f
 		}
 	);
