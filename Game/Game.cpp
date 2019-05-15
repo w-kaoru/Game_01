@@ -120,6 +120,10 @@ bool Game::Start()
 	m_bgm.Play(true);
 	m_bgm.SetVolume(0.17f);
 	m_bgm_bos.SetVolume(0.17f);
+
+	//HPの画像の読み込み
+	m_ui_01.Init(L"Assets/sprite/item_controller .dds", m_spriteScaleX, m_spriteScaleY);
+	m_ui_02.Init(L"Assets/sprite/game_ken.dds", m_spriteScaleX, m_spriteScaleY);
 	return false;
 }
 
@@ -152,6 +156,36 @@ void Game::Update()
 	}
 }
 
+//スプライトの描画
+void Game::SpriteDraw()
+{
+	m_spriteRot.SetRotationDeg(CVector3::AxisZ(), -10.0f);
+	//スプライトの更新
+	m_ui_01.Update(
+		{ 500, -220, 0.0f },
+		CQuaternion::Identity(),
+		{ 1.0f, 1.0f, 1.0f },
+		{ 0.0f,1.0f }
+	);
+	//スプライトの更新
+	m_ui_02.Update(
+		{ 535, -300, 0.0f },
+		m_spriteRot,
+		{ 0.4f, 0.4f, 1.0f },
+		{ 0.0f,1.0f }
+	);
+	//スプライトを２次元で表示をする。
+	m_ui_01.Draw(
+		g_camera2D.GetViewMatrix(),
+		g_camera2D.GetProjectionMatrix()
+	);
+	//スプライトを２次元で表示をする。
+	m_ui_02.Draw(
+		g_camera2D.GetViewMatrix(),
+		g_camera2D.GetProjectionMatrix()
+	);
+}
+
 void Game::PreDraw()
 {
 }
@@ -163,4 +197,5 @@ void Game::Draw()
 
 void Game::PostDraw()
 {
+	SpriteDraw();
 }

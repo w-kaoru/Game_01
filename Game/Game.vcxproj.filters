@@ -229,7 +229,6 @@
     <ClCompile Include="graphics\font.cpp">
       <Filter>graphics</Filter>
     </ClCompile>
-    <ClCompile Include="SpringCamera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -428,7 +427,6 @@
     <ClInclude Include="graphics\font.h">
       <Filter>graphics</Filter>
     </ClInclude>
-    <ClInclude Include="SpringCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\enpath2.fbx">
@@ -490,5 +488,9 @@
     <ImageContentTask Include="Assets\sprite\Mutant_normal.png">
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\sprite\game_ken.png" />
+    <Image Include="Assets\sprite\item_controller .png" />
   </ItemGroup>
 </Project>

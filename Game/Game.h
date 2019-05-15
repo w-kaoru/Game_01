@@ -29,6 +29,7 @@ public:
 	void PostDraw() override;
 	void Destroy() override;
 
+	void SpriteDraw();
 	void EnemyDeath()
 	{
 		m_enemyDeath++;
@@ -45,6 +46,13 @@ private:
 	int m_enemyDeath = 0;					//エネミーの死んだ数。
 	CSoundSource m_bgm;						//BGM。
 	CSoundSource m_bgm_bos;					//BOSのBGM
+
+
+	Sprite m_ui_01;		//UI
+	Sprite m_ui_02;		//UI
+	float m_spriteScaleX = 100.0f;	//HPのスプライトの横幅
+	float m_spriteScaleY = 100.0f;	//HPのスプライトの縦幅
+	CQuaternion m_spriteRot = CQuaternion::Identity();
 };
 
 //グローバルなアクセスポイントをグローバル変数として提供する。
