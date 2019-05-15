@@ -125,7 +125,6 @@
     <ClCompile Include="system\system.cpp">
       <Filter>system</Filter>
     </ClCompile>
-    <ClCompile Include="LightCamera.cpp" />
     <ClCompile Include="HID\Pad.cpp">
       <Filter>HID</Filter>
     </ClCompile>
@@ -229,6 +228,9 @@
     <ClCompile Include="graphics\font.cpp">
       <Filter>graphics</Filter>
     </ClCompile>
+    <ClCompile Include="LightCamera.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -313,7 +315,6 @@
     <ClInclude Include="system\system.h">
       <Filter>system</Filter>
     </ClInclude>
-    <ClInclude Include="LightCamera.h" />
     <ClInclude Include="Noncopyable.h" />
     <ClInclude Include="HID\Pad.h">
       <Filter>HID</Filter>
@@ -425,6 +426,9 @@
       <Filter>sound</Filter>
     </ClInclude>
     <ClInclude Include="graphics\font.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="LightCamera.h">
       <Filter>graphics</Filter>
     </ClInclude>
   </ItemGroup>
