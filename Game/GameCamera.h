@@ -1,4 +1,5 @@
 #pragma once
+#include "graphics/SpringCamera.h"
 class Player;
 
 class GameCamera:public IGameObject
@@ -14,6 +15,7 @@ public:
 	void Update();
 private:
 	Player * m_player = nullptr;	//プレイヤー。
+	SpringCamera m_springCamera;
 };
 
 

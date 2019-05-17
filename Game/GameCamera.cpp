@@ -9,7 +9,7 @@ GameCamera::GameCamera()
 
 GameCamera::~GameCamera()
 {
-	int u = 0;
+	m_springCamera.RemoveRigidBoby();
 }
 bool GameCamera::Start()
 {
@@ -21,32 +21,40 @@ bool GameCamera::Start()
 	);
 	g_camera3D.SetTarget(m_player->GetPosition());
 	g_camera3D.SetFar(20000.0f);
+	//バネカメラの大きさ。
+	m_springCamera.Init(
+		0.0001f,
+		0.0001f,
+		0.5f,
+		g_camera3D.GetPosition()
+	);
 	return false;
 }
 void GameCamera::Update()
 {
 	if (m_player != nullptr) {
 		//現在の注視点から視点へのベクトルを求めるよ。
-		auto toCameraPos = g_camera3D.GetPosition() - g_camera3D.GetTarget();
+		CVector3 toCameraPos = g_camera3D.GetPosition() - g_camera3D.GetTarget();
 		//新しい注視点を求める。
-		auto newTarget = m_player->GetPosition();
+		CVector3 newTarget = m_player->GetPosition();
 		//Y方向にちょっと上げる。
-		newTarget.y += 25.0f;
+		newTarget.y += 100.0f;
 		//新しい視点を計算する。
 
-		CVector3 toCameraPosOld = toCameraPos;
 		//パッドの入力を使ってカメラを回す。
-		float RStick_x = g_pad[0].GetRStickXF();
-		float RStick_y = g_pad[0].GetRStickYF();
+		CVector3 RStick = CVector3::Zero();
+		RStick.x = 0.05f * g_pad[0].GetRStickXF();
+		RStick.y = 0.05f * g_pad[0].GetRStickYF();
+		RStick.z = 0.0f;
 		//Y軸周りの回転
 		CQuaternion qRot;
-		qRot.SetRotation(CVector3::AxisY(), 0.05f * RStick_x);
+		qRot.SetRotation(CVector3::AxisY(), RStick.x);
 		qRot.Multiply(toCameraPos);
 		//X軸周りの回転。
 		CVector3 axisX;
 		axisX.Cross(CVector3::AxisY(), toCameraPos);
 		axisX.Normalize();
-		qRot.SetRotation(axisX, 0.05f * RStick_y);
+		qRot.SetRotation(axisX, RStick.y);
 		qRot.Multiply(toCameraPos);
 		//カメラの回転の上限をチェックする。
 		//注視点から視点までのベクトルを正規化する。
@@ -56,21 +64,21 @@ void GameCamera::Update()
 		toPosDir.Normalize();
 		float angle = toPosDir.Dot(g_camera3D.GetUp());
 		angle = CMath::RadToDeg(angle);
-		float upMax = 10.0f;
+		float upMax = -40.0f;
 		float downMax = 50.0f;
-		if(angle< upMax){
-		//	//カメラが上向きすぎ。
+		if(angle < upMax){
+		//カメラが上向きすぎ。
 			angle -= upMax;
 			qRot.SetRotationDeg(axisX, angle);
 			qRot.Multiply(toCameraPos);
 		}
-		else if(angle> downMax){
+		 if(angle > downMax){
 		//	//カメラが下向きすぎ。
 			angle -= downMax;
 			qRot.SetRotationDeg(axisX, angle);
 			qRot.Multiply(toCameraPos);
 		}
-		if (fabsf(RStick_x) < 0.01f) {
+		if (fabsf(RStick.x) < 0.01f) {
 			//Rスティックの入力がなければオートカメラの処理を行う。
 			//現在のカメラでのXZ平面上での注視点から視点までのベクトルと、その長さを求める。
 			CVector3 toCameraPosXZ = toCameraPos;
@@ -79,9 +87,6 @@ void GameCamera::Update()
 			float toCameraPosXZLen = toCameraPosXZ.Length();	//XZ平面上での視点と注視点の距離を求める。
 			toCameraPosXZ.Normalize();
 
-			//XZ平面での新しいカメラの視点を決める。
-			//オートカメラ
-			toCameraPos = g_camera3D.GetPosition() - newTarget;
 			toCameraPos.y = 0.0f;
 			toCameraPos.Normalize();
 			//ちょっとづつ追尾。
@@ -93,6 +98,12 @@ void GameCamera::Update()
 		}//*/
 
 		auto newPositin = newTarget + toCameraPos;
+		m_springCamera.SetPosition(newTarget);
+		auto move =  newPositin- newTarget;
+		move.Normalize();
+		move *= 300.0f;
+		//バネカメ更新。
+		newPositin = m_springCamera.Execute(1.0f, move);
 		g_camera3D.SetUpdateProjMatrixFunc(Camera::enUpdateProjMatrixFunc_Perspective);
 		g_camera3D.SetTarget(newTarget);
 		g_camera3D.SetPosition(newPositin);

@@ -231,6 +231,9 @@
     <ClCompile Include="LightCamera.cpp">
       <Filter>graphics</Filter>
     </ClCompile>
+    <ClCompile Include="graphics\SpringCamera.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -429,6 +432,9 @@
       <Filter>graphics</Filter>
     </ClInclude>
     <ClInclude Include="LightCamera.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\SpringCamera.h">
       <Filter>graphics</Filter>
     </ClInclude>
   </ItemGroup>
