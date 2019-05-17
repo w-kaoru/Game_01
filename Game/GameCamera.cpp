@@ -38,31 +38,37 @@ void GameCamera::Update()
 		//パッドの入力を使ってカメラを回す。
 		float RStick_x = g_pad[0].GetRStickXF();
 		float RStick_y = g_pad[0].GetRStickYF();
-		if (fabsf(RStick_x) > 0.0f || fabsf(RStick_y) > 0.0) {
-			//Y軸周りの回転
-			CQuaternion qRot;
-			qRot.SetRotation(CVector3::AxisY(), 0.05f * RStick_x);
+		//Y軸周りの回転
+		CQuaternion qRot;
+		qRot.SetRotation(CVector3::AxisY(), 0.05f * RStick_x);
+		qRot.Multiply(toCameraPos);
+		//X軸周りの回転。
+		CVector3 axisX;
+		axisX.Cross(CVector3::AxisY(), toCameraPos);
+		axisX.Normalize();
+		qRot.SetRotation(axisX, 0.05f * RStick_y);
+		qRot.Multiply(toCameraPos);
+		//カメラの回転の上限をチェックする。
+		//注視点から視点までのベクトルを正規化する。
+		//正規化すると、ベクトルの大きさが１になる。
+		//大きさが１になるということは、ベクトルから強さがなくなり、方向のみの情報となるということ。
+		CVector3 toPosDir = toCameraPos;
+		toPosDir.Normalize();
+		float angle = toPosDir.Dot(g_camera3D.GetUp());
+		angle = CMath::RadToDeg(angle);
+		float upMax = 10.0f;
+		float downMax = 50.0f;
+		if(angle< upMax){
+		//	//カメラが上向きすぎ。
+			angle -= upMax;
+			qRot.SetRotationDeg(axisX, angle);
 			qRot.Multiply(toCameraPos);
-			//X軸周りの回転。
-			CVector3 axisX;
-			axisX.Cross(CVector3::AxisY(), toCameraPos);
-			axisX.Normalize();
-			qRot.SetRotation(axisX, 0.05f * RStick_y);
+		}
+		else if(angle> downMax){
+		//	//カメラが下向きすぎ。
+			angle -= downMax;
+			qRot.SetRotationDeg(axisX, angle);
 			qRot.Multiply(toCameraPos);
-			//カメラの回転の上限をチェックする。
-			//注視点から視点までのベクトルを正規化する。
-			//正規化すると、ベクトルの大きさが１になる。
-			//大きさが１になるということは、ベクトルから強さがなくなり、方向のみの情報となるということ。
-			CVector3 toPosDir = toCameraPos;
-			toPosDir.Normalize();
-			if (toPosDir.y < -0.05f) {
-				//カメラが上向きすぎ。
-				toCameraPos = toCameraPosOld;
-			}
-			else if (toPosDir.y > 0.8f) {
-				//カメラが下向きすぎ。
-				toCameraPos = toCameraPosOld;
-			}
 		}
 		if (fabsf(RStick_x) < 0.01f) {
 			//Rスティックの入力がなければオートカメラの処理を行う。
@@ -84,7 +90,7 @@ void GameCamera::Update()
 			toCameraPos.Normalize();
 			toCameraPos *= toCameraPosXZLen;
 			toCameraPos.y = height;					//高さを戻す。
-		}
+		}//*/
 
 		auto newPositin = newTarget + toCameraPos;
 		g_camera3D.SetUpdateProjMatrixFunc(Camera::enUpdateProjMatrixFunc_Perspective);
