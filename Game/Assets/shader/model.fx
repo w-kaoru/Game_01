@@ -363,8 +363,8 @@ float4 PSMain(PSInput In) : SV_Target0
 	//　距離算出
 	float dist = normalize(In.Position.xyz - In.cameraPos);
 	//　フォグ係数算出
-	float3 FogCoor = { 0.7f,0.7f,0.7f };
-	albedoColor.xyz *= dist * FogCoor;
+	float FogCoor =0.9f;
+	albedoColor.xyz *= FogCoor * dist * dist;
 
 	float4 finalColor = float4(0.0f, 0.0f, 0.0f, 1.0f);
 	finalColor.xyz = albedoColor.xyz * lig;
