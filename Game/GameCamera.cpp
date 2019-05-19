@@ -87,10 +87,11 @@ void GameCamera::Update()
 			float toCameraPosXZLen = toCameraPosXZ.Length();	//XZ平面上での視点と注視点の距離を求める。
 			toCameraPosXZ.Normalize();
 
+			toCameraPos = g_camera3D.GetPosition() - newTarget;
 			toCameraPos.y = 0.0f;
 			toCameraPos.Normalize();
 			//ちょっとづつ追尾。
-			float weight = 0.7f;	//このウェイトの値は0.0～1.0の値をとる。1.0に近づくほど追尾が強くなる。
+			float weight = 0.3f;	//このウェイトの値は0.0～1.0の値をとる。1.0に近づくほど追尾が強くなる。
 			toCameraPos = toCameraPos * weight + toCameraPosXZ * (1.0f - weight);
 			toCameraPos.Normalize();
 			toCameraPos *= toCameraPosXZLen;

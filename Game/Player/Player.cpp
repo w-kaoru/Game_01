@@ -77,7 +77,7 @@ bool Player::Start()
 	//初期のポジションを設定してリスポーン地点にする。
 	m_respawnPosition = m_position;
 	//キャラクターコントローラーの初期化。
-	m_charaCon.Init(40.0f, 70.0f, m_position);
+	m_charaCon.Init(40.0f, 110.0f, m_position);
 	m_stMa.Start();
 	m_rotation.SetRotationDeg(CVector3::AxisY(), 180.0f);
 	//当たり判定を作る。

@@ -85,6 +85,7 @@ struct PSInput {
 	float4 posInLVP		: TEXCOORD1;	//ライトビュープロジェクション空間での座標。
 	float3 tangent		: TEXCOORD2;	//接ベクトル。
 	float3 posInWorld	: TEXCOORD3;	//ワールド座標。
+	float3 cameraPos	: TEXCOORD4;
 };
 /// <summary>
 /// シャドウマップ用のピクセルシェーダへの入力構造体。
@@ -105,6 +106,7 @@ PSInput VSMain(VSInputNmTxVcTangent In)
 	psInput.posInWorld = worldPos.xyz;
 	//ワールド座標系からカメラ座標系に変換する。
 	psInput.Position = mul(mView, worldPos);
+	psInput.cameraPos = psInput.Position.xyz ;
 	//カメラ座標系からスクリーン座標系に変換する。
 	psInput.Position = mul(mProj, psInput.Position);
 
@@ -358,6 +360,11 @@ float4 PSMain(PSInput In) : SV_Target0
 
 	//デプスシャドウマップを使って影を落とす。。
 	CalcShadow(lig, In.posInLVP);
+	//　距離算出
+	float dist = normalize(In.Position.xyz - In.cameraPos);
+	//　フォグ係数算出
+	float3 FogCoor = { 0.7f,0.7f,0.7f };
+	albedoColor.xyz *= dist * FogCoor;
 
 	float4 finalColor = float4(0.0f, 0.0f, 0.0f, 1.0f);
 	finalColor.xyz = albedoColor.xyz * lig;
