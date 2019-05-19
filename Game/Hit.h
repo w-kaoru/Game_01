@@ -1,5 +1,5 @@
 #pragma once
-class BattleHit:public Noncopyable
+class Hit :public Noncopyable
 {
 public:
 	enum objict_Name {
@@ -7,11 +7,11 @@ public:
 		player,
 		name_num
 	};
-	BattleHit();
-	~BattleHit();
+	Hit();
+	~Hit();
 	//ÉtÉbÉNä÷êî
 	void Create(const CVector3* pos, float radius, std::function<void(float damage)>  object, objict_Name name);
-	bool Hit(CVector3 pos, float damage);
+	bool HitTest(CVector3 pos, float damage);
 	objict_Name Getobjict_Name()
 	{
 		return m_name;

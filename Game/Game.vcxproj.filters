@@ -128,8 +128,6 @@
     <ClCompile Include="HID\Pad.cpp">
       <Filter>HID</Filter>
     </ClCompile>
-    <ClCompile Include="BattleController.cpp" />
-    <ClCompile Include="BattleHit.cpp" />
     <ClCompile Include="GameEnd.cpp" />
     <ClCompile Include="CharacterStatus.cpp" />
     <ClCompile Include="Enemy\Enemy.cpp">
@@ -234,6 +232,8 @@
     <ClCompile Include="graphics\SpringCamera.cpp">
       <Filter>graphics</Filter>
     </ClCompile>
+    <ClCompile Include="Hit.cpp" />
+    <ClCompile Include="HitObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -322,8 +322,6 @@
     <ClInclude Include="HID\Pad.h">
       <Filter>HID</Filter>
     </ClInclude>
-    <ClInclude Include="BattleController.h" />
-    <ClInclude Include="BattleHit.h" />
     <ClInclude Include="GameEnd.h" />
     <ClInclude Include="CharacterStatus.h" />
     <ClInclude Include="Enemy\Enemy.h">
@@ -437,6 +435,8 @@
     <ClInclude Include="graphics\SpringCamera.h">
       <Filter>graphics</Filter>
     </ClInclude>
+    <ClInclude Include="Hit.h" />
+    <ClInclude Include="HitObject.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\enpath2.fbx">

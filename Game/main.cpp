@@ -44,7 +44,7 @@ void TermnateGame()
 ///////////////////////////////////////////////////////////////////
 // ウィンドウプログラムのメイン関数。
 ///////////////////////////////////////////////////////////////////
-BattleController* g_battleController;
+HitObject* g_hitObject;
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow)
 {
 	g_camera2D.SetUpdateProjMatrixFunc(Camera::enUpdateProjMatrixFunc_Ortho);
@@ -58,7 +58,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	CSoundEngine soundEngine;				//サウンドエンジン。
 	soundEngine.Init();
 	//タイトルシーンの作成。
-	g_battleController = new BattleController;
+	g_hitObject = new HitObject;
 	g_gameObjM->NewGO<Title>();
 
 	//ゲームループ。

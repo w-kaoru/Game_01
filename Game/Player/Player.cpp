@@ -54,7 +54,7 @@ Player::~Player()
 	//キャラクターコントローラーを消去する。
 	m_charaCon.RemoveRigidBoby();
 	//当たり判定を消去。
-	g_battleController->Deleteobjict(m_hit);
+	g_hitObject->Delete(m_hit);
 }
 bool Player::Start()
 {
@@ -81,10 +81,10 @@ bool Player::Start()
 	m_stMa.Start();
 	m_rotation.SetRotationDeg(CVector3::AxisY(), 180.0f);
 	//当たり判定を作る。
-	m_hit = g_battleController->Create(
+	m_hit = g_hitObject->Create(
 		&m_position, 150.0f,
 		[&](float damage) {Damage(damage); },
-		BattleHit::player
+		Hit::player
 	);
 	//SE
 	m_se.Init(L"Assets/sound/se_damage.wav");
@@ -143,7 +143,7 @@ void Player::Attack()
 		//攻撃されてからあたったタイミングで攻撃したい（簡易版）
 		if (m_hitTiming == 15) {
 			//攻撃をヒットさせる。
-			g_battleController->Hit(m_attckPos, m_status.GetAtk(), BattleHit::enemy);
+			g_hitObject->HitTest(m_attckPos, m_status.GetAtk(), Hit::enemy);
 		}
 		if (m_animation.IsPlaying() == false) {
 			m_atkAnim = false;

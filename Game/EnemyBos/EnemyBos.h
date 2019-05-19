@@ -79,7 +79,7 @@ private:
 	Sprite m_hpSprite;									//hpバー。
 	CVector3 m_Sprite_Front = CVector3::AxisZ()*-1;	    //テクスチャの前方向
 	CQuaternion m_Sprite_angle = CQuaternion::Identity();	//テクスチャの回転角度
-	const BattleHit* m_hit;
+	const Hit* m_hit;
 	CSoundSource m_se_damade;							//SE
 	ID3D11ShaderResourceView* m_normalMapSRV = nullptr;
 	float m_toPlayerLen;		//プレイヤーとの距離

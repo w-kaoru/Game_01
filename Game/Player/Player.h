@@ -63,7 +63,7 @@ private:
 	Sprite m_hpFrameSprite;	//hpゲージの枠
 	float m_HpScaleX = 40.0f;	//HPのスプライトの横幅
 	float m_HpScaleY = 15.0f;	//HPのスプライトの縦幅
-	const BattleHit* m_hit;
+	const Hit* m_hit;
 	bool m_atkAnim = false;
 	int m_hitTiming = 0;		//ダメージを受けるタイミング
 	CharacterStatus m_status;	//プレイヤーのステイタス

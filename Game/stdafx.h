@@ -46,11 +46,11 @@
 #include "gameObject/GameObjectManager.h"
 #include "graphics/animation/Animation.h"
 #include "graphics/animation/AnimationClip.h"
-#include "BattleController.h"
+#include "HitObject.h"
 #include "sound/SoundEngine.h"
 #include "sound/SoundSource.h"
 
-extern BattleController* g_battleController; 
+extern HitObject* g_hitObject;
 
 const float FRAME_BUFFER_W = 1280.0f;				//フレームバッファの幅。
 const float FRAME_BUFFER_H = 720.0f;				//フレームバッファの高さ。

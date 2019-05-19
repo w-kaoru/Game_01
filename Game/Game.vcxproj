@@ -99,8 +99,8 @@
     </MeshContentTask>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="BattleController.cpp" />
-    <ClCompile Include="BattleHit.cpp" />
+    <ClCompile Include="HitObject.cpp" />
+    <ClCompile Include="Hit.cpp" />
     <ClCompile Include="CharacterStatus.cpp" />
     <ClCompile Include="character\CharacterController.cpp" />
     <ClCompile Include="EnemyBos\EnemyBos.cpp" />
@@ -171,8 +171,8 @@
     <ClCompile Include="Title.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BattleController.h" />
-    <ClInclude Include="BattleHit.h" />
+    <ClInclude Include="HitObject.h" />
+    <ClInclude Include="Hit.h" />
     <ClInclude Include="CharacterStatus.h" />
     <ClInclude Include="character\CharacterController.h" />
     <ClInclude Include="EnemyBos\EnemyBos.h" />

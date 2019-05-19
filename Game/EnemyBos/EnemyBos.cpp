@@ -16,7 +16,7 @@ EnemyBos::~EnemyBos()
 	//キャラクターコントローラーを消去する
 	m_charaCon.RemoveRigidBoby();
 	//当たり判定を消去。
-	g_battleController->Deleteobjict(m_hit);
+	g_hitObject->Delete(m_hit);
 	//法線マップをロード。
 	//ファイル名を使って、テクスチャをロードして、ShaderResrouceViewを作成する。
 	DirectX::CreateDDSTextureFromFileEx(
@@ -64,10 +64,10 @@ bool EnemyBos::Start()
 	//ステートマシンの初期化。
 	m_enbos_stm.Start();
 	//当たり判定の作成。
-	m_hit = g_battleController->Create(
+	m_hit = g_hitObject->Create(
 		&m_position, 150.0f,
 		[&](float damage) {Damage(damage); },
-		BattleHit::enemy
+		Hit::enemy
 	);
 	//SE
 	m_se_damade.Init(L"Assets/sound/se_damage.wav");
@@ -143,7 +143,7 @@ void EnemyBos::Attack()
 		hit.y += 50.0f;
 		hit += m_forward * 50.0f;
 		//攻撃をヒットさせる。
-		g_battleController->Hit(hit, m_status.GetAtk(), BattleHit::player);
+		g_hitObject->HitTest(hit, m_status.GetAtk(), Hit::player);
 		//攻撃の間隔を0に戻す。
 		m_AttackTiming = 0;
 	}
