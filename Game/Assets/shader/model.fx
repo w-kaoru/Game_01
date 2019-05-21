@@ -360,12 +360,20 @@ float4 PSMain(PSInput In) : SV_Target0
 
 	//デプスシャドウマップを使って影を落とす。。
 	CalcShadow(lig, In.posInLVP);
-	//　距離算出
-	float dist = normalize(In.Position.xyz - In.cameraPos);
-	//　フォグ係数算出
-	float FogCoor =0.9f;
-	albedoColor.xyz *= FogCoor * dist * dist;
-
+	/*
+	//Fog
+	//深度値を計算。
+	float z = In.Position.z / In.Position.w;
+	//フォグの色の設定
+	float3 FogCoor = { 0.2f,0.2f,0.2f };
+	float3 Fog;
+	//線形補間
+	//*
+	Fog.x = albedoColor.x + (FogCoor.x - albedoColor.x) * z;
+	Fog.y = albedoColor.y + (FogCoor.y - albedoColor.y) * z;
+	Fog.z = albedoColor.z + (FogCoor.z - albedoColor.z) * z;
+	albedoColor.xyz = Fog;
+	// */
 	float4 finalColor = float4(0.0f, 0.0f, 0.0f, 1.0f);
 	finalColor.xyz = albedoColor.xyz * lig;
 	return finalColor;
