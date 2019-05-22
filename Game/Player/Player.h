@@ -48,7 +48,7 @@ private:
 	SkinModel m_model;									//スキンモデル。
 	//SkinModel m_model_01;									//スキンモデル。
 	Animation m_animation;								//アニメーション。
-	AnimationClip m_animationClips[PlayerState::num];	//アニメーションクリップ。
+	AnimationClip m_animationClips[PlayerState::AnimState::num];	//アニメーションクリップ。
 	CVector3 m_position = CVector3::Zero();				//座標。
 	CVector3 m_respawnPosition = CVector3::Zero();		//リスポーン座標。
 	CVector3 m_scale = CVector3::One();					//拡大率。
@@ -70,6 +70,7 @@ private:
 	float m_maxHp = 0.0f;
 	float m_hpFrame = 0.0f;		//体力の枠
 	int m_exp = 0;
+	bool m_hitDamage = false;
 	Font m_font;
 	CSoundSource m_se;						//SE。
 	ID3D11ShaderResourceView* m_normalMapSRV = nullptr;	//ノーマルマップのSRV

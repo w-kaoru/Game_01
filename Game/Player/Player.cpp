@@ -23,6 +23,10 @@ Player::Player() :m_stMa(this)
 	m_animationClips[PlayerState::AnimState::attack].Load(L"Assets/animData/Player/plattack.tka");
 	m_animationClips[PlayerState::AnimState::attack].SetLoopFlag(false);
 
+	//ダメージアニメーション
+	m_animationClips[PlayerState::AnimState::damage].Load(L"Assets/animData/Player/pldamage.tka");
+	m_animationClips[PlayerState::AnimState::damage].SetLoopFlag(false);
+
 	//アニメーションの初期化。
 	m_animation.Init(
 		m_model,			//アニメーションを流すスキンモデル。
@@ -113,8 +117,6 @@ void Player::Move()
 	m_moveSpeed += cameraForward * lStick_y * m_status.GetAgi();
 	//右方向への移動速度を加算。
 	m_moveSpeed += cameraRight * lStick_x * m_status.GetAgi();
-	//キャラコンを使って移動する。
-	m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
 	//向きを変える。
 	if (fabsf(m_moveSpeed.x) > 0.1f
 		|| fabsf(m_moveSpeed.z) > 0.1f) {
@@ -192,16 +194,24 @@ void Player::HP_Gauge()
 //ダメージ
 void Player::Damage(float Enatk)
 {
+	m_hitDamage = true;
 	m_se.Play(false);
 	//攻撃をくらったのでHPからくらった分を引く
 	float hp = m_status.GetHp();
 	hp = (hp + m_status.GetDef()) - Enatk;
 	m_status.SetHp(hp);
+	m_stMa.Change(PlayerState::AnimState::damage);
 }
 
 void Player::Update()
 {
 	int lv = m_status.GetLv();
+	//前方向の取得。
+	m_rotMatrix.MakeRotationFromQuaternion(m_rotation);
+	m_forward.x = m_rotMatrix.m[2][0];
+	m_forward.y = m_rotMatrix.m[2][1];
+	m_forward.z = m_rotMatrix.m[2][2];
+	m_forward.Normalize();
 	//経験値
 	//レベルアップの条件
 	int exp = lv;
@@ -224,14 +234,17 @@ void Player::Update()
 		g_gameObjM->DeleteGO(g_gameObjM->FindGO<Game>());
 		g_gameObjM->NewGO<GameEnd>()->SetGameEnd(GameEnd::GameEndState::gameOver);
 	}
-	//攻撃
-	Attack();
-	//前方向の取得。
-	m_rotMatrix.MakeRotationFromQuaternion(m_rotation);
-	m_forward.x = m_rotMatrix.m[2][0];
-	m_forward.y = m_rotMatrix.m[2][1];
-	m_forward.z = m_rotMatrix.m[2][2];
-	m_forward.Normalize();
+
+	if (m_hitDamage == false) {
+		//攻撃
+		Attack();
+	}
+	else
+	{
+		if (m_animation.IsPlaying() == false) {
+			m_hitDamage = false;
+		}
+	}
 	//攻撃の当たり判定のポジション
 	//プレイヤーのポジションの少し前の位置
 	m_attckPos.x = m_position.x + m_forward.x * 60.0f;
@@ -239,6 +252,8 @@ void Player::Update()
 	m_attckPos.y = 100.0f;
 	//重力
 	m_moveSpeed.y -= 980.0f * (1.0f / 60.0f);
+	//キャラコンを使って移動する。
+	m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
 	//ワールド行列の更新。
 	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
 	//m_model_01.UpdateWorldMatrix(m_attckPos, CQuaternion::Identity(), CVector3::One());

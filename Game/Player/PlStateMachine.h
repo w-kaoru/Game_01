@@ -2,6 +2,7 @@
 #include "PlStateIdle.h"
 #include "PlStateRun.h"
 #include "PlStateAttack.h"
+#include "PlStateDamage.h"
 #include "PlayerState.h"
 
 
@@ -18,6 +19,7 @@ private:
 	PlStateIdle m_plIdle;
 	PlStateRun m_plRun;
 	PlStateAttack m_plAttack;
+	PlStateDamage m_plDamage;
 	IPlState *m_ips = nullptr;
 	PlayerState::AnimState m_state = PlayerState::nostate;
 };

@@ -36,13 +36,13 @@ bool Enemy::Start()
 		m_model.Init(L"Assets/modelData/enemy_01.cmo");
 		//tkaファイルの読み込み。
 		//待機アニメーション
-		m_animationClips[EnemyState::idle].Load(L"Assets/animData/enidle.tka");
+		m_animationClips[EnemyState::idle].Load(L"Assets/animData/enemy/enidle.tka");
 		m_animationClips[EnemyState::idle].SetLoopFlag(true);
 		//歩きアニメーション
-		m_animationClips[EnemyState::move].Load(L"Assets/animData/enwalk.tka");
+		m_animationClips[EnemyState::move].Load(L"Assets/animData/enemy/enwalk.tka");
 		m_animationClips[EnemyState::move].SetLoopFlag(true);
 		//攻撃アニメーション
-		m_animationClips[EnemyState::attack].Load(L"Assets/animData/enattack.tka");
+		m_animationClips[EnemyState::attack].Load(L"Assets/animData/enemy/enattack.tka");
 		m_animationClips[EnemyState::attack].SetLoopFlag(false);
 		//エネミーの大きさ。
 		m_scale *= 2.0f;

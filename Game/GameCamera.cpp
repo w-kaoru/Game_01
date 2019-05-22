@@ -15,7 +15,7 @@ bool GameCamera::Start()
 {
 	//カメラを初期化。
 	g_camera3D.SetPosition(
-		{ 0.0f,m_player->GetPosition().y + 280.0f,
+		{ 0.0f,m_player->GetPosition().y + 130.0f,
 		m_player->GetPosition().z + 250.0f
 		}
 	);
@@ -38,7 +38,7 @@ void GameCamera::Update()
 		//新しい注視点を求める。
 		CVector3 newTarget = m_player->GetPosition();
 		//Y方向にちょっと上げる。
-		newTarget.y += 100.0f;
+		newTarget.y += 120.0f;
 		//新しい視点を計算する。
 
 		//パッドの入力を使ってカメラを回す。

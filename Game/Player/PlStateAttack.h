@@ -7,7 +7,5 @@ public:
 	~PlStateAttack();
 	bool Start();
 	void Update();
-private:
-	bool m_flag = false;
 };
 

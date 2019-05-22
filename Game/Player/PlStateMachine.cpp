@@ -2,7 +2,7 @@
 #include "PlStateMachine.h"
 
 PlStateMachine::PlStateMachine(Player * pl) :
-	m_plIdle(pl, this),m_plRun(pl,this),m_plAttack(pl,this)
+	m_plIdle(pl, this),m_plRun(pl,this),m_plAttack(pl,this),m_plDamage(pl,this)
 {
 }
 
@@ -36,6 +36,9 @@ void PlStateMachine::Change(PlayerState::AnimState state)
 		break;
 	case PlayerState::AnimState::attack:
 		m_ips = &m_plAttack;
+		break;
+	case PlayerState::AnimState::damage:
+		m_ips = &m_plDamage;
 		break;
 	}
 	m_ips->Start();

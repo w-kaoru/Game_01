@@ -40,13 +40,13 @@ bool EnemyBos::Start()
 	m_model.SetNormalMap(m_normalMapSRV);
 	//tkaファイルの読み込み。
 	//待機アニメーション
-	m_animationClips[EnemyBosState::idle].Load(L"Assets/animData/enBosidle.tka");
+	m_animationClips[EnemyBosState::idle].Load(L"Assets/animData/enemy_Bos/enBosidle.tka");
 	m_animationClips[EnemyBosState::idle].SetLoopFlag(true);
 	//歩きアニメーション
-	m_animationClips[EnemyBosState::move].Load(L"Assets/animData/enBosrun.tka");
+	m_animationClips[EnemyBosState::move].Load(L"Assets/animData/enemy_Bos/enBosrun.tka");
 	m_animationClips[EnemyBosState::move].SetLoopFlag(true);
 	//攻撃アニメーション
-	m_animationClips[EnemyBosState::attack].Load(L"Assets/animData/enBosattack.tka");
+	m_animationClips[EnemyBosState::attack].Load(L"Assets/animData/enemy_Bos/enBosattack.tka");
 	m_animationClips[EnemyBosState::attack].SetLoopFlag(false);
 	//アニメーションの初期化。
 	m_animation.Init(

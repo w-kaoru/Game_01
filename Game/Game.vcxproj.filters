@@ -234,6 +234,9 @@
     </ClCompile>
     <ClCompile Include="Hit.cpp" />
     <ClCompile Include="HitObject.cpp" />
+    <ClCompile Include="Player\PlStateDamage.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -437,6 +440,9 @@
     </ClInclude>
     <ClInclude Include="Hit.h" />
     <ClInclude Include="HitObject.h" />
+    <ClInclude Include="Player\PlStateDamage.h">
+      <Filter>Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\enpath2.fbx">
