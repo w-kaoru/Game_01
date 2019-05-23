@@ -136,9 +136,6 @@
     <ClCompile Include="Enemy\EnStateAttack.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy\EnStateIdle.cpp">
-      <Filter>Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="Enemy\EnStateMachine.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
@@ -149,9 +146,6 @@
       <Filter>EnemyBos</Filter>
     </ClCompile>
     <ClCompile Include="EnemyBos\EnemyBosStateAttack.cpp">
-      <Filter>EnemyBos</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyBos\EnemyBosStateIdle.cpp">
       <Filter>EnemyBos</Filter>
     </ClCompile>
     <ClCompile Include="EnemyBos\EnemyBosStateMachine.cpp">
@@ -237,6 +231,8 @@
     <ClCompile Include="Player\PlStateDamage.cpp">
       <Filter>Player</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy\EnStateDamage.cpp" />
+    <ClCompile Include="EnemyBos\EnemyBosStateDamage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -336,9 +332,6 @@
     <ClInclude Include="Enemy\EnStateAttack.h">
       <Filter>Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy\EnStateIdle.h">
-      <Filter>Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="Enemy\EnStateMachine.h">
       <Filter>Enemy</Filter>
     </ClInclude>
@@ -352,9 +345,6 @@
       <Filter>EnemyBos</Filter>
     </ClInclude>
     <ClInclude Include="EnemyBos\EnemyBosStateAttack.h">
-      <Filter>EnemyBos</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyBos\EnemyBosStateIdle.h">
       <Filter>EnemyBos</Filter>
     </ClInclude>
     <ClInclude Include="EnemyBos\EnemyBosStateMachine.h">
@@ -443,6 +433,8 @@
     <ClInclude Include="Player\PlStateDamage.h">
       <Filter>Player</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy\EnStateDamage.h" />
+    <ClInclude Include="EnemyBos\EnemyBosStateDamage.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\enpath2.fbx">

@@ -64,7 +64,7 @@ bool Game::Start()
 			m_enemy->SetPlayer(m_player);
 			m_enemyList.push_back(m_enemy);
 			//エネミーのレベル
-			m_enemy->SetLv(3);
+			m_enemy->GetStatus()->SetLv(3);
 			return true;
 		}
 		if (objData.EqualName(L"enpath2") == true) {
@@ -76,7 +76,7 @@ bool Game::Start()
 			m_enemy->SetPlayer(m_player);
 			m_enemyList.push_back(m_enemy);
 			//エネミーのレベル
-			m_enemy->SetLv(3);
+			m_enemy->GetStatus()->SetLv(3);
 			return true;
 		}
 		return false;
@@ -93,7 +93,7 @@ bool Game::Start()
 			m_enemy->SetPlayer(m_player);
 			m_enemyList.push_back(m_enemy);
 			//エネミーのレベル
-			m_enemy->SetLv(7);
+			m_enemy->GetStatus()->SetLv(7);
 			return true;
 		}
 		if (objData.EqualName(L"enpath2") == true) {
@@ -105,7 +105,21 @@ bool Game::Start()
 			m_enemy->SetPlayer(m_player);
 			m_enemyList.push_back(m_enemy);
 			//エネミーのレベル
-			m_enemy->SetLv(6);
+			m_enemy->GetStatus()->SetLv(6);
+			return true;
+		}
+		return false;
+	});
+	m_level.Init(
+		L"Assets/level/enemyBos.tkl",
+		[&](LevelObjectData& objData) {
+		if (objData.EqualName(L"enpath") == true) {
+			//エネミー！！！
+			m_enemyBos = g_gameObjM->NewGO<EnemyBos>(0);
+			m_enemyBos->SetPosition(objData.position);
+			m_enemyBos->SetRotation(objData.rotation);
+			m_enemyBos->GetPlayer(m_player);
+			m_enemyBos->GetStatus()->SetLv(7);
 			return true;
 		}
 		return false;
@@ -147,7 +161,7 @@ void Game::Update()
 				m_enemyBos->SetPosition(objData.position);
 				m_enemyBos->SetRotation(objData.rotation);
 				m_enemyBos->GetPlayer(m_player);
-				m_enemyBos->SetLv(7);
+				m_enemyBos->GetStatus()->SetLv(7);
 				return true;
 			}
 			return false;

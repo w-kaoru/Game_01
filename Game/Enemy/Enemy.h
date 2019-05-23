@@ -19,10 +19,8 @@ public:
 	void Update();
 	void Draw();
 	void PostDraw();
-	//void Move();
 	void Search();
 	void PlLen();
-	void Attack();
 	void Damage(float damage);
 	void HP_Gauge();
 	void SetPosition(CVector3 pos)
@@ -40,7 +38,7 @@ public:
 	{
 		m_player = pl;
 	}
-	void SetAnimation(EnemyState::MoveState state)
+	void SetAnimation(EnemyState::AnimationState state)
 	{
 		m_animation.Play(state, 0.2f);
 	}
@@ -65,13 +63,13 @@ public:
 	{
 		return m_forward;
 	}
-	float GetSPD()
+	CharacterStatus* GetStatus()
 	{
-		return m_status.GetAgi();
+		return &m_status;
 	}
-	//ステータスのセッター
-	void SetLv(int lv) {
-		m_status.SetLv(lv);
+	Animation GetAnimation()
+	{
+		return m_animation;
 	}
 private:
 	Player* m_player = nullptr;							//プレイヤー
@@ -84,7 +82,7 @@ private:
 	CVector3 m_scale = CVector3::One();					//拡大率。
 	CharacterController m_charaCon;						//キャラクターコントローラーを追加。
 	Animation m_animation;								//アニメーション。
-	AnimationClip m_animationClips[EnemyState::num];	//アニメーションクリップ。
+	AnimationClip m_animationClips[EnemyState::AnimationState::AnimNum];	//アニメーションクリップ。
 	EnStateMachine m_ensm;								//ステートマシン。
 	Sprite m_hpSprite;									//hpバー。
 	CVector3 m_Sprite_Front = CVector3::AxisZ()*-1;	    //テクスチャの前方向
@@ -93,9 +91,6 @@ private:
 	CSoundSource m_se_damade;							//SE
 	EnemyType m_type = type_num;
 	float m_toPlayerLen;		//プレイヤーとの距離
-	int m_damageTiming = 0;		//ダメージを受けるタイミング
-	int m_AttackTiming = 0;		//攻撃するタイミング
-	bool attackFlag = false;
 	bool m_isDeath = false;
 	//エネミーのステイタス
 	CharacterStatus m_status;
@@ -104,7 +99,6 @@ private:
 	//float m_spd = 0.0f;
 	int m_atkAnimStart = 30;
 	int m_atkHit = 0;
-
 	CVector3 m_effectPos = CVector3::Zero();
 	Effekseer::Effect* m_effect = nullptr;
 	Effekseer::Handle m_playEffectHandle=-1;

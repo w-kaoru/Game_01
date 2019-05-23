@@ -16,7 +16,6 @@ public:
 	//void Move();
 	void Search();
 	void PlLen();
-	void Attack();
 	void Damage(float damage);
 	void HP_Gauge();
 	void SetPosition(CVector3 pos)
@@ -35,7 +34,7 @@ public:
 		m_player = pl;
 	}
 
-	void SetAnimation(EnemyBosState::MoveState state)
+	void SetAnimation(EnemyBosState::AnimationState state)
 	{
 		m_animation.Play(state, 0.2f);
 	}
@@ -56,13 +55,13 @@ public:
 	{
 		return m_forward;
 	}
-	float GetAgi() 
+	CharacterStatus* GetStatus()
 	{
-		return m_status.GetAgi();
+		return &m_status;
 	}
-	void SetLv(int lv)
+	Animation GetAnimation()
 	{
-		m_status.SetLv(lv);
+		return m_animation;
 	}
 private:
 	Player* m_player = nullptr;							//プレイヤー
@@ -74,7 +73,7 @@ private:
 	CQuaternion m_rotation = CQuaternion::Identity();	//回転。
 	CharacterController m_charaCon;						//キャラクターコントローラーを追加。
 	Animation m_animation;								//アニメーション。
-	AnimationClip m_animationClips[EnemyBosState::num];	//アニメーションクリップ。
+	AnimationClip m_animationClips[EnemyBosState::AnimationState::AnimNum];	//アニメーションクリップ。
 	EnemyBosStateMachine m_enbos_stm;					//ステートマシン。
 	Sprite m_hpSprite;									//hpバー。
 	CVector3 m_Sprite_Front = CVector3::AxisZ()*-1;	    //テクスチャの前方向

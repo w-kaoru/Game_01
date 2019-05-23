@@ -142,6 +142,7 @@ void Player::Attack()
 	}
 	if (m_atkAnim == true) {
 		m_hitTiming++;
+		m_moveSpeed *= 0.0f;
 		//攻撃されてからあたったタイミングで攻撃したい（簡易版）
 		if (m_hitTiming == 15) {
 			//攻撃をヒットさせる。
@@ -241,6 +242,7 @@ void Player::Update()
 	}
 	else
 	{
+		m_moveSpeed *= 0.0f;
 		if (m_animation.IsPlaying() == false) {
 			m_hitDamage = false;
 		}

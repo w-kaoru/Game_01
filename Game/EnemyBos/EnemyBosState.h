@@ -3,12 +3,20 @@ class EnemyBosState
 {
 public:
 	enum MoveState {
-		//search,
-		idle,
 		move,
 		attack,
+		damage,
 		num,
 		noState
+	};
+
+	enum AnimationState {
+		AnimIdle,
+		AnimMove,
+		AnimAttack,
+		AnimDamage,
+		AnimNum,
+		AnimNoState
 	};
 };
 

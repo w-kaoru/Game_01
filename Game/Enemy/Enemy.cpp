@@ -36,14 +36,17 @@ bool Enemy::Start()
 		m_model.Init(L"Assets/modelData/enemy_01.cmo");
 		//tkaファイルの読み込み。
 		//待機アニメーション
-		m_animationClips[EnemyState::idle].Load(L"Assets/animData/enemy/enidle.tka");
-		m_animationClips[EnemyState::idle].SetLoopFlag(true);
+		m_animationClips[EnemyState::AnimationState::AnimIdle].Load(L"Assets/animData/enemy/enidle.tka");
+		m_animationClips[EnemyState::AnimationState::AnimIdle].SetLoopFlag(true);
 		//歩きアニメーション
-		m_animationClips[EnemyState::move].Load(L"Assets/animData/enemy/enwalk.tka");
-		m_animationClips[EnemyState::move].SetLoopFlag(true);
+		m_animationClips[EnemyState::AnimationState::AnimMove].Load(L"Assets/animData/enemy/enwalk.tka");
+		m_animationClips[EnemyState::AnimationState::AnimMove].SetLoopFlag(true);
 		//攻撃アニメーション
-		m_animationClips[EnemyState::attack].Load(L"Assets/animData/enemy/enattack.tka");
-		m_animationClips[EnemyState::attack].SetLoopFlag(false);
+		m_animationClips[EnemyState::AnimationState::AnimAttack].Load(L"Assets/animData/enemy/enattack.tka");
+		m_animationClips[EnemyState::AnimationState::AnimAttack].SetLoopFlag(false);
+		//ダメージアニメーション
+		m_animationClips[EnemyState::AnimationState::AnimDamage].Load(L"Assets/animData/enemy/endamage.tka");
+		m_animationClips[EnemyState::AnimationState::AnimDamage].SetLoopFlag(false);
 		//エネミーの大きさ。
 		m_scale *= 2.0f;
 		//攻撃を当てるタイミング
@@ -58,14 +61,17 @@ bool Enemy::Start()
 		m_model.Init(L"Assets/modelData/TrollGiant.cmo");
 		//tkaファイルの読み込み。
 		//待機アニメーション
-		m_animationClips[EnemyState::idle].Load(L"Assets/animData/troll_anim/troll_idle.tka");
-		m_animationClips[EnemyState::idle].SetLoopFlag(true);
+		m_animationClips[EnemyState::AnimationState::AnimIdle].Load(L"Assets/animData/troll_anim/troll_idle.tka");
+		m_animationClips[EnemyState::AnimationState::AnimIdle].SetLoopFlag(true);
 		//歩きアニメーション
-		m_animationClips[EnemyState::move].Load(L"Assets/animData/troll_anim/troll_walk.tka");
-		m_animationClips[EnemyState::move].SetLoopFlag(true);
+		m_animationClips[EnemyState::AnimationState::AnimMove].Load(L"Assets/animData/troll_anim/troll_walk.tka");
+		m_animationClips[EnemyState::AnimationState::AnimMove].SetLoopFlag(true);
 		//攻撃アニメーション
-		m_animationClips[EnemyState::attack].Load(L"Assets/animData/troll_anim/troll_attack.tka");
-		m_animationClips[EnemyState::attack].SetLoopFlag(false);
+		m_animationClips[EnemyState::AnimationState::AnimAttack].Load(L"Assets/animData/troll_anim/troll_attack.tka");
+		m_animationClips[EnemyState::AnimationState::AnimAttack].SetLoopFlag(false);
+		//ダメージアニメーション
+		m_animationClips[EnemyState::AnimationState::AnimDamage].Load(L"Assets/animData/troll_anim/troll_damage.tka");
+		m_animationClips[EnemyState::AnimationState::AnimDamage].SetLoopFlag(false);
 		m_scale *= 90.0f;
 		//攻撃を当てるタイミング
 		m_atkHit = 40;
@@ -79,10 +85,10 @@ bool Enemy::Start()
 	m_status.StatusUp();
 	//アニメーションの初期化。
 	m_animation.Init(
-		m_model,			//アニメーションを流すスキンモデル。
-							//これでアニメーションとスキンモデルが関連付けされる。
-		m_animationClips,	//アニメーションクリップの配列。
-		4					//アニメーションクリップの数。
+		m_model,								//アニメーションを流すスキンモデル。
+												//これでアニメーションとスキンモデルが関連付けされる。
+		m_animationClips,						//アニメーションクリップの配列。
+		EnemyState::AnimationState::AnimNum		//アニメーションクリップの数。
 	);
 	//hpバーのスプライト。
 	m_hpSprite.Init(L"Assets/sprite/hp_gauge.dds", 40.0f, 10.0f);
@@ -125,58 +131,24 @@ void Enemy::Search()
 	//前方向の取得。
 	m_forward = CVector3::AxisZ();
 	m_rotation.Multiply(m_forward);
-	//enemyForwardとm_moveSpeedとの内積を計算する。
-	float d = m_forward.Dot(m_moveSpeed);
-	//内積の結果をacos関数に渡して、enemyForwardとm_moveSpeedのなす角を求める。
-	float angle = acos(d);
-	//視野角判定
 	//fabsfは絶対値を求める関数！
 	//角度はマイナスが存在するから、絶対値にする。
 	if (m_toPlayerLen <= 160.0) {
 		//プレイヤーとの距離が一定以下で
-		//攻撃関数をよべー。
-		Attack();
-	}
-	if (attackFlag == true) {
-		//攻撃アニメーションが終了したら。
-		if (m_animation.IsPlaying() == false) {
-			attackFlag = false;
-			m_AttackTiming = 0;
-		}
+		//攻撃ステートをよべー。
+		m_ensm.Change(EnemyState::MoveState::attack);
+		m_ensm.StateAttack()->SetAttack(m_atkHit, m_atkAnimStart);
 	}
 	else
 	{
-		//攻撃アニメーションが再生されてない時
-		if (m_toPlayerLen > 130.0f && m_toPlayerLen < 1200.0f) {
-			//歩きアニメーションの再生するためにステートの変更
-			m_ensm.Change(EnemyState::MoveState::move);
-		}
-		else {
-			//待機アニメーションの再生するためにステートの変更
-			m_ensm.Change(EnemyState::MoveState::idle);
-		}
+		m_ensm.Change(EnemyState::MoveState::move);
 	}
-}
- //攻撃
-void Enemy::Attack()
-{
-	m_AttackTiming++;
-	//攻撃の間隔
-	if (m_AttackTiming == m_atkAnimStart) {
-		//攻撃アニメーションの再生するためにステートの変更
-		m_ensm.Change(EnemyState::MoveState::attack);
-		attackFlag = true;
-	}
-	//攻撃されてからあたったタイミングで攻撃したい（簡易版）
-	if (m_AttackTiming == m_atkHit) {
-		//当たったと思われるタイミングで
-		CVector3 hit = m_position;
-		hit.y += 50.0f;
-		hit += m_forward * 50.0f;
-		//攻撃をヒットさせる。
-		g_hitObject->HitTest(hit, m_status.GetAtk(), Hit::player);
-		//攻撃の間隔を0に戻す。
-		m_AttackTiming = 0;
+	if (m_ensm.StateAttack()->GetAtkFlag() == true) {
+		//攻撃アニメーションが終了したら。
+		if (m_animation.IsPlaying() == false) {
+			m_ensm.StateAttack()->SetAtkFlag(false);
+			m_ensm.StateAttack()->SetTiming(0);
+		}
 	}
 }
 //ダメージ
@@ -185,7 +157,8 @@ void Enemy::Damage(float damage)
 	m_se_damade.Play(false);
 	//攻撃をくらったのでHPからくらった分を引く
 	float hp = m_status.GetHp();
-
+	m_ensm.StateDamage()->SetDamage(true);
+	m_ensm.Change(EnemyState::MoveState::damage);
 	float Damage = damage - m_status.GetDef();
 	if (Damage <= 0.0f) {
 		Damage = 0.0f;
@@ -228,8 +201,15 @@ void Enemy::HP_Gauge()
 void Enemy::Update()
 {
 	if (m_isDeath == false) {
-		m_damageTiming = 0;
-		Search();
+		if (m_ensm.StateDamage()->GetDamage() == false) {
+			Search();
+		}
+		else {
+			if (m_animation.IsPlaying() == false) {
+				m_ensm.Change(EnemyState::MoveState::move);
+				m_ensm.StateDamage()->SetDamage(false);
+			}
+		}
 		//ステートマシンの更新
 		m_ensm.Update();
 		
@@ -263,9 +243,6 @@ void Enemy::Update()
 		//アニメーションを流す。
 		m_animation.Update(1.0f / 30.0f);
 	
-	}
-	else
-	{
 	}
 }
 

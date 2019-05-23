@@ -99,19 +99,19 @@
     </MeshContentTask>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="EnemyBos\EnemyBosStateDamage.cpp" />
+    <ClCompile Include="Enemy\EnStateDamage.cpp" />
     <ClCompile Include="HitObject.cpp" />
     <ClCompile Include="Hit.cpp" />
     <ClCompile Include="CharacterStatus.cpp" />
     <ClCompile Include="character\CharacterController.cpp" />
     <ClCompile Include="EnemyBos\EnemyBos.cpp" />
     <ClCompile Include="EnemyBos\EnemyBosStateAttack.cpp" />
-    <ClCompile Include="EnemyBos\EnemyBosStateIdle.cpp" />
     <ClCompile Include="EnemyBos\EnemyBosStateMachine.cpp" />
     <ClCompile Include="EnemyBos\EnemyBosStateMove.cpp" />
     <ClCompile Include="EnemyBos\IEnemyBosState.cpp" />
     <ClCompile Include="Enemy\Enemy.cpp" />
     <ClCompile Include="Enemy\EnStateAttack.cpp" />
-    <ClCompile Include="Enemy\EnStateIdle.cpp" />
     <ClCompile Include="Enemy\EnStateMachine.cpp" />
     <ClCompile Include="Enemy\EnStateMove.cpp" />
     <ClCompile Include="Enemy\IEnState.cpp" />
@@ -172,6 +172,8 @@
     <ClCompile Include="Title.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="EnemyBos\EnemyBosStateDamage.h" />
+    <ClInclude Include="Enemy\EnStateDamage.h" />
     <ClInclude Include="HitObject.h" />
     <ClInclude Include="Hit.h" />
     <ClInclude Include="CharacterStatus.h" />
@@ -179,14 +181,12 @@
     <ClInclude Include="EnemyBos\EnemyBos.h" />
     <ClInclude Include="EnemyBos\EnemyBosState.h" />
     <ClInclude Include="EnemyBos\EnemyBosStateAttack.h" />
-    <ClInclude Include="EnemyBos\EnemyBosStateIdle.h" />
     <ClInclude Include="EnemyBos\EnemyBosStateMachine.h" />
     <ClInclude Include="EnemyBos\EnemyBosStateMove.h" />
     <ClInclude Include="EnemyBos\IEnemyBosState.h" />
     <ClInclude Include="Enemy\Enemy.h" />
     <ClInclude Include="Enemy\EnemyState.h" />
     <ClInclude Include="Enemy\EnStateAttack.h" />
-    <ClInclude Include="Enemy\EnStateIdle.h" />
     <ClInclude Include="Enemy\EnStateMachine.h" />
     <ClInclude Include="Enemy\EnStateMove.h" />
     <ClInclude Include="Enemy\IEnState.h" />

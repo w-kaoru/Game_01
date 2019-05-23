@@ -40,20 +40,23 @@ bool EnemyBos::Start()
 	m_model.SetNormalMap(m_normalMapSRV);
 	//tkaファイルの読み込み。
 	//待機アニメーション
-	m_animationClips[EnemyBosState::idle].Load(L"Assets/animData/enemy_Bos/enBosidle.tka");
-	m_animationClips[EnemyBosState::idle].SetLoopFlag(true);
+	m_animationClips[EnemyBosState::AnimationState::AnimIdle].Load(L"Assets/animData/enemy_Bos/enBosidle.tka");
+	m_animationClips[EnemyBosState::AnimationState::AnimIdle].SetLoopFlag(true);
 	//歩きアニメーション
-	m_animationClips[EnemyBosState::move].Load(L"Assets/animData/enemy_Bos/enBosrun.tka");
-	m_animationClips[EnemyBosState::move].SetLoopFlag(true);
+	m_animationClips[EnemyBosState::AnimationState::AnimMove].Load(L"Assets/animData/enemy_Bos/enBosrun.tka");
+	m_animationClips[EnemyBosState::AnimationState::AnimMove].SetLoopFlag(true);
 	//攻撃アニメーション
-	m_animationClips[EnemyBosState::attack].Load(L"Assets/animData/enemy_Bos/enBosattack.tka");
-	m_animationClips[EnemyBosState::attack].SetLoopFlag(false);
+	m_animationClips[EnemyBosState::AnimationState::AnimAttack].Load(L"Assets/animData/enemy_Bos/enBosattack.tka");
+	m_animationClips[EnemyBosState::AnimationState::AnimAttack].SetLoopFlag(false);
+	//ダメージアニメーション
+	m_animationClips[EnemyBosState::AnimationState::AnimDamage].Load(L"Assets/animData/enemy_Bos/enBosdamage.tka");
+	m_animationClips[EnemyBosState::AnimationState::AnimDamage].SetLoopFlag(false);
 	//アニメーションの初期化。
 	m_animation.Init(
-		m_model,			//アニメーションを流すスキンモデル。
-							//これでアニメーションとスキンモデルが関連付けされる。
-		m_animationClips,	//アニメーションクリップの配列。
-		4					//アニメーションクリップの数。
+		m_model,								//アニメーションを流すスキンモデル。
+												//これでアニメーションとスキンモデルが関連付けされる。
+		m_animationClips,						//アニメーションクリップの配列。
+		EnemyBosState::AnimationState::AnimNum//アニメーションクリップの数。
 	);
 	//hpバーのスプライト。
 	m_hpSprite.Init(L"Assets/sprite/hp_gauge.dds", 40.0f, 10.0f);
@@ -91,61 +94,24 @@ void EnemyBos::Search()
 	//前方向の取得。
 	m_forward = CVector3::AxisZ();
 	m_rotation.Multiply(m_forward);
-	//enemyForwardとm_moveSpeedとの内積を計算する。
-	float d = m_forward.Dot(m_moveSpeed);
-	//内積の結果をacos関数に渡して、enemyForwardとm_moveSpeedのなす角を求める。
-	float angle = acos(d);
-	//視野角判定
 	//fabsfは絶対値を求める関数！
 	//角度はマイナスが存在するから、絶対値にする。
-	// /*
-	if (m_toPlayerLen <= 170.0) {
+	if (m_toPlayerLen <= 160.0) {
 		//プレイヤーとの距離が一定以下で
-		//攻撃関数をよべー。
-		Attack();
-	}
-	// */
-	if (attackFlag == true) {
-		//攻撃アニメーションが終了したら。
-		if (m_animation.IsPlaying() == false) {
-			attackFlag = false;
-			m_AttackTiming = 0;
-		}
+		//攻撃ステートをよべー。
+		m_enbos_stm.Change(EnemyBosState::MoveState::attack);
+		m_enbos_stm.StateAttack()->SetAttack(60, 25);
 	}
 	else
 	{
-		//攻撃アニメーションが再生されてない時
-		if (m_toPlayerLen > 150.0f && m_toPlayerLen < 1300.0f) {
-			//歩きアニメーションの再生するためにステートの変更
-			m_enbos_stm.Change(EnemyBosState::MoveState::move);
-		}
-		else {
-			//待機アニメーションの再生するためにステートの変更
-			m_enbos_stm.Change(EnemyBosState::MoveState::idle);
-		}
+		m_enbos_stm.Change(EnemyBosState::MoveState::move);
 	}
-}
-
-//攻撃
-void EnemyBos::Attack()
-{
-	m_AttackTiming++;
-	//攻撃の間隔
-	if (m_AttackTiming == 25) {
-		//攻撃アニメーションの再生するためにステートの変更
-		m_enbos_stm.Change(EnemyBosState::MoveState::attack);
-		attackFlag = true;
-	}
-	//攻撃されてからあたったタイミングで攻撃したい（簡易版）
-	if (m_AttackTiming == 60) {
-		//当たったと思われるタイミングで
-		CVector3 hit = m_position;
-		hit.y += 50.0f;
-		hit += m_forward * 50.0f;
-		//攻撃をヒットさせる。
-		g_hitObject->HitTest(hit, m_status.GetAtk(), Hit::player);
-		//攻撃の間隔を0に戻す。
-		m_AttackTiming = 0;
+	if (m_enbos_stm.StateAttack()->GetAtkFlag() == true) {
+		//攻撃アニメーションが終了したら。
+		if (m_animation.IsPlaying() == false) {
+			m_enbos_stm.StateAttack()->SetAtkFlag(false);
+			m_enbos_stm.StateAttack()->SetTiming(0);
+		}
 	}
 }
 
@@ -153,6 +119,8 @@ void EnemyBos::Attack()
 void EnemyBos::Damage(float damage)
 {
 	m_se_damade.Play(false);
+	m_enbos_stm.Change(EnemyBosState::MoveState::damage);
+	m_enbos_stm.StateDamage()->SetDamage(true);
 	//攻撃をくらったのでHPからくらった分を引く
 	float hp = m_status.GetHp();
 	float Damage = damage - m_status.GetDef();
@@ -196,8 +164,15 @@ void EnemyBos::HP_Gauge()
 
 void EnemyBos::Update()
 {
-	m_damageTiming = 0;
-	Search();
+	if (m_enbos_stm.StateDamage()->GetDamage() == false) {
+		Search();
+	}
+	else {
+		if (m_animation.IsPlaying() == false) {
+			m_enbos_stm.Change(EnemyBosState::MoveState::move);
+			m_enbos_stm.StateDamage()->SetDamage(false);
+		}
+	}
 	//ステートマシンの更新
 	m_enbos_stm.Update();
 	//重力加速度

@@ -3,7 +3,7 @@
 
 
 EnemyBosStateMachine::EnemyBosStateMachine(EnemyBos * enbos)
-	:m_enBosMove(enbos,this),m_enBosIdle(enbos,this),m_enBosAttack(enbos,this)
+	:m_enBosMove(enbos,this),m_enBosAttack(enbos,this),m_enBosDamage(enbos,this)
 {
 }
 
@@ -13,7 +13,7 @@ EnemyBosStateMachine::~EnemyBosStateMachine()
 
 bool EnemyBosStateMachine::Start()
 {
-	Change(EnemyBosState::MoveState::idle);
+	Change(EnemyBosState::MoveState::move);
 	return false;
 }
 
@@ -32,12 +32,11 @@ void EnemyBosStateMachine::Change(EnemyBosState::MoveState state)
 	case EnemyBosState::MoveState::move:
 		m_ienbosState = &m_enBosMove;
 		break;
-	case EnemyBosState::MoveState::idle:
-		m_ienbosState = &m_enBosIdle;
-		break;
 	case EnemyBosState::MoveState::attack:
 		m_ienbosState = &m_enBosAttack;
 		break;
+	case EnemyBosState::MoveState::damage:
+		m_ienbosState = &m_enBosDamage;
 	}
 	m_ienbosState->Start();
 }
