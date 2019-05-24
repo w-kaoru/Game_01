@@ -15,7 +15,7 @@ public:
 	void Draw() override;
 	void PostDraw() override;
 
-	void Move();
+	//void Move();
 	//void Jump();
 	void Attack();
 	void HP_Gauge();
@@ -30,15 +30,37 @@ public:
 	{
 		return m_position;
 	}
+	CVector3 GetForward()
+	{
+		return m_forward;
+	}
+	CharacterStatus* GetStatus()
+	{
+		return &m_status;
+	}
+	Animation GetAnimation()
+	{
+		return m_animation;
+	}
+	CVector3 GetMoveSpeed() {
+		return m_moveSpeed;
+	}
+	CQuaternion GetRotation()
+	{
+		return m_rotation;
+	}
 	//ローテーションのゲッター。
 	void SetRotation(CQuaternion rot)
 	{
 		m_rotation = rot;
 	}
 	//アニメーションのステートのセッター。
-	void SetAnimation(PlayerState::AnimState state)
+	void SetAnimation(PlayerState::AnimationState state)
 	{
 		m_animation.Play(state, 0.2f);
+	}
+	void SetMoveSpeed(CVector3 ms) {
+		m_moveSpeed = ms;
 	}
 	void EXP(int exp)
 	{
@@ -48,7 +70,7 @@ private:
 	SkinModel m_model;									//スキンモデル。
 	//SkinModel m_model_01;									//スキンモデル。
 	Animation m_animation;								//アニメーション。
-	AnimationClip m_animationClips[PlayerState::AnimState::num];	//アニメーションクリップ。
+	AnimationClip m_animationClips[PlayerState::AnimationState::AnimNum];	//アニメーションクリップ。
 	CVector3 m_position = CVector3::Zero();				//座標。
 	CVector3 m_respawnPosition = CVector3::Zero();		//リスポーン座標。
 	CVector3 m_scale = CVector3::One();					//拡大率。
@@ -64,13 +86,10 @@ private:
 	float m_HpScaleX = 40.0f;	//HPのスプライトの横幅
 	float m_HpScaleY = 15.0f;	//HPのスプライトの縦幅
 	const Hit* m_hit;
-	bool m_atkAnim = false;
-	int m_hitTiming = 0;		//ダメージを受けるタイミング
 	CharacterStatus m_status;	//プレイヤーのステイタス
 	float m_maxHp = 0.0f;
 	float m_hpFrame = 0.0f;		//体力の枠
 	int m_exp = 0;
-	bool m_hitDamage = false;
 	Font m_font;
 	CSoundSource m_se;						//SE。
 	ID3D11ShaderResourceView* m_normalMapSRV = nullptr;	//ノーマルマップのSRV

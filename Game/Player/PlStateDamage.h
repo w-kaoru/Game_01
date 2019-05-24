@@ -7,4 +7,14 @@ public:
 	~PlStateDamage();
 	bool Start();
 	void Update();
+	void SetDamage(bool damage)
+	{
+		m_isDamage = damage;
+	}
+	bool GetDamage()
+	{
+		return m_isDamage;
+	}
+private:
+	bool m_isDamage = false;
 };

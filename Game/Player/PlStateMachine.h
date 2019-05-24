@@ -1,6 +1,5 @@
 #pragma once
-#include "PlStateIdle.h"
-#include "PlStateRun.h"
+#include "PlStateMove.h"
 #include "PlStateAttack.h"
 #include "PlStateDamage.h"
 #include "PlayerState.h"
@@ -14,12 +13,19 @@ public:
 	~PlStateMachine();
 	bool Start();
 	void Update();
-	void Change(PlayerState::AnimState state);
+	void Change(PlayerState::MoveState state);
+	PlStateAttack* StateAttack()
+	{
+		return &m_plAttack;
+	}
+	PlStateDamage* StateDamage()
+	{
+		return &m_plDamage;
+	}
 private:
-	PlStateIdle m_plIdle;
-	PlStateRun m_plRun;
+	PlStateMove m_plMove;
 	PlStateAttack m_plAttack;
 	PlStateDamage m_plDamage;
 	IPlState *m_ips = nullptr;
-	PlayerState::AnimState m_state = PlayerState::nostate;
+	PlayerState::MoveState m_state = PlayerState::MoveState::Nostate;
 };

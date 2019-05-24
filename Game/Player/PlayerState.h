@@ -2,12 +2,19 @@
 class PlayerState
 {
 public:
-	enum AnimState {
-		idle,		//待機
-		run,		//走る
-		attack,		//攻撃
-		damage,		//ダメージ
-		num,		//AniMoveの数	
-		nostate
+	enum AnimationState {
+		AnimIdle,		//待機
+		AnimRun,		//走る
+		AnimAttack,		//攻撃
+		AnimDamage,		//ダメージ
+		AnimNum,		//AniMoveの数	
+		AnimNostate
+	};
+	enum MoveState {
+		Move,		//
+		Attack,		//攻撃
+		Damage,		//ダメージ
+		Num,		//AniMoveの数	
+		Nostate
 	};
 };

@@ -13,7 +13,7 @@ PlStateDamage::~PlStateDamage()
 
 bool PlStateDamage::Start()
 {
-	m_player->SetAnimation(PlayerState::damage);
+	m_player->SetAnimation(PlayerState::AnimationState::AnimDamage);
 	return false;
 }
 

@@ -166,13 +166,7 @@
     <ClCompile Include="Player\PlStateAttack.cpp">
       <Filter>Player</Filter>
     </ClCompile>
-    <ClCompile Include="Player\PlStateIdle.cpp">
-      <Filter>Player</Filter>
-    </ClCompile>
     <ClCompile Include="Player\PlStateMachine.cpp">
-      <Filter>Player</Filter>
-    </ClCompile>
-    <ClCompile Include="Player\PlStateRun.cpp">
       <Filter>Player</Filter>
     </ClCompile>
     <ClCompile Include="graphics\Bloom.cpp">
@@ -233,6 +227,9 @@
     </ClCompile>
     <ClCompile Include="Enemy\EnStateDamage.cpp" />
     <ClCompile Include="EnemyBos\EnemyBosStateDamage.cpp" />
+    <ClCompile Include="Player\PlStateMove.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -368,13 +365,7 @@
     <ClInclude Include="Player\PlStateAttack.h">
       <Filter>Player</Filter>
     </ClInclude>
-    <ClInclude Include="Player\PlStateIdle.h">
-      <Filter>Player</Filter>
-    </ClInclude>
     <ClInclude Include="Player\PlStateMachine.h">
-      <Filter>Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Player\PlStateRun.h">
       <Filter>Player</Filter>
     </ClInclude>
     <ClInclude Include="graphics\Bloom.h">
@@ -435,6 +426,9 @@
     </ClInclude>
     <ClInclude Include="Enemy\EnStateDamage.h" />
     <ClInclude Include="EnemyBos\EnemyBosStateDamage.h" />
+    <ClInclude Include="Player\PlStateMove.h">
+      <Filter>Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\enpath2.fbx">

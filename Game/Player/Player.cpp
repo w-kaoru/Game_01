@@ -12,27 +12,27 @@ Player::Player() :m_stMa(this)
 	//m_model_01.Init(L"Assets/modelData/plpath.cmo", enFbxUpAxisZ);
 	//tkaファイルの読み込み。
 	//待機アニメーション
-	m_animationClips[PlayerState::AnimState::idle].Load(L"Assets/animData/Player/plidle.tka");
-	m_animationClips[PlayerState::AnimState::idle].SetLoopFlag(true);
+	m_animationClips[PlayerState::AnimationState::AnimIdle].Load(L"Assets/animData/Player/plidle.tka");
+	m_animationClips[PlayerState::AnimationState::AnimIdle].SetLoopFlag(true);
 
 	//走りアニメーション
-	m_animationClips[PlayerState::AnimState::run].Load(L"Assets/animData/Player/plwalk.tka");
-	m_animationClips[PlayerState::AnimState::run].SetLoopFlag(true);
+	m_animationClips[PlayerState::AnimationState::AnimRun].Load(L"Assets/animData/Player/plwalk.tka");
+	m_animationClips[PlayerState::AnimationState::AnimRun].SetLoopFlag(true);
 
 	//攻撃アニメーション
-	m_animationClips[PlayerState::AnimState::attack].Load(L"Assets/animData/Player/plattack.tka");
-	m_animationClips[PlayerState::AnimState::attack].SetLoopFlag(false);
+	m_animationClips[PlayerState::AnimationState::AnimAttack].Load(L"Assets/animData/Player/plattack.tka");
+	m_animationClips[PlayerState::AnimationState::AnimAttack].SetLoopFlag(false);
 
 	//ダメージアニメーション
-	m_animationClips[PlayerState::AnimState::damage].Load(L"Assets/animData/Player/pldamage.tka");
-	m_animationClips[PlayerState::AnimState::damage].SetLoopFlag(false);
+	m_animationClips[PlayerState::AnimationState::AnimDamage].Load(L"Assets/animData/Player/pldamage.tka");
+	m_animationClips[PlayerState::AnimationState::AnimDamage].SetLoopFlag(false);
 
 	//アニメーションの初期化。
 	m_animation.Init(
 		m_model,			//アニメーションを流すスキンモデル。
 							//アニメーションとスキンモデルの関連付けがされる。
 		m_animationClips,	//アニメーションクリップの配列。
-		4					//アニメーションクリップの数。
+		PlayerState::AnimationState::AnimNum//アニメーションクリップの数。
 	);
 	//m_scale *= 0.1f;
 	//HPの画像の読み込み
@@ -97,7 +97,7 @@ bool Player::Start()
 	return true;
 }
 //移動
-void Player::Move()
+/*void Player::Move()
 {
 	//スティックの入力量を受け取る。
 	float lStick_x = g_pad[0].GetLStickXF();
@@ -123,41 +123,26 @@ void Player::Move()
 		auto angle = atan2f(m_moveSpeed.x, m_moveSpeed.z);
 		m_rotation.SetRotation(CVector3::AxisY(), angle);
 		//走るアニメーションの再生するためにステートの変更
-		m_stMa.Change(PlayerState::AnimState::run);
+		//m_stMa.Change(PlayerState::AnimState::run);
 	}
 	else {
 		//待機アニメーションの再生するためにステートの変更
-		m_stMa.Change(PlayerState::AnimState::idle);
+		//m_stMa.Change(PlayerState::AnimState::idle);
 	}
-}
+}*/
 
 //攻撃
 void Player::Attack()
 {
-	if (g_pad[0].IsTrigger(enButtonX) && m_atkAnim == false) {
+	if (g_pad[0].IsTrigger(enButtonX) && m_stMa.StateAttack()->GetHit() == false) {
 		//Aボタンが押されて攻撃モーションをしてない時。
-		m_atkAnim = true;
+		m_stMa.StateAttack()->SetHit(true);
 		//攻撃アニメーションの再生するためにステートの変更
-		m_stMa.Change(PlayerState::AnimState::attack);
+		m_stMa.Change(PlayerState::MoveState::Attack);
 	}
-	if (m_atkAnim == true) {
-		m_hitTiming++;
-		m_moveSpeed *= 0.0f;
-		//攻撃されてからあたったタイミングで攻撃したい（簡易版）
-		if (m_hitTiming == 15) {
-			//攻撃をヒットさせる。
-			g_hitObject->HitTest(m_attckPos, m_status.GetAtk(), Hit::enemy);
-		}
-		if (m_animation.IsPlaying() == false) {
-			m_atkAnim = false;
-			//攻撃の間隔を0に戻す。
-			m_hitTiming = 0;
-		}
-	}
-	else {
-
+	if(m_stMa.StateAttack()->GetHit() == false) {
 		//攻撃していない時に移動などの処理。
-		Move();
+		m_stMa.Change(PlayerState::MoveState::Move);
 	}
 }
 
@@ -195,13 +180,14 @@ void Player::HP_Gauge()
 //ダメージ
 void Player::Damage(float Enatk)
 {
-	m_hitDamage = true;
+	m_stMa.StateDamage()->SetDamage(true);
 	m_se.Play(false);
+	m_stMa.StateAttack()->SetHit(false);
 	//攻撃をくらったのでHPからくらった分を引く
 	float hp = m_status.GetHp();
 	hp = (hp + m_status.GetDef()) - Enatk;
 	m_status.SetHp(hp);
-	m_stMa.Change(PlayerState::AnimState::damage);
+	m_stMa.Change(PlayerState::MoveState::Damage);
 }
 
 void Player::Update()
@@ -236,22 +222,32 @@ void Player::Update()
 		g_gameObjM->NewGO<GameEnd>()->SetGameEnd(GameEnd::GameEndState::gameOver);
 	}
 
-	if (m_hitDamage == false) {
-		//攻撃
+	//if (m_hitDamage == false) {
+	//	//攻撃
+	//	Attack();
+	//}
+	//else
+	//{
+	//	m_moveSpeed *= 0.0f;
+	//	if (m_animation.IsPlaying() == false) {
+	//		m_hitDamage = false;
+	//	}
+	//}
+
+	if (m_stMa.StateDamage()->GetDamage() == false) {
 		Attack();
 	}
-	else
-	{
-		m_moveSpeed *= 0.0f;
+	else {
 		if (m_animation.IsPlaying() == false) {
-			m_hitDamage = false;
+			m_stMa.Change(PlayerState::MoveState::Move);
+			m_stMa.StateDamage()->SetDamage(false);
 		}
 	}
 	//攻撃の当たり判定のポジション
 	//プレイヤーのポジションの少し前の位置
-	m_attckPos.x = m_position.x + m_forward.x * 60.0f;
+	/*m_attckPos.x = m_position.x + m_forward.x * 60.0f;
 	m_attckPos.z = m_position.z + m_forward.z * 60.0f;
-	m_attckPos.y = 100.0f;
+	m_attckPos.y = 100.0f;*/
 	//重力
 	m_moveSpeed.y -= 980.0f * (1.0f / 60.0f);
 	//キャラコンを使って移動する。

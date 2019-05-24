@@ -12,5 +12,7 @@ public:
 protected:
 	PlStateMachine * m_plstma = nullptr;
 	Player * m_player = nullptr;
+	CVector3 m_moveSpeed = CVector3::Zero();			//ˆÚ“®‘¬“x
+	CQuaternion m_rotation = CQuaternion::Identity();	//‰ñ“]B
 };
 
