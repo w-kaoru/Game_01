@@ -15,20 +15,16 @@ public:
 	void Draw() override;
 	void PostDraw() override;
 
-	//void Move();
-	//void Jump();
-	void Attack();
 	void HP_Gauge();
 	void Damage(float Enatk);
-	//ポジションのセッター。
-	void SetPosition(CVector3 pos)
-	{
-		m_position = pos;
-	}
-	//ポジションのゲッター。
+	//ゲッター。
 	CVector3 GetPosition()
 	{
 		return m_position;
+	}
+	CQuaternion GetRotation()
+	{
+		return m_rotation;
 	}
 	CVector3 GetForward()
 	{
@@ -45,11 +41,11 @@ public:
 	CVector3 GetMoveSpeed() {
 		return m_moveSpeed;
 	}
-	CQuaternion GetRotation()
+	//セッター。
+	void SetPosition(CVector3 pos)
 	{
-		return m_rotation;
+		m_position = pos;
 	}
-	//ローテーションのゲッター。
 	void SetRotation(CQuaternion rot)
 	{
 		m_rotation = rot;

@@ -96,56 +96,6 @@ bool Player::Start()
 	m_model.SetShadowReciever(true);
 	return true;
 }
-//移動
-/*void Player::Move()
-{
-	//スティックの入力量を受け取る。
-	float lStick_x = g_pad[0].GetLStickXF();
-	float lStick_y = g_pad[0].GetLStickYF();
-	//カメラの前方方向と右方向を取得。
-	CVector3 cameraForward = g_camera3D.GetForward();
-	CVector3 cameraRight = g_camera3D.GetRight();
-	//XZ平面での前方方向、右方向に変換する。
-	cameraForward.y = 0.0f;
-	cameraForward.Normalize();
-	cameraRight.y = 0.0f;
-	cameraRight.Normalize();
-	//XZ成分の移動速度をクリア。
-	m_moveSpeed.x = 0.0f;
-	m_moveSpeed.z = 0.0f;
-	//奥方向への移動速度を代入。
-	m_moveSpeed += cameraForward * lStick_y * m_status.GetAgi();
-	//右方向への移動速度を加算。
-	m_moveSpeed += cameraRight * lStick_x * m_status.GetAgi();
-	//向きを変える。
-	if (fabsf(m_moveSpeed.x) > 0.1f
-		|| fabsf(m_moveSpeed.z) > 0.1f) {
-		auto angle = atan2f(m_moveSpeed.x, m_moveSpeed.z);
-		m_rotation.SetRotation(CVector3::AxisY(), angle);
-		//走るアニメーションの再生するためにステートの変更
-		//m_stMa.Change(PlayerState::AnimState::run);
-	}
-	else {
-		//待機アニメーションの再生するためにステートの変更
-		//m_stMa.Change(PlayerState::AnimState::idle);
-	}
-}*/
-
-//攻撃
-void Player::Attack()
-{
-	if (g_pad[0].IsTrigger(enButtonX) && m_stMa.StateAttack()->GetHit() == false) {
-		//Aボタンが押されて攻撃モーションをしてない時。
-		m_stMa.StateAttack()->SetHit(true);
-		//攻撃アニメーションの再生するためにステートの変更
-		m_stMa.Change(PlayerState::MoveState::Attack);
-	}
-	if(m_stMa.StateAttack()->GetHit() == false) {
-		//攻撃していない時に移動などの処理。
-		m_stMa.Change(PlayerState::MoveState::Move);
-	}
-}
-
 //HPを表示するスプライトのための関係。
 void Player::HP_Gauge()
 {
@@ -221,21 +171,17 @@ void Player::Update()
 		g_gameObjM->DeleteGO(g_gameObjM->FindGO<Game>());
 		g_gameObjM->NewGO<GameEnd>()->SetGameEnd(GameEnd::GameEndState::gameOver);
 	}
-
-	//if (m_hitDamage == false) {
-	//	//攻撃
-	//	Attack();
-	//}
-	//else
-	//{
-	//	m_moveSpeed *= 0.0f;
-	//	if (m_animation.IsPlaying() == false) {
-	//		m_hitDamage = false;
-	//	}
-	//}
-
+	//攻撃をクラったかどうか
 	if (m_stMa.StateDamage()->GetDamage() == false) {
-		Attack();
+		if (g_pad[0].IsTrigger(enButtonX) && m_stMa.StateAttack()->GetHit() == false) {
+			m_stMa.StateAttack()->SetHit(true);
+			//攻撃ステートに変更
+			m_stMa.Change(PlayerState::MoveState::Attack);
+		}
+		if (m_stMa.StateAttack()->GetHit() == false) {
+			//攻撃していない時に移動などの処理。
+			m_stMa.Change(PlayerState::MoveState::Move);
+		}
 	}
 	else {
 		if (m_animation.IsPlaying() == false) {
@@ -243,11 +189,6 @@ void Player::Update()
 			m_stMa.StateDamage()->SetDamage(false);
 		}
 	}
-	//攻撃の当たり判定のポジション
-	//プレイヤーのポジションの少し前の位置
-	/*m_attckPos.x = m_position.x + m_forward.x * 60.0f;
-	m_attckPos.z = m_position.z + m_forward.z * 60.0f;
-	m_attckPos.y = 100.0f;*/
 	//重力
 	m_moveSpeed.y -= 980.0f * (1.0f / 60.0f);
 	//キャラコンを使って移動する。

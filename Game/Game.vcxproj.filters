@@ -225,10 +225,14 @@
     <ClCompile Include="Player\PlStateDamage.cpp">
       <Filter>Player</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy\EnStateDamage.cpp" />
-    <ClCompile Include="EnemyBos\EnemyBosStateDamage.cpp" />
     <ClCompile Include="Player\PlStateMove.cpp">
       <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyBos\EnemyBosStateDamage.cpp">
+      <Filter>EnemyBos</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy\EnStateDamage.cpp">
+      <Filter>Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -424,10 +428,14 @@
     <ClInclude Include="Player\PlStateDamage.h">
       <Filter>Player</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy\EnStateDamage.h" />
-    <ClInclude Include="EnemyBos\EnemyBosStateDamage.h" />
     <ClInclude Include="Player\PlStateMove.h">
       <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy\EnStateDamage.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyBos\EnemyBosStateDamage.h">
+      <Filter>EnemyBos</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
