@@ -159,11 +159,13 @@ void Enemy::Damage(float damage)
 	float hp = m_status.GetHp();
 	m_ensm.StateDamage()->SetDamage(true);
 	m_ensm.Change(EnemyState::MoveState::damage);
-	float Damage = damage - m_status.GetDef();
-	if (Damage <= 0.0f) {
-		Damage = 0.0f;
+	//攻撃をくらったのでHPからくらった分を引く
+	if (hp > 0) {
+		hp = (hp + m_status.GetDef()) - damage;
 	}
-	hp -= Damage;
+	else {
+		hp = 0.0f;
+	}
 	m_status.SetHp(hp);
 }
 
@@ -213,7 +215,7 @@ void Enemy::Update()
 		//ステートマシンの更新
 		m_ensm.Update();
 		
-		if (m_status.GetHp() <= 0.01f&&m_isDeath == false) {
+		if (m_status.GetHp() < 0.01f&&m_isDeath == false) {
 			m_isDeath = true;
 			m_effectPos = m_position;
 			//エフェクトの再生。

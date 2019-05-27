@@ -286,6 +286,9 @@
     <ImageContentTask Include="Assets\sprite\game_ken.png" />
     <ImageContentTask Include="Assets\sprite\item_controller .png" />
   </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\hp_yellowGauge.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\ImageContentTask.targets" />

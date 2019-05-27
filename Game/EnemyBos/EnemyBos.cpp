@@ -123,11 +123,12 @@ void EnemyBos::Damage(float damage)
 	m_enbos_stm.StateDamage()->SetDamage(true);
 	//UŒ‚‚ğ‚­‚ç‚Á‚½‚Ì‚ÅHP‚©‚ç‚­‚ç‚Á‚½•ª‚ğˆø‚­
 	float hp = m_status.GetHp();
-	float Damage = damage - m_status.GetDef();
-	if (Damage <= 0.0f) {
-		Damage = 0.0f;
+	if (hp > 0) {
+		hp = (hp + m_status.GetDef()) - damage;
 	}
-	hp -= Damage;
+	else {
+		hp = 0.0f;
+	}
 	m_status.SetHp(hp);
 }
 

@@ -37,6 +37,7 @@ Player::Player() :m_stMa(this)
 	//m_scale *= 0.1f;
 	//HPの画像の読み込み
 	m_hpSprite.Init(L"Assets/sprite/hp_gauge.dds", m_HpScaleX, m_HpScaleY);
+	m_hpyellowSprite.Init(L"Assets/sprite/hp_yellowGauge.dds", m_HpScaleX, m_HpScaleY);
 	m_hpFrameSprite.Init(L"Assets/sprite/hp_frame.dds", m_HpScaleX, m_HpScaleY);
 
 	//法線マップをロード。
@@ -63,16 +64,16 @@ Player::~Player()
 bool Player::Start()
 {
 	//ステータスの設定
-	m_hpFrame = 6;
 	m_status.SetLv(1);
 	m_status.SetHp(60);
 	m_status.SetAgi(1150.0f);
 	m_status.SetDef(1.0f);
-	m_status.SetAtk(4.5f);
+	m_status.SetAtk(14.5f);
 	m_status.SetMaxLv(9);
 	m_maxHp = m_status.GetHp();
+	m_yellowhp = m_maxHp;
+	m_hpFrame = m_maxHp;
 	m_status.StatusUp();
-	m_hpFrame = m_status.GetHp();
 	//ノーマルマップをセットする。
 	m_model.SetNormalMap(m_normalMapSRV);
 	m_model.SetSpecularMap(m_specularMapSRV);
@@ -101,6 +102,14 @@ void Player::HP_Gauge()
 {
 	float w = -500.0f;
 	float h = 350.0f;
+
+	if (m_status.GetHp() < m_yellowhp) {
+		m_yellowhp *= 0.995f;
+	}
+	else
+	{
+		m_yellowhp = m_status.GetHp();
+	}
 	//スプライトの更新
 	m_hpFrameSprite.Update(
 		{ w, h, 0.0f },
@@ -115,8 +124,19 @@ void Player::HP_Gauge()
 		{ m_status.GetHp() / 10, 1.5f, 1.0f },
 		{ 0.0f,1.0f }
 	);
+	m_hpyellowSprite.Update(
+		{ w, h, 0.0f },
+		CQuaternion::Identity(),
+		{ m_yellowhp / 10, 1.5f, 1.0f },
+		{ 0.0f,1.0f }
+	);
 	//スプライトを２次元で表示をする。
 	m_hpFrameSprite.Draw(
+		g_camera2D.GetViewMatrix(),
+		g_camera2D.GetProjectionMatrix()
+	);
+	//スプライトを２次元で表示をする。
+	m_hpyellowSprite.Draw(
 		g_camera2D.GetViewMatrix(),
 		g_camera2D.GetProjectionMatrix()
 	);
@@ -128,14 +148,20 @@ void Player::HP_Gauge()
 }
 
 //ダメージ
-void Player::Damage(float Enatk)
+void Player::Damage(float damage)
 {
 	m_stMa.StateDamage()->SetDamage(true);
 	m_se.Play(false);
 	m_stMa.StateAttack()->SetHit(false);
 	//攻撃をくらったのでHPからくらった分を引く
 	float hp = m_status.GetHp();
-	hp = (hp + m_status.GetDef()) - Enatk;
+	if (hp > 0) {
+		hp = (hp + m_status.GetDef()) - damage;
+	}
+	else {
+		hp = 0.0f;
+	}
+	m_moveSpeed *= 0.0f;
 	m_status.SetHp(hp);
 	m_stMa.Change(PlayerState::MoveState::Damage);
 }

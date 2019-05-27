@@ -160,6 +160,7 @@ const CVector3& SpringCamera::Execute(float deltaTime, CVector3& moveSpeed)
 				nextPosition.z = callback.hitPos.z;
 				////–@ü‚Ì•ûŒü‚É”¼Œa•ª‰Ÿ‚µ–ß‚·B
 				nextPosition.x += callback.hitNormal.x * m_normalpush;
+				nextPosition.y += callback.hitNormal.y * m_normalpush;
 				nextPosition.z += callback.hitNormal.z * m_normalpush;
 				break;
 			}

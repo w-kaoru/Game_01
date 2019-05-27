@@ -11,6 +11,7 @@ public:
 		* @brief	初期化。
 		*@param[in]	radius		カプセルコライダーの半径。
 		*@param[in]	height		カプセルコライダーの高さ。
+		*@param[in]	height		カプセルコライダーを法線方向に押す。
 		*@param[in]	position	初期位置。
 		*/
 	void Init(float radius, float height, float normalpush, const CVector3& position);

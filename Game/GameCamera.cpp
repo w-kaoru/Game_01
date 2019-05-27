@@ -25,7 +25,7 @@ bool GameCamera::Start()
 	m_springCamera.Init(
 		0.0001f,
 		0.0001f,
-		0.5f,
+		0.9f,
 		g_camera3D.GetPosition()
 	);
 	return false;

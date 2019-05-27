@@ -33,7 +33,7 @@ void PlStateAttack::Update()
 	if (m_hitTiming == 15) {
 		//UŒ‚‚ðƒqƒbƒg‚³‚¹‚éB
 		g_hitObject->HitTest(m_attckPos, m_player->GetStatus()->GetAtk(), Hit::enemy);
-		m_hitTiming == 0;
+		m_hitTiming = 0;
 	}
 	if (m_player->GetAnimation().IsPlaying() == false) {
 		m_atk = false;

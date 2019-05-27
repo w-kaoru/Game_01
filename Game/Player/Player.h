@@ -16,7 +16,7 @@ public:
 	void PostDraw() override;
 
 	void HP_Gauge();
-	void Damage(float Enatk);
+	void Damage(float damage);
 	//ゲッター。
 	CVector3 GetPosition()
 	{
@@ -78,6 +78,7 @@ private:
 	CVector3 m_forward = CVector3::Zero();		//前方。
 	CVector3 m_attckPos = CVector3::Zero();		//攻撃の場所。
 	Sprite m_hpSprite;		//hpゲージ
+	Sprite m_hpyellowSprite;		//hpゲージ
 	Sprite m_hpFrameSprite;	//hpゲージの枠
 	float m_HpScaleX = 40.0f;	//HPのスプライトの横幅
 	float m_HpScaleY = 15.0f;	//HPのスプライトの縦幅
@@ -86,6 +87,7 @@ private:
 	float m_maxHp = 0.0f;
 	float m_hpFrame = 0.0f;		//体力の枠
 	int m_exp = 0;
+	float m_yellowhp = 0.0f;
 	Font m_font;
 	CSoundSource m_se;						//SE。
 	ID3D11ShaderResourceView* m_normalMapSRV = nullptr;	//ノーマルマップのSRV
