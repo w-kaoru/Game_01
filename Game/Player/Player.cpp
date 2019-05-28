@@ -68,16 +68,15 @@ Player::~Player()
 bool Player::Start()
 {
 	//ステータスの設定
-	m_status.SetLv(1);
 	m_status.SetHp(60);
 	m_status.SetAgi(1150.0f);
 	m_status.SetDef(1.0f);
-	m_status.SetAtk(14.5f);
+	m_status.SetAtk(5.5f);
 	m_status.SetMaxLv(9);
+	m_status.StatusUp();
 	m_maxHp = m_status.GetHp();
 	m_yellowhp = m_maxHp;
 	m_hpFrame = m_maxHp;
-	m_status.StatusUp();
 	//ノーマルマップをセットする。
 	m_model.SetNormalMap(m_normalMapSRV);
 	m_model.SetSpecularMap(m_specularMapSRV);

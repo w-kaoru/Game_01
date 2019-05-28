@@ -32,8 +32,8 @@ bool EnemyBos::Start()
 	//ステータスの設定
 	m_status.SetHp(20.0f);
 	m_status.SetAgi(500.0f);
-	m_status.SetDef(3.0f);
-	m_status.SetAtk(15.0f);
+	m_status.SetDef(5.0f);
+	m_status.SetAtk(16.0f);
 	m_status.StatusUp();
 	m_model.Init(L"Assets/modelData/enemy_Bos.cmo");
 	//ノーマルマップをセットする。
@@ -131,6 +131,7 @@ void EnemyBos::Damage(float damage)
 	if (hp <= 0.0f) {
 		hp = 0.0f;
 	}
+	m_moveSpeed *= 0.0f;
 	m_status.SetHp(hp);
 	if (m_status.GetHp() > 0.0f) {
 		m_enbos_stm.Change(EnemyBosState::MoveState::damage);

@@ -48,6 +48,7 @@ bool Game::Start()
 		if (objData.EqualName(L"plpath") == true) {
 			m_player = g_gameObjM->NewGO<Player>(0);
 			m_player->SetPosition(objData.position);
+			m_player->GetStatus()->SetLv(1);
 			return true;
 		}
 		return false;
@@ -147,7 +148,7 @@ void Game::Update()
 				m_enemyBos->SetPosition(objData.position);
 				m_enemyBos->SetRotation(objData.rotation);
 				m_enemyBos->GetPlayer(m_player);
-				m_enemyBos->GetStatus()->SetLv(7);
+				m_enemyBos->GetStatus()->SetLv(8);
 				return true;
 			}
 			return false;
