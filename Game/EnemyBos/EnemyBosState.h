@@ -6,6 +6,7 @@ public:
 		move,
 		attack,
 		damage,
+		death,
 		num,
 		noState
 	};
@@ -15,6 +16,7 @@ public:
 		AnimMove,
 		AnimAttack,
 		AnimDamage,
+		AnimDeath,
 		AnimNum,
 		AnimNoState
 	};

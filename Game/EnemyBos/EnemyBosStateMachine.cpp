@@ -3,7 +3,7 @@
 
 
 EnemyBosStateMachine::EnemyBosStateMachine(EnemyBos * enbos)
-	:m_enBosMove(enbos,this),m_enBosAttack(enbos,this),m_enBosDamage(enbos,this)
+	:m_enBosMove(enbos,this),m_enBosAttack(enbos,this),m_enBosDamage(enbos,this),m_enBosDeath(enbos,this)
 {
 }
 
@@ -37,6 +37,10 @@ void EnemyBosStateMachine::Change(EnemyBosState::MoveState state)
 		break;
 	case EnemyBosState::MoveState::damage:
 		m_ienbosState = &m_enBosDamage;
+		break;
+	case EnemyBosState::MoveState::death:
+		m_ienbosState = &m_enBosDeath;
+		break;
 	}
 	m_ienbosState->Start();
 }

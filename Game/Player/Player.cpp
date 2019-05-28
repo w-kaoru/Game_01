@@ -27,6 +27,10 @@ Player::Player() :m_stMa(this)
 	m_animationClips[PlayerState::AnimationState::AnimDamage].Load(L"Assets/animData/Player/pldamage.tka");
 	m_animationClips[PlayerState::AnimationState::AnimDamage].SetLoopFlag(false);
 
+	//死ぬアニメーション
+	m_animationClips[PlayerState::AnimationState::AnimDeath].Load(L"Assets/animData/Player/pldeath.tka");
+	m_animationClips[PlayerState::AnimationState::AnimDeath].SetLoopFlag(false);
+
 	//アニメーションの初期化。
 	m_animation.Init(
 		m_model,			//アニメーションを流すスキンモデル。
@@ -155,15 +159,16 @@ void Player::Damage(float damage)
 	m_stMa.StateAttack()->SetHit(false);
 	//攻撃をくらったのでHPからくらった分を引く
 	float hp = m_status.GetHp();
-	if (hp > 0) {
-		hp = (hp + m_status.GetDef()) - damage;
-	}
-	else {
+	hp = (hp + m_status.GetDef()) - damage;
+	if (hp <= 0) {
 		hp = 0.0f;
 	}
 	m_moveSpeed *= 0.0f;
 	m_status.SetHp(hp);
-	m_stMa.Change(PlayerState::MoveState::Damage);
+	//死亡の判定
+	if (m_status.GetHp() > 0.0f) {
+		m_stMa.Change(PlayerState::MoveState::Damage);
+	}
 }
 
 void Player::Update()
@@ -194,8 +199,8 @@ void Player::Update()
 
 	//死亡の判定
 	if (m_status.GetHp() <= 0.0f) {
-		g_gameObjM->DeleteGO(g_gameObjM->FindGO<Game>());
-		g_gameObjM->NewGO<GameEnd>()->SetGameEnd(GameEnd::GameEndState::gameOver);
+		m_stMa.Change(PlayerState::MoveState::Death);
+		m_moveSpeed *= 0.0f;
 	}
 	//攻撃をクラったかどうか
 	if (m_stMa.StateDamage()->GetDamage() == false) {

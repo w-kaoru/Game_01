@@ -2,6 +2,7 @@
 #include "PlStateMove.h"
 #include "PlStateAttack.h"
 #include "PlStateDamage.h"
+#include "PlStateDeath.h"
 #include "PlayerState.h"
 
 
@@ -22,10 +23,15 @@ public:
 	{
 		return &m_plDamage;
 	}
+	PlStateDeath* StateDeath()
+	{
+		return &m_plDeath;
+	}
 private:
 	PlStateMove m_plMove;
 	PlStateAttack m_plAttack;
 	PlStateDamage m_plDamage;
+	PlStateDeath m_plDeath;
 	IPlState *m_ips = nullptr;
 	PlayerState::MoveState m_state = PlayerState::MoveState::Nostate;
 };

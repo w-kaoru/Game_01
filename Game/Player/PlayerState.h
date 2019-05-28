@@ -7,13 +7,15 @@ public:
 		AnimRun,		//走る
 		AnimAttack,		//攻撃
 		AnimDamage,		//ダメージ
+		AnimDeath,		//死ぬ
 		AnimNum,		//AniMoveの数	
 		AnimNostate
 	};
 	enum MoveState {
-		Move,		//
+		Move,		//動き
 		Attack,		//攻撃
 		Damage,		//ダメージ
+		Death,		//死ぬ
 		Num,		//AniMoveの数	
 		Nostate
 	};

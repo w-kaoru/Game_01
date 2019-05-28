@@ -2,7 +2,7 @@
 #include "PlStateMachine.h"
 
 PlStateMachine::PlStateMachine(Player * pl) :
-	m_plMove(pl,this),m_plAttack(pl,this),m_plDamage(pl,this)
+	m_plMove(pl,this),m_plAttack(pl,this),m_plDamage(pl,this),m_plDeath(pl,this)
 {
 }
 
@@ -37,6 +37,8 @@ void PlStateMachine::Change(PlayerState::MoveState state)
 	case PlayerState::MoveState::Damage:
 		m_ips = &m_plDamage;
 		break;
+	case PlayerState::MoveState::Death:
+		m_ips = &m_plDeath;
 	}
 	m_ips->Start();
 }

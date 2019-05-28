@@ -139,9 +139,11 @@ void Enemy::Search()
 		m_ensm.Change(EnemyState::MoveState::attack);
 		m_ensm.StateAttack()->SetAttack(m_atkHit, m_atkAnimStart);
 	}
-	else
+	if(m_toPlayerLen > 160.0
+		&&m_ensm.StateAttack()->GetAtkFlag() == false)
 	{
 		m_ensm.Change(EnemyState::MoveState::move);
+		m_ensm.StateAttack()->SetTiming(0);
 	}
 	if (m_ensm.StateAttack()->GetAtkFlag() == true) {
 		//攻撃アニメーションが終了したら。
@@ -154,16 +156,15 @@ void Enemy::Search()
 //ダメージ
 void Enemy::Damage(float damage)
 {
+	m_moveSpeed *= 0.0f;
 	m_se_damade.Play(false);
 	//攻撃をくらったのでHPからくらった分を引く
 	float hp = m_status.GetHp();
 	m_ensm.StateDamage()->SetDamage(true);
 	m_ensm.Change(EnemyState::MoveState::damage);
 	//攻撃をくらったのでHPからくらった分を引く
-	if (hp > 0) {
-		hp = (hp + m_status.GetDef()) - damage;
-	}
-	else {
+	hp = (hp + m_status.GetDef()) - damage;
+	if (hp <= 0) {
 		hp = 0.0f;
 	}
 	m_status.SetHp(hp);

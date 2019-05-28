@@ -100,6 +100,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="EnemyBos\EnemyBosStateDamage.cpp" />
+    <ClCompile Include="EnemyBos\EnemyBosStateDeath.cpp" />
     <ClCompile Include="Enemy\EnStateDamage.cpp" />
     <ClCompile Include="HitObject.cpp" />
     <ClCompile Include="Hit.cpp" />
@@ -150,6 +151,7 @@
     <ClCompile Include="Player\Player.cpp" />
     <ClCompile Include="Player\PlStateAttack.cpp" />
     <ClCompile Include="Player\PlStateDamage.cpp" />
+    <ClCompile Include="Player\PlStateDeath.cpp" />
     <ClCompile Include="Player\PlStateMachine.cpp" />
     <ClCompile Include="Player\PlStateMove.cpp" />
     <ClCompile Include="graphics\Bloom.cpp" />
@@ -172,6 +174,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EnemyBos\EnemyBosStateDamage.h" />
+    <ClInclude Include="EnemyBos\EnemyBosStateDeath.h" />
     <ClInclude Include="Enemy\EnStateDamage.h" />
     <ClInclude Include="HitObject.h" />
     <ClInclude Include="Hit.h" />
@@ -228,6 +231,7 @@
     <ClInclude Include="Player\PlayerState.h" />
     <ClInclude Include="Player\PlStateAttack.h" />
     <ClInclude Include="Player\PlStateDamage.h" />
+    <ClInclude Include="Player\PlStateDeath.h" />
     <ClInclude Include="Player\PlStateMachine.h" />
     <ClInclude Include="Player\PlStateMove.h" />
     <ClInclude Include="graphics\Bloom.h" />

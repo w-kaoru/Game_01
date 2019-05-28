@@ -51,6 +51,9 @@ bool EnemyBos::Start()
 	//ダメージアニメーション
 	m_animationClips[EnemyBosState::AnimationState::AnimDamage].Load(L"Assets/animData/enemy_Bos/enBosdamage.tka");
 	m_animationClips[EnemyBosState::AnimationState::AnimDamage].SetLoopFlag(false);
+	//ダメージアニメーション
+	m_animationClips[EnemyBosState::AnimationState::AnimDeath].Load(L"Assets/animData/enemy_Bos/enBosdeath.tka");
+	m_animationClips[EnemyBosState::AnimationState::AnimDeath].SetLoopFlag(false);
 	//アニメーションの初期化。
 	m_animation.Init(
 		m_model,								//アニメーションを流すスキンモデル。
@@ -102,9 +105,11 @@ void EnemyBos::Search()
 		m_enbos_stm.Change(EnemyBosState::MoveState::attack);
 		m_enbos_stm.StateAttack()->SetAttack(60, 25);
 	}
-	else
+	if(m_toPlayerLen > 160.0 &&
+		m_enbos_stm.StateAttack()->GetAtkFlag() == false)
 	{
 		m_enbos_stm.Change(EnemyBosState::MoveState::move);
+		m_enbos_stm.StateAttack()->SetTiming(0);
 	}
 	if (m_enbos_stm.StateAttack()->GetAtkFlag() == true) {
 		//攻撃アニメーションが終了したら。
@@ -119,17 +124,17 @@ void EnemyBos::Search()
 void EnemyBos::Damage(float damage)
 {
 	m_se_damade.Play(false);
-	m_enbos_stm.Change(EnemyBosState::MoveState::damage);
 	m_enbos_stm.StateDamage()->SetDamage(true);
 	//攻撃をくらったのでHPからくらった分を引く
 	float hp = m_status.GetHp();
-	if (hp > 0) {
 		hp = (hp + m_status.GetDef()) - damage;
-	}
-	else {
+	if (hp <= 0.0f) {
 		hp = 0.0f;
 	}
 	m_status.SetHp(hp);
+	if (m_status.GetHp() > 0.0f) {
+		m_enbos_stm.Change(EnemyBosState::MoveState::damage);
+	}
 }
 
 //HPを表示するスプライトのための関係。
@@ -165,13 +170,19 @@ void EnemyBos::HP_Gauge()
 
 void EnemyBos::Update()
 {
-	if (m_enbos_stm.StateDamage()->GetDamage() == false) {
-		Search();
+	if (m_status.GetHp() <= 0.0f) {
+		m_moveSpeed *= 0.0f;
+		m_enbos_stm.Change(EnemyBosState::MoveState::death);
 	}
 	else {
-		if (m_animation.IsPlaying() == false) {
-			m_enbos_stm.Change(EnemyBosState::MoveState::move);
-			m_enbos_stm.StateDamage()->SetDamage(false);
+		if (m_enbos_stm.StateDamage()->GetDamage() == false) {
+			Search();
+		}
+		else {
+			if (m_animation.IsPlaying() == false) {
+				m_enbos_stm.Change(EnemyBosState::MoveState::move);
+				m_enbos_stm.StateDamage()->SetDamage(false);
+			}
 		}
 	}
 	//ステートマシンの更新
@@ -187,10 +198,6 @@ void EnemyBos::Update()
 	m_model.UpdateWorldMatrix(m_position, m_rotation, { 1.0f, 1.0f, 1.0f });
 	//アニメーションを流す。
 	m_animation.Update(1.0f / 30.0f);
-	if (m_status.GetHp() <= 0.01f) {
-		g_gameObjM->DeleteGO(g_gameObjM->FindGO<Game>());
-		g_gameObjM->NewGO<GameEnd>()->SetGameEnd(GameEnd::GameEndState::gameCleared);
-	}
 }
 
 void EnemyBos::Draw()
