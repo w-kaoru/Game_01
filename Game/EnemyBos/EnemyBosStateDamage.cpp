@@ -24,6 +24,7 @@ bool EnemyBosStateDamage::Start()
 	}
 	m_moveSpeed *= 0.0f;
 	m_enemy->GetStatus()->SetHp(hp);
+	m_enemy->SetMoveSpeed(m_moveSpeed);
 	return false;
 }
 

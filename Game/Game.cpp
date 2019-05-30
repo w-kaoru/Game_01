@@ -111,6 +111,17 @@ bool Game::Start()
 		}
 		return false;
 	});
+	
+	m_level.Init(
+			L"Assets/level/enemyBos.tkl",
+			[&](LevelObjectData& objData) {
+			if (objData.EqualName(L"enpath") == true) {
+				m_bosPos = objData.position;
+				m_bosRot = objData.rotation;
+				return true;
+			}
+			return false;
+		});
 	m_gameCamera = g_gameObjM->NewGO<GameCamera>(1);
 	m_gameCamera->SetPlayer(m_player);
 	m_light = g_gameObjM->NewGO<LightCamera>(1);
@@ -139,20 +150,14 @@ void Game::Update()
 	if (m_enemyDeath >= m_enemyList.size()) {
 		m_bgm.Stop();
 		m_bgm_bos.Play(true);
-		m_level.Init(
-			L"Assets/level/enemyBos.tkl",
-			[&](LevelObjectData& objData) {
-			if (objData.EqualName(L"enpath") == true) {
-				//エネミー！！！
-				m_enemyBos = g_gameObjM->NewGO<EnemyBos>(0);
-				m_enemyBos->SetPosition(objData.position);
-				m_enemyBos->SetRotation(objData.rotation);
-				m_enemyBos->GetPlayer(m_player);
-				m_enemyBos->GetStatus()->SetLv(8);
-				return true;
-			}
-			return false;
-		});
+
+		//エネミー！！！
+		m_enemyBos = g_gameObjM->NewGO<EnemyBos>(0);
+		m_enemyBos->SetPosition(m_bosPos);
+		m_enemyBos->SetRotation(m_bosRot);
+		m_enemyBos->GetPlayer(m_player);
+		m_enemyBos->GetStatus()->SetLv(8);
+
 		m_enemyDeath = 0;
 	}
 }
