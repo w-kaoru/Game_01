@@ -153,19 +153,10 @@ void Player::HP_Gauge()
 //ダメージ
 void Player::Damage(float damage)
 {
-	m_stMa.StateDamage()->SetDamage(true);
-	m_se.Play(false);
-	m_stMa.StateAttack()->SetHit(false);
-	//攻撃をくらったのでHPからくらった分を引く
-	float hp = m_status.GetHp();
-	hp = (hp + m_status.GetDef()) - damage;
-	if (hp <= 0) {
-		hp = 0.0f;
-	}
-	m_moveSpeed *= 0.0f;
-	m_status.SetHp(hp);
 	//死亡の判定
 	if (m_status.GetHp() > 0.0f) {
+		m_se.Play(false);
+		m_stMa.StateDamage()->SetDamage(damage);
 		m_stMa.Change(PlayerState::MoveState::Damage);
 	}
 }
@@ -201,22 +192,24 @@ void Player::Update()
 		m_stMa.Change(PlayerState::MoveState::Death);
 		m_moveSpeed *= 0.0f;
 	}
-	//攻撃をクラったかどうか
-	if (m_stMa.StateDamage()->GetDamage() == false) {
-		if (g_pad[0].IsTrigger(enButtonX) && m_stMa.StateAttack()->GetHit() == false) {
-			m_stMa.StateAttack()->SetHit(true);
-			//攻撃ステートに変更
-			m_stMa.Change(PlayerState::MoveState::Attack);
-		}
-		if (m_stMa.StateAttack()->GetHit() == false) {
-			//攻撃していない時に移動などの処理。
-			m_stMa.Change(PlayerState::MoveState::Move);
-		}
-	}
 	else {
-		if (m_animation.IsPlaying() == false) {
-			m_stMa.Change(PlayerState::MoveState::Move);
-			m_stMa.StateDamage()->SetDamage(false);
+		//攻撃をクラったかどうか
+		if (m_stMa.StateDamage()->GetDamageFlag() == false) {
+			if (g_pad[0].IsTrigger(enButtonX) && m_stMa.StateAttack()->GetHit() == false) {
+				m_stMa.StateAttack()->SetHit(true);
+				//攻撃ステートに変更
+				m_stMa.Change(PlayerState::MoveState::Attack);
+			}
+			if (m_stMa.StateAttack()->GetHit() == false) {
+				//攻撃していない時に移動などの処理。
+				m_stMa.Change(PlayerState::MoveState::Move);
+			}
+		}
+		else {
+			if (m_animation.IsPlaying() == false) {
+				m_stMa.Change(PlayerState::MoveState::Move);
+				m_stMa.StateDamage()->SetDamageFlag(false);
+			}
 		}
 	}
 	//重力

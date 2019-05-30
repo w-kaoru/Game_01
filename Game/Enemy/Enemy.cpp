@@ -156,18 +156,10 @@ void Enemy::Search()
 //ダメージ
 void Enemy::Damage(float damage)
 {
-	m_moveSpeed *= 0.0f;
 	m_se_damade.Play(false);
-	//攻撃をくらったのでHPからくらった分を引く
-	float hp = m_status.GetHp();
-	m_ensm.StateDamage()->SetDamage(true);
+	m_ensm.StateDamage()->SetDamage(damage);
 	m_ensm.Change(EnemyState::MoveState::damage);
-	//攻撃をくらったのでHPからくらった分を引く
-	hp = (hp + m_status.GetDef()) - damage;
-	if (hp <= 0) {
-		hp = 0.0f;
-	}
-	m_status.SetHp(hp);
+
 }
 
 //HPを表示するスプライトのための関係。
@@ -204,13 +196,13 @@ void Enemy::HP_Gauge()
 void Enemy::Update()
 {
 	if (m_isDeath == false) {
-		if (m_ensm.StateDamage()->GetDamage() == false) {
+		if (m_ensm.StateDamage()->GetDamageFlag() == false) {
 			Search();
 		}
 		else {
 			if (m_animation.IsPlaying() == false) {
 				m_ensm.Change(EnemyState::MoveState::move);
-				m_ensm.StateDamage()->SetDamage(false);
+				m_ensm.StateDamage()->SetDamageFlag(false);
 			}
 		}
 		//ステートマシンの更新

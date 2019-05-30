@@ -237,7 +237,9 @@
     <ClCompile Include="Player\PlStateDeath.cpp">
       <Filter>Player</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyBos\EnemyBosStateDeath.cpp" />
+    <ClCompile Include="EnemyBos\EnemyBosStateDeath.cpp">
+      <Filter>EnemyBos</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -444,7 +446,9 @@
     <ClInclude Include="Player\PlStateDeath.h">
       <Filter>Player</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyBos\EnemyBosStateDeath.h" />
+    <ClInclude Include="EnemyBos\EnemyBosStateDeath.h">
+      <Filter>EnemyBos</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\enpath2.fbx">

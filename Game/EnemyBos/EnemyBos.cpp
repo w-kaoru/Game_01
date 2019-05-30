@@ -123,17 +123,9 @@ void EnemyBos::Search()
 //ƒ_ƒ[ƒW
 void EnemyBos::Damage(float damage)
 {
-	m_se_damade.Play(false);
-	m_enbos_stm.StateDamage()->SetDamage(true);
-	//UŒ‚‚ğ‚­‚ç‚Á‚½‚Ì‚ÅHP‚©‚ç‚­‚ç‚Á‚½•ª‚ğˆø‚­
-	float hp = m_status.GetHp();
-		hp = (hp + m_status.GetDef()) - damage;
-	if (hp <= 0.0f) {
-		hp = 0.0f;
-	}
-	m_moveSpeed *= 0.0f;
-	m_status.SetHp(hp);
 	if (m_status.GetHp() > 0.0f) {
+		m_se_damade.Play(false);
+		m_enbos_stm.StateDamage()->SetDamage(damage);
 		m_enbos_stm.Change(EnemyBosState::MoveState::damage);
 	}
 }
@@ -176,13 +168,13 @@ void EnemyBos::Update()
 		m_enbos_stm.Change(EnemyBosState::MoveState::death);
 	}
 	else {
-		if (m_enbos_stm.StateDamage()->GetDamage() == false) {
+		if (m_enbos_stm.StateDamage()->GetDamageFlag() == false) {
 			Search();
 		}
 		else {
 			if (m_animation.IsPlaying() == false) {
 				m_enbos_stm.Change(EnemyBosState::MoveState::move);
-				m_enbos_stm.StateDamage()->SetDamage(false);
+				m_enbos_stm.StateDamage()->SetDamageFlag(false);
 			}
 		}
 	}
