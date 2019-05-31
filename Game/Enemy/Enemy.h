@@ -97,7 +97,7 @@ private:
 	//float m_hp = 10.0f;			//‘Ì—Í
 	//float m_atk = 0.0f;			//UŒ‚—Í
 	//float m_spd = 0.0f;
-	int m_atkAnimStart = 30;
+	int m_atkAnimStart = 10;
 	int m_atkHit = 0;
 	CVector3 m_effectPos = CVector3::Zero();
 	Effekseer::Effect* m_effect = nullptr;

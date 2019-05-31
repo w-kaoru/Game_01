@@ -103,7 +103,7 @@ void EnemyBos::Search()
 		//プレイヤーとの距離が一定以下で
 		//攻撃ステートをよべー。
 		m_enbos_stm.Change(EnemyBosState::MoveState::attack);
-		m_enbos_stm.StateAttack()->SetAttack(60, 25);
+		m_enbos_stm.StateAttack()->SetAttack(45, 10);
 	}
 	if(m_toPlayerLen > 160.0 &&
 		m_enbos_stm.StateAttack()->GetAtkFlag() == false)
