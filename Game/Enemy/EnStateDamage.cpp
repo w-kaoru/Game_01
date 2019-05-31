@@ -21,9 +21,8 @@ bool EnStateDamage::Start()
 	m_isDamage = true;
 	//UŒ‚‚ð‚­‚ç‚Á‚½‚Ì‚ÅHP‚©‚ç‚­‚ç‚Á‚½•ª‚ðˆø‚­
 	hp = (hp + m_enemy->GetStatus()->GetDef()) - m_damage;
-	if (hp <= 0) {
-		hp = 0.0f;
-	}
+	hp = min(hp, m_enemy->GetStatus()->GetHp());
+	hp = max(0.0f, hp);
 	m_enemy->GetStatus()->SetHp(hp);
 	m_enemy->SetMoveSpeed(m_moveSpeed);
 	return false;
