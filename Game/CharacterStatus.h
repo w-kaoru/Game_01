@@ -23,6 +23,7 @@ public:
 		m_hp = m_standardHp * m_lvUp;
 		m_atk = m_standardAtk * m_lvUp;
 		m_def = m_standardDef * m_lvUp;
+		m_maxHp = m_standardHp * m_lvUp;
 		//m_agi = m_standardAgi * m_lvUp;
 	}
 	void LvUp()
@@ -63,6 +64,11 @@ public:
 	{
 		m_maxLv = MaxLv;
 	}
+
+	void SetMaxHp(float MaxHp)
+	{
+		m_maxHp = MaxHp;
+	}
 	//ゲッター
 	int GetLv()
 	{
@@ -88,6 +94,10 @@ public:
 	{
 		return m_maxLv;
 	}
+	float GetMaxHp()
+	{
+		return m_maxHp;
+	}
 private:
 	//キャラクターのステータス
 	int		m_lv = 0;		//レベル
@@ -96,7 +106,8 @@ private:
 	float	m_def = 0.0f;	//硬さ
 	float	m_agi = 0.0f;	//素早さ
 	float	m_lvUp = 0.0f;	
-	int		m_maxLv = 100;//レベルの最大値
+	int		m_maxLv = 100;//レベルの最大値	
+	float	m_maxHp = 100;
 	//基準のステータス
 	float	m_standardHp = 0.0f;	//体力
 	float	m_standardAtk = 0.0f;	//攻撃力

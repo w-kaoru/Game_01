@@ -80,9 +80,10 @@ bool Player::Start()
 	m_status.SetAtk(5.5f);
 	m_status.SetMaxLv(9);
 	m_status.StatusUp();
-	m_maxHp = m_status.GetHp();
-	m_yellowhp = m_maxHp;
-	m_hpFrame = m_maxHp;
+	m_status.SetMaxHp(m_status.GetHp());
+	m_yellowhp = m_spriteScale;
+	m_hpFrame = m_spriteScale;
+	m_hpGauge = m_spriteScale;
 	//ノーマルマップをセットする。
 	m_model.SetNormalMap(m_normalMapSRV);
 	m_model.SetSpecularMap(m_specularMapSRV);
@@ -137,11 +138,11 @@ void Player::Update()
 	int exp = lv;
 	if (m_exp >= exp) {
 		if (lv < m_status.GetMaxLv()) {
-			m_status.SetHp(m_maxHp);
+			m_status.SetHp(m_status.GetMaxHp());
 			m_status.SetLv(lv);
 			m_status.LvUp();
 			m_status.StatusUp();
-			m_hpFrame = m_status.GetHp();
+			//m_hpFrame = m_status.GetHp();
 			m_exp = 0;
 		}
 	}
@@ -194,39 +195,39 @@ void Player::HP_Gauge()
 {
 	float w = -500.0f;
 	float h = 350.0f;
-
-	if (m_status.GetHp() < m_yellowhp) {
-		m_yellowhp -= 0.2f;
+	m_hpGauge = (m_status.GetHp() / m_status.GetMaxHp()) * m_spriteScale;
+	if (m_hpGauge < m_yellowhp) {
+		m_yellowhp -= 1.5f * (1.0f / 60.0f);
 	}
 	else
 	{
-		m_yellowhp = m_status.GetHp();
+		m_yellowhp = m_hpGauge;//m_status.GetHp();
 	}
 	//スプライトの更新
 	m_hpFrameSprite.Update(
 		{ w, h, 0.0f },
 		CQuaternion::Identity(),
-		{ m_hpFrame / 10, 1.5f, 1.0f },
+		{ m_hpFrame , 1.5f, 1.0f },
 		{ 0.0f,1.0f }
 	);
 	//スプライトの更新
 	m_hpSprite.Update(
 		{ w, h, 0.0f },
 		CQuaternion::Identity(),
-		{ m_status.GetHp() / 10, 1.5f, 1.0f },
+		{ m_hpGauge, 1.5f, 1.0f },
 		{ 0.0f,1.0f }
 	);
 	m_hpyellowSprite.Update(
 		{ w, h, 0.0f },
 		CQuaternion::Identity(),
-		{ m_yellowhp / 10, 1.5f, 1.0f },
+		{ m_yellowhp , 1.5f, 1.0f },
 		{ 0.0f,1.0f }
 	);
 	//スプライトの更新
 	m_hpFrameSprite01.Update(
 		{ w, h, 0.0f },
 		CQuaternion::Identity(),
-		{ m_hpFrame / 10, 1.5f, 1.0f },
+		{ m_hpFrame , 1.5f, 1.0f },
 		{ 0.0f,1.0f }
 	);
 	//スプライトを２次元で表示をする。

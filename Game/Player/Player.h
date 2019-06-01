@@ -100,9 +100,11 @@ private:
 	const Hit* m_hit;
 	CharacterStatus m_status;	//プレイヤーのステイタス
 	float m_maxHp = 0.0f;
-	float m_hpFrame = 0.0f;		//体力の枠
 	int m_exp = 0;
 	float m_yellowhp = 0.0f;
+	float m_hpFrame = 0.0f;		//体力の枠
+	float m_hpGauge = 0.0f;
+	float m_spriteScale = 10.0f;
 	float m_damageCutSpan = 6.0f;
 	float m_damageCutValue = 6.0f;
 	bool m_damageCut = false;
