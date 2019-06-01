@@ -16,10 +16,15 @@ public:
 		return m_isDamage;
 	}
 
+	float GetDamage()
+	{
+		return m_damage;
+	}
 	void SetDamage(float damage)
 	{
 		m_damage = damage;
 	}
+
 private:
 	bool m_isDamage = false;
 	float m_damage = 0.0f;

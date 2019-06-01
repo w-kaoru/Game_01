@@ -43,6 +43,12 @@ Player::Player() :m_stMa(this)
 	m_hpSprite.Init(L"Assets/sprite/hp_gauge.dds", m_HpScaleX, m_HpScaleY);
 	m_hpyellowSprite.Init(L"Assets/sprite/hp_yellowGauge.dds", m_HpScaleX, m_HpScaleY);
 	m_hpFrameSprite.Init(L"Assets/sprite/hp_frame.dds", m_HpScaleX, m_HpScaleY);
+	m_hpFrameSprite01.Init(L"Assets/sprite/hp_frame01.dds", m_HpScaleX, m_HpScaleY);
+
+	
+	m_damageCutSprite.Init(L"Assets/sprite/dc_gauge.dds", m_HpScaleX, m_HpScaleY);
+	m_DCframeSprite.Init(L"Assets/sprite/hp_frame.dds", m_HpScaleX, m_HpScaleY);
+	m_DCframeSprite01.Init(L"Assets/sprite/hp_frame01.dds", m_HpScaleX, m_HpScaleY);
 
 	//法線マップをロード。
 	//ファイル名を使って、テクスチャをロードして、ShaderResrouceViewを作成する。
@@ -100,55 +106,6 @@ bool Player::Start()
 	m_model.SetShadowReciever(true);
 	return true;
 }
-//HPを表示するスプライトのための関係。
-void Player::HP_Gauge()
-{
-	float w = -500.0f;
-	float h = 350.0f;
-
-	if (m_status.GetHp() < m_yellowhp) {
-		m_yellowhp *= 0.995f;
-	}
-	else
-	{
-		m_yellowhp = m_status.GetHp();
-	}
-	//スプライトの更新
-	m_hpFrameSprite.Update(
-		{ w, h, 0.0f },
-		CQuaternion::Identity(),
-		{ m_hpFrame / 10, 1.5f, 1.0f },
-		{ 0.0f,1.0f }
-	);
-	//スプライトの更新
-	m_hpSprite.Update(
-		{ w, h, 0.0f },
-		CQuaternion::Identity(),
-		{ m_status.GetHp() / 10, 1.5f, 1.0f },
-		{ 0.0f,1.0f }
-	);
-	m_hpyellowSprite.Update(
-		{ w, h, 0.0f },
-		CQuaternion::Identity(),
-		{ m_yellowhp / 10, 1.5f, 1.0f },
-		{ 0.0f,1.0f }
-	);
-	//スプライトを２次元で表示をする。
-	m_hpFrameSprite.Draw(
-		g_camera2D.GetViewMatrix(),
-		g_camera2D.GetProjectionMatrix()
-	);
-	//スプライトを２次元で表示をする。
-	m_hpyellowSprite.Draw(
-		g_camera2D.GetViewMatrix(),
-		g_camera2D.GetProjectionMatrix()
-	);
-	//スプライトを２次元で表示をする。
-	m_hpSprite.Draw(
-		g_camera2D.GetViewMatrix(),
-		g_camera2D.GetProjectionMatrix()
-	);
-}
 
 //ダメージ
 void Player::Damage(float damage)
@@ -156,8 +113,13 @@ void Player::Damage(float damage)
 	//死亡の判定
 	if (m_status.GetHp() > 0.0f) {
 		m_se.Play(false);
-		m_stMa.StateDamage()->SetDamage(damage);
-		m_stMa.Change(PlayerState::MoveState::Damage);
+		if (m_damageCut) {
+			m_stMa.StateDamage()->SetDamageFlag(false);
+		}
+		else {
+			m_stMa.StateDamage()->SetDamage(damage);
+			m_stMa.Change(PlayerState::MoveState::Damage);
+		}
 	}
 }
 
@@ -192,25 +154,26 @@ void Player::Update()
 		m_stMa.Change(PlayerState::MoveState::Death);
 		m_moveSpeed *= 0.0f;
 	}
+	//攻撃をクラったかどうか
+	if (m_stMa.StateDamage()->GetDamageFlag() == false && m_status.GetHp() > 0.0f) {
+		if (g_pad[0].IsTrigger(enButtonX) && !m_stMa.StateAttack()->GetHit()) {
+			m_stMa.StateAttack()->SetHit(true);
+			//攻撃ステートに変更
+			m_stMa.Change(PlayerState::MoveState::Attack);
+		}
+		if (!m_stMa.StateAttack()->GetHit()) {
+			//攻撃していない時に移動などの処理。
+			m_stMa.Change(PlayerState::MoveState::Move);
+		}
+	}
 	else {
-		//攻撃をクラったかどうか
-		if (m_stMa.StateDamage()->GetDamageFlag() == false) {
-			if (g_pad[0].IsTrigger(enButtonX) && m_stMa.StateAttack()->GetHit() == false) {
-				m_stMa.StateAttack()->SetHit(true);
-				//攻撃ステートに変更
-				m_stMa.Change(PlayerState::MoveState::Attack);
-			}
-			if (m_stMa.StateAttack()->GetHit() == false) {
-				//攻撃していない時に移動などの処理。
-				m_stMa.Change(PlayerState::MoveState::Move);
-			}
+		if (!m_animation.IsPlaying()) {
+			m_stMa.Change(PlayerState::MoveState::Move);
+			m_stMa.StateDamage()->SetDamageFlag(false);
 		}
-		else {
-			if (m_animation.IsPlaying() == false) {
-				m_stMa.Change(PlayerState::MoveState::Move);
-				m_stMa.StateDamage()->SetDamageFlag(false);
-			}
-		}
+	}
+	if (g_pad[0].IsTrigger(enButtonY) && m_damageCutSpan >= m_damageCutValue) {
+		m_damageCut = true;
 	}
 	//重力
 	m_moveSpeed.y -= 980.0f * (1.0f / 60.0f);
@@ -224,6 +187,122 @@ void Player::Update()
 	//シャドウキャスターを登録。
 	g_graphicsEngine->GetShadowMap()->RegistShadowCaster(&m_model);
 
+}
+
+//HPを表示するスプライトのための関係。
+void Player::HP_Gauge()
+{
+	float w = -500.0f;
+	float h = 350.0f;
+
+	if (m_status.GetHp() < m_yellowhp) {
+		m_yellowhp -= 0.2f;
+	}
+	else
+	{
+		m_yellowhp = m_status.GetHp();
+	}
+	//スプライトの更新
+	m_hpFrameSprite.Update(
+		{ w, h, 0.0f },
+		CQuaternion::Identity(),
+		{ m_hpFrame / 10, 1.5f, 1.0f },
+		{ 0.0f,1.0f }
+	);
+	//スプライトの更新
+	m_hpSprite.Update(
+		{ w, h, 0.0f },
+		CQuaternion::Identity(),
+		{ m_status.GetHp() / 10, 1.5f, 1.0f },
+		{ 0.0f,1.0f }
+	);
+	m_hpyellowSprite.Update(
+		{ w, h, 0.0f },
+		CQuaternion::Identity(),
+		{ m_yellowhp / 10, 1.5f, 1.0f },
+		{ 0.0f,1.0f }
+	);
+	//スプライトの更新
+	m_hpFrameSprite01.Update(
+		{ w, h, 0.0f },
+		CQuaternion::Identity(),
+		{ m_hpFrame / 10, 1.5f, 1.0f },
+		{ 0.0f,1.0f }
+	);
+	//スプライトを２次元で表示をする。
+	m_hpFrameSprite.Draw(
+		g_camera2D.GetViewMatrix(),
+		g_camera2D.GetProjectionMatrix()
+	);
+	//スプライトを２次元で表示をする。
+	m_hpyellowSprite.Draw(
+		g_camera2D.GetViewMatrix(),
+		g_camera2D.GetProjectionMatrix()
+	);
+	//スプライトを２次元で表示をする。
+	m_hpSprite.Draw(
+		g_camera2D.GetViewMatrix(),
+		g_camera2D.GetProjectionMatrix()
+	);
+	//スプライトを２次元で表示をする。
+	m_hpFrameSprite01.Draw(
+		g_camera2D.GetViewMatrix(),
+		g_camera2D.GetProjectionMatrix()
+	);
+}
+
+void Player::DamageCut()
+{
+
+	float w = -500.0f;
+	float h = 330.0f;
+	if (m_damageCut) {
+		m_damageCutSpan -= 1.2f * (1.0f / 60.0f);
+		m_damageCutSpan = max(0.0f, m_damageCutSpan);
+		if (m_damageCutSpan <= 0.0f) {
+			m_damageCut = false;
+		}
+	}
+	else {
+		m_damageCutSpan += 0.5f * (1.0f / 60.0f);
+		m_damageCutSpan = min(m_damageCutValue, m_damageCutSpan);
+	}
+	//スプライトの更新
+	m_DCframeSprite.Update(
+		{ w, h, 0.0f },
+		CQuaternion::Identity(),
+		{ m_damageCutValue, 1.5f, 1.0f },
+		{ 0.0f,1.0f }
+	);
+	//スプライトの更新
+	m_damageCutSprite.Update(
+		{ w, h, 0.0f },
+		CQuaternion::Identity(),
+		{ m_damageCutSpan, 1.5f, 1.0f },
+		{ 0.0f,1.0f }
+	);
+	//スプライトの更新
+	m_DCframeSprite01.Update(
+		{ w, h, 0.0f },
+		CQuaternion::Identity(),
+		{ m_damageCutValue, 1.5f, 1.0f },
+		{ 0.0f,1.0f }
+	);
+	//スプライトを２次元で表示をする。
+	m_DCframeSprite.Draw(
+		g_camera2D.GetViewMatrix(),
+		g_camera2D.GetProjectionMatrix()
+	);
+	//スプライトを２次元で表示をする。
+	m_damageCutSprite.Draw(
+		g_camera2D.GetViewMatrix(),
+		g_camera2D.GetProjectionMatrix()
+	);
+	//スプライトを２次元で表示をする。
+	m_DCframeSprite01.Draw(
+		g_camera2D.GetViewMatrix(),
+		g_camera2D.GetProjectionMatrix()
+	);
 }
 
 void Player::Draw()
@@ -271,4 +350,5 @@ void Player::PostDraw()
 	m_font.EndDraw();
 	//スプライトの描画。
 	HP_Gauge();
+	DamageCut();
 }

@@ -519,5 +519,9 @@
     <ImageContentTask Include="Assets\sprite\hp_yellowGauge.png">
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\hp_frame01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\sprite\dc_gauge.png" />
   </ItemGroup>
 </Project>

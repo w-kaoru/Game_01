@@ -16,6 +16,7 @@ public:
 	void PostDraw() override;
 
 	void HP_Gauge();
+	void DamageCut();
 	void Damage(float damage);
 	//ゲッター。
 	CVector3 GetPosition()
@@ -41,6 +42,10 @@ public:
 	CVector3 GetMoveSpeed() {
 		return m_moveSpeed;
 	}
+	bool GetDamageCut()
+	{
+		return m_damageCut;
+	}
 	//セッター。
 	void SetPosition(CVector3 pos)
 	{
@@ -62,6 +67,10 @@ public:
 	{
 		m_exp += exp;
 	}
+	void SetDamageCut(bool damage)
+	{
+		m_damageCut = damage;
+	}
 private:
 	SkinModel m_model;									//スキンモデル。
 	//SkinModel m_model_01;									//スキンモデル。
@@ -80,14 +89,23 @@ private:
 	Sprite m_hpSprite;		//hpゲージ
 	Sprite m_hpyellowSprite;		//hpゲージ
 	Sprite m_hpFrameSprite;	//hpゲージの枠
+	Sprite m_hpFrameSprite01;	//hpゲージの枠
+
+
+	Sprite m_damageCutSprite;		//hpゲージ
+	Sprite m_DCframeSprite;	//hpゲージの枠
+	Sprite m_DCframeSprite01;	//hpゲージの枠
 	float m_HpScaleX = 40.0f;	//HPのスプライトの横幅
-	float m_HpScaleY = 15.0f;	//HPのスプライトの縦幅
+	float m_HpScaleY = 10.0f;	//HPのスプライトの縦幅
 	const Hit* m_hit;
 	CharacterStatus m_status;	//プレイヤーのステイタス
 	float m_maxHp = 0.0f;
 	float m_hpFrame = 0.0f;		//体力の枠
 	int m_exp = 0;
 	float m_yellowhp = 0.0f;
+	float m_damageCutSpan = 6.0f;
+	float m_damageCutValue = 6.0f;
+	bool m_damageCut = false;
 	Font m_font;
 	CSoundSource m_se;						//SE。
 	ID3D11ShaderResourceView* m_normalMapSRV = nullptr;	//ノーマルマップのSRV
