@@ -95,6 +95,7 @@ private:
 	Sprite m_damageCutSprite;		//hpゲージ
 	Sprite m_DCframeSprite;	//hpゲージの枠
 	Sprite m_DCframeSprite01;	//hpゲージの枠
+	Sprite m_shieldSprite;
 	float m_HpScaleX = 40.0f;	//HPのスプライトの横幅
 	float m_HpScaleY = 10.0f;	//HPのスプライトの縦幅
 	const Hit* m_hit;

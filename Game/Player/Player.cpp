@@ -50,6 +50,8 @@ Player::Player() :m_stMa(this)
 	m_DCframeSprite.Init(L"Assets/sprite/hp_frame.dds", m_HpScaleX, m_HpScaleY);
 	m_DCframeSprite01.Init(L"Assets/sprite/hp_frame01.dds", m_HpScaleX, m_HpScaleY);
 
+	m_shieldSprite.Init(L"Assets/sprite/shield.dds", 20.0f, 20.0f);
+
 	//法線マップをロード。
 	//ファイル名を使って、テクスチャをロードして、ShaderResrouceViewを作成する。
 	DirectX::CreateDDSTextureFromFileEx(
@@ -289,6 +291,12 @@ void Player::DamageCut()
 		{ m_damageCutValue, 1.5f, 1.0f },
 		{ 0.0f,1.0f }
 	);
+	//スプライトの更新
+	m_shieldSprite.Update(
+		{ -520.0f , 322.0f, 0.0f },
+		CQuaternion::Identity(),
+		{ 1.0f, 1.0f, 1.0f }
+	);
 	//スプライトを２次元で表示をする。
 	m_DCframeSprite.Draw(
 		g_camera2D.GetViewMatrix(),
@@ -301,6 +309,11 @@ void Player::DamageCut()
 	);
 	//スプライトを２次元で表示をする。
 	m_DCframeSprite01.Draw(
+		g_camera2D.GetViewMatrix(),
+		g_camera2D.GetProjectionMatrix()
+	);
+	//スプライトを２次元で表示をする。
+	m_shieldSprite.Draw(
 		g_camera2D.GetViewMatrix(),
 		g_camera2D.GetProjectionMatrix()
 	);
@@ -349,7 +362,6 @@ void Player::PostDraw()
 		);
 	}
 	m_font.EndDraw();
-	//スプライトの描画。
 	HP_Gauge();
 	DamageCut();
 }
