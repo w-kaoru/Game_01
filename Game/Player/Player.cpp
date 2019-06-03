@@ -78,7 +78,7 @@ bool Player::Start()
 	//ステータスの設定
 	m_status.SetHp(60);
 	m_status.SetAgi(1150.0f);
-	m_status.SetDef(0.0f);
+	m_status.SetDef(1.0f);
 	m_status.SetAtk(5.5f);
 	m_status.SetMaxLv(9);
 	m_status.StatusUp();
@@ -116,8 +116,19 @@ void Player::Damage(float damage)
 	//死亡の判定
 	if (m_status.GetHp() > 0.0f) {
 		m_se.Play(false);
-		m_stMa.StateDamage()->SetDamage(damage);
-		m_stMa.Change(PlayerState::MoveState::Damage);
+		if (!m_damageCut) {
+			m_stMa.StateDamage()->SetDamage(damage);
+			m_stMa.Change(PlayerState::MoveState::Damage);
+		}
+		else
+		{
+			//攻撃をくらったのでHPからくらった分を引く
+			float hp = m_status.GetHp();
+			hp = (hp + m_status.GetDef()) - (damage / 3.0f);
+			hp = min(hp, m_status.GetHp());
+			hp = max(0.0f, hp);
+			m_status.SetHp(hp);
+		}
 	}
 }
 
@@ -252,7 +263,7 @@ void Player::HP_Gauge()
 void Player::DamageCut()
 {
 
-	float w = -500.0f;
+	float w = -470.0f;
 	float h = 330.0f;
 	if (m_damageCut) {
 		m_damageCutSpan -= 1.2f * (1.0f / 60.0f);
@@ -288,7 +299,7 @@ void Player::DamageCut()
 	);
 	//スプライトの更新
 	m_shieldSprite.Update(
-		{ -520.0f , 322.0f, 0.0f },
+		{ w-20.0f , 322.0f, 0.0f },
 		CQuaternion::Identity(),
 		{ 1.0f, 1.0f, 1.0f }
 	);

@@ -63,6 +63,7 @@ bool EnemyBos::Start()
 	);
 	//hpバーのスプライト。
 	m_hpSprite.Init(L"Assets/sprite/hp_gauge.dds", 40.0f, 10.0f);
+	m_shieldSprite.Init(L"Assets/sprite/shield.dds", 20.0f, 20.0f);
 	m_position.y = 200.0f;
 	//キャラクターコントローラーの初期化。
 	m_charaCon.Init(40.0f, 50.0f, m_position);
@@ -103,7 +104,7 @@ void EnemyBos::Search()
 		//プレイヤーとの距離が一定以下で
 		//攻撃ステートをよべー。
 		m_enbos_stm.Change(EnemyBosState::MoveState::attack);
-		m_enbos_stm.StateAttack()->SetAttack(45, 10);
+		m_enbos_stm.StateAttack()->SetAttack(25, 10);
 	}
 	if(m_toPlayerLen > 160.0 &&
 		m_enbos_stm.StateAttack()->GetAtkFlag() == false)
@@ -125,8 +126,37 @@ void EnemyBos::Damage(float damage)
 {
 	if (m_status.GetHp() > 0.0f) {
 		m_se_damade.Play(false);
-		m_enbos_stm.StateDamage()->SetDamage(damage);
-		m_enbos_stm.Change(EnemyBosState::MoveState::damage);
+		if (!m_damageCut) {
+			m_enbos_stm.StateDamage()->SetDamage(damage);
+			m_enbos_stm.Change(EnemyBosState::MoveState::damage);
+		}
+		else {
+			//攻撃をくらったのでHPからくらった分を引く
+			float hp = m_status.GetHp();
+			hp = (hp + m_status.GetDef()) - (damage / 3.0f);
+			hp = min(hp, m_status.GetHp());
+			hp = max(0.0f, hp);
+			m_status.SetHp(hp);
+		}
+		m_damageCutCounter++;
+	}
+}
+
+void EnemyBos::DamageCut()
+{
+	if (m_damageCutCounter >= 2 && m_damageCutSpan >= m_damageCutValue) {
+		m_damageCut = true;
+	}
+	if (m_damageCut) {
+		m_damageCutSpan -= 1.5f * (1.0f / 60.0f);
+		m_damageCutSpan = max(0.0f, m_damageCutSpan);
+		if (m_damageCutSpan <= 0.0f) {
+			m_damageCut = false;
+		}
+	}
+	else {
+		m_damageCutSpan += 1.0f * (1.0f / 60.0f);
+		m_damageCutSpan = min(m_damageCutValue, m_damageCutSpan);
 	}
 }
 
@@ -135,7 +165,9 @@ void EnemyBos::HP_Gauge()
 {
 	//ポジションを頭の上付近にする。
 	auto pos = m_position;
+	auto pos_s = m_position;
 	pos.y += 170.0f;
+	pos_s.y += 180.0f;
 	//カメラのポジション向きのベクトルを取得。
 	CVector3 hp_angle;
 	hp_angle = g_camera3D.GetPosition() - m_position;
@@ -158,7 +190,16 @@ void EnemyBos::HP_Gauge()
 	m_hpSprite.Draw(
 		g_camera3D.GetViewMatrix(),
 		g_camera3D.GetProjectionMatrix()
-	);
+	); 
+	if (m_damageCut) {
+		//HPスプライトの更新
+		m_shieldSprite.Update(pos_s, m_Sprite_angle, { 1.0f, 1.0f, 1.0f });
+		//HPスプライトの表示
+		m_shieldSprite.Draw(
+			g_camera3D.GetViewMatrix(),
+			g_camera3D.GetProjectionMatrix()
+		);
+	}
 }
 
 void EnemyBos::Update()
@@ -180,6 +221,7 @@ void EnemyBos::Update()
 	}
 	//ステートマシンの更新
 	m_enbos_stm.Update();
+	DamageCut();
 	//重力加速度
 	m_moveSpeed.y -= 9800.0f * (1.0f / 60.0f);
 	//キャラコンを使って移動する。

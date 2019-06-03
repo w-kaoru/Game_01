@@ -17,6 +17,7 @@ public:
 	void Search();
 	void PlLen();
 	void Damage(float damage);
+	void DamageCut();
 	void HP_Gauge();
 	void SetPosition(CVector3 pos)
 	{
@@ -69,6 +70,7 @@ private:
 	CVector3 m_position = CVector3::Zero();				//座標。
 	CVector3 m_moveSpeed = CVector3::Zero();			//移動速度。
 	CVector3 m_forward = CVector3::Zero();				//前方。
+	CMatrix m_rotMatrix = CMatrix::Identity();
 	SkinModel m_model;									//モデル。
 	CQuaternion m_rotation = CQuaternion::Identity();	//回転。
 	CharacterController m_charaCon;						//キャラクターコントローラーを追加。
@@ -76,6 +78,7 @@ private:
 	AnimationClip m_animationClips[EnemyBosState::AnimationState::AnimNum];	//アニメーションクリップ。
 	EnemyBosStateMachine m_enbos_stm;					//ステートマシン。
 	Sprite m_hpSprite;									//hpバー。
+	Sprite m_shieldSprite;
 	CVector3 m_Sprite_Front = CVector3::AxisZ()*-1;	    //テクスチャの前方向
 	CQuaternion m_Sprite_angle = CQuaternion::Identity();	//テクスチャの回転角度
 	const Hit* m_hit;
@@ -85,8 +88,10 @@ private:
 	int m_damageTiming = 0;		//ダメージを受けるタイミング
 	int m_AttackTiming = 0;		//攻撃するタイミング
 	bool attackFlag = false;
+	float m_damageCutSpan = 6.0f;
+	float m_damageCutValue = 6.0f;
+	bool m_damageCut = false;
+	int m_damageCutCounter = 0;
 	//エネミーのステイタス
 	CharacterStatus m_status;
-	//float m_hp = 0.0f;			//体力
-	//float m_atk = 0.0f;			//攻撃力
 };

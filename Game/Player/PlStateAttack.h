@@ -19,5 +19,6 @@ private:
 	CVector3 m_attckPos = CVector3::Zero();
 	int m_hitTiming = 0;
 	bool m_atk = false;
+	bool m_isAtk = false;
 };
 

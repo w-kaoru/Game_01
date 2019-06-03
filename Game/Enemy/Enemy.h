@@ -22,6 +22,7 @@ public:
 	void Search();
 	void PlLen();
 	void Damage(float damage);
+	void DamageCut();
 	void HP_Gauge();
 	void SetPosition(CVector3 pos)
 	{
@@ -85,6 +86,7 @@ private:
 	AnimationClip m_animationClips[EnemyState::AnimationState::AnimNum];	//アニメーションクリップ。
 	EnStateMachine m_ensm;								//ステートマシン。
 	Sprite m_hpSprite;									//hpバー。
+	Sprite m_shieldSprite;
 	CVector3 m_Sprite_Front = CVector3::AxisZ()*-1;	    //テクスチャの前方向
 	CQuaternion m_Sprite_angle = CQuaternion::Identity();	//テクスチャの回転角度
 	const Hit* m_hit;
@@ -92,11 +94,12 @@ private:
 	EnemyType m_type = type_num;
 	float m_toPlayerLen;		//プレイヤーとの距離
 	bool m_isDeath = false;
+	float m_damageCutSpan = 6.0f;
+	float m_damageCutValue = 6.0f;
+	bool m_damageCut = false;
+	int m_damageCutCounter = 0;
 	//エネミーのステイタス
 	CharacterStatus m_status;
-	//float m_hp = 10.0f;			//体力
-	//float m_atk = 0.0f;			//攻撃力
-	//float m_spd = 0.0f;
 	int m_atkAnimStart = 10;
 	int m_atkHit = 0;
 	CVector3 m_effectPos = CVector3::Zero();

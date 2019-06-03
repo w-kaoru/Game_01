@@ -39,8 +39,13 @@ void EnemyBosStateAttack::Update()
 		g_hitObject->HitTest(hit, m_enemy->GetStatus()->GetAtk(), Hit::player);
 		//UŒ‚‚ÌŠÔŠu‚ð0‚É–ß‚·B
 		m_AttackTiming = 0;
+		m_isAtk = true;
+	}
+	if (m_isAtk) {
+		m_AttackTiming = 0;
 	}
 	if (m_attackFlag == false) {
 		m_enemy->SetAnimation(EnemyBosState::AnimationState::AnimIdle);
+		m_isAtk = false;
 	}
 }
