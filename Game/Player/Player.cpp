@@ -78,7 +78,7 @@ bool Player::Start()
 	//ステータスの設定
 	m_status.SetHp(60);
 	m_status.SetAgi(1150.0f);
-	m_status.SetDef(1.0f);
+	m_status.SetDef(0.0f);
 	m_status.SetAtk(5.5f);
 	m_status.SetMaxLv(9);
 	m_status.StatusUp();
@@ -116,13 +116,8 @@ void Player::Damage(float damage)
 	//死亡の判定
 	if (m_status.GetHp() > 0.0f) {
 		m_se.Play(false);
-		if (m_damageCut) {
-			m_stMa.StateDamage()->SetDamageFlag(false);
-		}
-		else {
-			m_stMa.StateDamage()->SetDamage(damage);
-			m_stMa.Change(PlayerState::MoveState::Damage);
-		}
+		m_stMa.StateDamage()->SetDamage(damage);
+		m_stMa.Change(PlayerState::MoveState::Damage);
 	}
 }
 

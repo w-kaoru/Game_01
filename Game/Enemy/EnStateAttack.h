@@ -30,5 +30,6 @@ private:
 	int m_atkAnimStart = 0;
 	int m_atkHit = 0;
 	bool m_attackFlag = false;
+	bool m_isAtk = false;
 };
 

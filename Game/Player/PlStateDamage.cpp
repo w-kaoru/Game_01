@@ -14,7 +14,6 @@ PlStateDamage::~PlStateDamage()
 bool PlStateDamage::Start()
 {
 	m_plstma->StateAttack()->SetHit(false);
-	m_isDamage = true;
 	//UŒ‚‚ð‚­‚ç‚Á‚½‚Ì‚ÅHP‚©‚ç‚­‚ç‚Á‚½•ª‚ðˆø‚­
 	float hp = m_player->GetStatus()->GetHp();
 	if (!m_player->GetDamageCut()) {
@@ -22,6 +21,13 @@ bool PlStateDamage::Start()
 		hp = (hp + m_player->GetStatus()->GetDef()) - m_damage;
 		hp = min(hp, m_player->GetStatus()->GetHp());
 		hp = max(0.0f, hp);
+		m_isDamage = true;
+	}
+	else {
+		hp = (hp + m_player->GetStatus()->GetDef()) - (m_damage / 3.0f);
+		hp = min(hp, m_player->GetStatus()->GetHp());
+		hp = max(0.0f, hp);
+		m_isDamage = false;
 	}
 	m_moveSpeed *= 0.0f;
 	m_player->SetMoveSpeed(m_moveSpeed);

@@ -74,7 +74,7 @@ bool Enemy::Start()
 		m_animationClips[EnemyState::AnimationState::AnimDamage].SetLoopFlag(false);
 		m_scale *= 90.0f;
 		//攻撃を当てるタイミング
-		m_atkHit = 20;
+		m_atkHit = 23;
 		//エネミーの基礎ステータス。
 		m_status.SetHp(15.0f);
 		m_status.SetAgi(550.0f);
