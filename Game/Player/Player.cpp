@@ -123,9 +123,9 @@ void Player::Damage(float damage)
 		{
 			//UŒ‚‚ğ‚­‚ç‚Á‚½‚Ì‚ÅHP‚©‚ç‚­‚ç‚Á‚½•ª‚ğˆø‚­
 			float hp = m_status.GetHp();
-			float Damage = m_status.GetDef() - (damage / 3.0f);
-			Damage = max(0.0f, fabsf(Damage));
-			hp - Damage;
+			float Damage = damage - m_status.GetDef();
+			Damage = max(0.0f, Damage);
+			hp -= (Damage / 3.0f);
 			hp = min(hp, m_status.GetHp());
 			hp = max(0.0f, hp);
 			m_status.SetHp(hp);

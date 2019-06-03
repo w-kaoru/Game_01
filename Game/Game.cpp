@@ -73,7 +73,7 @@ bool Game::Start()
 			m_enemyList.push_back(m_enemy);
 			//エネミーのレベル
 			m_enemy->GetStatus()->SetLv(3);
-			m_enemy->GetStatus()->SetHp(10.0f);
+			m_enemy->GetStatus()->SetHp(30.0f);
 			m_enemy->GetStatus()->SetAgi(550.0f);
 			m_enemy->GetStatus()->SetDef(1.5f);
 			m_enemy->GetStatus()->SetAtk(3.0f);
@@ -90,7 +90,7 @@ bool Game::Start()
 			m_enemyList.push_back(m_enemy);
 			//エネミーのレベル
 			m_enemy->GetStatus()->SetLv(3); 
-			m_enemy->GetStatus()->SetHp(15.0f);
+			m_enemy->GetStatus()->SetHp(35.0f);
 			m_enemy->GetStatus()->SetAgi(550.0f);
 			m_enemy->GetStatus()->SetDef(1.0f);
 			m_enemy->GetStatus()->SetAtk(3.5f);
@@ -112,7 +112,7 @@ bool Game::Start()
 			m_enemyList.push_back(m_enemy);
 			//エネミーのレベル
 			m_enemy->GetStatus()->SetLv(7);
-			m_enemy->GetStatus()->SetHp(10.0f);
+			m_enemy->GetStatus()->SetHp(30.0f);
 			m_enemy->GetStatus()->SetAgi(550.0f);
 			m_enemy->GetStatus()->SetDef(1.5f);
 			m_enemy->GetStatus()->SetAtk(3.0f);
@@ -129,7 +129,7 @@ bool Game::Start()
 			m_enemyList.push_back(m_enemy);
 			//エネミーのレベル
 			m_enemy->GetStatus()->SetLv(6);
-			m_enemy->GetStatus()->SetHp(15.0f);
+			m_enemy->GetStatus()->SetHp(35.0f);
 			m_enemy->GetStatus()->SetAgi(550.0f);
 			m_enemy->GetStatus()->SetDef(1.0f);
 			m_enemy->GetStatus()->SetAtk(3.5f);
@@ -149,9 +149,9 @@ bool Game::Start()
 				m_enemyBos->SetRotation(objData.rotation);
 				m_enemyBos->GetPlayer(m_player);
 				m_enemyBos->GetStatus()->SetLv(8);
-				m_enemyBos->GetStatus()->SetHp(20.0f);
+				m_enemyBos->GetStatus()->SetHp(100.0f);
 				m_enemyBos->GetStatus()->SetAgi(500.0f);
-				m_enemyBos->GetStatus()->SetDef(2.0f);
+				m_enemyBos->GetStatus()->SetDef(6.0f);
 				m_enemyBos->GetStatus()->SetAtk(17.0f);
 				m_enemyBos->GetStatus()->StatusUp();
 				return true;

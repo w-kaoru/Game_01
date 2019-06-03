@@ -51,11 +51,6 @@ bool Enemy::Start()
 		m_scale *= 2.0f;
 		//攻撃を当てるタイミング
 		m_atkHit = 25;
-		//エネミーの基礎ステータス。
-		/*m_status.SetHp(10.0f);
-		m_status.SetAgi(550.0f);
-		m_status.SetDef(1.5f);
-		m_status.SetAtk(3.0f);*/
 		break;
 	case type_troll:
 		m_model.Init(L"Assets/modelData/TrollGiant.cmo");
@@ -75,14 +70,8 @@ bool Enemy::Start()
 		m_scale *= 90.0f;
 		//攻撃を当てるタイミング
 		m_atkHit = 23;
-		//エネミーの基礎ステータス。
-		/*m_status.SetHp(15.0f);
-		m_status.SetAgi(550.0f);
-		m_status.SetDef(1.0f);
-		m_status.SetAtk(3.5f);*/
 		break;
 	}
-	//m_status.StatusUp();
 	//アニメーションの初期化。
 	m_animation.Init(
 		m_model,								//アニメーションを流すスキンモデル。
@@ -165,9 +154,9 @@ void Enemy::Damage(float damage)
 	else {
 		//攻撃をくらったのでHPからくらった分を引く
 		float hp = m_status.GetHp();
-		float Damage = m_status.GetDef() - (damage / 3.0f);
-		Damage = max(0.0f, fabsf(Damage));
-		hp -= Damage;
+		float Damage = damage - m_status.GetDef();
+		Damage = max(0.0f, Damage);
+		hp -= (Damage / 3.0f);
 		hp = min(hp, m_status.GetHp());
 		hp = max(1.5f, hp);
 		m_status.SetHp(hp);
