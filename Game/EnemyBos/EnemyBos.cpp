@@ -30,11 +30,11 @@ bool EnemyBos::Start()
 	//m_model.Init(L"Assets/modelData/enemy.cmo");
 
 	//ステータスの設定
-	m_status.SetHp(20.0f);
+	/*m_status.SetHp(20.0f);
 	m_status.SetAgi(500.0f);
-	m_status.SetDef(5.0f);
-	m_status.SetAtk(16.0f);
-	m_status.StatusUp();
+	m_status.SetDef(2.0f);
+	m_status.SetAtk(17.0f);
+	m_status.StatusUp();*/
 	m_model.Init(L"Assets/modelData/enemy_Bos.cmo");
 	//ノーマルマップをセットする。
 	m_model.SetNormalMap(m_normalMapSRV);
@@ -100,6 +100,12 @@ void EnemyBos::Search()
 	m_rotation.Multiply(m_forward);
 	//fabsfは絶対値を求める関数！
 	//角度はマイナスが存在するから、絶対値にする。
+	if (m_toPlayerLen < 2500.0f) {
+		m_bosBgm = true;
+	}
+	else {
+		m_bosBgm = false;
+	}
 	if (m_toPlayerLen <= 160.0) {
 		//プレイヤーとの距離が一定以下で
 		//攻撃ステートをよべー。
@@ -133,7 +139,9 @@ void EnemyBos::Damage(float damage)
 		else {
 			//攻撃をくらったのでHPからくらった分を引く
 			float hp = m_status.GetHp();
-			hp = (hp + m_status.GetDef()) - (damage / 3.0f);
+			float Damage = m_status.GetDef() - (damage / 3.0f);
+			Damage = max(0.0f, fabsf(Damage));
+			hp - Damage;
 			hp = min(hp, m_status.GetHp());
 			hp = max(0.0f, hp);
 			m_status.SetHp(hp);
@@ -184,8 +192,10 @@ void EnemyBos::HP_Gauge()
 	else {
 		m_Sprite_angle.SetRotationDeg(CVector3::AxisY()*-1, angle);
 	}
+	m_hpGauge = (m_status.GetHp() / m_status.GetMaxHp()) * m_spriteScale;
+
 	//HPスプライトの更新
-	m_hpSprite.Update(pos, m_Sprite_angle, { m_status.GetHp() / 10, 1.0f, 1.0f });
+	m_hpSprite.Update(pos, m_Sprite_angle, { m_hpGauge, 1.0f, 1.0f });
 	//HPスプライトの表示
 	m_hpSprite.Draw(
 		g_camera3D.GetViewMatrix(),

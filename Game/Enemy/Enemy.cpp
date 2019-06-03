@@ -52,10 +52,10 @@ bool Enemy::Start()
 		//攻撃を当てるタイミング
 		m_atkHit = 25;
 		//エネミーの基礎ステータス。
-		m_status.SetHp(10.0f);
+		/*m_status.SetHp(10.0f);
 		m_status.SetAgi(550.0f);
 		m_status.SetDef(1.5f);
-		m_status.SetAtk(3.0f);
+		m_status.SetAtk(3.0f);*/
 		break;
 	case type_troll:
 		m_model.Init(L"Assets/modelData/TrollGiant.cmo");
@@ -76,13 +76,13 @@ bool Enemy::Start()
 		//攻撃を当てるタイミング
 		m_atkHit = 23;
 		//エネミーの基礎ステータス。
-		m_status.SetHp(15.0f);
+		/*m_status.SetHp(15.0f);
 		m_status.SetAgi(550.0f);
-		m_status.SetDef(2.0f);
-		m_status.SetAtk(4.0f);
+		m_status.SetDef(1.0f);
+		m_status.SetAtk(3.5f);*/
 		break;
 	}
-	m_status.StatusUp();
+	//m_status.StatusUp();
 	//アニメーションの初期化。
 	m_animation.Init(
 		m_model,								//アニメーションを流すスキンモデル。
@@ -165,9 +165,11 @@ void Enemy::Damage(float damage)
 	else {
 		//攻撃をくらったのでHPからくらった分を引く
 		float hp = m_status.GetHp();
-		hp = (hp + m_status.GetDef()) - (damage / 3.0f);
+		float Damage = m_status.GetDef() - (damage / 3.0f);
+		Damage = max(0.0f, fabsf(Damage));
+		hp -= Damage;
 		hp = min(hp, m_status.GetHp());
-		hp = max(0.0f, hp);
+		hp = max(1.5f, hp);
 		m_status.SetHp(hp);
 	}
 	m_damageCutCounter++;
@@ -215,8 +217,10 @@ void Enemy::HP_Gauge()
 	else {
 		m_Sprite_angle.SetRotationDeg(CVector3::AxisY()*-1, angle);
 	}
+	m_hpGauge = (m_status.GetHp() / m_status.GetMaxHp()) * m_spriteScale;
+
 	//HPスプライトの更新
-	m_hpSprite.Update(pos, m_Sprite_angle, { m_status.GetHp() / 10, 1.0f, 1.0f });
+	m_hpSprite.Update(pos, m_Sprite_angle, { m_hpGauge, 1.0f, 1.0f });
 	//HPスプライトの表示
 	m_hpSprite.Draw(
 		g_camera3D.GetViewMatrix(),

@@ -47,14 +47,11 @@ private:
 	CSoundSource m_bgm;						//BGM。
 	CSoundSource m_bgm_bos;					//BOSのBGM
 
-
 	Sprite m_ui_01;		//UI
 	Sprite m_ui_02;		//UI
 	float m_spriteScaleX = 100.0f;	//HPのスプライトの横幅
 	float m_spriteScaleY = 100.0f;	//HPのスプライトの縦幅
 	CQuaternion m_spriteRot = CQuaternion::Identity();
-	CVector3 m_bosPos = CVector3::Zero();
-	CQuaternion m_bosRot = CQuaternion::Identity();
 };
 
 //グローバルなアクセスポイントをグローバル変数として提供する。

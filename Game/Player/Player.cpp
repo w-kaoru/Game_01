@@ -9,7 +9,6 @@ Player::Player() :m_stMa(this)
 {
 	//cmoファイルの読み込み。
 	m_model.Init(L"Assets/modelData/paladin.cmo", enFbxUpAxisZ);
-	//m_model_01.Init(L"Assets/modelData/plpath.cmo", enFbxUpAxisZ);
 	//tkaファイルの読み込み。
 	//待機アニメーション
 	m_animationClips[PlayerState::AnimationState::AnimIdle].Load(L"Assets/animData/Player/plidle.tka");
@@ -75,13 +74,13 @@ Player::~Player()
 }
 bool Player::Start()
 {
-	//ステータスの設定
-	m_status.SetHp(60);
-	m_status.SetAgi(1150.0f);
-	m_status.SetDef(1.0f);
-	m_status.SetAtk(5.5f);
-	m_status.SetMaxLv(9);
-	m_status.StatusUp();
+	////ステータスの設定
+	//m_status.SetHp(60);
+	//m_status.SetAgi(1150.0f);
+	//m_status.SetDef(1.0f);
+	//m_status.SetAtk(5.0f);
+	//m_status.SetMaxLv(9);
+	//m_status.StatusUp();
 	m_status.SetMaxHp(m_status.GetHp());
 	m_yellowhp = m_spriteScale;
 	m_hpFrame = m_spriteScale;
@@ -124,7 +123,9 @@ void Player::Damage(float damage)
 		{
 			//攻撃をくらったのでHPからくらった分を引く
 			float hp = m_status.GetHp();
-			hp = (hp + m_status.GetDef()) - (damage / 3.0f);
+			float Damage = m_status.GetDef() - (damage / 3.0f);
+			Damage = max(0.0f, fabsf(Damage));
+			hp - Damage;
 			hp = min(hp, m_status.GetHp());
 			hp = max(0.0f, hp);
 			m_status.SetHp(hp);
@@ -150,7 +151,6 @@ void Player::Update()
 			m_status.SetLv(lv);
 			m_status.LvUp();
 			m_status.StatusUp();
-			//m_hpFrame = m_status.GetHp();
 			m_exp = 0;
 		}
 	}
@@ -205,6 +205,7 @@ void Player::HP_Gauge()
 	float h = 350.0f;
 	m_hpGauge = (m_status.GetHp() / m_status.GetMaxHp()) * m_spriteScale;
 	if (m_hpGauge < m_yellowhp) {
+		//ゲージを徐々に減らす
 		m_yellowhp -= 1.5f * (1.0f / 60.0f);
 	}
 	else
@@ -259,13 +260,15 @@ void Player::HP_Gauge()
 		g_camera2D.GetProjectionMatrix()
 	);
 }
-
+//ダメージカット
 void Player::DamageCut()
 {
 
 	float w = -470.0f;
 	float h = 330.0f;
+	//ダメージカットの判定
 	if (m_damageCut) {
+		//ゲージを徐々に減らす
 		m_damageCutSpan -= 1.2f * (1.0f / 60.0f);
 		m_damageCutSpan = max(0.0f, m_damageCutSpan);
 		if (m_damageCutSpan <= 0.0f) {
@@ -273,6 +276,7 @@ void Player::DamageCut()
 		}
 	}
 	else {
+		//ゲージを徐々に増やす
 		m_damageCutSpan += 0.5f * (1.0f / 60.0f);
 		m_damageCutSpan = min(m_damageCutValue, m_damageCutSpan);
 	}
@@ -333,11 +337,6 @@ void Player::Draw()
 		g_camera3D.GetViewMatrix(), 
 		g_camera3D.GetProjectionMatrix()
 	);
-	/*m_model_01.Draw(
-		enRenderMode_Normal,
-		g_camera3D.GetViewMatrix(),
-		g_camera3D.GetProjectionMatrix()
-	);*/
 }
 
 void Player::PostDraw()

@@ -64,6 +64,9 @@ public:
 	{
 		return m_animation;
 	}
+	bool GetBGMFlag() {
+		return m_bosBgm;
+	}
 private:
 	Player* m_player = nullptr;							//プレイヤー
 	//MoveState movestate = idle;
@@ -88,10 +91,13 @@ private:
 	int m_damageTiming = 0;		//ダメージを受けるタイミング
 	int m_AttackTiming = 0;		//攻撃するタイミング
 	bool attackFlag = false;
+	float m_spriteScale = 3.0f;
+	float m_hpGauge = 0.0f;
 	float m_damageCutSpan = 6.0f;
 	float m_damageCutValue = 6.0f;
 	bool m_damageCut = false;
 	int m_damageCutCounter = 0;
 	//エネミーのステイタス
 	CharacterStatus m_status;
+	bool m_bosBgm = false;
 };

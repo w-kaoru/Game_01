@@ -94,6 +94,8 @@ private:
 	EnemyType m_type = type_num;
 	float m_toPlayerLen;		//ƒvƒŒƒCƒ„[‚Æ‚Ì‹——£
 	bool m_isDeath = false;
+	float m_spriteScale = 3.0f;
+	float m_hpGauge = 0.0f;
 	float m_damageCutSpan = 6.0f;
 	float m_damageCutValue = 6.0f;
 	bool m_damageCut = false;
