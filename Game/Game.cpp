@@ -174,7 +174,7 @@ bool Game::Start()
 	m_ui[1].Init(L"Assets/sprite/game_ken.dds", m_spriteScaleX, m_spriteScaleY);
 	m_ui[2].Init(L"Assets/sprite/shield.dds", m_spriteScaleX, m_spriteScaleY);
 	m_ui[3].Init(L"Assets/sprite/frame.dds", 1280.0f, 300);
-	m_ui[3].SetAlpha(0.8f);
+	m_ui[3].SetAlpha(0.5f);
 	return false;
 }
 

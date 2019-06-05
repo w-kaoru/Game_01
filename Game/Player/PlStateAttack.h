@@ -7,6 +7,10 @@ public:
 	~PlStateAttack();
 	bool Start();
 	void Update();
+	void SetAttack(int hit)
+	{
+		m_atkHit = hit;
+	}
 	void SetHit(bool atk)
 	{
 		m_atk = atk;
@@ -20,5 +24,6 @@ private:
 	int m_hitTiming = 0;
 	bool m_atk = false;
 	bool m_isAtk = false;
+	int m_atkHit = 0;
 };
 

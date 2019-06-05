@@ -21,7 +21,6 @@ Player::Player() :m_stMa(this)
 	//攻撃アニメーション
 	m_animationClips[PlayerState::AnimationState::AnimAttack].Load(L"Assets/animData/Player/plattack.tka");
 	m_animationClips[PlayerState::AnimationState::AnimAttack].SetLoopFlag(false);
-
 	//ダメージアニメーション
 	m_animationClips[PlayerState::AnimationState::AnimDamage].Load(L"Assets/animData/Player/pldamage.tka");
 	m_animationClips[PlayerState::AnimationState::AnimDamage].SetLoopFlag(false);
@@ -166,6 +165,7 @@ void Player::Update()
 	if (m_stMa.StateDamage()->GetDamageFlag() == false && m_status.GetHp() > 0.0f) {
 		if (g_pad[0].IsTrigger(enButtonX) && !m_stMa.StateAttack()->GetHit()) {
 			m_stMa.StateAttack()->SetHit(true);
+				m_stMa.StateAttack()->SetAttack(15);
 			//攻撃ステートに変更
 			m_stMa.Change(PlayerState::MoveState::Attack);
 		}
