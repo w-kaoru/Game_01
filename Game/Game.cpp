@@ -170,8 +170,11 @@ bool Game::Start()
 	m_bgm_bos.SetVolume(0.17f);
 
 	//HPの画像の読み込み
-	m_ui_01.Init(L"Assets/sprite/item_controller .dds", m_spriteScaleX, m_spriteScaleY);
-	m_ui_02.Init(L"Assets/sprite/game_ken.dds", m_spriteScaleX, m_spriteScaleY);
+	m_ui[0].Init(L"Assets/sprite/item_controller .dds", m_spriteScaleX, m_spriteScaleY);
+	m_ui[1].Init(L"Assets/sprite/game_ken.dds", m_spriteScaleX, m_spriteScaleY);
+	m_ui[2].Init(L"Assets/sprite/shield.dds", m_spriteScaleX, m_spriteScaleY);
+	m_ui[3].Init(L"Assets/sprite/frame.dds", 1280.0f, 300);
+	m_ui[3].SetAlpha(0.8f);
 	return false;
 }
 
@@ -198,26 +201,49 @@ void Game::SpriteDraw()
 {
 	m_spriteRot.SetRotationDeg(CVector3::AxisZ(), -5.0f);
 	//スプライトの更新
-	m_ui_01.Update(
-		{ -610, 300, 0.0f },
+	m_ui[0].Update(
+		{ -610.0f, 300.0f, 0.0f },
 		CQuaternion::Identity(),
 		{ 1.0f, 1.0f, 1.0f },
 		{ 0.0f,1.0f }
 	);
 	//スプライトの更新
-	m_ui_02.Update(
-		{ -630, 270, 0.0f },
+	m_ui[1].Update(
+		{ -630.0f, 270.0f, 0.0f },
 		m_spriteRot,
 		{ 0.3f, 0.3f, 1.0f },
 		{ 0.0f,1.0f }
 	);
+	//スプライトの更新
+	m_ui[2].Update(
+		{ -572.0f, 310.0f, 0.0f },
+		CQuaternion::Identity(),
+		{ 0.2f, 0.2f, 1.0f },
+		{ 0.0f,1.0f }
+	);
+	//スプライトの更新
+	m_ui[3].Update(
+		{ -640.0f, 370.0f ,0.0f},
+		CQuaternion::Identity(),
+		{ 0.5f, 0.2f, 1.0f },
+		{ 0.0f,1.0f }
+	);
 	//スプライトを２次元で表示をする。
-	m_ui_01.Draw(
+	m_ui[3].Draw(
 		g_camera2D.GetViewMatrix(),
 		g_camera2D.GetProjectionMatrix()
 	);
 	//スプライトを２次元で表示をする。
-	m_ui_02.Draw(
+	m_ui[0].Draw(
+		g_camera2D.GetViewMatrix(),
+		g_camera2D.GetProjectionMatrix()
+	);
+	//スプライトを２次元で表示をする。
+	m_ui[1].Draw(
+		g_camera2D.GetViewMatrix(),
+		g_camera2D.GetProjectionMatrix()
+	);
+	m_ui[2].Draw(
 		g_camera2D.GetViewMatrix(),
 		g_camera2D.GetProjectionMatrix()
 	);
@@ -232,7 +258,7 @@ void Game::Draw()
 	m_level.Draw();
 }
 
-void Game::PostDraw()
+void Game::PostPostDraw()
 {
 	SpriteDraw();
 }

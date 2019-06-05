@@ -68,6 +68,10 @@ public:
 	{
 		m_alpha = alpha;
 	}
+	float GetAlpha()
+	{
+		return m_alpha;
+	}
 private:
 	/// <summary>
 	/// ‰Šú‰»‚Ì‹¤’Êˆ—B

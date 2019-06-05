@@ -26,7 +26,7 @@ public:
 	void Update() override;
 	void Draw() override;
 	void PreDraw() override;
-	void PostDraw() override;
+	void PostPostDraw() override;
 	void Destroy() override;
 
 	void SpriteDraw();
@@ -47,8 +47,7 @@ private:
 	CSoundSource m_bgm;						//BGM。
 	CSoundSource m_bgm_bos;					//BOSのBGM
 
-	Sprite m_ui_01;		//UI
-	Sprite m_ui_02;		//UI
+	Sprite m_ui[4];		//UI
 	float m_spriteScaleX = 100.0f;	//HPのスプライトの横幅
 	float m_spriteScaleY = 100.0f;	//HPのスプライトの縦幅
 	CQuaternion m_spriteRot = CQuaternion::Identity();

@@ -39,15 +39,14 @@ Player::Player() :m_stMa(this)
 	);
 	//m_scale *= 0.1f;
 	//HPの画像の読み込み
-	m_hpSprite.Init(L"Assets/sprite/hp_gauge.dds", m_HpScaleX, m_HpScaleY);
-	m_hpyellowSprite.Init(L"Assets/sprite/hp_yellowGauge.dds", m_HpScaleX, m_HpScaleY);
-	m_hpFrameSprite.Init(L"Assets/sprite/hp_frame.dds", m_HpScaleX, m_HpScaleY);
-	m_hpFrameSprite01.Init(L"Assets/sprite/hp_frame01.dds", m_HpScaleX, m_HpScaleY);
-
+	m_hp[HPSprite::HPGauge].Init(L"Assets/sprite/hp_gauge.dds", m_HpScaleX, m_HpScaleY);
+	m_hp[HPSprite::YellowHPGauge] .Init(L"Assets/sprite/hp_yellowGauge.dds", m_HpScaleX, m_HpScaleY);
+	m_hp[HPSprite::RedHPGauge].Init(L"Assets/sprite/redGauge.dds", m_HpScaleX, m_HpScaleY);
+	m_hp[HPSprite::HPFrameSprite].Init(L"Assets/sprite/GaugeFrame.dds", m_HpScaleX, m_HpScaleY);
+	m_hp[HPSprite::RedHPGauge].SetAlpha(0.0f);
 	
-	m_damageCutSprite.Init(L"Assets/sprite/dc_gauge.dds", m_HpScaleX, m_HpScaleY);
-	m_DCframeSprite.Init(L"Assets/sprite/hp_frame.dds", m_HpScaleX, m_HpScaleY);
-	m_DCframeSprite01.Init(L"Assets/sprite/hp_frame01.dds", m_HpScaleX, m_HpScaleY);
+	m_dc[DCSprite::DamageCutSprite].Init(L"Assets/sprite/dc_gauge.dds", m_HpScaleX, m_HpScaleY);
+	m_dc[DCSprite::DCFrameSprite].Init(L"Assets/sprite/GaugeFrame.dds", m_HpScaleX, m_HpScaleY);
 
 	m_shieldSprite.Init(L"Assets/sprite/shield.dds", 20.0f, 20.0f);
 
@@ -212,50 +211,70 @@ void Player::HP_Gauge()
 	{
 		m_yellowhp = m_hpGauge;//m_status.GetHp();
 	}
+
+	if (m_hpGauge < 4.0f) {
+		if (m_hp[HPSprite::RedHPGauge].GetAlpha() >= 0.99f) {
+			m_redGaugeDraw = false;
+		}
+		if (m_hp[HPSprite::RedHPGauge].GetAlpha() <= 0.01f) {
+			m_redGaugeDraw = true;
+		}
+		if (!m_redGaugeDraw) {
+			m_hp[HPSprite::RedHPGauge].DeltaAlpha(-0.2f);
+		}
+		else {
+			m_hp[HPSprite::RedHPGauge].DeltaAlpha(0.2f);
+		}
+	}
+	else
+	{
+		m_hp[HPSprite::RedHPGauge].SetAlpha(0.0f);
+	}
 	//スプライトの更新
-	m_hpFrameSprite.Update(
-		{ w, h, 0.0f },
-		CQuaternion::Identity(),
-		{ m_hpFrame , 1.5f, 1.0f },
-		{ 0.0f,1.0f }
-	);
-	//スプライトの更新
-	m_hpSprite.Update(
-		{ w, h, 0.0f },
-		CQuaternion::Identity(),
-		{ m_hpGauge, 1.5f, 1.0f },
-		{ 0.0f,1.0f }
-	);
-	m_hpyellowSprite.Update(
+	m_hp[HPSprite::YellowHPGauge].Update(
 		{ w, h, 0.0f },
 		CQuaternion::Identity(),
 		{ m_yellowhp , 1.5f, 1.0f },
 		{ 0.0f,1.0f }
 	);
+	//スプライトを２次元で表示をする。
+	m_hp[HPSprite::YellowHPGauge].Draw(
+		g_camera2D.GetViewMatrix(),
+		g_camera2D.GetProjectionMatrix()
+	);
 	//スプライトの更新
-	m_hpFrameSprite01.Update(
+	m_hp[HPSprite::HPGauge].Update(
+		{ w, h, 0.0f },
+		CQuaternion::Identity(),
+		{ m_hpGauge, 1.5f, 1.0f },
+		{ 0.0f,1.0f }
+	);
+	//スプライトを２次元で表示をする。
+	m_hp[HPSprite::HPGauge].Draw(
+		g_camera2D.GetViewMatrix(),
+		g_camera2D.GetProjectionMatrix()
+	);
+	//スプライトの更新
+	m_hp[HPSprite::RedHPGauge].Update(
+		{ w, h, 0.0f },
+		CQuaternion::Identity(),
+		{ m_hpGauge , 1.5f, 1.0f },
+		{ 0.0f,1.0f }
+	);
+	//スプライトを２次元で表示をする。
+	m_hp[HPSprite::RedHPGauge].Draw(
+		g_camera2D.GetViewMatrix(),
+		g_camera2D.GetProjectionMatrix()
+	);
+	//スプライトの更新
+	m_hp[HPSprite::HPFrameSprite].Update(
 		{ w, h, 0.0f },
 		CQuaternion::Identity(),
 		{ m_hpFrame , 1.5f, 1.0f },
 		{ 0.0f,1.0f }
 	);
 	//スプライトを２次元で表示をする。
-	m_hpFrameSprite.Draw(
-		g_camera2D.GetViewMatrix(),
-		g_camera2D.GetProjectionMatrix()
-	);
-	//スプライトを２次元で表示をする。
-	m_hpyellowSprite.Draw(
-		g_camera2D.GetViewMatrix(),
-		g_camera2D.GetProjectionMatrix()
-	);
-	//スプライトを２次元で表示をする。
-	m_hpSprite.Draw(
-		g_camera2D.GetViewMatrix(),
-		g_camera2D.GetProjectionMatrix()
-	);
-	//スプライトを２次元で表示をする。
-	m_hpFrameSprite01.Draw(
+	m_hp[HPSprite::HPFrameSprite].Draw(
 		g_camera2D.GetViewMatrix(),
 		g_camera2D.GetProjectionMatrix()
 	);
@@ -269,7 +288,7 @@ void Player::DamageCut()
 	//ダメージカットの判定
 	if (m_damageCut) {
 		//ゲージを徐々に減らす
-		m_damageCutSpan -= 1.2f * (1.0f / 60.0f);
+		m_damageCutSpan -= 1.4f * (1.0f / 60.0f);
 		m_damageCutSpan = max(0.0f, m_damageCutSpan);
 		if (m_damageCutSpan <= 0.0f) {
 			m_damageCut = false;
@@ -277,25 +296,18 @@ void Player::DamageCut()
 	}
 	else {
 		//ゲージを徐々に増やす
-		m_damageCutSpan += 0.5f * (1.0f / 60.0f);
+		m_damageCutSpan += 1.0f * (1.0f / 60.0f);
 		m_damageCutSpan = min(m_damageCutValue, m_damageCutSpan);
 	}
 	//スプライトの更新
-	m_DCframeSprite.Update(
-		{ w, h, 0.0f },
-		CQuaternion::Identity(),
-		{ m_damageCutValue, 1.5f, 1.0f },
-		{ 0.0f,1.0f }
-	);
-	//スプライトの更新
-	m_damageCutSprite.Update(
+	m_dc[DCSprite::DamageCutSprite].Update(
 		{ w, h, 0.0f },
 		CQuaternion::Identity(),
 		{ m_damageCutSpan, 1.5f, 1.0f },
 		{ 0.0f,1.0f }
 	);
 	//スプライトの更新
-	m_DCframeSprite01.Update(
+	m_dc[DCSprite::DCFrameSprite].Update(
 		{ w, h, 0.0f },
 		CQuaternion::Identity(),
 		{ m_damageCutValue, 1.5f, 1.0f },
@@ -308,17 +320,12 @@ void Player::DamageCut()
 		{ 1.0f, 1.0f, 1.0f }
 	);
 	//スプライトを２次元で表示をする。
-	m_DCframeSprite.Draw(
+	m_dc[DCSprite::DamageCutSprite].Draw(
 		g_camera2D.GetViewMatrix(),
 		g_camera2D.GetProjectionMatrix()
 	);
 	//スプライトを２次元で表示をする。
-	m_damageCutSprite.Draw(
-		g_camera2D.GetViewMatrix(),
-		g_camera2D.GetProjectionMatrix()
-	);
-	//スプライトを２次元で表示をする。
-	m_DCframeSprite01.Draw(
+	m_dc[DCSprite::DCFrameSprite].Draw(
 		g_camera2D.GetViewMatrix(),
 		g_camera2D.GetProjectionMatrix()
 	);
@@ -339,7 +346,7 @@ void Player::Draw()
 	);
 }
 
-void Player::PostDraw()
+void Player::PostPostDraw()
 {
 	m_font.BeginDraw();	//フォントの描画開始。
 	if (m_status.GetLv() < m_status.GetMaxLv()) {

@@ -477,9 +477,6 @@
     </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\sprite\hp_frame.png">
-      <Filter>Assets\sprite</Filter>
-    </ImageContentTask>
     <ImageContentTask Include="Assets\sprite\hp_gauge.png">
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
@@ -519,10 +516,20 @@
     <ImageContentTask Include="Assets\sprite\hp_yellowGauge.png">
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
-    <ImageContentTask Include="Assets\sprite\hp_frame01.png" />
-    <ImageContentTask Include="Assets\sprite\dc_gauge.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Assets\sprite\shield.png" />
+    <ImageContentTask Include="Assets\sprite\dc_gauge.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\shield.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\redGauge.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\GaugeFrame.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\frame.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
   </ItemGroup>
 </Project>

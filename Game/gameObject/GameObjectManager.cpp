@@ -40,6 +40,11 @@ void GameObjectManager::Execute()
 			obj->PostDrawWrapper();
 		}
 	}
+	for (auto& objList : m_gameObjectList) {
+		for (auto& obj : objList) {
+			obj->PostPostDrawWrapper();
+		}
+	}
 	g_graphicsEngine->EffectDraw();
 	g_graphicsEngine->PostEffectDraw();
 	DeleteExecute();

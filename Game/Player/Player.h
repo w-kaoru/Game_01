@@ -8,12 +8,26 @@
 class Player :public IGameObject
 {
 public:
+	enum HPSprite
+	{
+		HPGauge,
+		YellowHPGauge,
+		RedHPGauge,
+		HPFrameSprite,
+		GaugeNum
+	};
+	enum DCSprite
+	{
+		DamageCutSprite,
+		DCFrameSprite,
+		DCNum
+	};
 	Player();
 	~Player();
 	bool Start() override;
 	void Update() override;
 	void Draw() override;
-	void PostDraw() override;
+	void PostPostDraw() override;
 
 	void HP_Gauge();
 	void DamageCut();
@@ -86,15 +100,9 @@ private:
 	CMatrix m_rotMatrix = CMatrix::Identity();
 	CVector3 m_forward = CVector3::Zero();		//前方。
 	CVector3 m_attckPos = CVector3::Zero();		//攻撃の場所。
-	Sprite m_hpSprite;		//hpゲージ
-	Sprite m_hpyellowSprite;		//hpゲージ
-	Sprite m_hpFrameSprite;	//hpゲージの枠
-	Sprite m_hpFrameSprite01;	//hpゲージの枠
-
-
-	Sprite m_damageCutSprite;		//hpゲージ
-	Sprite m_DCframeSprite;	//hpゲージの枠
-	Sprite m_DCframeSprite01;	//hpゲージの枠
+	Sprite m_hp[HPSprite::GaugeNum];
+	Sprite m_dc[DCSprite::DCNum];
+	bool m_redGaugeDraw = false;
 	Sprite m_shieldSprite;
 	float m_HpScaleX = 40.0f;	//HPのスプライトの横幅
 	float m_HpScaleY = 10.0f;	//HPのスプライトの縦幅
