@@ -8,20 +8,6 @@
 class Player :public IGameObject
 {
 public:
-	enum HPSprite
-	{
-		HPGauge,
-		YellowHPGauge,
-		RedHPGauge,
-		HPFrameSprite,
-		GaugeNum
-	};
-	enum DCSprite
-	{
-		DamageCutSprite,
-		DCFrameSprite,
-		DCNum
-	};
 	Player();
 	~Player();
 	bool Start() override;
@@ -29,9 +15,8 @@ public:
 	void Draw() override;
 	void PostPostDraw() override;
 
-	void HP_Gauge();
-	void DamageCut();
 	void Damage(float damage);
+	void DamageCut();
 	//ゲッター。
 	CVector3 GetPosition()
 	{
@@ -85,6 +70,16 @@ public:
 	{
 		m_damageCut = damage;
 	}
+
+
+	float GetDCSpan()
+	{
+		return m_damageCutSpan;
+	}
+	float GetDCValue()
+	{
+		return m_damageCutValue;
+	}
 private:
 	SkinModel m_model;									//スキンモデル。
 	//SkinModel m_model_01;									//スキンモデル。
@@ -100,23 +95,13 @@ private:
 	CMatrix m_rotMatrix = CMatrix::Identity();
 	CVector3 m_forward = CVector3::Zero();		//前方。
 	CVector3 m_attckPos = CVector3::Zero();		//攻撃の場所。
-	Sprite m_hp[HPSprite::GaugeNum];
-	Sprite m_dc[DCSprite::DCNum];
-	bool m_redGaugeDraw = false;
-	Sprite m_shieldSprite;
-	float m_HpScaleX = 40.0f;	//HPのスプライトの横幅
-	float m_HpScaleY = 10.0f;	//HPのスプライトの縦幅
 	const Hit* m_hit;
 	CharacterStatus m_status;	//プレイヤーのステイタス
 	float m_maxHp = 0.0f;
 	int m_exp = 0;
-	float m_yellowhp = 0.0f;
-	float m_hpFrame = 0.0f;		//体力の枠
-	float m_hpGauge = 0.0f;
-	float m_spriteScale = 10.0f;
+	bool m_damageCut = false;
 	float m_damageCutSpan = 6.0f;
 	float m_damageCutValue = 6.0f;
-	bool m_damageCut = false;
 	Font m_font;
 	CSoundSource m_se;						//SE。
 	ID3D11ShaderResourceView* m_normalMapSRV = nullptr;	//ノーマルマップのSRV

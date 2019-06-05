@@ -240,6 +240,7 @@
     <ClCompile Include="EnemyBos\EnemyBosStateDeath.cpp">
       <Filter>EnemyBos</Filter>
     </ClCompile>
+    <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -449,6 +450,7 @@
     <ClInclude Include="EnemyBos\EnemyBosStateDeath.h">
       <Filter>EnemyBos</Filter>
     </ClInclude>
+    <ClInclude Include="UI.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\enpath2.fbx">

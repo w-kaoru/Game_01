@@ -24,7 +24,7 @@ void PlStateDeath::Update()
 {
 	m_player->SetAnimation(PlayerState::AnimationState::AnimDeath);
 	if (m_player->GetAnimation().IsPlaying() == false) {
-		g_gameObjM->DeleteGO(g_gameObjM->FindGO<Game>());
+		g_gameObjM->DeleteGO(g_gameObjM->FindGO<Game>("Game"));
 		g_gameObjM->NewGO<GameEnd>()->SetGameEnd(GameEnd::GameEndState::gameOver);
 	}
 }

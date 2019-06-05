@@ -59,7 +59,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	soundEngine.Init();
 	//タイトルシーンの作成。
 	g_hitObject = new HitObject;
-	g_gameObjM->NewGO<Title>();
+	g_gameObjM->NewGO<Title>(0,"Title");
 
 	//ゲームループ。
 	while (DispatchWindowMessage() == true)

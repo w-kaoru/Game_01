@@ -24,7 +24,7 @@ void EnemyBosStateDeath::Update()
 {
 	m_enemy->SetAnimation(EnemyBosState::AnimationState::AnimDeath);
 	if (m_enemy->GetAnimation().IsPlaying() == false) {
-		g_gameObjM->DeleteGO(g_gameObjM->FindGO<Game>());
+		g_gameObjM->DeleteGO(g_gameObjM->FindGO<Game>("Game"));
 		g_gameObjM->NewGO<GameEnd>()->SetGameEnd(GameEnd::GameEndState::gameCleared);
 	}
 }

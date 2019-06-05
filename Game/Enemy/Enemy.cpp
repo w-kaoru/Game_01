@@ -255,7 +255,7 @@ void Enemy::Update()
 			);
 			m_position.y = -10000.0f;
 			m_charaCon.SetPosition(m_position);
-			g_gameObjM->FindGO<Game>()->EnemyDeath();
+			g_gameObjM->FindGO<Game>("Game")->EnemyDeath();
 			m_player->EXP(1);
 		}
 		DamageCut();

@@ -15,9 +15,10 @@ public:
 	void DeleteExecute();
 
 	template<class T>
-	T* NewGO(int i = 0)
+	T* NewGO(int i = 0, const char* name = "NULL")
 	{
 		T* newObj = new T;
+		newObj->SetName(name);
 		m_gameObjectList[i].push_back(newObj);
 		return newObj;
 	}
@@ -48,11 +49,13 @@ public:
 		// 検索したいオブジェクトにつけた名前
 		// 検索成功で検索したインスタンスのポインタ
 	template<class T>
-	T* FindGO()
+	T* FindGO(char* Name)
 	{
 		for (auto& list : m_gameObjectList) {
 			for (auto& obj : list) {
-				return (T*)obj;
+				if (Name == obj->GetName()) {
+					return (T*)obj;
+				}
 			}
 		}
 		return nullptr;

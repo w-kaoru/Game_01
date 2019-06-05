@@ -6,6 +6,7 @@
 #include "Title.h"
 #include "GameEnd.h"
 #include "LightCamera.h"
+#include "UI.h"
 
 //グローバルなアクセスポイントをグローバル変数として提供する。
 //Game* g_game = nullptr;
@@ -21,6 +22,7 @@ Game::~Game()
 }
 void Game::Destroy()
 {
+	g_gameObjM->DeleteGO(m_ui);
 	g_gameObjM->DeleteGO(m_gameCamera);
 	g_gameObjM->DeleteGO(m_light);
 	g_gameObjM->DeleteGO(m_player);
@@ -46,7 +48,7 @@ bool Game::Start()
 		L"Assets/level/player_01.tkl",
 		[&](LevelObjectData& objData) {
 		if (objData.EqualName(L"plpath") == true) {
-			m_player = g_gameObjM->NewGO<Player>(0);
+			m_player = g_gameObjM->NewGO<Player>(0,"Player");
 			m_player->SetPosition(objData.position);
 			//ステータスの設定
 			m_player->GetStatus()->SetLv(1);
@@ -65,7 +67,7 @@ bool Game::Start()
 		[&](LevelObjectData& objData) {
 		if (objData.EqualName(L"enpath") == true) {
 			//エネミー！！！
-			m_enemy = g_gameObjM->NewGO<Enemy>(0);
+			m_enemy = g_gameObjM->NewGO<Enemy>(0,"Enemy00");
 			m_enemy->SetEnemyType(Enemy::EnemyType::type_skeleton);
 			m_enemy->SetPosition(objData.position);
 			m_enemy->SetRotation(objData.rotation);
@@ -82,7 +84,7 @@ bool Game::Start()
 		}
 		if (objData.EqualName(L"enpath2") == true) {
 			//エネミー！！！
-			m_enemy = g_gameObjM->NewGO<Enemy>(0);
+			m_enemy = g_gameObjM->NewGO<Enemy>(0,"Enemy01");
 			m_enemy->SetEnemyType(Enemy::EnemyType::type_troll);
 			m_enemy->SetPosition(objData.position);
 			m_enemy->SetRotation(objData.rotation);
@@ -104,7 +106,7 @@ bool Game::Start()
 		[&](LevelObjectData& objData) {
 		if (objData.EqualName(L"enpath") == true) {
 			//エネミー！！！
-			m_enemy = g_gameObjM->NewGO<Enemy>(0);
+			m_enemy = g_gameObjM->NewGO<Enemy>(0,"Enemy02");
 			m_enemy->SetEnemyType(Enemy::EnemyType::type_skeleton);
 			m_enemy->SetPosition(objData.position);
 			m_enemy->SetRotation(objData.rotation);
@@ -121,7 +123,7 @@ bool Game::Start()
 		}
 		if (objData.EqualName(L"enpath2") == true) {
 			//エネミー！！！
-			m_enemy = g_gameObjM->NewGO<Enemy>(0);
+			m_enemy = g_gameObjM->NewGO<Enemy>(0,"Enemy03");
 			m_enemy->SetEnemyType(Enemy::EnemyType::type_troll);
 			m_enemy->SetPosition(objData.position);
 			m_enemy->SetRotation(objData.rotation);
@@ -144,7 +146,7 @@ bool Game::Start()
 			[&](LevelObjectData& objData) {
 			if (objData.EqualName(L"enpath") == true) {
 				//エネミー！！！
-				m_enemyBos = g_gameObjM->NewGO<EnemyBos>(0);
+				m_enemyBos = g_gameObjM->NewGO<EnemyBos>(0, "EnemyBos");
 				m_enemyBos->SetPosition(objData.position);
 				m_enemyBos->SetRotation(objData.rotation);
 				m_enemyBos->GetPlayer(m_player);
@@ -158,10 +160,11 @@ bool Game::Start()
 			}
 			return false;
 		});
-	m_gameCamera = g_gameObjM->NewGO<GameCamera>(1);
+	m_gameCamera = g_gameObjM->NewGO<GameCamera>(1,"GameCamera");
 	m_gameCamera->SetPlayer(m_player);
-	m_light = g_gameObjM->NewGO<LightCamera>(1);
+	m_light = g_gameObjM->NewGO<LightCamera>(1,"LightCamera");
 	m_light->SetPlayer(m_player);
+	m_ui = g_gameObjM->NewGO<UI>(1,"UI");
 	//BGM
 	m_bgm.Init(L"Assets/sound/bgm_Dungeon.wav");
 	m_bgm_bos.Init(L"Assets/sound/bgm_Bos.wav");
@@ -169,12 +172,6 @@ bool Game::Start()
 	m_bgm.SetVolume(0.17f);
 	m_bgm_bos.SetVolume(0.17f);
 
-	//HPの画像の読み込み
-	m_ui[0].Init(L"Assets/sprite/item_controller .dds", m_spriteScaleX, m_spriteScaleY);
-	m_ui[1].Init(L"Assets/sprite/game_ken.dds", m_spriteScaleX, m_spriteScaleY);
-	m_ui[2].Init(L"Assets/sprite/shield.dds", m_spriteScaleX, m_spriteScaleY);
-	m_ui[3].Init(L"Assets/sprite/frame.dds", 1280.0f, 300);
-	m_ui[3].SetAlpha(0.5f);
 	return false;
 }
 
@@ -184,7 +181,7 @@ void Game::Update()
 		g_gameObjM->DeleteGO(this);
 		//タイトルシーンの作成。
 		//g_gameObjM->NewGameObject<Title>();
-		g_gameObjM->NewGO<GameEnd>()->SetGameEnd(GameEnd::GameEndState::gameDefault);
+		g_gameObjM->NewGO<GameEnd>(0,"GameEnd")->SetGameEnd(GameEnd::GameEndState::gameDefault);
 	}
 	if (!m_enemyBos->GetBGMFlag()) {
 
@@ -194,59 +191,6 @@ void Game::Update()
 		m_bgm.Stop();
 		m_bgm_bos.Play(true);
 	}
-}
-
-//スプライトの描画
-void Game::SpriteDraw()
-{
-	m_spriteRot.SetRotationDeg(CVector3::AxisZ(), -5.0f);
-	//スプライトの更新
-	m_ui[0].Update(
-		{ -610.0f, 300.0f, 0.0f },
-		CQuaternion::Identity(),
-		{ 1.0f, 1.0f, 1.0f },
-		{ 0.0f,1.0f }
-	);
-	//スプライトの更新
-	m_ui[1].Update(
-		{ -630.0f, 270.0f, 0.0f },
-		m_spriteRot,
-		{ 0.3f, 0.3f, 1.0f },
-		{ 0.0f,1.0f }
-	);
-	//スプライトの更新
-	m_ui[2].Update(
-		{ -572.0f, 310.0f, 0.0f },
-		CQuaternion::Identity(),
-		{ 0.2f, 0.2f, 1.0f },
-		{ 0.0f,1.0f }
-	);
-	//スプライトの更新
-	m_ui[3].Update(
-		{ -640.0f, 370.0f ,0.0f},
-		CQuaternion::Identity(),
-		{ 0.5f, 0.2f, 1.0f },
-		{ 0.0f,1.0f }
-	);
-	//スプライトを２次元で表示をする。
-	m_ui[3].Draw(
-		g_camera2D.GetViewMatrix(),
-		g_camera2D.GetProjectionMatrix()
-	);
-	//スプライトを２次元で表示をする。
-	m_ui[0].Draw(
-		g_camera2D.GetViewMatrix(),
-		g_camera2D.GetProjectionMatrix()
-	);
-	//スプライトを２次元で表示をする。
-	m_ui[1].Draw(
-		g_camera2D.GetViewMatrix(),
-		g_camera2D.GetProjectionMatrix()
-	);
-	m_ui[2].Draw(
-		g_camera2D.GetViewMatrix(),
-		g_camera2D.GetProjectionMatrix()
-	);
 }
 
 void Game::PreDraw()
@@ -260,5 +204,4 @@ void Game::Draw()
 
 void Game::PostPostDraw()
 {
-	SpriteDraw();
 }

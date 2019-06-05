@@ -53,7 +53,16 @@ public:
 	{
 		return m_priority;
 	}
+	const std::string& GetName()const
+	{
+		return m_Name;
+	}
+	void SetName(const std::string& Name)
+	{
+		m_Name = Name;
+	}
 private:
 	bool startDed = false;
-	int m_priority = 0;					//優先度
+	int m_priority = 0;
+	std::string m_Name = "NULL";     	//インスタンスの名前				//優先度
 };

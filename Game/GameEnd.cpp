@@ -46,11 +46,11 @@ void GameEnd::SelectYesNo()
 	if (g_pad[0].IsTrigger(enButtonA)) {
 		if (m_yesNoFlag == true) {
 			g_gameObjM->DeleteGO(this);
-			g_gameObjM->NewGO<Title>();
+			g_gameObjM->NewGO<Title>(0,"Title");
 		}
 		else {
 			g_gameObjM->DeleteGO(this);
-			g_gameObjM->NewGO<Game>();
+			g_gameObjM->NewGO<Game>(0,"Game");
 		}
 	}
 }

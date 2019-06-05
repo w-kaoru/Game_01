@@ -27,7 +27,7 @@ void Title::Update()
 {
 	if (g_pad[0].IsTrigger(enButtonA) == true) {
 		//ゲームシーンを作成して、自分は死ぬ。
-		g_gameObjM->NewGO<Game>();
+		g_gameObjM->NewGO<Game>(0,"Game");
 		g_gameObjM->DeleteGO(this);
 	}
 	m_titelSprite.Update(CVector3::Zero(), CQuaternion::Identity(), CVector3::One());
