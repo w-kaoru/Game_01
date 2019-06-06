@@ -60,7 +60,12 @@ bool Game::Start()
 			m_player->GetStatus()->SetHp(60);
 			m_player->GetStatus()->SetAgi(1150.0f);
 			m_player->GetStatus()->SetDef(1.0f);
-			m_player->GetStatus()->SetAtk(5.0f);
+			m_player->GetStatus()->SetAtk(6.5f);
+
+			m_player->GetStatus()->SetStandardHp(60);
+			m_player->GetStatus()->SetStandardAgi(1150.0f);
+			m_player->GetStatus()->SetStandardDef(1.0f);
+			m_player->GetStatus()->SetStandardAtk(6.5f);
 			m_player->GetStatus()->SetMaxLv(9);
 			m_player->GetStatus()->StatusUp();
 			return true;
@@ -84,6 +89,11 @@ bool Game::Start()
 			m_enemy->GetStatus()->SetAgi(550.0f);
 			m_enemy->GetStatus()->SetDef(1.5f);
 			m_enemy->GetStatus()->SetAtk(3.0f);
+
+			m_enemy->GetStatus()->SetStandardHp(30.0f);
+			m_enemy->GetStatus()->SetStandardAgi(550.0f);
+			m_enemy->GetStatus()->SetStandardDef(1.5f);
+			m_enemy->GetStatus()->SetStandardAtk(3.0f);
 			m_enemy->GetStatus()->StatusUp();
 			return true;
 		}
@@ -101,6 +111,11 @@ bool Game::Start()
 			m_enemy->GetStatus()->SetAgi(550.0f);
 			m_enemy->GetStatus()->SetDef(1.0f);
 			m_enemy->GetStatus()->SetAtk(3.5f);
+
+			m_enemy->GetStatus()->SetStandardHp(35.0f);
+			m_enemy->GetStatus()->SetStandardAgi(550.0f);
+			m_enemy->GetStatus()->SetStandardDef(1.0f);
+			m_enemy->GetStatus()->SetStandardAtk(3.5f);
 			m_enemy->GetStatus()->StatusUp();
 			return true;
 		}
@@ -123,6 +138,10 @@ bool Game::Start()
 			m_enemy->GetStatus()->SetAgi(550.0f);
 			m_enemy->GetStatus()->SetDef(1.5f);
 			m_enemy->GetStatus()->SetAtk(3.0f);
+			m_enemy->GetStatus()->SetStandardHp(30.0f);
+			m_enemy->GetStatus()->SetStandardAgi(550.0f);
+			m_enemy->GetStatus()->SetStandardDef(1.5f);
+			m_enemy->GetStatus()->SetStandardAtk(3.0f);
 			m_enemy->GetStatus()->StatusUp();
 			return true;
 		}
@@ -140,6 +159,11 @@ bool Game::Start()
 			m_enemy->GetStatus()->SetAgi(550.0f);
 			m_enemy->GetStatus()->SetDef(1.0f);
 			m_enemy->GetStatus()->SetAtk(3.5f);
+
+			m_enemy->GetStatus()->SetStandardHp(35.0f);
+			m_enemy->GetStatus()->SetStandardAgi(550.0f);
+			m_enemy->GetStatus()->SetStandardDef(1.0f);
+			m_enemy->GetStatus()->SetStandardAtk(3.5f);
 			m_enemy->GetStatus()->StatusUp();
 			return true;
 		}
@@ -160,6 +184,11 @@ bool Game::Start()
 				m_enemyBos->GetStatus()->SetAgi(500.0f);
 				m_enemyBos->GetStatus()->SetDef(6.0f);
 				m_enemyBos->GetStatus()->SetAtk(17.0f);
+
+				m_enemyBos->GetStatus()->SetStandardHp(100.0f);
+				m_enemyBos->GetStatus()->SetStandardAgi(500.0f);
+				m_enemyBos->GetStatus()->SetStandardDef(6.0f);
+				m_enemyBos->GetStatus()->SetStandardAtk(17.0f);
 				m_enemyBos->GetStatus()->StatusUp();
 				return true;
 			}
