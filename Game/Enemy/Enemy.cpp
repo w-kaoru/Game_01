@@ -158,7 +158,7 @@ void Enemy::Damage(float damage)
 		Damage = max(0.0f, Damage);
 		hp -= (Damage / 3.0f);
 		hp = min(hp, m_status.GetHp());
-		hp = max(1.5f, hp);
+		hp = max(0.0f, hp);
 		m_status.SetHp(hp);
 	}
 	m_damageCutCounter++;

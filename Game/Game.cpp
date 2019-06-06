@@ -60,12 +60,12 @@ bool Game::Start()
 			m_player->GetStatus()->SetHp(60);
 			m_player->GetStatus()->SetAgi(1150.0f);
 			m_player->GetStatus()->SetDef(1.0f);
-			m_player->GetStatus()->SetAtk(6.5f);
+			m_player->GetStatus()->SetAtk(12.5f);
 
 			m_player->GetStatus()->SetStandardHp(60);
 			m_player->GetStatus()->SetStandardAgi(1150.0f);
 			m_player->GetStatus()->SetStandardDef(1.0f);
-			m_player->GetStatus()->SetStandardAtk(6.5f);
+			m_player->GetStatus()->SetStandardAtk(12.5f);
 			m_player->GetStatus()->SetMaxLv(9);
 			m_player->GetStatus()->StatusUp();
 			return true;
