@@ -27,7 +27,6 @@ public:
 	void Update() override;
 	void Draw() override;
 	void PreDraw() override;
-	void PostPostDraw() override;
 	void Destroy() override;
 
 	void EnemyDeath()

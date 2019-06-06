@@ -27,14 +27,6 @@ EnemyBos::~EnemyBos()
 
 bool EnemyBos::Start()
 {
-	//m_model.Init(L"Assets/modelData/enemy.cmo");
-
-	//ステータスの設定
-	/*m_status.SetHp(20.0f);
-	m_status.SetAgi(500.0f);
-	m_status.SetDef(2.0f);
-	m_status.SetAtk(17.0f);
-	m_status.StatusUp();*/
 	m_model.Init(L"Assets/modelData/enemy_Bos.cmo");
 	//ノーマルマップをセットする。
 	m_model.SetNormalMap(m_normalMapSRV);

@@ -3,7 +3,6 @@
 #include "PlayerState.h"
 #include "PlStateMachine.h"
 #include "CharacterStatus.h"
-#include "../graphics/font.h"
 
 class Player :public IGameObject
 {
@@ -13,7 +12,6 @@ public:
 	bool Start() override;
 	void Update() override;
 	void Draw() override;
-	void PostPostDraw() override;
 
 	void Damage(float damage);
 	void DamageCut();
@@ -82,7 +80,6 @@ public:
 	}
 private:
 	SkinModel m_model;									//スキンモデル。
-	//SkinModel m_model_01;									//スキンモデル。
 	Animation m_animation;								//アニメーション。
 	AnimationClip m_animationClips[PlayerState::AnimationState::AnimNum];	//アニメーションクリップ。
 	CVector3 m_position = CVector3::Zero();				//座標。
@@ -102,7 +99,6 @@ private:
 	bool m_damageCut = false;
 	float m_damageCutSpan = 6.0f;
 	float m_damageCutValue = 6.0f;
-	Font m_font;
 	CSoundSource m_se;						//SE。
 	ID3D11ShaderResourceView* m_normalMapSRV = nullptr;	//ノーマルマップのSRV
 	ID3D11ShaderResourceView* m_specularMapSRV = nullptr;	//ノーマルマップのSRV

@@ -20,6 +20,11 @@ Game::Game()
 Game::~Game()
 {
 }
+
+void UI::Destroy()
+{
+}
+
 void Game::Destroy()
 {
 	g_gameObjM->DeleteGO(m_ui);
@@ -202,6 +207,3 @@ void Game::Draw()
 	m_level.Draw();
 }
 
-void Game::PostPostDraw()
-{
-}

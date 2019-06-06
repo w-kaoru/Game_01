@@ -13,7 +13,6 @@ public:
 	void Update();
 	void Draw();
 	void PostDraw();
-	//void Move();
 	void Search();
 	void PlLen();
 	void Damage(float damage);
@@ -69,7 +68,6 @@ public:
 	}
 private:
 	Player* m_player = nullptr;							//プレイヤー
-	//MoveState movestate = idle;
 	CVector3 m_position = CVector3::Zero();				//座標。
 	CVector3 m_moveSpeed = CVector3::Zero();			//移動速度。
 	CVector3 m_forward = CVector3::Zero();				//前方。

@@ -60,13 +60,6 @@ Player::~Player()
 }
 bool Player::Start()
 {
-	////ステータスの設定
-	//m_status.SetHp(60);
-	//m_status.SetAgi(1150.0f);
-	//m_status.SetDef(1.0f);
-	//m_status.SetAtk(5.0f);
-	//m_status.SetMaxLv(9);
-	//m_status.StatusUp();
 	m_status.SetMaxHp(m_status.GetHp());
 	//ノーマルマップをセットする。
 	m_model.SetNormalMap(m_normalMapSRV);
@@ -176,7 +169,6 @@ void Player::Update()
 	m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
 	//ワールド行列の更新。
 	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
-	//m_model_01.UpdateWorldMatrix(m_attckPos, CQuaternion::Identity(), CVector3::One());
 	//アニメーションを流す。
 	m_animation.Update(1.0f / 30.0f);
 	//シャドウキャスターを登録。
@@ -212,32 +204,3 @@ void Player::Draw()
 	);
 }
 
-void Player::PostPostDraw()
-{
-	m_font.BeginDraw();	//フォントの描画開始。
-	if (m_status.GetLv() < m_status.GetMaxLv()) {
-		wchar_t Seconds[256];
-		swprintf_s(Seconds, L"Lv.%d", m_status.GetLv());
-		m_font.Draw(
-			Seconds,
-			{ -640.0f, 360.0f },
-			{ 0.0f,1.0f,0.0f,1.0f },
-			0.0f,
-			1.0f,
-			{ 1.0f, 1.0f }
-		);
-	}
-	else {
-		wchar_t Seconds[256];
-		swprintf_s(Seconds, L"Lv.Max");
-		m_font.Draw(
-			Seconds,
-			{ -640.0f, 360.0f },
-			{ 0.0f,1.0f,0.0f,1.0f },
-			0.0f,
-			1.0f,
-			{ 1.0f, 1.0f }
-		);
-	}
-	m_font.EndDraw();
-}
