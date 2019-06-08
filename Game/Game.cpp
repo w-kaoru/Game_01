@@ -8,13 +8,9 @@
 #include "LightCamera.h"
 #include "UI.h"
 
-//グローバルなアクセスポイントをグローバル変数として提供する。
-//Game* g_game = nullptr;
 
 Game::Game()
 {
-	//m_player = g_gameObjM->NewGameObject<Player>();
-
 }
 
 Game::~Game()
@@ -57,11 +53,6 @@ bool Game::Start()
 			m_player->SetPosition(objData.position);
 			//ステータスの設定
 			m_player->GetStatus()->SetLv(1);
-			m_player->GetStatus()->SetHp(60);
-			m_player->GetStatus()->SetAgi(1150.0f);
-			m_player->GetStatus()->SetDef(1.0f);
-			m_player->GetStatus()->SetAtk(12.5f);
-
 			m_player->GetStatus()->SetStandardHp(60);
 			m_player->GetStatus()->SetStandardAgi(1150.0f);
 			m_player->GetStatus()->SetStandardDef(1.0f);
@@ -85,11 +76,6 @@ bool Game::Start()
 			m_enemyList.push_back(m_enemy);
 			//エネミーのレベル
 			m_enemy->GetStatus()->SetLv(3);
-			m_enemy->GetStatus()->SetHp(30.0f);
-			m_enemy->GetStatus()->SetAgi(550.0f);
-			m_enemy->GetStatus()->SetDef(1.5f);
-			m_enemy->GetStatus()->SetAtk(3.0f);
-
 			m_enemy->GetStatus()->SetStandardHp(30.0f);
 			m_enemy->GetStatus()->SetStandardAgi(550.0f);
 			m_enemy->GetStatus()->SetStandardDef(1.5f);
@@ -107,11 +93,6 @@ bool Game::Start()
 			m_enemyList.push_back(m_enemy);
 			//エネミーのレベル
 			m_enemy->GetStatus()->SetLv(3); 
-			m_enemy->GetStatus()->SetHp(35.0f);
-			m_enemy->GetStatus()->SetAgi(550.0f);
-			m_enemy->GetStatus()->SetDef(1.0f);
-			m_enemy->GetStatus()->SetAtk(3.5f);
-
 			m_enemy->GetStatus()->SetStandardHp(35.0f);
 			m_enemy->GetStatus()->SetStandardAgi(550.0f);
 			m_enemy->GetStatus()->SetStandardDef(1.0f);
@@ -134,10 +115,6 @@ bool Game::Start()
 			m_enemyList.push_back(m_enemy);
 			//エネミーのレベル
 			m_enemy->GetStatus()->SetLv(7);
-			m_enemy->GetStatus()->SetHp(30.0f);
-			m_enemy->GetStatus()->SetAgi(550.0f);
-			m_enemy->GetStatus()->SetDef(1.5f);
-			m_enemy->GetStatus()->SetAtk(3.0f);
 			m_enemy->GetStatus()->SetStandardHp(30.0f);
 			m_enemy->GetStatus()->SetStandardAgi(550.0f);
 			m_enemy->GetStatus()->SetStandardDef(1.5f);
@@ -155,11 +132,6 @@ bool Game::Start()
 			m_enemyList.push_back(m_enemy);
 			//エネミーのレベル
 			m_enemy->GetStatus()->SetLv(6);
-			m_enemy->GetStatus()->SetHp(35.0f);
-			m_enemy->GetStatus()->SetAgi(550.0f);
-			m_enemy->GetStatus()->SetDef(1.0f);
-			m_enemy->GetStatus()->SetAtk(3.5f);
-
 			m_enemy->GetStatus()->SetStandardHp(35.0f);
 			m_enemy->GetStatus()->SetStandardAgi(550.0f);
 			m_enemy->GetStatus()->SetStandardDef(1.0f);
@@ -180,11 +152,6 @@ bool Game::Start()
 				m_enemyBos->SetRotation(objData.rotation);
 				m_enemyBos->GetPlayer(m_player);
 				m_enemyBos->GetStatus()->SetLv(8);
-				m_enemyBos->GetStatus()->SetHp(100.0f);
-				m_enemyBos->GetStatus()->SetAgi(500.0f);
-				m_enemyBos->GetStatus()->SetDef(6.0f);
-				m_enemyBos->GetStatus()->SetAtk(17.0f);
-
 				m_enemyBos->GetStatus()->SetStandardHp(100.0f);
 				m_enemyBos->GetStatus()->SetStandardAgi(500.0f);
 				m_enemyBos->GetStatus()->SetStandardDef(6.0f);

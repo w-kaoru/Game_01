@@ -46,6 +46,7 @@ public:
 	}
 	void SetStandardHp(float hp)
 	{
+		m_hp = hp;
 		m_standardHp = hp;
 	}
 	void SetAtk(float atk)
@@ -54,6 +55,7 @@ public:
 	}
 	void SetStandardAtk(float atk)
 	{
+		m_atk = atk;
 		m_standardAtk = atk;
 	}
 	void SetDef(float def)
@@ -62,6 +64,7 @@ public:
 	}
 	void SetStandardDef(float def)
 	{
+		m_def = def;
 		m_standardDef = def;
 	}
 	void SetAgi(float agi)
@@ -70,6 +73,7 @@ public:
 	}
 	void SetStandardAgi(float agi)
 	{
+		m_agi = agi;
 		m_standardAgi = agi;
 	}
 	void SetMaxLv(int MaxLv)

@@ -9,7 +9,6 @@
 
 
 //これらは前方宣言でよい！
-struct PathPoint;
 class Enemy;
 class EnemyBos;
 class Player;
@@ -40,7 +39,6 @@ private:
 	GameCamera* m_gameCamera= nullptr;		//ゲームカメラ。
 	LightCamera* m_light = nullptr;			//ライト
 	Level m_level;							//レベルを初期化。
-	//Level* m_level = nullptr;				//レベルを初期化。
 	std::vector< Enemy* > m_enemyList;		//エネミーのリスト。
 	int m_enemyDeath = 0;					//エネミーの死んだ数。
 	CSoundSource m_bgm;						//BGM。
@@ -48,5 +46,3 @@ private:
 	UI* m_ui = nullptr;
 };
 
-//グローバルなアクセスポイントをグローバル変数として提供する。
-//extern Game* g_game;

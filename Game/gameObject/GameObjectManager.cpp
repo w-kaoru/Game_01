@@ -64,10 +64,7 @@ void GameObjectManager::DeleteExecute()
 		}
 	}
 	m_deleteList[nowNo].clear();
-	//m_gameObjectList.clear();
-	//*/
 }
-//*
 bool GameObjectManager::DeleteGO(IGameObject * gameObject)
 {
 	for (auto objedct1 : m_gameObjectList)
@@ -83,4 +80,3 @@ bool GameObjectManager::DeleteGO(IGameObject * gameObject)
 	}
 	return false;
 }
-//*/

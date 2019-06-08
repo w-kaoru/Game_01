@@ -27,7 +27,6 @@ public:
 
 	bool DeleteGameobject(IGameObject* gameObject)
 	{
-		//*
 		if (gameObject != nullptr) {
 			for (int i = 0; i < m_gameObjectList.size(); i++)
 			{
@@ -39,15 +38,14 @@ public:
 			}	
 			delete gameObject;
 			return true;
-			//m_gameObjectList.clear();
-		}//*/
+		}
 		return false;
 	}
-		// 名前を使ったインスタンス検索
-		//（複数ある場合は最初に積んだものが返ってくるので注意！！）
-		//（検索は重たいので注意！！）
-		// 検索したいオブジェクトにつけた名前
-		// 検索成功で検索したインスタンスのポインタ
+	// 名前を使ったインスタンス検索
+	//（複数ある場合は最初に積んだものが返ってくるので注意！！）
+	//（検索は重たいので注意！！）
+	// 検索したいオブジェクトにつけた名前
+	// 検索成功で検索したインスタンスのポインタ
 	template<class T>
 	T* FindGO(char* Name)
 	{
