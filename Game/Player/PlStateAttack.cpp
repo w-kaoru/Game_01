@@ -26,7 +26,7 @@ void PlStateAttack::Update()
 	m_player->SetAnimation(PlayerState::AnimationState::AnimAttack);
 	m_attckPos.x = m_player->GetPosition().x + (m_player->GetForward().x * 65.0f);
 	m_attckPos.z = m_player->GetPosition().z + (m_player->GetForward().z * 65.0f);
-	m_attckPos.y = 100.0f;
+	m_attckPos.y = m_player->GetPosition().y + 100.0f;
 	m_hitTiming++;
 	//攻撃されてからあたったタイミングで攻撃したい（簡易版）
 	if (m_hitTiming == 15) {
