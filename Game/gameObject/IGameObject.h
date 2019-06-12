@@ -14,7 +14,6 @@ public:
 	virtual void PreDraw() {};
 	//Draw関数が実行された後で呼ばれる描画処理。
 	virtual void PostDraw() {};
-	virtual void PostPostDraw() {};
 	friend class GameObjectManager;
 
 	void StartWrapper(){
@@ -41,11 +40,6 @@ public:
 	void PostDrawWrapper() {
 		if (startDed == true) {
 			PostDraw();
-		}
-	}
-	void PostPostDrawWrapper() {
-		if (startDed == true) {
-			PostPostDraw();
 		}
 	}
 	//オブジェクト

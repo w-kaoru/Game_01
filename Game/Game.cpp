@@ -17,10 +17,6 @@ Game::~Game()
 {
 }
 
-void UI::Destroy()
-{
-}
-
 void Game::Destroy()
 {
 	g_gameObjM->DeleteGO(m_ui);

@@ -66,8 +66,8 @@ void Bloom::InitRenderTarget()
 {
 	//輝度抽出用のレンダリングターゲットを作成する。
 	m_luminanceRT.Create(
-		FRAME_BUFFER_W,
-		FRAME_BUFFER_H,
+		(unsigned int(FRAME_BUFFER_W)),
+		(unsigned int(FRAME_BUFFER_H)),
 		DXGI_FORMAT_R16G16B16A16_FLOAT
 	);
 	///////////////////////////////////////////////////////////////////////////
@@ -80,8 +80,8 @@ void Bloom::InitRenderTarget()
 	//   1/2になっているから。
 	///////////////////////////////////////////////////////////////////////////
 	m_blurCombineRT.Create(
-		FRAME_BUFFER_W / 2,
-		FRAME_BUFFER_H / 2,
+		(unsigned int(FRAME_BUFFER_W/2)),
+		(unsigned int(FRAME_BUFFER_H/2)),
 		DXGI_FORMAT_R16G16B16A16_FLOAT
 	);
 }

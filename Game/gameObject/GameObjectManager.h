@@ -12,6 +12,7 @@ public:
 	~GameObjectManager();
 	//é¿çs
 	void Execute();
+	void DrawExecute();
 	void DeleteExecute();
 
 	template<class T>
