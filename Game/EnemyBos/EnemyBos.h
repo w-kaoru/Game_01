@@ -86,6 +86,7 @@ private:
 	CSoundSource m_se_damade;							//SE
 	ID3D11ShaderResourceView* m_normalMapSRV = nullptr;
 	float m_toPlayerLen;		//プレイヤーとの距離
+	float m_speedY = 0.0f;
 	int m_damageTiming = 0;		//ダメージを受けるタイミング
 	int m_AttackTiming = 0;		//攻撃するタイミング
 	bool attackFlag = false;
