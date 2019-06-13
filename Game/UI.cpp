@@ -9,9 +9,6 @@ UI::UI()
 
 UI::~UI()
 {
-	if (m_player != nullptr) {
-		m_player = nullptr;
-	}
 }
 
 void UI::Destroy()

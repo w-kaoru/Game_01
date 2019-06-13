@@ -2,8 +2,6 @@
 
 #include "gameObject\IGameObject.h"
 #include "level/Level.h"
-#include "Enemy\Enemy.h"
-#include "EnemyBos/EnemyBos.h"
 #include "graphics\RenderTarget.h"
 #include "graphics\SkinModel.h"
 
@@ -15,6 +13,7 @@ class Player;
 class GameCamera;
 class LightCamera;
 class UI;
+class Background;
 
 //ゲームクラス。
 class Game : public IGameObject
@@ -33,6 +32,7 @@ public:
 		m_enemyDeath++;
 	}
 private:
+	Background* m_background = nullptr;
 	Player* m_player = nullptr;				//プレイヤー
 	Enemy* m_enemy = nullptr;				//エネミー
 	EnemyBos* m_enemyBos = nullptr;			//エネミーボス

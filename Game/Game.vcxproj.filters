@@ -241,6 +241,7 @@
       <Filter>EnemyBos</Filter>
     </ClCompile>
     <ClCompile Include="UI.cpp" />
+    <ClCompile Include="Background.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -451,6 +452,7 @@
       <Filter>EnemyBos</Filter>
     </ClInclude>
     <ClInclude Include="UI.h" />
+    <ClInclude Include="Background.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\enpath2.fbx">

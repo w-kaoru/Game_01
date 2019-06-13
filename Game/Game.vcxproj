@@ -99,6 +99,7 @@
     </MeshContentTask>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Background.cpp" />
     <ClCompile Include="EnemyBos\EnemyBosStateDamage.cpp" />
     <ClCompile Include="EnemyBos\EnemyBosStateDeath.cpp" />
     <ClCompile Include="Enemy\EnStateDamage.cpp" />
@@ -174,6 +175,7 @@
     <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Background.h" />
     <ClInclude Include="EnemyBos\EnemyBosStateDamage.h" />
     <ClInclude Include="EnemyBos\EnemyBosStateDeath.h" />
     <ClInclude Include="Enemy\EnStateDamage.h" />

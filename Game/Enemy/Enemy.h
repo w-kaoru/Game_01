@@ -91,6 +91,7 @@ private:
 	const Hit* m_hit;
 	CSoundSource m_se_damade;							//SE
 	EnemyType m_type = type_num;
+	float m_moveSpeedY = 0.0f;
 	float m_toPlayerLen;		//ƒvƒŒƒCƒ„[‚Æ‚Ì‹——£
 	bool m_isDeath = false;
 	float m_spriteScale = 3.0f;

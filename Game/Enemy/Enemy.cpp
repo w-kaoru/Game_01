@@ -260,7 +260,8 @@ void Enemy::Update()
 		}
 		DamageCut();
 		//重力加速度
-		m_moveSpeed.y -= 9800.0f * (1.0f / 60.0f);
+		m_moveSpeedY -= 980.0f * (1.0f / 60.0f);
+		m_moveSpeed.y = m_moveSpeedY;
 		//キャラコンを使って移動する。
 		m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
 

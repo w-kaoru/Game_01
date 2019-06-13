@@ -6,15 +6,18 @@ Background::Background()
 {
 	m_model.Init(L"Assets/modelData/Dungeon.cmo");
 	
-	m_model.UpdateWorldMatrix(CVector3::Zero(), CQuaternion::Identity(), CVector3::One());
+	m_model.UpdateWorldMatrix(m_position, m_rotation, CVector3::One());
 
-	//Hands-On 2 m_phyStaticObjectÇçÏê¨Ç∑ÇÈÅB
-	m_phyStaticObject.CreateMeshObject(m_model, CVector3::Zero(), CQuaternion::Identity());
+	m_phyStaticObject.CreateMeshObject(m_model, m_position, m_rotation);
 	m_model.SetShadowReciever(true);
 }
 
 
 Background::~Background()
+{
+}
+
+void Background::Update()
 {
 }
 

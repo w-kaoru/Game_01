@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Game.h"
+#include "Background.h"
 #include "Player\Player.h"
 #include "level/Level.h"
 #include "GameCamera.h"
@@ -7,6 +8,8 @@
 #include "GameEnd.h"
 #include "LightCamera.h"
 #include "UI.h"
+#include "Enemy\Enemy.h"
+#include "EnemyBos/EnemyBos.h"
 
 
 Game::Game()
@@ -19,6 +22,7 @@ Game::~Game()
 
 void Game::Destroy()
 {
+	g_gameObjM->DeleteGO(m_background);
 	g_gameObjM->DeleteGO(m_ui);
 	g_gameObjM->DeleteGO(m_gameCamera);
 	g_gameObjM->DeleteGO(m_light);
@@ -38,6 +42,11 @@ bool Game::Start()
 	m_level.Init(
 		L"Assets/level/Dungeon_01.tkl",
 		[&](LevelObjectData& objData) {
+		if (objData.EqualName(L"Dungeon") == true) {
+			m_background = g_gameObjM->NewGO<Background>(0, "Dungeon");
+			m_background->SetPosition(objData.position);
+			m_background->SetRotation(objData.rotation);
+		}
 		return false;
 	});
 	//ƒŒƒxƒ‹‚ğ‰Šú‰»B
