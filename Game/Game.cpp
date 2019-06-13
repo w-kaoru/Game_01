@@ -73,7 +73,9 @@ bool Game::Start()
 		[&](LevelObjectData& objData) {
 		if (objData.EqualName(L"enpath") == true) {
 			//エネミー！！！
-			m_enemy = g_gameObjM->NewGO<Enemy>(0,"Enemy00");
+			char enemyName[256];
+			sprintf(enemyName, "EnemyS%d", m_enemyNo++);
+			m_enemy = g_gameObjM->NewGO<Enemy>(0,enemyName);
 			m_enemy->SetEnemyType(Enemy::EnemyType::type_skeleton);
 			m_enemy->SetPosition(objData.position);
 			m_enemy->SetRotation(objData.rotation);
@@ -90,7 +92,9 @@ bool Game::Start()
 		}
 		if (objData.EqualName(L"enpath2") == true) {
 			//エネミー！！！
-			m_enemy = g_gameObjM->NewGO<Enemy>(0,"Enemy01");
+			char enemyName[256];
+			sprintf(enemyName, "EnemyT%d", m_enemyNo++);
+			m_enemy = g_gameObjM->NewGO<Enemy>(0, enemyName);
 			m_enemy->SetEnemyType(Enemy::EnemyType::type_troll);
 			m_enemy->SetPosition(objData.position);
 			m_enemy->SetRotation(objData.rotation);
@@ -112,7 +116,9 @@ bool Game::Start()
 		[&](LevelObjectData& objData) {
 		if (objData.EqualName(L"enpath") == true) {
 			//エネミー！！！
-			m_enemy = g_gameObjM->NewGO<Enemy>(0,"Enemy02");
+			char enemyName[256];
+			sprintf(enemyName, "EnemyS%d", m_enemyNo++);
+			m_enemy = g_gameObjM->NewGO<Enemy>(0, enemyName);
 			m_enemy->SetEnemyType(Enemy::EnemyType::type_skeleton);
 			m_enemy->SetPosition(objData.position);
 			m_enemy->SetRotation(objData.rotation);
@@ -129,7 +135,9 @@ bool Game::Start()
 		}
 		if (objData.EqualName(L"enpath2") == true) {
 			//エネミー！！！
-			m_enemy = g_gameObjM->NewGO<Enemy>(0,"Enemy03");
+			char enemyName[256];
+			sprintf(enemyName, "EnemyT%d", m_enemyNo++);
+			m_enemy = g_gameObjM->NewGO<Enemy>(0, enemyName);
 			m_enemy->SetEnemyType(Enemy::EnemyType::type_troll);
 			m_enemy->SetPosition(objData.position);
 			m_enemy->SetRotation(objData.rotation);

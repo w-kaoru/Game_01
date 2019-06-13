@@ -44,5 +44,6 @@ private:
 	CSoundSource m_bgm;						//BGMÅB
 	CSoundSource m_bgm_bos;					//BOSÇÃBGM
 	UI* m_ui = nullptr;
+	int m_enemyNo = 0;
 };
 
