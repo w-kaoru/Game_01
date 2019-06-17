@@ -71,6 +71,7 @@ bool EnemyBos::Start()
 	//SE
 	m_se_damade.Init(L"Assets/sound/se_damage.wav");
 	m_se_damade.SetVolume(1.0f);
+	m_player = g_gameObjM->FindGO<Player>("Player");
 	return true;
 }
 

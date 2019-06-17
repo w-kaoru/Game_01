@@ -101,6 +101,7 @@ bool Enemy::Start()
 		g_graphicsEngine->GetEffekseerManager(),
 		(const EFK_CHAR*)L"Assets/effect/death.efk"
 	);
+	m_player = g_gameObjM->FindGO<Player>("Player");
 	return true;
 }
 
