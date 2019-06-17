@@ -18,8 +18,6 @@ void UpdateGame()
 	}
 	//物理エンジンの更新。
 	g_physics.Update();
-	//現在のシーンの更新。
-	g_gameObjM->Execute();
 }
 ///////////////////////////////////////////////////////////////////
 // ゲームの描画処理。
@@ -29,7 +27,8 @@ void RenderGame()
 {
 	//描画開始。
 	g_graphicsEngine->BegineRender();
-	g_gameObjM->DrawExecute();
+	//現在のシーンの更新。
+	g_gameObjM->Execute();
 	//描画終了。
 	g_graphicsEngine->EndRender();
 }
