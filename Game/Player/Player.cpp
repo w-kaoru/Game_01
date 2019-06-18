@@ -19,8 +19,11 @@ Player::Player() :m_stMa(this)
 	m_animationClips[PlayerState::AnimationState::AnimRun].SetLoopFlag(true);
 
 	//攻撃アニメーション
-	m_animationClips[PlayerState::AnimationState::AnimAttack].Load(L"Assets/animData/Player/plattack.tka");
-	m_animationClips[PlayerState::AnimationState::AnimAttack].SetLoopFlag(false);
+	m_animationClips[PlayerState::AnimationState::AnimAttack_00].Load(L"Assets/animData/Player/plattack.tka");
+	m_animationClips[PlayerState::AnimationState::AnimAttack_00].SetLoopFlag(false);
+	//攻撃アニメーション
+	m_animationClips[PlayerState::AnimationState::AnimAttack_01].Load(L"Assets/animData/Player/plattack_01.tka");
+	m_animationClips[PlayerState::AnimationState::AnimAttack_01].SetLoopFlag(false);
 	//ダメージアニメーション
 	m_animationClips[PlayerState::AnimationState::AnimDamage].Load(L"Assets/animData/Player/pldamage.tka");
 	m_animationClips[PlayerState::AnimationState::AnimDamage].SetLoopFlag(false);
@@ -94,6 +97,9 @@ void Player::Damage(float damage)
 		if (!m_damageCut) {
 			m_stMa.StateDamage()->SetDamage(damage);
 			m_stMa.Change(PlayerState::MoveState::Damage);
+			//ダメージを受けたのでコンボ初期化。
+			m_stMa.StateAttack()->SetCombo(PlStateAttack::Combo::attack_00);
+			m_stMa.StateAttack()->DamageReceiveIsInit();
 		}
 		else
 		{
@@ -144,10 +150,11 @@ void Player::Update()
 	if (m_stMa.StateDamage()->GetDamageFlag() == false && m_status.GetHp() > 0.0f) {
 		if (g_pad[0].IsTrigger(enButtonX) && !m_stMa.StateAttack()->GetHit()) {
 			m_stMa.StateAttack()->SetHit(true);
-				m_stMa.StateAttack()->SetAttack(15);
+			//m_stMa.StateAttack()->SetAttack(15);
 			//攻撃ステートに変更
 			m_stMa.Change(PlayerState::MoveState::Attack);
 		}
+		
 		if (!m_stMa.StateAttack()->GetHit()) {
 			//攻撃していない時に移動などの処理。
 			m_stMa.Change(PlayerState::MoveState::Move);

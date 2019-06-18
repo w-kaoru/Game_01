@@ -5,7 +5,8 @@ public:
 	enum AnimationState {
 		AnimIdle,		//待機
 		AnimRun,		//走る
-		AnimAttack,		//攻撃
+		AnimAttack_00,	//攻撃
+		AnimAttack_01,	//攻撃
 		AnimDamage,		//ダメージ
 		AnimDeath,		//死ぬ
 		AnimNum,		//AniMoveの数	
