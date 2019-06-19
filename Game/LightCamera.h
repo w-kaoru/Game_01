@@ -6,8 +6,8 @@ class LightCamera:public IGameObject
 public:
 	LightCamera();
 	~LightCamera();
-	bool Start();
-	void Update();
+	bool Start()override;
+	void Update()override;
 
 	void SetPlayer(Player* player)
 	{

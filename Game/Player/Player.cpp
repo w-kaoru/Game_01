@@ -98,8 +98,7 @@ void Player::Damage(float damage)
 			m_stMa.StateDamage()->SetDamage(damage);
 			m_stMa.Change(PlayerState::MoveState::Damage);
 			//ダメージを受けたのでコンボ初期化。
-			m_stMa.StateAttack()->SetCombo(PlStateAttack::Combo::attack_00);
-			m_stMa.StateAttack()->DamageReceiveIsInit();
+			m_stMa.StateAttack()->DamageReceiveIsInit(PlStateAttack::Combo::attack_00);
 		}
 		else
 		{

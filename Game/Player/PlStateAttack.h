@@ -24,15 +24,10 @@ public:
 	{
 		return m_atk;
 	}
-	//アニメーションのステートのセッター。
-	void SetCombo(Combo state)
-	{
-		m_combo = state;
-	}
-	void DamageReceiveIsInit()
+	void DamageReceiveIsInit(Combo co)
 	{
 		//ダメージを受けたため初期化
-		m_combo = Combo::attack_00;
+		m_combo = co;
 		m_hitTimer = 0;
 		m_comboTimer = 0;
 		m_isAtk = false;

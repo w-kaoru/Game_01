@@ -8,6 +8,7 @@ MapChip::MapChip(const LevelObjectData& objData)
 	swprintf_s(filePath, L"Assets/modelData/%s.cmo", objData.name);
 	m_model.Init(filePath);
 	m_model.UpdateWorldMatrix(objData.position, objData.rotation, CVector3::One());
+	//m_model.SetShadowReciever(true);
 	//静的物理オブジェクトをメッシュコライダーから作成する。
 	m_physicsStaticObject.CreateMeshObject(m_model, objData.position, objData.rotation);
 }

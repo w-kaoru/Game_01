@@ -4,17 +4,24 @@
 
 Background::Background()
 {
-	m_model.Init(L"Assets/modelData/Dungeon.cmo");
-	
-	m_model.UpdateWorldMatrix(m_position, m_rotation, CVector3::One());
-
-	m_phyStaticObject.CreateMeshObject(m_model, m_position, m_rotation);
-	m_model.SetShadowReciever(true);
 }
 
 
 Background::~Background()
 {
+}
+
+bool Background::Start()
+{
+	m_model.Init(L"Assets/modelData/Dungeon.cmo");
+
+	//m_model.Init(L"Assets/modelData/ground.cmo");
+	m_model.UpdateWorldMatrix(m_position, m_rotation, CVector3::One());
+
+	m_phyStaticObject.CreateMeshObject(m_model, m_position, m_rotation);
+	m_model.SetShadowReciever(true);
+	m_model.SetDirectionLightColor(0, { 0.8f,0.8f,0.8f,1.0f });
+	return false;
 }
 
 void Background::Update()

@@ -15,18 +15,21 @@ LightCamera::~LightCamera()
 
 bool LightCamera::Start()
 {
-	m_LightCameraPos = { 400.0f, 400.0f, 400.0f };
 	return false;
 }
 
 void LightCamera::Update()
 {	
-	//新しい注視点を求める。
+	m_LightCameraPos = {
+		m_player->GetPosition().x + 400.0f,
+		m_player->GetPosition().y + 400.0f,
+		m_player->GetPosition().z + 400.0f
+	};
 	auto newTarget = m_player->GetPosition();
-	auto pos = m_LightCameraPos + newTarget;
+	//新しい注視点を求める。
 	//シャドウマップを更新。
 	g_graphicsEngine->GetShadowMap()->UpdateFromLightTarget(
-		pos,
+		m_LightCameraPos,
 		newTarget
 	);
 }

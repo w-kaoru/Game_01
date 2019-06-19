@@ -46,8 +46,9 @@ bool Game::Start()
 			m_background = g_gameObjM->NewGO<Background>(0, "Dungeon");
 			m_background->SetPosition(objData.position);
 			m_background->SetRotation(objData.rotation);
+			return true;
 		}
-		return false;
+		return true;
 	});
 	//ƒŒƒxƒ‹‚ð‰Šú‰»B
 	m_level.Init(
@@ -66,7 +67,7 @@ bool Game::Start()
 			m_player->GetStatus()->StatusUp();
 			return true;
 		}
-		return false;
+		return true;
 	});
 	m_level.Init(
 		L"Assets/level/enemy_01.tkl",
@@ -109,7 +110,7 @@ bool Game::Start()
 			m_enemy->GetStatus()->StatusUp();
 			return true;
 		}
-		return false;
+		return true;
 	});
 	m_level.Init(
 		L"Assets/level/enemy_02.tkl",
@@ -152,7 +153,7 @@ bool Game::Start()
 			m_enemy->GetStatus()->StatusUp();
 			return true;
 		}
-		return false;
+		return true;
 	});
 	
 	m_level.Init(
@@ -172,7 +173,7 @@ bool Game::Start()
 				m_enemyBos->GetStatus()->StatusUp();
 				return true;
 			}
-			return false;
+			return true;
 		});
 	m_gameCamera = g_gameObjM->NewGO<GameCamera>(1,"GameCamera");
 	m_gameCamera->SetPlayer(m_player);

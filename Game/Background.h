@@ -6,6 +6,7 @@ class Background:public IGameObject
 public:
 	Background();
 	~Background();
+	bool Start() override;
 	void Update() override;
 	void Draw() override;
 	void SetPosition(CVector3 pos)
