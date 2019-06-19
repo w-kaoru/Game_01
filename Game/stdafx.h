@@ -44,6 +44,7 @@
 
 
 #include "gameObject/GameObjectManager.h"
+#include "gameObject/IGameObject.h"
 #include "graphics/animation/Animation.h"
 #include "graphics/animation/AnimationClip.h"
 #include "HitObject.h"

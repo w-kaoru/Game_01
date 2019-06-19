@@ -1,6 +1,5 @@
 #pragma once
 #include "physics/PhysicsStaticObject.h"
-#include "gameObject/IGameObject.h"
 class Background:public IGameObject
 {
 public:

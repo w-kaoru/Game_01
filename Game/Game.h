@@ -1,6 +1,4 @@
 #pragma once
-
-#include "gameObject\IGameObject.h"
 #include "level/Level.h"
 #include "graphics\RenderTarget.h"
 #include "graphics\SkinModel.h"
