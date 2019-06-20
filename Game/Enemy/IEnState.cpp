@@ -5,7 +5,7 @@
 IEnState::IEnState(Enemy* en, EnStateMachine* esm)
 {
 	m_enemy = en;
-	m_esm = esm;
+	m_stMa = esm;
 }
 
 IEnState::~IEnState()

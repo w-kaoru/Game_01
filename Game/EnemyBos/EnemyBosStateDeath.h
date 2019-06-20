@@ -5,6 +5,6 @@ class EnemyBosStateDeath :public IEnemyBosState
 public:
 	EnemyBosStateDeath(EnemyBos* enbos, EnemyBosStateMachine* enstm);
 	~EnemyBosStateDeath();
-	bool Start();
-	void Update();
+	bool Start() override;
+	void Update() override;
 };

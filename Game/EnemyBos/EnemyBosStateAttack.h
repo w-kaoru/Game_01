@@ -6,8 +6,8 @@ class EnemyBosStateAttack : public IEnemyBosState
 public:
 	EnemyBosStateAttack(EnemyBos* enbos, EnemyBosStateMachine* estm);
 	~EnemyBosStateAttack();
-	bool Start();
-	void Update();
+	bool Start() override;
+	void Update() override;
 	void SetAttack(int hit, int start)
 	{
 		m_atkHit = hit;

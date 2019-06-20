@@ -77,7 +77,7 @@ private:
 	CharacterController m_charaCon;						//キャラクターコントローラーを追加。
 	Animation m_animation;								//アニメーション。
 	AnimationClip m_animationClips[EnemyBosState::AnimationState::AnimNum];	//アニメーションクリップ。
-	EnemyBosStateMachine m_enbos_stm;					//ステートマシン。
+	EnemyBosStateMachine m_stMa;					//ステートマシン。
 	Sprite m_hpSprite;									//hpバー。
 	Sprite m_shieldSprite;
 	CVector3 m_Sprite_Front = CVector3::AxisZ()*-1;	    //テクスチャの前方向

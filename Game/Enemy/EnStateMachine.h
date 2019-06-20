@@ -10,6 +10,7 @@ class EnStateMachine
 public:
 	EnStateMachine(Enemy* en);
 	~EnStateMachine();
+	void Destroy();
 	bool Start();
 	void Update();
 	void Change(EnemyState::MoveState state);

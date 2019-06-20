@@ -10,8 +10,8 @@ public:
 	};
 	PlStateAttack(Player *pl, PlStateMachine *psm);
 	~PlStateAttack();
-	bool Start();
-	void Update();
+	bool Start() override;
+	void Update() override;
 	/*void SetAttack(int hit)
 	{
 		m_atkHit = hit;

@@ -6,7 +6,7 @@ class PlStateMove :public IPlState
 public:
 	PlStateMove(Player *pl,PlStateMachine *psm);
 	~PlStateMove();
-	bool Start();
-	void Update();
+	bool Start() override;
+	void Update() override;
 };
 

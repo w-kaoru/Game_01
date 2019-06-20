@@ -6,8 +6,8 @@ class EnemyBosStateDamage :public IEnemyBosState
 public:
 	EnemyBosStateDamage(EnemyBos* enbos, EnemyBosStateMachine*estm);
 	~EnemyBosStateDamage();
-	bool Start();
-	void Update();
+	bool Start() override;
+	void Update() override;
 	void SetDamageFlag(bool damage)
 	{
 		m_isDamage = damage;

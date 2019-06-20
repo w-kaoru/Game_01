@@ -1,15 +1,16 @@
 #pragma once
 class Enemy;
 class EnStateMachine;
-class IEnState:public IGameObject
+class IEnState
 {
 public:
 	IEnState(Enemy* en, EnStateMachine* esm);
 	~IEnState();
 	virtual bool Start() = 0;
 	virtual void Update() = 0;
+	virtual void Destroy() {};
 protected:
-	EnStateMachine *m_esm = nullptr;
+	EnStateMachine* m_stMa = nullptr;
 	Enemy* m_enemy = nullptr;
 	CVector3 m_moveSpeed = CVector3::Zero();			//ˆÚ“®‘¬“x
 	CQuaternion m_rotation = CQuaternion::Identity();	//‰ñ“]B

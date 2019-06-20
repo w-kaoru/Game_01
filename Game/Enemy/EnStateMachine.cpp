@@ -10,6 +10,10 @@ EnStateMachine::EnStateMachine(Enemy * en)
 EnStateMachine::~EnStateMachine()
 {
 }
+void EnStateMachine::Destroy()
+{
+	m_iens->Destroy();
+}
 
 bool EnStateMachine::Start()
 {
@@ -21,6 +25,7 @@ void EnStateMachine::Update()
 {
 	m_iens->Update();
 }
+
 
 void EnStateMachine::Change(EnemyState::MoveState state)
 {
@@ -37,6 +42,7 @@ void EnStateMachine::Change(EnemyState::MoveState state)
 		break;
 	case EnemyState::MoveState::damage:
 		m_iens = &m_enDamage;
+		break;
 	}
 	m_iens->Start();
 }

@@ -6,6 +6,7 @@ public:
 		move,
 		attack,
 		damage,
+		death,
 		num,
 		noState
 	};

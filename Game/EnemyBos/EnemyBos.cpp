@@ -4,7 +4,7 @@
 #include "../Game.h"
 #include "../GameEnd.h"
 
-EnemyBos::EnemyBos():m_enbos_stm(this)
+EnemyBos::EnemyBos():m_stMa(this)
 {
 }
 
@@ -61,7 +61,7 @@ bool EnemyBos::Start()
 	m_charaCon.Init(40.0f, 50.0f, m_position);
 	//エネミーのステートマシンのスタート関数を呼ぶ。
 	//ステートマシンの初期化。
-	m_enbos_stm.Start();
+	m_stMa.Start();
 	//当たり判定の作成。
 	m_hit = g_hitObject->Create(
 		&m_position, 150.0f,
@@ -102,20 +102,20 @@ void EnemyBos::Search()
 	if (m_toPlayerLen <= 160.0) {
 		//プレイヤーとの距離が一定以下で
 		//攻撃ステートをよべー。
-		m_enbos_stm.Change(EnemyBosState::MoveState::attack);
-		m_enbos_stm.StateAttack()->SetAttack(25, 10);
+		m_stMa.Change(EnemyBosState::MoveState::attack);
+		m_stMa.StateAttack()->SetAttack(25, 10);
 	}
 	if(m_toPlayerLen > 160.0 &&
-		m_enbos_stm.StateAttack()->GetAtkFlag() == false)
+		m_stMa.StateAttack()->GetAtkFlag() == false)
 	{
-		m_enbos_stm.Change(EnemyBosState::MoveState::move);
-		m_enbos_stm.StateAttack()->SetTiming(0);
+		m_stMa.Change(EnemyBosState::MoveState::move);
+		m_stMa.StateAttack()->SetTiming(0);
 	}
-	if (m_enbos_stm.StateAttack()->GetAtkFlag() == true) {
+	if (m_stMa.StateAttack()->GetAtkFlag() == true) {
 		//攻撃アニメーションが終了したら。
 		if (m_animation.IsPlaying() == false) {
-			m_enbos_stm.StateAttack()->SetAtkFlag(false);
-			m_enbos_stm.StateAttack()->SetTiming(0);
+			m_stMa.StateAttack()->SetAtkFlag(false);
+			m_stMa.StateAttack()->SetTiming(0);
 		}
 	}
 }
@@ -126,8 +126,8 @@ void EnemyBos::Damage(float damage)
 	if (m_status.GetHp() > 0.0f) {
 		m_se_damade.Play(false);
 		if (!m_damageCut) {
-			m_enbos_stm.StateDamage()->SetDamage(damage);
-			m_enbos_stm.Change(EnemyBosState::MoveState::damage);
+			m_stMa.StateDamage()->SetDamage(damage);
+			m_stMa.Change(EnemyBosState::MoveState::damage);
 		}
 		else {
 			//攻撃をくらったのでHPからくらった分を引く
@@ -209,21 +209,21 @@ void EnemyBos::Update()
 {
 	if (m_status.GetHp() <= 0.0f) {
 		m_moveSpeed *= 0.0f;
-		m_enbos_stm.Change(EnemyBosState::MoveState::death);
+		m_stMa.Change(EnemyBosState::MoveState::death);
 	}
 	else {
-		if (m_enbos_stm.StateDamage()->GetDamageFlag() == false) {
+		if (m_stMa.StateDamage()->GetDamageFlag() == false) {
 			Search();
 		}
 		else {
 			if (m_animation.IsPlaying() == false) {
-				m_enbos_stm.Change(EnemyBosState::MoveState::move);
-				m_enbos_stm.StateDamage()->SetDamageFlag(false);
+				m_stMa.Change(EnemyBosState::MoveState::move);
+				m_stMa.StateDamage()->SetDamageFlag(false);
 			}
 		}
 	}
 	//ステートマシンの更新
-	m_enbos_stm.Update();
+	m_stMa.Update();
 	DamageCut();
 	//重力加速度
 	if (m_charaCon.IsOnGround()) {

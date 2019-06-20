@@ -1,7 +1,7 @@
 #pragma once
 class EnemyBos;
 class EnemyBosStateMachine;
-class IEnemyBosState:public IGameObject
+class IEnemyBosState
 {
 public:
 	IEnemyBosState(EnemyBos* en, EnemyBosStateMachine* esm);
@@ -9,7 +9,7 @@ public:
 	virtual bool Start() = 0;
 	virtual void Update() = 0;
 protected:
-	EnemyBosStateMachine *m_esm = nullptr;
+	EnemyBosStateMachine* m_stMa = nullptr;
 	EnemyBos* m_enemy = nullptr;
 	CVector3 m_moveSpeed = CVector3::Zero();			//à⁄ìÆë¨ìx
 	CQuaternion m_rotation = CQuaternion::Identity();	//âÒì]ÅB

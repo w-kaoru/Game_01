@@ -5,7 +5,7 @@ class PlStateDeath : public IPlState
 public:
 	PlStateDeath(Player *pl, PlStateMachine *psm);
 	~PlStateDeath();
-	bool Start();
-	void Update();
+	bool Start() override;
+	void Update() override;
 };
 

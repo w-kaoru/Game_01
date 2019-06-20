@@ -6,8 +6,8 @@ class EnStateAttack : public IEnState
 public:
 	EnStateAttack(Enemy* en, EnStateMachine* estm);
 	~EnStateAttack();
-	bool Start();
-	void Update();
+	bool Start() override;
+	void Update() override;
 	void SetAttack(int hit,int start)
 	{
 		m_atkHit = hit;

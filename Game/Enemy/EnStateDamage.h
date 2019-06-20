@@ -5,8 +5,8 @@ class EnStateDamage :public IEnState
 public:
 	EnStateDamage(Enemy* en, EnStateMachine*estm);
 	~EnStateDamage();
-	bool Start();
-	void Update();
+	bool Start() override;
+	void Update() override;
 	void SetDamageFlag(bool damage)
 	{
 		m_isDamage = damage;

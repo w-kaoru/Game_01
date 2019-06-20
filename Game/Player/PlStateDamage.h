@@ -5,8 +5,8 @@ class PlStateDamage : public IPlState
 public:
 	PlStateDamage(Player *pl, PlStateMachine *psm);
 	~PlStateDamage();
-	bool Start();
-	void Update();
+	bool Start() override;
+	void Update() override;
 	void SetDamageFlag(bool damage)
 	{
 		m_isDamage = damage;

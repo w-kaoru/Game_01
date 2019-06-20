@@ -2,7 +2,7 @@
 
 class Player;
 class PlStateMachine;
-class IPlState:public IGameObject
+class IPlState
 {
 public:
 	IPlState(Player *pl,PlStateMachine *psm);

@@ -4,7 +4,7 @@
 #include "../Game.h"
 
 
-Enemy::Enemy():m_ensm(this)
+Enemy::Enemy():m_stMa(this)
 {
 }
 
@@ -87,7 +87,7 @@ bool Enemy::Start()
 	m_charaCon.Init(40.0f, 70.0f, m_position);
 	//エネミーのステートマシンのスタート関数を呼ぶ。
 	//ステートマシンの初期化。
-	m_ensm.Start();
+	m_stMa.Start();
 	//当たり判定の作成。
 	m_hit = g_hitObject->Create(
 		&m_position, 150.0f,
@@ -127,20 +127,20 @@ void Enemy::Search()
 	if (m_toPlayerLen <= 160.0) {
 		//プレイヤーとの距離が一定以下で
 		//攻撃ステートをよべー。
-		m_ensm.Change(EnemyState::MoveState::attack);
-		m_ensm.StateAttack()->SetAttack(m_atkHit, m_atkAnimStart);
+		m_stMa.Change(EnemyState::MoveState::attack);
+		m_stMa.StateAttack()->SetAttack(m_atkHit, m_atkAnimStart);
 	}
 	if(m_toPlayerLen > 160.0
-		&&m_ensm.StateAttack()->GetAtkFlag() == false)
+		&&m_stMa.StateAttack()->GetAtkFlag() == false)
 	{
-		m_ensm.Change(EnemyState::MoveState::move);
-		m_ensm.StateAttack()->SetTiming(0);
+		m_stMa.Change(EnemyState::MoveState::move);
+		m_stMa.StateAttack()->SetTiming(0);
 	}
-	if (m_ensm.StateAttack()->GetAtkFlag() == true) {
+	if (m_stMa.StateAttack()->GetAtkFlag() == true) {
 		//攻撃アニメーションが終了したら。
 		if (m_animation.IsPlaying() == false) {
-			m_ensm.StateAttack()->SetAtkFlag(false);
-			m_ensm.StateAttack()->SetTiming(0);
+			m_stMa.StateAttack()->SetAtkFlag(false);
+			m_stMa.StateAttack()->SetTiming(0);
 		}
 	}
 }
@@ -149,8 +149,8 @@ void Enemy::Damage(float damage)
 {
 	m_se_damade.Play(false);
 	if (!m_damageCut) {
-		m_ensm.StateDamage()->SetDamage(damage);
-		m_ensm.Change(EnemyState::MoveState::damage);
+		m_stMa.StateDamage()->SetDamage(damage);
+		m_stMa.Change(EnemyState::MoveState::damage);
 	}
 	else {
 		//攻撃をくらったのでHPからくらった分を引く
@@ -229,56 +229,52 @@ void Enemy::HP_Gauge()
 
 void Enemy::Update()
 {
-	if (m_isDeath == false) {
-		if (m_ensm.StateDamage()->GetDamageFlag() == false) {
-			Search();
+	if (m_stMa.StateDamage()->GetDamageFlag() == false) {
+		Search();
+	}
+	else {
+		if (m_animation.IsPlaying() == false) {
+			m_stMa.Change(EnemyState::MoveState::move);
+			m_stMa.StateDamage()->SetDamageFlag(false);
 		}
-		else {
-			if (m_animation.IsPlaying() == false) {
-				m_ensm.Change(EnemyState::MoveState::move);
-				m_ensm.StateDamage()->SetDamageFlag(false);
-			}
-		}
-		//ステートマシンの更新
-		m_ensm.Update();
-		
-		if (m_status.GetHp() < 0.01f&&m_isDeath == false) {
-			m_isDeath = true;
-			m_effectPos = m_position;
-			//エフェクトの再生。
-			m_playEffectHandle = g_graphicsEngine->GetEffekseerManager()->Play(
-				m_effect, m_effectPos.x, m_effectPos.y+100.0f, m_effectPos.z
-			);
-			//エフェクトの拡大率。
-			g_graphicsEngine->GetEffekseerManager()->SetScale(
-				m_playEffectHandle,
-				20.0f, 20.0f, 20.0f
-			);
-			m_position.y = -10000.0f;
-			m_charaCon.SetPosition(m_position);
-			g_gameObjM->FindGO<Game>("Game")->EnemyDeath();
-			m_player->EXP(1);
-		}
-		DamageCut();
-		//重力加速度
-		if (m_charaCon.IsOnGround()) {
-			m_moveSpeed.y = 0.0f;
-		}
-		else {
-			m_speedY -= 980.0f * (1.0f / 60.0f);
-			m_moveSpeed.y = m_speedY;
-		}
-		//キャラコンを使って移動する。
-		m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
+	}
+	//ステートマシンの更新
+	m_stMa.Update();
 
-		//シャドウキャスターを登録。
-		g_graphicsEngine->GetShadowMap()->RegistShadowCaster(&m_model);
-		//m_model.SetShadowReciever(true);
-		//ワールド行列を求める。
-		m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
-		//アニメーションを流す。
-		m_animation.Update(1.0f / 30.0f);
-	
+	DamageCut();
+	//重力加速度
+	if (m_charaCon.IsOnGround()) {
+		m_moveSpeed.y = 0.0f;
+	}
+	else {
+		m_speedY -= 980.0f * (1.0f / 60.0f);
+		m_moveSpeed.y = m_speedY;
+	}
+	//キャラコンを使って移動する。
+	m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
+
+	//シャドウキャスターを登録。
+	g_graphicsEngine->GetShadowMap()->RegistShadowCaster(&m_model);
+	//m_model.SetShadowReciever(true);
+	//ワールド行列を求める。
+	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
+	//アニメーションを流す。
+	m_animation.Update(1.0f / 30.0f);
+	//死んだら。
+	if (m_status.GetHp() < 0.01f&&m_isDeath == false) {
+		m_isDeath = true;
+		m_effectPos = m_position;
+		//エフェクトの再生。
+		m_playEffectHandle = g_graphicsEngine->GetEffekseerManager()->Play(
+			m_effect, m_effectPos.x, m_effectPos.y + 100.0f, m_effectPos.z
+		);
+		//エフェクトの拡大率。
+		g_graphicsEngine->GetEffekseerManager()->SetScale(
+			m_playEffectHandle,
+			20.0f, 20.0f, 20.0f
+		);
+		g_gameObjM->FindGO<Game>("Game")->EnemyDelete(this);
+		m_player->EXP(1);
 	}
 }
 

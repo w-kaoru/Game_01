@@ -35,6 +35,18 @@ void Game::Destroy()
 		g_gameObjM->DeleteGO(m_enemyBos);
 	}
 }
+bool Game::EnemyDelete(Enemy* enemy)
+{
+	if (enemy != nullptr) {
+		m_enemyList.erase(std::remove(m_enemyList.begin(), m_enemyList.end(), enemy)
+			, m_enemyList.end());
+		//delete enemy;
+		g_gameObjM->DeleteGO(enemy);
+		return true;
+	}
+	return false;
+}
+
 
 bool Game::Start()
 {
@@ -76,38 +88,38 @@ bool Game::Start()
 			//エネミー！！！
 			char enemyName[256];
 			sprintf(enemyName, "EnemyS%d", m_enemyNo++);
-			m_enemy = g_gameObjM->NewGO<Enemy>(0,enemyName);
-			m_enemy->SetEnemyType(Enemy::EnemyType::type_skeleton);
-			m_enemy->SetPosition(objData.position);
-			m_enemy->SetRotation(objData.rotation);
-			m_enemy->SetPlayer(m_player);
-			m_enemyList.push_back(m_enemy);
+			auto enemy = g_gameObjM->NewGO<Enemy>(0,enemyName);
+			enemy->SetEnemyType(Enemy::EnemyType::type_skeleton);
+			enemy->SetPosition(objData.position);
+			enemy->SetRotation(objData.rotation);
+			enemy->SetPlayer(m_player);
+			m_enemyList.push_back(enemy);
 			//エネミーのレベル
-			m_enemy->GetStatus()->SetLv(3);
-			m_enemy->GetStatus()->SetStandardHp(30.0f);
-			m_enemy->GetStatus()->SetStandardAgi(550.0f);
-			m_enemy->GetStatus()->SetStandardDef(1.5f);
-			m_enemy->GetStatus()->SetStandardAtk(3.0f);
-			m_enemy->GetStatus()->StatusUp();
+			enemy->GetStatus()->SetLv(3);
+			enemy->GetStatus()->SetStandardHp(30.0f);
+			enemy->GetStatus()->SetStandardAgi(550.0f);
+			enemy->GetStatus()->SetStandardDef(1.5f);
+			enemy->GetStatus()->SetStandardAtk(3.0f);
+			enemy->GetStatus()->StatusUp();
 			return true;
 		}
 		if (objData.EqualName(L"enpath2") == true) {
 			//エネミー！！！
 			char enemyName[256];
 			sprintf(enemyName, "EnemyT%d", m_enemyNo++);
-			m_enemy = g_gameObjM->NewGO<Enemy>(0, enemyName);
-			m_enemy->SetEnemyType(Enemy::EnemyType::type_troll);
-			m_enemy->SetPosition(objData.position);
-			m_enemy->SetRotation(objData.rotation);
-			m_enemy->SetPlayer(m_player);
-			m_enemyList.push_back(m_enemy);
+			auto enemy = g_gameObjM->NewGO<Enemy>(0, enemyName);
+			enemy->SetEnemyType(Enemy::EnemyType::type_troll);
+			enemy->SetPosition(objData.position);
+			enemy->SetRotation(objData.rotation);
+			enemy->SetPlayer(m_player);
+			m_enemyList.push_back(enemy);
 			//エネミーのレベル
-			m_enemy->GetStatus()->SetLv(3); 
-			m_enemy->GetStatus()->SetStandardHp(35.0f);
-			m_enemy->GetStatus()->SetStandardAgi(550.0f);
-			m_enemy->GetStatus()->SetStandardDef(1.0f);
-			m_enemy->GetStatus()->SetStandardAtk(3.5f);
-			m_enemy->GetStatus()->StatusUp();
+			enemy->GetStatus()->SetLv(3); 
+			enemy->GetStatus()->SetStandardHp(35.0f);
+			enemy->GetStatus()->SetStandardAgi(550.0f);
+			enemy->GetStatus()->SetStandardDef(1.0f);
+			enemy->GetStatus()->SetStandardAtk(3.5f);
+			enemy->GetStatus()->StatusUp();
 			return true;
 		}
 		return true;
@@ -119,38 +131,38 @@ bool Game::Start()
 			//エネミー！！！
 			char enemyName[256];
 			sprintf(enemyName, "EnemyS%d", m_enemyNo++);
-			m_enemy = g_gameObjM->NewGO<Enemy>(0, enemyName);
-			m_enemy->SetEnemyType(Enemy::EnemyType::type_skeleton);
-			m_enemy->SetPosition(objData.position);
-			m_enemy->SetRotation(objData.rotation);
-			m_enemy->SetPlayer(m_player);
-			m_enemyList.push_back(m_enemy);
+			auto enemy = g_gameObjM->NewGO<Enemy>(0, enemyName);
+			enemy->SetEnemyType(Enemy::EnemyType::type_skeleton);
+			enemy->SetPosition(objData.position);
+			enemy->SetRotation(objData.rotation);
+			enemy->SetPlayer(m_player);
+			m_enemyList.push_back(enemy);
 			//エネミーのレベル
-			m_enemy->GetStatus()->SetLv(7);
-			m_enemy->GetStatus()->SetStandardHp(30.0f);
-			m_enemy->GetStatus()->SetStandardAgi(550.0f);
-			m_enemy->GetStatus()->SetStandardDef(1.5f);
-			m_enemy->GetStatus()->SetStandardAtk(3.0f);
-			m_enemy->GetStatus()->StatusUp();
+			enemy->GetStatus()->SetLv(7);
+			enemy->GetStatus()->SetStandardHp(30.0f);
+			enemy->GetStatus()->SetStandardAgi(550.0f);
+			enemy->GetStatus()->SetStandardDef(1.5f);
+			enemy->GetStatus()->SetStandardAtk(3.0f);
+			enemy->GetStatus()->StatusUp();
 			return true;
 		}
 		if (objData.EqualName(L"enpath2") == true) {
 			//エネミー！！！
 			char enemyName[256];
 			sprintf(enemyName, "EnemyT%d", m_enemyNo++);
-			m_enemy = g_gameObjM->NewGO<Enemy>(0, enemyName);
-			m_enemy->SetEnemyType(Enemy::EnemyType::type_troll);
-			m_enemy->SetPosition(objData.position);
-			m_enemy->SetRotation(objData.rotation);
-			m_enemy->SetPlayer(m_player);
-			m_enemyList.push_back(m_enemy);
+			auto enemy = g_gameObjM->NewGO<Enemy>(0, enemyName);
+			enemy->SetEnemyType(Enemy::EnemyType::type_troll);
+			enemy->SetPosition(objData.position);
+			enemy->SetRotation(objData.rotation);
+			enemy->SetPlayer(m_player);
+			m_enemyList.push_back(enemy);
 			//エネミーのレベル
-			m_enemy->GetStatus()->SetLv(6);
-			m_enemy->GetStatus()->SetStandardHp(35.0f);
-			m_enemy->GetStatus()->SetStandardAgi(550.0f);
-			m_enemy->GetStatus()->SetStandardDef(1.0f);
-			m_enemy->GetStatus()->SetStandardAtk(3.5f);
-			m_enemy->GetStatus()->StatusUp();
+			enemy->GetStatus()->SetLv(6);
+			enemy->GetStatus()->SetStandardHp(35.0f);
+			enemy->GetStatus()->SetStandardAgi(550.0f);
+			enemy->GetStatus()->SetStandardDef(1.0f);
+			enemy->GetStatus()->SetStandardAtk(3.5f);
+			enemy->GetStatus()->StatusUp();
 			return true;
 		}
 		return true;
@@ -192,6 +204,7 @@ bool Game::Start()
 
 void Game::Update()
 {
+	m_enemyList.size();
 	if (g_pad[0].IsTrigger(enButtonSelect)) {
 		g_gameObjM->DeleteGO(this);
 		//タイトルシーンの作成。
