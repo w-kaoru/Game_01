@@ -51,6 +51,13 @@ Player::Player() :m_stMa(this)
 		g_graphicsEngine->GetD3DDevice(), L"Assets/sprite/Paladin_specular.dds", 0,
 		D3D11_USAGE_DEFAULT, D3D11_BIND_SHADER_RESOURCE, 0, 0,
 		false, nullptr, &m_specularMapSRV);
+
+	m_status.SetStandardHp(60);
+	m_status.SetStandardAgi(650.0f);
+	m_status.SetStandardDef(1.0f);
+	m_status.SetStandardAtk(12.5f);
+	m_status.SetMaxLv(100);
+	m_status.StatusUp();
 }
 Player::~Player()
 {

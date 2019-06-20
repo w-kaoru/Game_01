@@ -58,7 +58,7 @@ bool EnemyBos::Start()
 	m_shieldSprite.Init(L"Assets/sprite/shield.dds", 20.0f, 20.0f);
 	m_position.y = 200.0f;
 	//キャラクターコントローラーの初期化。
-	m_charaCon.Init(40.0f, 50.0f, m_position);
+	m_charaCon.Init(50.0f, 110.0f, m_position);
 	//エネミーのステートマシンのスタート関数を呼ぶ。
 	//ステートマシンの初期化。
 	m_stMa.Start();
@@ -72,6 +72,13 @@ bool EnemyBos::Start()
 	m_se_damade.Init(L"Assets/sound/se_damage.wav");
 	m_se_damade.SetVolume(1.0f);
 	m_player = g_gameObjM->FindGO<Player>("Player");
+
+
+	m_status.SetStandardHp(100.0f);
+	m_status.SetStandardAgi(550.0f);
+	m_status.SetStandardDef(6.0f);
+	m_status.SetStandardAtk(17.0f);
+	m_status.StatusUp();
 	return true;
 }
 
@@ -227,7 +234,8 @@ void EnemyBos::Update()
 	DamageCut();
 	//重力加速度
 	if (m_charaCon.IsOnGround()) {
-		m_moveSpeed.y = 0.0f;
+		m_moveSpeed.y *= 0.0f; 
+		m_speedY *= 0.0f;
 	}
 	else {
 		m_speedY -= 980.0f * (1.0f / 60.0f);

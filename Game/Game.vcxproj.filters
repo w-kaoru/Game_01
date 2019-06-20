@@ -241,7 +241,9 @@
       <Filter>EnemyBos</Filter>
     </ClCompile>
     <ClCompile Include="UI.cpp" />
-    <ClCompile Include="Background.cpp" />
+    <ClCompile Include="Stage\Background.cpp" />
+    <ClCompile Include="Stage\Stage.cpp" />
+    <ClCompile Include="Stage\Dungeon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -452,7 +454,9 @@
       <Filter>EnemyBos</Filter>
     </ClInclude>
     <ClInclude Include="UI.h" />
-    <ClInclude Include="Background.h" />
+    <ClInclude Include="Stage\Background.h" />
+    <ClInclude Include="Stage\Stage.h" />
+    <ClInclude Include="Stage\Dungeon.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\enpath2.fbx">

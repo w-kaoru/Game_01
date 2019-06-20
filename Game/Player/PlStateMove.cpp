@@ -44,8 +44,14 @@ void PlStateMove::Update()
 		|| fabsf(m_moveSpeed.z) > 0.1f) {
 		auto angle = atan2f(m_moveSpeed.x, m_moveSpeed.z);
 		m_rotation.SetRotation(CVector3::AxisY(), angle);
-		//走るアニメーションの再生するためにステートの変更
-		m_player->SetAnimation(PlayerState::AnimationState::AnimRun);
+		if (m_player->GetCharaCon()->IsOnGround()) {
+			//走るアニメーションの再生するためにステートの変更
+			m_player->SetAnimation(PlayerState::AnimationState::AnimRun);
+		}
+		else {
+			//待機アニメーションの再生するためにステートの変更
+			m_player->SetAnimation(PlayerState::AnimationState::AnimIdle);
+		}
 	}
 	else {
 		//待機アニメーションの再生するためにステートの変更

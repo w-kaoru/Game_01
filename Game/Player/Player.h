@@ -78,6 +78,10 @@ public:
 	{
 		return m_damageCutValue;
 	}
+	CharacterController* GetCharaCon()
+	{
+		return &m_charaCon;
+	}
 private:
 	SkinModel m_model;									//スキンモデル。
 	Animation m_animation;								//アニメーション。

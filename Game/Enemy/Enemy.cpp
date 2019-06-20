@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Enemy.h"
 #include "Player\Player.h"
-#include "../Game.h"
+#include "../Stage/Stage.h"
 
 
 Enemy::Enemy():m_stMa(this)
@@ -51,6 +51,12 @@ bool Enemy::Start()
 		m_scale *= 2.0f;
 		//攻撃を当てるタイミング
 		m_atkHit = 25;
+		//ステータス
+		m_status.SetStandardHp(30.0f);
+		m_status.SetStandardAgi(550.0f);
+		m_status.SetStandardDef(1.5f);
+		m_status.SetStandardAtk(3.0f);
+		m_status.StatusUp();
 		break;
 	case type_troll:
 		m_model.Init(L"Assets/modelData/TrollGiant.cmo");
@@ -70,6 +76,12 @@ bool Enemy::Start()
 		m_scale *= 90.0f;
 		//攻撃を当てるタイミング
 		m_atkHit = 23;
+		//ステータス
+		m_status.SetStandardHp(35.0f);
+		m_status.SetStandardAgi(550.0f);
+		m_status.SetStandardDef(1.0f);
+		m_status.SetStandardAtk(3.5f);
+		m_status.StatusUp();
 		break;
 	}
 	//アニメーションの初期化。
@@ -84,7 +96,7 @@ bool Enemy::Start()
 	m_shieldSprite.Init(L"Assets/sprite/shield.dds", 20.0f, 20.0f);
 	m_position.y = 200.0f;
 	//キャラクターコントローラーの初期化。
-	m_charaCon.Init(40.0f, 70.0f, m_position);
+	m_charaCon.Init(40.0f, 110.0f, m_position);
 	//エネミーのステートマシンのスタート関数を呼ぶ。
 	//ステートマシンの初期化。
 	m_stMa.Start();
@@ -244,7 +256,8 @@ void Enemy::Update()
 	DamageCut();
 	//重力加速度
 	if (m_charaCon.IsOnGround()) {
-		m_moveSpeed.y = 0.0f;
+		m_moveSpeed.y *= 0.0f;
+		m_speedY *= 0.0f;
 	}
 	else {
 		m_speedY -= 980.0f * (1.0f / 60.0f);
@@ -273,7 +286,7 @@ void Enemy::Update()
 			m_playEffectHandle,
 			20.0f, 20.0f, 20.0f
 		);
-		g_gameObjM->FindGO<Game>("Game")->EnemyDelete(this);
+		g_gameObjM->FindGO<Stage>("Stage")->EnemyDelete(this);
 		m_player->EXP(1);
 	}
 }

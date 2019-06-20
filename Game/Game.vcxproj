@@ -99,7 +99,6 @@
     </MeshContentTask>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Background.cpp" />
     <ClCompile Include="EnemyBos\EnemyBosStateDamage.cpp" />
     <ClCompile Include="EnemyBos\EnemyBosStateDeath.cpp" />
     <ClCompile Include="Enemy\EnStateDamage.cpp" />
@@ -166,6 +165,9 @@
     <ClCompile Include="sound\SoundSource.cpp" />
     <ClCompile Include="sound\WaveFile.cpp" />
     <ClCompile Include="sound\WaveFileBank.cpp" />
+    <ClCompile Include="Stage\Background.cpp" />
+    <ClCompile Include="Stage\Dungeon.cpp" />
+    <ClCompile Include="Stage\Stage.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -175,7 +177,6 @@
     <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Background.h" />
     <ClInclude Include="EnemyBos\EnemyBosStateDamage.h" />
     <ClInclude Include="EnemyBos\EnemyBosStateDeath.h" />
     <ClInclude Include="Enemy\EnStateDamage.h" />
@@ -248,6 +249,9 @@
     <ClInclude Include="sound\SoundSource.h" />
     <ClInclude Include="sound\WaveFile.h" />
     <ClInclude Include="sound\WaveFileBank.h" />
+    <ClInclude Include="Stage\Background.h" />
+    <ClInclude Include="Stage\Dungeon.h" />
+    <ClInclude Include="Stage\Stage.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="system\system.h" />
     <ClInclude Include="Title.h" />
