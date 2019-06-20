@@ -24,6 +24,9 @@ Player::Player() :m_stMa(this)
 	//攻撃アニメーション
 	m_animationClips[PlayerState::AnimationState::AnimAttack_01].Load(L"Assets/animData/Player/plattack_01.tka");
 	m_animationClips[PlayerState::AnimationState::AnimAttack_01].SetLoopFlag(false);
+	//攻撃アニメーション
+	m_animationClips[PlayerState::AnimationState::AnimAttack_02].Load(L"Assets/animData/Player/plattack_02.tka");
+	m_animationClips[PlayerState::AnimationState::AnimAttack_02].SetLoopFlag(false);
 	//ダメージアニメーション
 	m_animationClips[PlayerState::AnimationState::AnimDamage].Load(L"Assets/animData/Player/pldamage.tka");
 	m_animationClips[PlayerState::AnimationState::AnimDamage].SetLoopFlag(false);

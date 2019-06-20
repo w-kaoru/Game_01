@@ -14,16 +14,6 @@ PlStateAttack::~PlStateAttack()
 
 bool PlStateAttack::Start()
 {
-	switch (m_combo)
-	{
-	case Combo::attack_00:
-		m_atkHit = 15;
-		m_comboTiming = 16;
-		break;
-	case Combo::attack_01:
-		m_atkHit = 10;
-		break;
-	}
 	return false;
 }
 
@@ -36,16 +26,18 @@ void PlStateAttack::Update()
 	m_attckPos.x = m_player->GetPosition().x + (m_player->GetForward().x * 65.0f);
 	m_attckPos.z = m_player->GetPosition().z + (m_player->GetForward().z * 65.0f);
 	m_attckPos.y = m_player->GetPosition().y + 50.0f;
-	m_comboTimer++;
 	switch (m_combo)
 	{
 	case Combo::attack_00:
+		m_atkHit = 15;
+		m_comboTiming = 16;
 		m_hitTimer++;
+		m_comboTimer++;
 		m_player->SetAnimation(PlayerState::AnimationState::AnimAttack_00);
 		//攻撃されてからあたったタイミングで攻撃したい（簡易版）
 		if (m_hitTimer == m_atkHit) {
 			//攻撃をヒットさせる。
-			g_hitObject->HitTest(m_attckPos, m_player->GetStatus()->GetAtk(), Hit::enemy);
+			g_hitObject->HitTest(m_attckPos, 20.0f, m_player->GetStatus()->GetAtk(), Hit::enemy);
 			m_isAtk = true;
 		}
 		if (m_isAtk) {
@@ -70,15 +62,48 @@ void PlStateAttack::Update()
 		}
 		break;
 	case Combo::attack_01:
+		m_atkHit = 10;
+		m_comboTiming = 10;
 		m_hitTimer++;
+		m_comboTimer++;
 		m_player->SetAnimation(PlayerState::AnimationState::AnimAttack_01);
 		//攻撃されてからあたったタイミングで攻撃したい（簡易版）
 		if (m_hitTimer == m_atkHit) {
 			//攻撃をヒットさせる。
-			g_hitObject->HitTest(m_attckPos, m_player->GetStatus()->GetAtk(), Hit::enemy);
+			g_hitObject->HitTest(m_player->GetPosition(), 20.0f, m_player->GetStatus()->GetAtk(), Hit::enemy);
 			m_isAtk = true;
 		}
 		if (m_isAtk) {
+			m_hitTimer = 0;
+		}
+		if (m_comboTimer > m_comboTiming) {
+			if (g_pad[0].IsTrigger(enButtonX)) {
+				//コンボでアニメーションの変更のため初期化
+				m_combo = Combo::attack_02;
+				m_hitTimer = 0;
+				m_comboTimer = 0;
+				m_isAtk = false;
+			}
+		}
+		if (!m_player->GetAnimation().IsPlaying()) {
+			//アニメーションが終わるため初期化
+			m_combo = Combo::attack_00;
+			m_atk = false;
+			//攻撃の間隔を0に戻す。
+			m_hitTimer = 0;
+			m_comboTimer = 0;
+			m_isAtk = false;
+		}
+		break;
+	case Combo::attack_02:
+		m_atkHit = 8;
+		m_hitTimer++;
+		m_player->SetAnimation(PlayerState::AnimationState::AnimAttack_02);
+		//攻撃されてからあたったタイミングで攻撃したい（簡易版）
+		if (m_hitTimer == m_atkHit) {
+			//攻撃をヒットさせる。
+			g_hitObject->HitTest(m_player->GetPosition(), 70.0f, m_player->GetStatus()->GetAtk() / 1.5f, Hit::enemy);
+			m_isAtk = true;
 			m_hitTimer = 0;
 		}
 		if (!m_player->GetAnimation().IsPlaying()) {

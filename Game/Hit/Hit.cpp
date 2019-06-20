@@ -19,11 +19,12 @@ void Hit::Create(const CVector3 * pos, float radius, std::function<void(float da
 	m_name = name;
 }
 
-bool Hit::HitTest(CVector3 pos, float damage)
+bool Hit::HitTest(CVector3 pos, float radius, float damage)
 {
 	auto rengs = *m_pos - pos;
+	auto radiusThis = radius + m_radius;
 	//‰~‚Å”»’è
-	if (rengs.Length() <= m_radius)
+	if (rengs.Length() <= radiusThis)
 	{
 		m_fuk(damage);
 	}

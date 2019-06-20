@@ -19,12 +19,12 @@ const Hit * HitObject::Create(const CVector3 * pos, float radius, std::function<
 	return hit;
 }
 
-bool HitObject::HitTest(CVector3 pos, float damage, Hit::objict_Name name)
+bool HitObject::HitTest(CVector3 pos, float radius, float damage, Hit::objict_Name name)
 {
 	for (auto hitter : m_controller)
 	{
 		if (hitter->Getobjict_Name() == name) {
-			if (hitter->HitTest(pos, damage))
+			if (hitter->HitTest(pos, radius ,damage))
 				return true;
 		}
 	}

@@ -7,6 +7,7 @@ public:
 		AnimRun,		//‘–‚é
 		AnimAttack_00,	//UŒ‚
 		AnimAttack_01,	//UŒ‚
+		AnimAttack_02,	//UŒ‚
 		AnimDamage,		//ƒ_ƒ[ƒW
 		AnimDeath,		//€‚Ê
 		AnimNum,		//AniMove‚Ì”	

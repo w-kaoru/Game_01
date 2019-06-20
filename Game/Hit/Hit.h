@@ -11,7 +11,7 @@ public:
 	~Hit();
 	//ƒtƒbƒNŠÖ”
 	void Create(const CVector3* pos, float radius, std::function<void(float damage)>  object, objict_Name name);
-	bool HitTest(CVector3 pos, float damage);
+	bool HitTest(CVector3 pos, float radius, float damage);
 	objict_Name Getobjict_Name()
 	{
 		return m_name;

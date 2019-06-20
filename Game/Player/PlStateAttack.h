@@ -6,6 +6,7 @@ public:
 	enum Combo {
 		attack_00,
 		attack_01,
+		attack_02,
 		attack_Num
 	};
 	PlStateAttack(Player *pl, PlStateMachine *psm);

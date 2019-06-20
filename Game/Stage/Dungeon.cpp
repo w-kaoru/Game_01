@@ -14,8 +14,6 @@ Dungeon::~Dungeon()
 bool Dungeon::Start()
 {
 	m_model.Init(L"Assets/modelData/Dungeon.cmo");
-
-	//m_model.Init(L"Assets/modelData/ground.cmo");
 	m_model.UpdateWorldMatrix(m_position, m_rotation, CVector3::One());
 
 	m_phyStaticObject.CreateMeshObject(m_model, m_position, m_rotation);

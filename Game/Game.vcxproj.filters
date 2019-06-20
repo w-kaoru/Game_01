@@ -49,6 +49,12 @@
     <Filter Include="Player">
       <UniqueIdentifier>{cdca7448-da27-409c-8d4d-ba6dc025f327}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Stage">
+      <UniqueIdentifier>{54c38d3c-8446-463a-9798-588d3b8355be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Hit">
+      <UniqueIdentifier>{2cc94fa3-543f-4576-9a75-4a0c6347be22}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -220,8 +226,6 @@
     <ClCompile Include="graphics\SpringCamera.cpp">
       <Filter>graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Hit.cpp" />
-    <ClCompile Include="HitObject.cpp" />
     <ClCompile Include="Player\PlStateDamage.cpp">
       <Filter>Player</Filter>
     </ClCompile>
@@ -241,9 +245,21 @@
       <Filter>EnemyBos</Filter>
     </ClCompile>
     <ClCompile Include="UI.cpp" />
-    <ClCompile Include="Stage\Background.cpp" />
-    <ClCompile Include="Stage\Stage.cpp" />
-    <ClCompile Include="Stage\Dungeon.cpp" />
+    <ClCompile Include="Stage\Dungeon.cpp">
+      <Filter>Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage\Background.cpp">
+      <Filter>Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage\Stage.cpp">
+      <Filter>Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Hit\Hit.cpp">
+      <Filter>Hit</Filter>
+    </ClCompile>
+    <ClCompile Include="Hit\HitObject.cpp">
+      <Filter>Hit</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -433,8 +449,6 @@
     <ClInclude Include="graphics\SpringCamera.h">
       <Filter>graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Hit.h" />
-    <ClInclude Include="HitObject.h" />
     <ClInclude Include="Player\PlStateDamage.h">
       <Filter>Player</Filter>
     </ClInclude>
@@ -454,9 +468,21 @@
       <Filter>EnemyBos</Filter>
     </ClInclude>
     <ClInclude Include="UI.h" />
-    <ClInclude Include="Stage\Background.h" />
-    <ClInclude Include="Stage\Stage.h" />
-    <ClInclude Include="Stage\Dungeon.h" />
+    <ClInclude Include="Stage\Dungeon.h">
+      <Filter>Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage\Background.h">
+      <Filter>Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage\Stage.h">
+      <Filter>Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Hit\Hit.h">
+      <Filter>Hit</Filter>
+    </ClInclude>
+    <ClInclude Include="Hit\HitObject.h">
+      <Filter>Hit</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\enpath2.fbx">
@@ -483,7 +509,9 @@
     <MeshContentTask Include="Assets\modelData\paladin.fbx">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\ground.fbx" />
+    <MeshContentTask Include="Assets\modelData\ground.fbx">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\hp_gauge.png">
