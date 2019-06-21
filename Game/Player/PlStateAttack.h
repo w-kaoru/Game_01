@@ -7,6 +7,7 @@ public:
 		attack_00,
 		attack_01,
 		attack_02,
+		attack_03,
 		attack_Num
 	};
 	PlStateAttack(Player *pl, PlStateMachine *psm);

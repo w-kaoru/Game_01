@@ -15,10 +15,10 @@ public:
 	Enemy();
 	~Enemy();
 	void Destroy() override;
-	bool Start();
-	void Update();
-	void Draw();
-	void PostDraw();
+	bool Start() override;
+	void Update() override;
+	void Draw() override;
+	void PostDraw() override;
 	void Search();
 	void PlLen();
 	void Damage(float damage);

@@ -20,7 +20,9 @@ Stage::~Stage()
 
 void Stage::Destroy()
 {
+	if (m_ui != nullptr) g_gameObjM->DeleteGO(m_ui);
 	if(m_background!=nullptr) g_gameObjM->DeleteGO(m_background);
+	if (m_dungeon != nullptr) g_gameObjM->DeleteGO(m_dungeon);
 	if (m_gameCamera != nullptr) g_gameObjM->DeleteGO(m_gameCamera);
 	if (m_light != nullptr) g_gameObjM->DeleteGO(m_light);
 	if (m_player != nullptr) g_gameObjM->DeleteGO(m_player);
@@ -56,180 +58,196 @@ bool Stage::Start()
 	return false;
 }
 
-void Stage::StageSelect(StageType st)
+void Stage::StageSelect(StageType type)
 {
-	switch (st)
+	m_type = type;
+	switch (m_type)
 	{
-	case Stage::type_Dungeon:
+	case Stage::Stage_Dungeon:
 		//レベルを初期化。
-		m_level.Init(
-			L"Assets/level/Dungeon_01.tkl",
-			[&](LevelObjectData& objData) {
-			if (objData.EqualName(L"Dungeon") == true) {
-				m_dungeon = g_gameObjM->NewGO<Dungeon>(0, "Dungeon");
-				m_dungeon->SetPosition(objData.position);
-				m_dungeon->SetRotation(objData.rotation);
-				return true;
-			}
-			return true;
-		});
-		//レベルを初期化。
-		m_level.Init(
-			L"Assets/level/player_01.tkl",
-			[&](LevelObjectData& objData) {
-			if (objData.EqualName(L"plpath") == true) {
-				m_player = g_gameObjM->NewGO<Player>(0, "Player");
-				m_player->SetPosition(objData.position);
-				//ステータスの設定
-				m_player->GetStatus()->SetLv(1);
-				return true;
-			}
-			return true;
-		});
-		m_level.Init(
-			L"Assets/level/enemy_01.tkl",
-			[&](LevelObjectData& objData) {
-			if (objData.EqualName(L"enpath") == true) {
-				//エネミー！！！
-				char enemyName[256];
-				sprintf(enemyName, "EnemyS%d", m_enemyNo++);
-				auto enemy = g_gameObjM->NewGO<Enemy>(0, enemyName);
-				enemy->SetEnemyType(Enemy::EnemyType::type_skeleton);
-				enemy->SetPosition(objData.position);
-				enemy->SetRotation(objData.rotation);
-				enemy->SetPlayer(m_player);
-				m_enemyList.push_back(enemy);
-				//エネミーのレベル
-				enemy->GetStatus()->SetLv(3);
-				return true;
-			}
-			if (objData.EqualName(L"enpath2") == true) {
-				//エネミー！！！
-				char enemyName[256];
-				sprintf(enemyName, "EnemyT%d", m_enemyNo++);
-				auto enemy = g_gameObjM->NewGO<Enemy>(0, enemyName);
-				enemy->SetEnemyType(Enemy::EnemyType::type_troll);
-				enemy->SetPosition(objData.position);
-				enemy->SetRotation(objData.rotation);
-				enemy->SetPlayer(m_player);
-				m_enemyList.push_back(enemy);
-				//エネミーのレベル
-				enemy->GetStatus()->SetLv(3);
-				return true;
-			}
-			return true;
-		});
-		m_level.Init(
-			L"Assets/level/enemy_02.tkl",
-			[&](LevelObjectData& objData) {
-			if (objData.EqualName(L"enpath") == true) {
-				//エネミー！！！
-				char enemyName[256];
-				sprintf(enemyName, "EnemyS%d", m_enemyNo++);
-				auto enemy = g_gameObjM->NewGO<Enemy>(0, enemyName);
-				enemy->SetEnemyType(Enemy::EnemyType::type_skeleton);
-				enemy->SetPosition(objData.position);
-				enemy->SetRotation(objData.rotation);
-				enemy->SetPlayer(m_player);
-				m_enemyList.push_back(enemy);
-				//エネミーのレベル
-				enemy->GetStatus()->SetLv(7);
-				enemy->GetStatus()->StatusUp();
-				return true;
-			}
-			if (objData.EqualName(L"enpath2") == true) {
-				//エネミー！！！
-				char enemyName[256];
-				sprintf(enemyName, "EnemyT%d", m_enemyNo++);
-				auto enemy = g_gameObjM->NewGO<Enemy>(0, enemyName);
-				enemy->SetEnemyType(Enemy::EnemyType::type_troll);
-				enemy->SetPosition(objData.position);
-				enemy->SetRotation(objData.rotation);
-				enemy->SetPlayer(m_player);
-				m_enemyList.push_back(enemy);
-				//エネミーのレベル
-				enemy->GetStatus()->SetLv(6);
-				enemy->GetStatus()->StatusUp();
-				return true;
-			}
-			return true;
-		});
-
-		m_level.Init(
-			L"Assets/level/enemyBos.tkl",
-			[&](LevelObjectData& objData) {
-			if (objData.EqualName(L"enpath") == true) {
-				//エネミー！！！
-				m_enemyBos = g_gameObjM->NewGO<EnemyBos>(0, "EnemyBos");
-				m_enemyBos->SetPosition(objData.position);
-				m_enemyBos->SetRotation(objData.rotation);
-				m_enemyBos->GetPlayer(m_player);
-				m_enemyBos->GetStatus()->SetLv(8);
-				return true;
-			}
-			return true;
-		});
-		m_gameCamera = g_gameObjM->NewGO<GameCamera>(1, "GameCamera");
-		m_gameCamera->SetPlayer(m_player);
-		m_light = g_gameObjM->NewGO<LightCamera>(1, "LightCamera");
-		m_light->SetPlayer(m_player);
+		DungeonNew();
 		break;
-	case Stage::type_Ground:
-		m_level.Init(
-			L"Assets/level/Map.tkl",
-			[&](LevelObjectData& objData) {
-			if (objData.EqualName(L"ground") == true) {
-				m_background = g_gameObjM->NewGO<Background>(0, "Ground");
-				m_background->SetPosition(objData.position);
-				m_background->SetRotation(objData.rotation);
-				return true;
-			}
-			return true;
-		});
-		//レベルを初期化。
-		m_level.Init(
-			L"Assets/level/player_01.tkl",
-			[&](LevelObjectData& objData) {
-			if (objData.EqualName(L"plpath") == true) {
-				m_player = g_gameObjM->NewGO<Player>(0, "Player");
-				m_player->SetPosition(objData.position);
-				//ステータスの設定
-				m_player->GetStatus()->SetLv(1);
-				return true;
-			}
-			return true;
-		});
-		m_level.Init(
-			L"Assets/level/enemyBos.tkl",
-			[&](LevelObjectData& objData) {
-			if (objData.EqualName(L"enpath") == true) {
-				//エネミー！！！
-				m_enemyBos = g_gameObjM->NewGO<EnemyBos>(0, "EnemyBos");
-				m_enemyBos->SetPosition({ objData.position.x + 100.0f,objData.position.y,objData.position.z });
-				m_enemyBos->SetRotation(objData.rotation);
-				m_enemyBos->GetPlayer(m_player);
-				m_enemyBos->GetStatus()->SetLv(2);
-				return true;
-			}
-			return true;
-		});
-		m_gameCamera = g_gameObjM->NewGO<GameCamera>(1, "GameCamera");
-		m_gameCamera->SetPlayer(m_player);
-		m_light = g_gameObjM->NewGO<LightCamera>(1, "LightCamera");
-		m_light->SetPlayer(m_player);
+	case Stage::Stage_Ground:
+		GroundNew();
 		break;
 	}
 }
 
+
+void Stage::DungeonNew()
+{
+	m_level.Init(
+		L"Assets/level/Dungeon_01.tkl",
+		[&](LevelObjectData& objData) {
+		if (objData.EqualName(L"Dungeon") == true) {
+			m_dungeon = g_gameObjM->NewGO<Dungeon>(0, "Dungeon");
+			m_dungeon->SetPosition(objData.position);
+			m_dungeon->SetRotation(objData.rotation);
+			return true;
+		}
+		return true;
+	});
+	//レベルを初期化。
+	m_level.Init(
+		L"Assets/level/player_01.tkl",
+		[&](LevelObjectData& objData) {
+		if (objData.EqualName(L"plpath") == true) {
+			m_player = g_gameObjM->NewGO<Player>(0, "Player");
+			m_player->SetPosition(objData.position);
+			//ステータスの設定
+			m_player->GetStatus()->SetLv(1);
+			return true;
+		}
+		return true;
+	});
+	m_level.Init(
+		L"Assets/level/enemy_01.tkl",
+		[&](LevelObjectData& objData) {
+		if (objData.EqualName(L"enpath") == true) {
+			//エネミー！！！
+			char enemyName[256];
+			sprintf(enemyName, "EnemyS%d", m_enemyNo++);
+			auto enemy = g_gameObjM->NewGO<Enemy>(0, enemyName);
+			enemy->SetEnemyType(Enemy::EnemyType::type_skeleton);
+			enemy->SetPosition(objData.position);
+			enemy->SetRotation(objData.rotation);
+			enemy->SetPlayer(m_player);
+			m_enemyList.push_back(enemy);
+			//エネミーのレベル
+			enemy->GetStatus()->SetLv(3);
+			return true;
+		}
+		if (objData.EqualName(L"enpath2") == true) {
+			//エネミー！！！
+			char enemyName[256];
+			sprintf(enemyName, "EnemyT%d", m_enemyNo++);
+			auto enemy = g_gameObjM->NewGO<Enemy>(0, enemyName);
+			enemy->SetEnemyType(Enemy::EnemyType::type_troll);
+			enemy->SetPosition(objData.position);
+			enemy->SetRotation(objData.rotation);
+			enemy->SetPlayer(m_player);
+			m_enemyList.push_back(enemy);
+			//エネミーのレベル
+			enemy->GetStatus()->SetLv(3);
+			return true;
+		}
+		return true;
+	});
+	m_level.Init(
+		L"Assets/level/enemy_02.tkl",
+		[&](LevelObjectData& objData) {
+		if (objData.EqualName(L"enpath") == true) {
+			//エネミー！！！
+			char enemyName[256];
+			sprintf(enemyName, "EnemyS%d", m_enemyNo++);
+			auto enemy = g_gameObjM->NewGO<Enemy>(0, enemyName);
+			enemy->SetEnemyType(Enemy::EnemyType::type_skeleton);
+			enemy->SetPosition(objData.position);
+			enemy->SetRotation(objData.rotation);
+			enemy->SetPlayer(m_player);
+			m_enemyList.push_back(enemy);
+			//エネミーのレベル
+			enemy->GetStatus()->SetLv(7);
+			enemy->GetStatus()->StatusUp();
+			return true;
+		}
+		if (objData.EqualName(L"enpath2") == true) {
+			//エネミー！！！
+			char enemyName[256];
+			sprintf(enemyName, "EnemyT%d", m_enemyNo++);
+			auto enemy = g_gameObjM->NewGO<Enemy>(0, enemyName);
+			enemy->SetEnemyType(Enemy::EnemyType::type_troll);
+			enemy->SetPosition(objData.position);
+			enemy->SetRotation(objData.rotation);
+			enemy->SetPlayer(m_player);
+			m_enemyList.push_back(enemy);
+			//エネミーのレベル
+			enemy->GetStatus()->SetLv(6);
+			enemy->GetStatus()->StatusUp();
+			return true;
+		}
+		return true;
+	});
+
+	m_level.Init(
+		L"Assets/level/enemyBos.tkl",
+		[&](LevelObjectData& objData) {
+		if (objData.EqualName(L"enpath") == true) {
+			//エネミー！！！
+			m_enemyBos = g_gameObjM->NewGO<EnemyBos>(0, "EnemyBos");
+			m_enemyBos->SetPosition(objData.position);
+			m_enemyBos->SetRotation(objData.rotation);
+			m_enemyBos->GetPlayer(m_player);
+			m_enemyBos->GetStatus()->SetLv(8);
+			return true;
+		}
+		return true;
+	});
+	m_gameCamera = g_gameObjM->NewGO<GameCamera>(1, "GameCamera");
+	m_gameCamera->SetPlayer(m_player);
+	m_light = g_gameObjM->NewGO<LightCamera>(1, "LightCamera");
+	m_light->SetPlayer(m_player);
+	m_ui = g_gameObjM->NewGO<UI>(1, "UI");
+}
+
+void Stage::GroundNew()
+{
+	m_level.Init(
+		L"Assets/level/Map.tkl",
+		[&](LevelObjectData& objData) {
+		if (objData.EqualName(L"ground") == true) {
+			m_background = g_gameObjM->NewGO<Background>(0, "Ground");
+			m_background->SetPosition(objData.position);
+			m_background->SetRotation(objData.rotation);
+			return true;
+		}
+		return true;
+	});
+	//レベルを初期化。
+	m_level.Init(
+		L"Assets/level/player_02.tkl",
+		[&](LevelObjectData& objData) {
+		if (objData.EqualName(L"plpath") == true) {
+			m_player = g_gameObjM->NewGO<Player>(0, "Player");
+			m_player->SetPosition(objData.position);
+			//ステータスの設定
+			m_player->GetStatus()->SetLv(1);
+			return true;
+		}
+		return true;
+	});
+	m_level.Init(
+		L"Assets/level/enemyBos.tkl",
+		[&](LevelObjectData& objData) {
+		if (objData.EqualName(L"enpath") == true) {
+			//エネミー！！！
+			m_enemyBos = g_gameObjM->NewGO<EnemyBos>(0, "EnemyBos");
+			m_enemyBos->SetPosition({ objData.position.x + 100.0f,objData.position.y,objData.position.z });
+			m_enemyBos->SetRotation(objData.rotation);
+			m_enemyBos->GetPlayer(m_player);
+			m_enemyBos->GetStatus()->SetLv(2);
+			return true;
+		}
+		return true;
+	});
+	m_gameCamera = g_gameObjM->NewGO<GameCamera>(1, "GameCamera");
+	m_gameCamera->SetPlayer(m_player);
+	m_light = g_gameObjM->NewGO<LightCamera>(1, "LightCamera");
+	m_light->SetPlayer(m_player);
+	m_ui = g_gameObjM->NewGO<UI>(1, "UI");
+}
 void Stage::Update()
 {
-	if (!m_enemyBos->GetBGMFlag()) {
+	if (m_enemyBos != nullptr) {
+		if (!m_enemyBos->GetBGMFlag()) {
 
-		m_bgm_bos.Stop();
-		m_bgm.Play(true);
-	}else{
-		m_bgm.Stop();
-		m_bgm_bos.Play(true);
+			m_bgm_bos.Stop();
+			m_bgm.Play(true);
+		}
+		else {
+			m_bgm.Stop();
+			m_bgm_bos.Play(true);
+		}
 	}
 }
 

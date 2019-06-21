@@ -29,8 +29,8 @@ void PlStateAttack::Update()
 	switch (m_combo)
 	{
 	case Combo::attack_00:
-		m_atkHit = 15;
-		m_comboTiming = 16;
+		m_atkHit = 11;
+		m_comboTiming = 12;
 		m_hitTimer++;
 		m_comboTimer++;
 		m_player->SetAnimation(PlayerState::AnimationState::AnimAttack_00);
@@ -43,6 +43,14 @@ void PlStateAttack::Update()
 		if (m_isAtk) {
 			m_hitTimer = 0;
 		}
+		if (!m_player->GetAnimation().IsPlaying()) {
+			//アニメーションが終わるため初期化
+			m_atk = false;
+			//攻撃の間隔を0に戻す。
+			m_hitTimer = 0;
+			m_comboTimer = 0;
+			m_isAtk = false;
+		}
 		if (m_comboTimer > m_comboTiming) {
 			if (g_pad[0].IsTrigger(enButtonX)) {
 				//コンボでアニメーションの変更のため初期化
@@ -52,18 +60,10 @@ void PlStateAttack::Update()
 				m_isAtk = false;
 			}
 		}
-		if (!m_player->GetAnimation().IsPlaying()) {
-			//アニメーションが終わるため初期化
-			m_atk = false;
-			//攻撃の間隔を0に戻す。
-			m_hitTimer = 0;
-			m_comboTimer = 0;
-			m_isAtk = false;
-		}
 		break;
 	case Combo::attack_01:
 		m_atkHit = 10;
-		m_comboTiming = 16;
+		m_comboTiming = 14;
 		m_hitTimer++;
 		m_comboTimer++;
 		m_player->SetAnimation(PlayerState::AnimationState::AnimAttack_01);
@@ -76,6 +76,15 @@ void PlStateAttack::Update()
 		if (m_isAtk) {
 			m_hitTimer = 0;
 		}
+		if (!m_player->GetAnimation().IsPlaying()) {
+			//アニメーションが終わるため初期化
+			m_combo = Combo::attack_00;
+			m_atk = false;
+			//攻撃の間隔を0に戻す。
+			m_hitTimer = 0;
+			m_comboTimer = 0;
+			m_isAtk = false;
+		}
 		if (m_comboTimer > m_comboTiming) {
 			if (g_pad[0].IsTrigger(enButtonX)) {
 				//コンボでアニメーションの変更のため初期化
@@ -84,6 +93,22 @@ void PlStateAttack::Update()
 				m_comboTimer = 0;
 				m_isAtk = false;
 			}
+		}
+		break;
+	case Combo::attack_02:
+		m_atkHit = 10;
+		m_comboTiming = 11;
+		m_hitTimer++;
+		m_comboTimer++;
+		m_player->SetAnimation(PlayerState::AnimationState::AnimAttack_00);
+		//攻撃されてからあたったタイミングで攻撃したい（簡易版）
+		if (m_hitTimer == m_atkHit) {
+			//攻撃をヒットさせる。
+			g_hitObject->HitTest(m_attckPos, 20.0f, m_player->GetStatus()->GetAtk(), Hit::enemy);
+			m_isAtk = true;
+		}
+		if (m_isAtk) {
+			m_hitTimer = 0;
 		}
 		if (!m_player->GetAnimation().IsPlaying()) {
 			//アニメーションが終わるため初期化
@@ -94,8 +119,17 @@ void PlStateAttack::Update()
 			m_comboTimer = 0;
 			m_isAtk = false;
 		}
+		if (m_comboTimer > m_comboTiming) {
+			if (g_pad[0].IsTrigger(enButtonX)) {
+				//コンボでアニメーションの変更のため初期化
+				m_combo = Combo::attack_03;
+				m_hitTimer = 0;
+				m_comboTimer = 0;
+				m_isAtk = false;
+			}
+		}
 		break;
-	case Combo::attack_02:
+	case Combo::attack_03:
 		m_atkHit = 8;
 		m_hitTimer++;
 		m_player->SetAnimation(PlayerState::AnimationState::AnimAttack_02);

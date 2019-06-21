@@ -19,7 +19,6 @@ public:
 	void PreDraw() override;
 	void Destroy() override;
 private:
-	UI* m_ui = nullptr;
 	Stage* m_stage = nullptr;
 };
 

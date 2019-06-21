@@ -34,3 +34,7 @@ void Dungeon::Draw()
 		g_camera3D.GetProjectionMatrix()
 	);
 }
+
+void Dungeon::Destroy()
+{
+}

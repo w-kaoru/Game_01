@@ -78,7 +78,7 @@ bool Player::Start()
 	m_model.SetNormalMap(m_normalMapSRV);
 	m_model.SetSpecularMap(m_specularMapSRV);
 	//ポジションを少し上にしておく。
-	m_position.y = 200.0f;
+	m_position.y =100.0f;
 	//初期のポジションを設定してリスポーン地点にする。
 	m_respawnPosition = m_position;
 	//キャラクターコントローラーの初期化。

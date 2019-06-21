@@ -17,11 +17,10 @@ class Dungeon;
 class Stage : public IGameObject
 {
 public:
-	enum StageType
-	{
-		type_Dungeon,
-		type_Ground,
-		type_Num
+	enum StageType {
+		Stage_Dungeon,
+		Stage_Ground,
+		Stage_Num
 	};
 	Stage();
 	~Stage();
@@ -29,8 +28,14 @@ public:
 	void Update() override;
 	void Draw() override;
 	void Destroy() override;
-	void StageSelect(StageType st);
+	void StageSelect(StageType type);
+	StageType GetStageType()
+	{
+		return m_type;
+	}
 	bool EnemyDelete(Enemy* ememy);
+	void DungeonNew();
+	void GroundNew();
 private:
 	Background* m_background = nullptr;
 	Dungeon* m_dungeon = nullptr;
@@ -40,9 +45,10 @@ private:
 	LightCamera* m_light = nullptr;			//ライト
 	Level m_level;							//レベルを初期化。
 	std::vector< Enemy* > m_enemyList;		//エネミーのリスト。
-	StageType m_type = StageType::type_Dungeon;
+	UI* m_ui = nullptr;
 	int m_enemyNo = 0;
 	CSoundSource m_bgm;						//BGM。
 	CSoundSource m_bgm_bos;					//BOSのBGM
+	StageType m_type = StageType::Stage_Num;
 };
 
