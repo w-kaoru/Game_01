@@ -36,7 +36,7 @@ void EnStateAttack::Update()
 		hit.y += 50.0f;
 		hit += m_enemy->GetForward() * 50.0f;
 		//UŒ‚‚ğƒqƒbƒg‚³‚¹‚éB
-		g_hitObject->HitTest(hit, 20.0f, m_enemy->GetStatus()->GetAtk(), Hit::player);
+		g_hitObject->HitTest(hit, 40.0f, m_enemy->GetStatus()->GetAtk(), Hit::player);
 		//UŒ‚‚ÌŠÔŠu‚ğ0‚É–ß‚·B
 		m_AttackTiming = 0;
 		m_isAtk = true;

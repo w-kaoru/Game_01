@@ -87,7 +87,7 @@ bool Player::Start()
 	m_rotation.SetRotationDeg(CVector3::AxisY(), 180.0f);
 	//“–‚½‚è”»’è‚ðì‚éB
 	m_hit = g_hitObject->Create(
-		&m_position, 150.0f,
+		&m_position, 90.0f,
 		[&](float damage) {Damage(damage); },
 		Hit::player
 	);

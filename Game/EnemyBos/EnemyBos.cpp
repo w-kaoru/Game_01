@@ -64,7 +64,7 @@ bool EnemyBos::Start()
 	m_stMa.Start();
 	//“–‚½‚è”»’è‚Ìì¬B
 	m_hit = g_hitObject->Create(
-		&m_position, 150.0f,
+		&m_position, 90.0f,
 		[&](float damage) {Damage(damage); },
 		Hit::enemy
 	);

@@ -76,86 +76,90 @@ void UI::Update()
 			{ 0.0f,1.0f }
 		);
 	}
-	{	//HPの処理。
-		m_hpGauge = (m_player->GetStatus()->GetHp() / m_player->GetStatus()->GetMaxHp()) * m_spriteScale;
-		if (m_hpGauge < m_yellowhp) {
-			//ゲージを徐々に減らす
-			m_yellowhp -= 1.5f * (1.0f / 60.0f);
-		}
-		else
+	if (m_player != nullptr) {
 		{
-			m_yellowhp = m_hpGauge;//m_status.GetHp();
-		}
+			//HPの処理。
+			m_hpGauge = (m_player->GetStatus()->GetHp() / m_player->GetStatus()->GetMaxHp()) * m_spriteScale;
+			if (m_hpGauge < m_yellowhp) {
+				//ゲージを徐々に減らす
+				m_yellowhp -= 1.5f * (1.0f / 60.0f);
+			}
+			else
+			{
+				m_yellowhp = m_hpGauge;//m_status.GetHp();
+			}
 
-		if (m_hpGauge < 4.0f) {
-			if (m_ui[UISprite::RedHPGauge].GetAlpha() >= 0.99f) {
-				m_redGaugeDraw = false;
+			if (m_hpGauge < 4.0f) {
+				if (m_ui[UISprite::RedHPGauge].GetAlpha() >= 0.99f) {
+					m_redGaugeDraw = false;
+				}
+				if (m_ui[UISprite::RedHPGauge].GetAlpha() <= 0.01f) {
+					m_redGaugeDraw = true;
+				}
+				if (!m_redGaugeDraw) {
+					m_ui[UISprite::RedHPGauge].DeltaAlpha(-0.05f);
+				}
+				else {
+					m_ui[UISprite::RedHPGauge].DeltaAlpha(0.05f);
+				}
 			}
-			if (m_ui[UISprite::RedHPGauge].GetAlpha() <= 0.01f) {
-				m_redGaugeDraw = true;
+			else
+			{
+				m_ui[UISprite::RedHPGauge].SetAlpha(0.0f);
 			}
-			if (!m_redGaugeDraw) {
-				m_ui[UISprite::RedHPGauge].DeltaAlpha(-0.05f);
-			}
-			else {
-				m_ui[UISprite::RedHPGauge].DeltaAlpha(0.05f);
-			}
+			//スプライトの更新
+			m_ui[UISprite::YellowHPGauge].Update(
+				{ -500.0f, 350.0f, 0.0f },
+				CQuaternion::Identity(),
+				{ m_yellowhp , 1.5f, 1.0f },
+				{ 0.0f,1.0f }
+			);
+			//スプライトの更新
+			m_ui[UISprite::HPGauge].Update(
+				{ -500.0f, 350.0f, 0.0f },
+				CQuaternion::Identity(),
+				{ m_hpGauge, 1.5f, 1.0f },
+				{ 0.0f,1.0f }
+			);
+			//スプライトの更新
+			m_ui[UISprite::RedHPGauge].Update(
+				{ -500.0f, 350.0f, 0.0f },
+				CQuaternion::Identity(),
+				{ m_hpGauge , 1.5f, 1.0f },
+				{ 0.0f,1.0f }
+			);
+			//スプライトの更新
+			m_ui[UISprite::HPFrame].Update(
+				{ -500.0f, 350.0f, 0.0f },
+				CQuaternion::Identity(),
+				{ m_hpFrame , 1.5f, 1.0f },
+				{ 0.0f,1.0f }
+			);
 		}
-		else
 		{
-			m_ui[UISprite::RedHPGauge].SetAlpha(0.0f);
-		}
-		//スプライトの更新
-		m_ui[UISprite::YellowHPGauge].Update(
-			{ -500.0f, 350.0f, 0.0f },
-			CQuaternion::Identity(),
-			{ m_yellowhp , 1.5f, 1.0f },
-			{ 0.0f,1.0f }
-		);
-		//スプライトの更新
-		m_ui[UISprite::HPGauge].Update(
-			{ -500.0f, 350.0f, 0.0f },
-			CQuaternion::Identity(),
-			{ m_hpGauge, 1.5f, 1.0f },
-			{ 0.0f,1.0f }
-		);
-		//スプライトの更新
-		m_ui[UISprite::RedHPGauge].Update(
-			{ -500.0f, 350.0f, 0.0f },
-			CQuaternion::Identity(),
-			{ m_hpGauge , 1.5f, 1.0f },
-			{ 0.0f,1.0f }
-		);
-		//スプライトの更新
-		m_ui[UISprite::HPFrame].Update(
-			{ -500.0f, 350.0f, 0.0f },
-			CQuaternion::Identity(),
-			{ m_hpFrame , 1.5f, 1.0f },
-			{ 0.0f,1.0f }
-		);
-	}
-	{	//ダメージカットの処理。
+			//ダメージカットの処理。
 
-		//スプライトの更新
-		m_ui[UISprite::DCGauge].Update(
-			{ -470.0f, 330.0f, 0.0f },
-			CQuaternion::Identity(),
-			{ m_player->GetDCSpan(), 1.5f, 1.0f },
-			{ 0.0f,1.0f }
-		);
-		//スプライトの更新
-		m_ui[UISprite::DCFrame].Update(
-			{ -470.0f, 330.0f, 0.0f },
-			CQuaternion::Identity(),
-			{ m_player->GetDCValue(), 1.5f, 1.0f },
-			{ 0.0f,1.0f }
-		);
-		//スプライトの更新
-		m_shieldSprite.Update(
-			{ -485.0f, 322.0f, 0.0f },
-			CQuaternion::Identity(),
-			{ 1.0f, 1.0f, 1.0f }
-		);
+			//スプライトの更新
+			m_ui[UISprite::DCGauge].Update(
+				{ -470.0f, 330.0f, 0.0f },
+				CQuaternion::Identity(),
+				{ m_player->GetDCSpan(), 1.5f, 1.0f },
+				{ 0.0f,1.0f }
+			);
+			//スプライトの更新
+			m_ui[UISprite::DCFrame].Update(
+				{ -470.0f, 330.0f, 0.0f },
+				CQuaternion::Identity(),
+				{ m_player->GetDCValue(), 1.5f, 1.0f },
+				{ 0.0f,1.0f }
+			);
+			//スプライトの更新
+			m_shieldSprite.Update(
+				{ -485.0f, 322.0f, 0.0f },
+				CQuaternion::Identity(),
+				{ 1.0f, 1.0f, 1.0f }
+			);
+		}
 	}
 }
 
@@ -190,71 +194,73 @@ void UI::PostDraw()
 			g_camera2D.GetProjectionMatrix()
 		);
 	}
-	{
-		//スプライトを２次元で表示をする。
-		m_ui[UISprite::YellowHPGauge].Draw(
-			g_camera2D.GetViewMatrix(),
-			g_camera2D.GetProjectionMatrix()
-		);
-		//スプライトを２次元で表示をする。
-		m_ui[UISprite::HPGauge].Draw(
-			g_camera2D.GetViewMatrix(),
-			g_camera2D.GetProjectionMatrix()
-		);
-		//スプライトを２次元で表示をする。
-		m_ui[UISprite::RedHPGauge].Draw(
-			g_camera2D.GetViewMatrix(),
-			g_camera2D.GetProjectionMatrix()
-		);
-		//スプライトを２次元で表示をする。
-		m_ui[UISprite::HPFrame].Draw(
-			g_camera2D.GetViewMatrix(),
-			g_camera2D.GetProjectionMatrix()
-		);
-	}
-	{
-		m_ui[UISprite::DCGauge].Draw(
-			g_camera2D.GetViewMatrix(),
-			g_camera2D.GetProjectionMatrix()
-		);
-		//スプライトを２次元で表示をする。
-		m_ui[UISprite::DCFrame].Draw(
-			g_camera2D.GetViewMatrix(),
-			g_camera2D.GetProjectionMatrix()
-		);
-		//スプライトを２次元で表示をする。
-		m_shieldSprite.Draw(
-			g_camera2D.GetViewMatrix(),
-			g_camera2D.GetProjectionMatrix()
-		);
-	}
-	{
-		m_font.BeginDraw();	//フォントの描画開始。
-		if (m_player->GetStatus()->GetLv() < m_player->GetStatus()->GetMaxLv()) {
-			wchar_t Seconds[256];
-			swprintf_s(Seconds, L"Lv.%d", m_player->GetStatus()->GetLv());
-			m_font.Draw(
-				Seconds,
-				{ -640.0f, 360.0f },
-				{ 0.0f,1.0f,0.0f,1.0f },
-				0.0f,
-				1.0f,
-				{ 1.0f, 1.0f }
+	if (m_player != nullptr) {
+		{
+			//スプライトを２次元で表示をする。
+			m_ui[UISprite::YellowHPGauge].Draw(
+				g_camera2D.GetViewMatrix(),
+				g_camera2D.GetProjectionMatrix()
+			);
+			//スプライトを２次元で表示をする。
+			m_ui[UISprite::HPGauge].Draw(
+				g_camera2D.GetViewMatrix(),
+				g_camera2D.GetProjectionMatrix()
+			);
+			//スプライトを２次元で表示をする。
+			m_ui[UISprite::RedHPGauge].Draw(
+				g_camera2D.GetViewMatrix(),
+				g_camera2D.GetProjectionMatrix()
+			);
+			//スプライトを２次元で表示をする。
+			m_ui[UISprite::HPFrame].Draw(
+				g_camera2D.GetViewMatrix(),
+				g_camera2D.GetProjectionMatrix()
 			);
 		}
-		else {
-			wchar_t Seconds[256];
-			swprintf_s(Seconds, L"Lv.Max");
-			m_font.Draw(
-				Seconds,
-				{ -640.0f, 360.0f },
-				{ 0.0f,1.0f,0.0f,1.0f },
-				0.0f,
-				1.0f,
-				{ 1.0f, 1.0f }
+		{
+			m_ui[UISprite::DCGauge].Draw(
+				g_camera2D.GetViewMatrix(),
+				g_camera2D.GetProjectionMatrix()
+			);
+			//スプライトを２次元で表示をする。
+			m_ui[UISprite::DCFrame].Draw(
+				g_camera2D.GetViewMatrix(),
+				g_camera2D.GetProjectionMatrix()
+			);
+			//スプライトを２次元で表示をする。
+			m_shieldSprite.Draw(
+				g_camera2D.GetViewMatrix(),
+				g_camera2D.GetProjectionMatrix()
 			);
 		}
-		m_font.EndDraw();
+		{
+			m_font.BeginDraw();	//フォントの描画開始。
+			if (m_player->GetStatus()->GetLv() < m_player->GetStatus()->GetMaxLv()) {
+				wchar_t Seconds[256];
+				swprintf_s(Seconds, L"Lv.%d", m_player->GetStatus()->GetLv());
+				m_font.Draw(
+					Seconds,
+					{ -640.0f, 360.0f },
+					{ 0.0f,1.0f,0.0f,1.0f },
+					0.0f,
+					1.0f,
+					{ 1.0f, 1.0f }
+				);
+			}
+			else {
+				wchar_t Seconds[256];
+				swprintf_s(Seconds, L"Lv.Max");
+				m_font.Draw(
+					Seconds,
+					{ -640.0f, 360.0f },
+					{ 0.0f,1.0f,0.0f,1.0f },
+					0.0f,
+					1.0f,
+					{ 1.0f, 1.0f }
+				);
+			}
+			m_font.EndDraw();
+		}
 	}
 }
 

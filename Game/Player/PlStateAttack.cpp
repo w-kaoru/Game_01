@@ -63,7 +63,7 @@ void PlStateAttack::Update()
 		break;
 	case Combo::attack_01:
 		m_atkHit = 10;
-		m_comboTiming = 10;
+		m_comboTiming = 16;
 		m_hitTimer++;
 		m_comboTimer++;
 		m_player->SetAnimation(PlayerState::AnimationState::AnimAttack_01);
