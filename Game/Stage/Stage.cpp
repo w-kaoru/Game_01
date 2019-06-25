@@ -9,6 +9,7 @@
 #include "../UI.h"
 #include "../Enemy\Enemy.h"
 #include "../EnemyBos/EnemyBos.h"
+#include "WarpPoint.h"
 
 Stage::Stage()
 {
@@ -20,6 +21,10 @@ Stage::~Stage()
 
 void Stage::Destroy()
 {
+	Release();
+}
+void Stage::Release()
+{
 	if (m_ui != nullptr) g_gameObjM->DeleteGO(m_ui);
 	if(m_background!=nullptr) g_gameObjM->DeleteGO(m_background);
 	if (m_dungeon != nullptr) g_gameObjM->DeleteGO(m_dungeon);
@@ -30,9 +35,7 @@ void Stage::Destroy()
 	for (auto& enemy : m_enemyList) {
 		if(enemy!=nullptr) g_gameObjM->DeleteGO(enemy);
 	}
-	if (m_enemyBos) {
-		g_gameObjM->DeleteGO(m_enemyBos);
-	}
+	if (m_enemyBos) g_gameObjM->DeleteGO(m_enemyBos);
 }
 bool Stage::EnemyDelete(Enemy* enemy)
 {
@@ -205,7 +208,7 @@ void Stage::GroundNew()
 	});
 	//レベルを初期化。
 	m_level.Init(
-		L"Assets/level/player_02.tkl",
+		L"Assets/level/player_01.tkl",
 		[&](LevelObjectData& objData) {
 		if (objData.EqualName(L"plpath") == true) {
 			m_player = g_gameObjM->NewGO<Player>(0, "Player");
@@ -230,6 +233,18 @@ void Stage::GroundNew()
 		}
 		return true;
 	});
+	m_level.Init(
+		L"Assets/level/Warp_point.tkl",
+		[&](LevelObjectData& objData) {
+		if (objData.EqualName(L"Warp_point") == true) {
+			//エネミー！！！
+			m_warpPoint = g_gameObjM->NewGO<WarpPoint>(0, "WarpPoint");
+			m_warpPoint->SetPosition(objData.position);
+			m_warpPoint->SetRotation(objData.rotation);
+			return true;
+		}
+		return true;
+	});
 	m_gameCamera = g_gameObjM->NewGO<GameCamera>(1, "GameCamera");
 	m_gameCamera->SetPlayer(m_player);
 	m_light = g_gameObjM->NewGO<LightCamera>(1, "LightCamera");
@@ -238,6 +253,13 @@ void Stage::GroundNew()
 }
 void Stage::Update()
 {
+	if (m_player != nullptr && m_warpPoint != nullptr) {
+		m_warpPoint->ToLen(m_player->GetPosition());
+		if (g_pad[0].IsTrigger(enButtonA) && m_warpPoint->GetIsWarp()) {
+			Release();
+			StageSelect(StageType::Stage_Dungeon);
+		}
+	}
 	if (m_enemyBos != nullptr) {
 		if (!m_enemyBos->GetBGMFlag()) {
 

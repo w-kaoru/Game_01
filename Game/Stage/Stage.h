@@ -13,6 +13,7 @@ class LightCamera;
 class UI;
 class Background;
 class Dungeon;
+class WarpPoint;
 //ゲームクラス。
 class Stage : public IGameObject
 {
@@ -28,6 +29,7 @@ public:
 	void Update() override;
 	void Draw() override;
 	void Destroy() override;
+	void Release();
 	void StageSelect(StageType type);
 	StageType GetStageType()
 	{
@@ -43,6 +45,7 @@ private:
 	EnemyBos* m_enemyBos = nullptr;			//エネミーボス
 	GameCamera* m_gameCamera= nullptr;		//ゲームカメラ。
 	LightCamera* m_light = nullptr;			//ライト
+	WarpPoint* m_warpPoint = nullptr;
 	Level m_level;							//レベルを初期化。
 	std::vector< Enemy* > m_enemyList;		//エネミーのリスト。
 	UI* m_ui = nullptr;

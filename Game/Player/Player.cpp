@@ -58,7 +58,7 @@ Player::Player() :m_stMa(this)
 	m_status.SetStandardHp(60);
 	m_status.SetStandardAgi(650.0f);
 	m_status.SetStandardDef(1.0f);
-	m_status.SetStandardAtk(12.5f);
+	m_status.SetStandardAtk(1200.5f);
 	m_status.SetMaxLv(100);
 	m_status.StatusUp();
 }

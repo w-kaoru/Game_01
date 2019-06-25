@@ -21,7 +21,7 @@ void Game::Destroy()
 bool Game::Start()
 {
 	m_stage = g_gameObjM->NewGO<Stage>(0, "Stage");
-	m_stage->StageSelect(Stage::StageType::Stage_Dungeon);
+	m_stage->StageSelect(Stage::StageType::Stage_Ground);
 	return false;
 }
 

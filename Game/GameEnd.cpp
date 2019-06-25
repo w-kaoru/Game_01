@@ -71,6 +71,12 @@ void GameEnd::Update()
 			CQuaternion::Identity(),
 			CVector3::One()
 		);
+		SelectYesNo();
+		m_ArrowSprite.Update(
+			m_ArrowPos,
+			CQuaternion::Identity(),
+			CVector3::One()
+		);
 		break;
 	case gameOver:
 		m_gameOverSprite.Update(
@@ -78,21 +84,30 @@ void GameEnd::Update()
 			CQuaternion::Identity(),
 			CVector3::One()
 		);
+		SelectYesNo();
+		m_ArrowSprite.Update(
+			m_ArrowPos,
+			CQuaternion::Identity(),
+			CVector3::One()
+		);
 		break;
+	case Ground:
+		g_gameObjM->DeleteGO(this);
+		g_gameObjM->NewGO<Game>(0, "Game");
 	case gameDefault:
 		m_gameEndSprite.Update(
 			CVector3::Zero(),
 			CQuaternion::Identity(),
 			CVector3::One()
 		);
+		SelectYesNo();
+		m_ArrowSprite.Update(
+			m_ArrowPos,
+			CQuaternion::Identity(),
+			CVector3::One()
+		);
 		break;
 	}
-	SelectYesNo();
-	m_ArrowSprite.Update(
-		m_ArrowPos,
-		CQuaternion::Identity(),
-		CVector3::One()
-	);
 }
 
 void GameEnd::PostDraw()
@@ -109,9 +124,19 @@ void GameEnd::PostDraw()
 			g_camera2D.GetViewMatrix(),
 			g_camera2D.GetProjectionMatrix()
 		);
+		//–îˆó•`‰æB
+		m_ArrowSprite.Draw(
+			g_camera2D.GetViewMatrix(),
+			g_camera2D.GetProjectionMatrix()
+		);
 		break;
 	case gameOver:
 		m_gameOverSprite.Draw(
+			g_camera2D.GetViewMatrix(),
+			g_camera2D.GetProjectionMatrix()
+		);
+		//–îˆó•`‰æB
+		m_ArrowSprite.Draw(
 			g_camera2D.GetViewMatrix(),
 			g_camera2D.GetProjectionMatrix()
 		);
@@ -121,12 +146,11 @@ void GameEnd::PostDraw()
 			g_camera2D.GetViewMatrix(),
 			g_camera2D.GetProjectionMatrix()
 		);
+		//–îˆó•`‰æB
+		m_ArrowSprite.Draw(
+			g_camera2D.GetViewMatrix(),
+			g_camera2D.GetProjectionMatrix()
+		);
 		break;
 	}
-
-	//–îˆó•`‰æB
-	m_ArrowSprite.Draw(
-		g_camera2D.GetViewMatrix(),
-		g_camera2D.GetProjectionMatrix()
-	);
 }

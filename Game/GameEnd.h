@@ -6,6 +6,7 @@ public:
 	{
 		gameCleared,
 		gameOver,
+		Ground,
 		gameDefault
 	};
 	GameEnd();
