@@ -52,7 +52,7 @@
 #include "sound/SoundSource.h"
 
 extern HitObject* g_hitObject;
-
+extern int g_playerLv;
 const float FRAME_BUFFER_W = 1280.0f;				//フレームバッファの幅。
 const float FRAME_BUFFER_H = 720.0f;				//フレームバッファの高さ。
 

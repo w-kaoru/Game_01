@@ -58,9 +58,9 @@ Player::Player() :m_stMa(this)
 	m_status.SetStandardHp(60);
 	m_status.SetStandardAgi(650.0f);
 	m_status.SetStandardDef(1.0f);
-	m_status.SetStandardAtk(1200.5f);
+	m_status.SetStandardAtk(13.5f);
+	//m_status.SetStandardAtk(1300.5f);
 	m_status.SetMaxLv(100);
-	m_status.StatusUp();
 }
 Player::~Player()
 {
@@ -95,6 +95,7 @@ bool Player::Start()
 	m_se.Init(L"Assets/sound/se_damage.wav");
 	m_se.SetVolume(1.0f);
 	m_model.SetShadowReciever(true);
+	m_status.StatusUp();
 	return true;
 }
 
@@ -128,6 +129,7 @@ void Player::Damage(float damage)
 void Player::Update()
 {
 	int lv = m_status.GetLv();
+	g_playerLv = lv;
 	//‘O•ûŒü‚Ìæ“¾B
 	m_rotMatrix.MakeRotationFromQuaternion(m_rotation);
 	m_forward.x = m_rotMatrix.m[2][0];

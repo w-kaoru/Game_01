@@ -98,7 +98,7 @@ void Stage::DungeonNew()
 			m_player = g_gameObjM->NewGO<Player>(0, "Player");
 			m_player->SetPosition(objData.position);
 			//ステータスの設定
-			m_player->GetStatus()->SetLv(1);
+			m_player->GetStatus()->SetLv(g_playerLv);
 			return true;
 		}
 		return true;
@@ -214,7 +214,7 @@ void Stage::GroundNew()
 			m_player = g_gameObjM->NewGO<Player>(0, "Player");
 			m_player->SetPosition(objData.position);
 			//ステータスの設定
-			m_player->GetStatus()->SetLv(1);
+			m_player->GetStatus()->SetLv(g_playerLv);
 			return true;
 		}
 		return true;

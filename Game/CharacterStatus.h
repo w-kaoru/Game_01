@@ -10,7 +10,7 @@ public:
 		if (m_lv > 1) {
 			if (m_lv <= m_maxLv) {
 				m_lvUp = (float(m_lv)) / 10.0f;
-				m_lvUp += 1.2f;
+				m_lvUp += 1.0f;
 			}
 			else
 			{
