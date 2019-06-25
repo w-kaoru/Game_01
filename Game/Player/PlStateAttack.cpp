@@ -70,7 +70,7 @@ void PlStateAttack::Update()
 		//攻撃されてからあたったタイミングで攻撃したい（簡易版）
 		if (m_hitTimer == m_atkHit) {
 			//攻撃をヒットさせる。
-			g_hitObject->HitTest(m_player->GetPosition(), 20.0f, m_player->GetStatus()->GetAtk(), Hit::enemy);
+			g_hitObject->HitTest(m_player->GetPosition(), 30.0f, m_player->GetStatus()->GetAtk(), Hit::enemy);
 			m_isAtk = true;
 		}
 		if (m_isAtk) {
