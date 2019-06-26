@@ -228,7 +228,7 @@ void Stage::GroundNew()
 			m_enemyBos->SetPosition({ objData.position.x + 100.0f,objData.position.y,objData.position.z });
 			m_enemyBos->SetRotation(objData.rotation);
 			m_enemyBos->GetPlayer(m_player);
-			m_enemyBos->GetStatus()->SetLv(100);
+			m_enemyBos->GetStatus()->SetLv(30);
 			return false;
 		}
 		return true;

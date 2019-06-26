@@ -61,7 +61,7 @@ Player::Player() :m_stMa(this)
 	m_status.SetStandardDef(1.0f);
 	m_status.SetStandardAtk(13.5f);
 	//m_status.SetStandardAtk(1300.5f);
-	m_status.SetMaxLv(100);
+	m_status.SetMaxLv(30);
 }
 Player::~Player()
 {
