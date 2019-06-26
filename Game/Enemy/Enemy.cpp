@@ -56,6 +56,7 @@ bool Enemy::Start()
 		m_status.SetStandardAgi(550.0f);
 		m_status.SetStandardDef(1.5f);
 		m_status.SetStandardAtk(3.0f);
+		m_status.SetMaxLv(100);
 		m_status.StatusUp();
 		break;
 	case type_troll:
@@ -94,7 +95,7 @@ bool Enemy::Start()
 	//hpバーのスプライト。
 	m_hpSprite.Init(L"Assets/sprite/hp_gauge.dds", 40.0f, 10.0f);
 	m_shieldSprite.Init(L"Assets/sprite/shield.dds", 20.0f, 20.0f);
-	m_position.y = 200.0f;
+	m_position.y += 200.0f;
 	//キャラクターコントローラーの初期化。
 	m_charaCon.Init(40.0f, 110.0f, m_position);
 	//エネミーのステートマシンのスタート関数を呼ぶ。

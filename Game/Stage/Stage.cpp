@@ -117,7 +117,7 @@ void Stage::DungeonNew()
 			enemy->SetPlayer(m_player);
 			m_enemyList.push_back(enemy);
 			//エネミーのレベル
-			enemy->GetStatus()->SetLv(3);
+			enemy->GetStatus()->SetLv(g_playerLv + 2);
 			return true;
 		}
 		if (objData.EqualName(L"enpath2") == true) {
@@ -131,7 +131,7 @@ void Stage::DungeonNew()
 			enemy->SetPlayer(m_player);
 			m_enemyList.push_back(enemy);
 			//エネミーのレベル
-			enemy->GetStatus()->SetLv(3);
+			enemy->GetStatus()->SetLv(g_playerLv + 2);
 			return true;
 		}
 		return true;
@@ -150,7 +150,7 @@ void Stage::DungeonNew()
 			enemy->SetPlayer(m_player);
 			m_enemyList.push_back(enemy);
 			//エネミーのレベル
-			enemy->GetStatus()->SetLv(7);
+			enemy->GetStatus()->SetLv(g_playerLv + 6);
 			enemy->GetStatus()->StatusUp();
 			return true;
 		}
@@ -165,7 +165,7 @@ void Stage::DungeonNew()
 			enemy->SetPlayer(m_player);
 			m_enemyList.push_back(enemy);
 			//エネミーのレベル
-			enemy->GetStatus()->SetLv(6);
+			enemy->GetStatus()->SetLv(g_playerLv + 5);
 			enemy->GetStatus()->StatusUp();
 			return true;
 		}
@@ -181,7 +181,7 @@ void Stage::DungeonNew()
 			m_enemyBos->SetPosition(objData.position);
 			m_enemyBos->SetRotation(objData.rotation);
 			m_enemyBos->GetPlayer(m_player);
-			m_enemyBos->GetStatus()->SetLv(8);
+			m_enemyBos->GetStatus()->SetLv(g_playerLv + 7);
 			return true;
 		}
 		return true;
@@ -208,7 +208,7 @@ void Stage::GroundNew()
 	});
 	//レベルを初期化。
 	m_level.Init(
-		L"Assets/level/player_01.tkl",
+		L"Assets/level/player_02.tkl",
 		[&](LevelObjectData& objData) {
 		if (objData.EqualName(L"plpath") == true) {
 			m_player = g_gameObjM->NewGO<Player>(0, "Player");
@@ -220,16 +220,16 @@ void Stage::GroundNew()
 		return true;
 	});
 	m_level.Init(
-		L"Assets/level/enemyBos.tkl",
+		L"Assets/level/BosHouse.tkl",
 		[&](LevelObjectData& objData) {
-		if (objData.EqualName(L"enpath") == true) {
+		if (objData.EqualName(L"BosHouse") == true) {
 			//エネミー！！！
 			m_enemyBos = g_gameObjM->NewGO<EnemyBos>(0, "EnemyBos");
 			m_enemyBos->SetPosition({ objData.position.x + 100.0f,objData.position.y,objData.position.z });
 			m_enemyBos->SetRotation(objData.rotation);
 			m_enemyBos->GetPlayer(m_player);
-			m_enemyBos->GetStatus()->SetLv(2);
-			return true;
+			m_enemyBos->GetStatus()->SetLv(100);
+			return false;
 		}
 		return true;
 	});

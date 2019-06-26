@@ -20,7 +20,7 @@ bool GameCamera::Start()
 		}
 	);
 	g_camera3D.SetTarget(m_player->GetPosition());
-	g_camera3D.SetFar(20000.0f);
+	g_camera3D.SetFar(2000000.0f);
 	//バネカメラの大きさ。
 	m_springCamera.Init(
 		0.0001f,

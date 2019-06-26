@@ -56,7 +56,7 @@ bool EnemyBos::Start()
 	//hpバーのスプライト。
 	m_hpSprite.Init(L"Assets/sprite/hp_gauge.dds", 40.0f, 10.0f);
 	m_shieldSprite.Init(L"Assets/sprite/shield.dds", 20.0f, 20.0f);
-	m_position.y = 200.0f;
+	m_position.y += 200.0f;
 	//キャラクターコントローラーの初期化。
 	m_charaCon.Init(50.0f, 110.0f, m_position);
 	//エネミーのステートマシンのスタート関数を呼ぶ。
@@ -78,6 +78,7 @@ bool EnemyBos::Start()
 	m_status.SetStandardAgi(550.0f);
 	m_status.SetStandardDef(6.0f);
 	m_status.SetStandardAtk(17.0f);
+	m_status.SetMaxLv(100);
 	m_status.StatusUp();
 	return true;
 }

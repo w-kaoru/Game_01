@@ -56,7 +56,7 @@ Player::Player() :m_stMa(this)
 		false, nullptr, &m_specularMapSRV);
 
 	m_status.SetStandardHp(60);
-	m_status.SetStandardAgi(650.0f);
+	m_status.SetStandardAgi(850.0f);
 	m_status.SetStandardDef(1.0f);
 	m_status.SetStandardAtk(13.5f);
 	//m_status.SetStandardAtk(1300.5f);
@@ -78,7 +78,7 @@ bool Player::Start()
 	m_model.SetNormalMap(m_normalMapSRV);
 	m_model.SetSpecularMap(m_specularMapSRV);
 	//ポジションを少し上にしておく。
-	m_position.y =100.0f;
+	m_position.y += 100.0f;
 	//初期のポジションを設定してリスポーン地点にする。
 	m_respawnPosition = m_position;
 	//キャラクターコントローラーの初期化。
