@@ -57,6 +57,7 @@ Player::Player() :m_stMa(this)
 
 	m_status.SetStandardHp(60);
 	m_status.SetStandardAgi(850.0f);
+	//m_status.SetStandardAgi(1850.0f);
 	m_status.SetStandardDef(1.0f);
 	m_status.SetStandardAtk(13.5f);
 	//m_status.SetStandardAtk(1300.5f);
@@ -138,14 +139,13 @@ void Player::Update()
 	m_forward.Normalize();
 	//経験値
 	//レベルアップの条件
-	int exp = lv;
-	if (m_exp >= exp) {
+	if (g_playerEXP / 2.5f >= lv) {
 		if (lv < m_status.GetMaxLv()) {
 			m_status.SetHp(m_status.GetMaxHp());
 			m_status.SetLv(lv);
 			m_status.LvUp();
 			m_status.StatusUp();
-			m_exp = 0;
+			g_playerEXP -= lv;
 		}
 	}
 	//ステートマシンの更新。

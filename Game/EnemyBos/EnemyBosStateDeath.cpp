@@ -5,6 +5,7 @@
 #include "../Game.h"
 #include "../GameEnd.h"
 #include "../Stage/Stage.h"
+#include "../Player/Player.h"
 
 
 EnemyBosStateDeath::EnemyBosStateDeath(EnemyBos* enbos, EnemyBosStateMachine* enstm)
@@ -18,6 +19,12 @@ EnemyBosStateDeath::~EnemyBosStateDeath()
 
 bool EnemyBosStateDeath::Start()
 {
+	static bool f=false;
+	if (f == false) {
+		f = true;
+		float exp = max(10.0f, float(m_enemy->GetStatus()->GetLv()));
+		g_gameObjM->FindGO<Player>("Player")->EXP(exp);
+	}
 	return false;
 }
 

@@ -82,13 +82,13 @@ void Stage::DungeonNew()
 	m_level.Init(
 		L"Assets/level/Dungeon_01.tkl",
 		[&](LevelObjectData& objData) {
-		if (objData.EqualName(L"Dungeon") == true) {
+		/*if (objData.EqualName(L"Dungeon") == true) {
 			m_dungeon = g_gameObjM->NewGO<Dungeon>(0, "Dungeon");
 			m_dungeon->SetPosition(objData.position);
 			m_dungeon->SetRotation(objData.rotation);
 			return true;
-		}
-		return true;
+		}*/
+		return false;
 	});
 	//レベルを初期化。
 	m_level.Init(
@@ -198,13 +198,13 @@ void Stage::GroundNew()
 	m_level.Init(
 		L"Assets/level/Map.tkl",
 		[&](LevelObjectData& objData) {
-		if (objData.EqualName(L"ground") == true) {
+		/*if (objData.EqualName(L"ground") == true) {
 			m_background = g_gameObjM->NewGO<Background>(0, "Ground");
 			m_background->SetPosition(objData.position);
 			m_background->SetRotation(objData.rotation);
-			return true;
-		}
-		return true;
+			return false;
+		}*/
+		return false;
 	});
 	//レベルを初期化。
 	m_level.Init(

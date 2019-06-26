@@ -245,12 +245,6 @@
       <Filter>EnemyBos</Filter>
     </ClCompile>
     <ClCompile Include="UI.cpp" />
-    <ClCompile Include="Stage\Dungeon.cpp">
-      <Filter>Stage</Filter>
-    </ClCompile>
-    <ClCompile Include="Stage\Background.cpp">
-      <Filter>Stage</Filter>
-    </ClCompile>
     <ClCompile Include="Stage\Stage.cpp">
       <Filter>Stage</Filter>
     </ClCompile>
@@ -471,12 +465,6 @@
       <Filter>EnemyBos</Filter>
     </ClInclude>
     <ClInclude Include="UI.h" />
-    <ClInclude Include="Stage\Dungeon.h">
-      <Filter>Stage</Filter>
-    </ClInclude>
-    <ClInclude Include="Stage\Background.h">
-      <Filter>Stage</Filter>
-    </ClInclude>
     <ClInclude Include="Stage\Stage.h">
       <Filter>Stage</Filter>
     </ClInclude>

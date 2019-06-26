@@ -288,7 +288,8 @@ void Enemy::Update()
 			20.0f, 20.0f, 20.0f
 		);
 		g_gameObjM->FindGO<Stage>("Stage")->EnemyDelete(this);
-		m_player->EXP(1);
+		float exp = max(2.0f, float(m_status.GetLv() - 5.0f));
+		m_player->EXP(exp);
 	}
 }
 

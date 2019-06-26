@@ -60,9 +60,9 @@ public:
 	void SetMoveSpeed(CVector3 ms) {
 		m_moveSpeed = ms;
 	}
-	void EXP(int exp)
+	void EXP(float exp)
 	{
-		m_exp += exp;
+		g_playerEXP += exp;
 	}
 	void SetDamageCut(bool damage)
 	{
@@ -99,7 +99,7 @@ private:
 	const Hit* m_hit;
 	CharacterStatus m_status;	//プレイヤーのステイタス
 	float m_maxHp = 0.0f;
-	int m_exp = 0;
+	//float m_exp = 0.0f;
 	bool m_damageCut = false;
 	float m_damageCutSpan = 6.0f;
 	float m_damageCutValue = 6.0f;
