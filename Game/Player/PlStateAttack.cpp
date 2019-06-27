@@ -29,15 +29,15 @@ void PlStateAttack::Update()
 	switch (m_combo)
 	{
 	case Combo::attack_00:
-		m_atkHit = 15;
-		m_comboTiming = 16;
+		m_atkHit = 14;
+		m_comboTiming = 15;
 		m_hitTimer++;
 		m_comboTimer++;
 		m_player->SetAnimation(PlayerState::AnimationState::AnimAttack_00);
 		//攻撃されてからあたったタイミングで攻撃したい（簡易版）
 		if (m_hitTimer == m_atkHit) {
 			//攻撃をヒットさせる。
-			g_hitObject->HitTest(m_attckPos, 20.0f, m_player->GetStatus()->GetAtk(), Hit::enemy);
+			g_hitObject->HitTest(m_attckPos, 30.0f, m_player->GetStatus()->GetAtk(), Hit::enemy);
 			m_isAtk = true;
 		}
 		if (m_isAtk) {
