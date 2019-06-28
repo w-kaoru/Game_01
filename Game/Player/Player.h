@@ -62,7 +62,7 @@ public:
 	}
 	void EXP(float exp)
 	{
-		g_playerEXP += exp;
+		g_gameObjM->FindGO<PlayerSave>("PlayerSave")->exp += exp;
 	}
 	void SetDamageCut(bool damage)
 	{
@@ -87,7 +87,6 @@ private:
 	Animation m_animation;								//アニメーション。
 	AnimationClip m_animationClips[PlayerState::AnimationState::AnimNum];	//アニメーションクリップ。
 	CVector3 m_position = CVector3::Zero();				//座標。
-	CVector3 m_respawnPosition = CVector3::Zero();		//リスポーン座標。
 	CVector3 m_scale = CVector3::One();					//拡大率。
 	CVector3 m_moveSpeed = CVector3::Zero();			//移動速度。
 	CQuaternion m_rotation = CQuaternion::Identity();	//回転。
@@ -99,7 +98,7 @@ private:
 	const Hit* m_hit;
 	CharacterStatus m_status;	//プレイヤーのステイタス
 	float m_maxHp = 0.0f;
-	//float m_exp = 0.0f;
+	float m_exp = 0.0f;
 	bool m_damageCut = false;
 	float m_damageCutSpan = 6.0f;
 	float m_damageCutValue = 6.0f;

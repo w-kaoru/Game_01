@@ -477,6 +477,7 @@
     <ClInclude Include="Stage\WarpPoint.h">
       <Filter>Stage</Filter>
     </ClInclude>
+    <ClInclude Include="Player\PlayerSave.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\enpath2.fbx">

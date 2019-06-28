@@ -20,7 +20,10 @@ bool EnStateDamage::Start()
 	float hp = m_enemy->GetStatus()->GetHp();
 	m_isDamage = true;
 	//UŒ‚‚ð‚­‚ç‚Á‚½‚Ì‚ÅHP‚©‚ç‚­‚ç‚Á‚½•ª‚ðˆø‚­
-	hp = (hp + m_enemy->GetStatus()->GetDef()) - m_damage;
+	float dmg = m_enemy->GetStatus()->GetDef() - m_damage;
+	dmg *= -1.0f;
+	dmg = max(0.01f, dmg);
+	hp = hp - dmg;
 	hp = min(hp, m_enemy->GetStatus()->GetHp());
 	hp = max(0.0f, hp);
 	m_enemy->GetStatus()->SetHp(hp);

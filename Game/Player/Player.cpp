@@ -80,8 +80,6 @@ bool Player::Start()
 	m_model.SetSpecularMap(m_specularMapSRV);
 	//ポジションを少し上にしておく。
 	m_position.y += 100.0f;
-	//初期のポジションを設定してリスポーン地点にする。
-	m_respawnPosition = m_position;
 	//キャラクターコントローラーの初期化。
 	m_charaCon.Init(40.0f, 110.0f, m_position);
 	m_stMa.Start();
@@ -130,7 +128,7 @@ void Player::Damage(float damage)
 void Player::Update()
 {
 	int lv = m_status.GetLv();
-	g_playerLv = lv;
+	g_gameObjM->FindGO<PlayerSave>("PlayerSave")->Lv = lv;
 	//前方向の取得。
 	m_rotMatrix.MakeRotationFromQuaternion(m_rotation);
 	m_forward.x = m_rotMatrix.m[2][0];
@@ -139,13 +137,13 @@ void Player::Update()
 	m_forward.Normalize();
 	//経験値
 	//レベルアップの条件
-	if (g_playerEXP / 2.5f >= lv) {
+	if (g_gameObjM->FindGO<PlayerSave>("PlayerSave")->exp / 2.5f >= lv) {
 		if (lv < m_status.GetMaxLv()) {
 			m_status.SetHp(m_status.GetMaxHp());
 			m_status.SetLv(lv);
 			m_status.LvUp();
 			m_status.StatusUp();
-			g_playerEXP -= lv;
+			g_gameObjM->FindGO<PlayerSave>("PlayerSave")->exp -= lv;
 		}
 	}
 	//ステートマシンの更新。

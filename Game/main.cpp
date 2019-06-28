@@ -44,8 +44,6 @@ void TermnateGame()
 // ウィンドウプログラムのメイン関数。
 ///////////////////////////////////////////////////////////////////
 HitObject* g_hitObject;
-int g_playerLv;
-int g_playerEXP;
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow)
 {
 	g_camera2D.SetUpdateProjMatrixFunc(Camera::enUpdateProjMatrixFunc_Ortho);
@@ -61,8 +59,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	//タイトルシーンの作成。
 	g_hitObject = new HitObject;
 	g_gameObjM->NewGO<Title>(0,"Title");
-	g_playerLv = 1;
-	g_playerEXP = 0;
+	g_gameObjM->NewGO<PlayerSave>(0, "PlayerSave")->NeworLoadGame(1, 0.0f);
 	//ゲームループ。
 	while (DispatchWindowMessage() == true)
 	{

@@ -6,7 +6,7 @@ public:
 	IGameObject();
 	virtual ~IGameObject();
 	virtual bool Start() { return true; }
-	virtual void Update() = 0;
+	virtual void Update() {};
 	virtual void Draw() {};
 	virtual void Destroy() {};
 

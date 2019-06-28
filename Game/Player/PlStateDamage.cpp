@@ -17,7 +17,10 @@ bool PlStateDamage::Start()
 	//UŒ‚‚ð‚­‚ç‚Á‚½‚Ì‚ÅHP‚©‚ç‚­‚ç‚Á‚½•ª‚ðˆø‚­
 	float hp = m_player->GetStatus()->GetHp();
 	m_player->SetAnimation(PlayerState::AnimationState::AnimDamage);
-	hp = (hp + m_player->GetStatus()->GetDef()) - m_damage;
+	float dmg = m_player->GetStatus()->GetDef() - m_damage;
+	dmg *= -1.0f;
+	dmg = max(0.01f, dmg);
+	hp = hp - dmg;
 	hp = min(hp, m_player->GetStatus()->GetHp());
 	hp = max(0.0f, hp);
 	m_isDamage = true;

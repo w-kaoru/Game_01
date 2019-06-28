@@ -98,7 +98,7 @@ void Stage::DungeonNew()
 			m_player = g_gameObjM->NewGO<Player>(0, "Player");
 			m_player->SetPosition(objData.position);
 			//ステータスの設定
-			m_player->GetStatus()->SetLv(g_playerLv);
+			m_player->GetStatus()->SetLv(g_gameObjM->FindGO<PlayerSave>("PlayerSave")->Lv);
 			return true;
 		}
 		return true;
@@ -117,7 +117,7 @@ void Stage::DungeonNew()
 			enemy->SetPlayer(m_player);
 			m_enemyList.push_back(enemy);
 			//エネミーのレベル
-			enemy->GetStatus()->SetLv(g_playerLv + 2);
+			enemy->GetStatus()->SetLv(g_gameObjM->FindGO<PlayerSave>("PlayerSave")->Lv + 2);
 			return true;
 		}
 		if (objData.EqualName(L"enpath2") == true) {
@@ -131,7 +131,7 @@ void Stage::DungeonNew()
 			enemy->SetPlayer(m_player);
 			m_enemyList.push_back(enemy);
 			//エネミーのレベル
-			enemy->GetStatus()->SetLv(g_playerLv + 2);
+			enemy->GetStatus()->SetLv(g_gameObjM->FindGO<PlayerSave>("PlayerSave")->Lv + 2);
 			return true;
 		}
 		return true;
@@ -150,7 +150,7 @@ void Stage::DungeonNew()
 			enemy->SetPlayer(m_player);
 			m_enemyList.push_back(enemy);
 			//エネミーのレベル
-			enemy->GetStatus()->SetLv(g_playerLv + 6);
+			enemy->GetStatus()->SetLv(g_gameObjM->FindGO<PlayerSave>("PlayerSave")->Lv + 6);
 			enemy->GetStatus()->StatusUp();
 			return true;
 		}
@@ -165,7 +165,7 @@ void Stage::DungeonNew()
 			enemy->SetPlayer(m_player);
 			m_enemyList.push_back(enemy);
 			//エネミーのレベル
-			enemy->GetStatus()->SetLv(g_playerLv + 5);
+			enemy->GetStatus()->SetLv(g_gameObjM->FindGO<PlayerSave>("PlayerSave")->Lv + 5);
 			enemy->GetStatus()->StatusUp();
 			return true;
 		}
@@ -181,7 +181,7 @@ void Stage::DungeonNew()
 			m_enemyBos->SetPosition(objData.position);
 			m_enemyBos->SetRotation(objData.rotation);
 			m_enemyBos->GetPlayer(m_player);
-			m_enemyBos->GetStatus()->SetLv(g_playerLv + 7);
+			m_enemyBos->GetStatus()->SetLv(g_gameObjM->FindGO<PlayerSave>("PlayerSave")->Lv + 7);
 			return true;
 		}
 		return true;
@@ -214,7 +214,7 @@ void Stage::GroundNew()
 			m_player = g_gameObjM->NewGO<Player>(0, "Player");
 			m_player->SetPosition(objData.position);
 			//ステータスの設定
-			m_player->GetStatus()->SetLv(g_playerLv);
+			m_player->GetStatus()->SetLv(g_gameObjM->FindGO<PlayerSave>("PlayerSave")->Lv);
 			return true;
 		}
 		return true;
