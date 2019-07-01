@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Stage.h"
-#include "Background.h"
-#include "Dungeon.h"
+//#include "Background.h"
+//#include "Dungeon.h"
 #include "../Player\Player.h"
 #include "../level/Level.h"
 #include "../GameCamera.h"
@@ -26,8 +26,8 @@ void Stage::Destroy()
 void Stage::Release()
 {
 	if (m_ui != nullptr) g_gameObjM->DeleteGO(m_ui);
-	if(m_background!=nullptr) g_gameObjM->DeleteGO(m_background);
-	if (m_dungeon != nullptr) g_gameObjM->DeleteGO(m_dungeon);
+	//if(m_background!=nullptr) g_gameObjM->DeleteGO(m_background);
+	//if (m_dungeon != nullptr) g_gameObjM->DeleteGO(m_dungeon);
 	if (m_gameCamera != nullptr) g_gameObjM->DeleteGO(m_gameCamera);
 	if (m_light != nullptr) g_gameObjM->DeleteGO(m_light);
 	if (m_player != nullptr) g_gameObjM->DeleteGO(m_player);
@@ -35,7 +35,8 @@ void Stage::Release()
 	for (auto& enemy : m_enemyList) {
 		if(enemy!=nullptr) g_gameObjM->DeleteGO(enemy);
 	}
-	if (m_enemyBos) g_gameObjM->DeleteGO(m_enemyBos);
+	if (m_enemyBos!=nullptr) g_gameObjM->DeleteGO(m_enemyBos);
+	if (m_warpPoint != nullptr) g_gameObjM->DeleteGO(m_warpPoint);
 }
 bool Stage::EnemyDelete(Enemy* enemy)
 {
@@ -191,6 +192,7 @@ void Stage::DungeonNew()
 	m_light = g_gameObjM->NewGO<LightCamera>(1, "LightCamera");
 	m_light->SetPlayer(m_player);
 	m_ui = g_gameObjM->NewGO<UI>(1, "UI");
+	m_warpPoint = nullptr;
 }
 
 void Stage::GroundNew()
@@ -220,13 +222,45 @@ void Stage::GroundNew()
 		return true;
 	});
 	m_level.Init(
+		L"Assets/level/SpawnEnemy.tkl",
+		[&](LevelObjectData& objData) {
+		if (objData.EqualName(L"enpath") == true) {
+			auto pos = objData.position;
+			if (m_enemyList.size() <= 0) {
+				for (int i = 0; i < 5; i++) {
+					pos.x += 150.0f;
+					auto rot = objData.rotation;
+					rot.SetRotationDeg(CVector3::AxisY(), 180.0f);
+					char enemyName[256];
+					sprintf(enemyName, "EnemyS%d", m_enemyNo++);
+					auto enemy = g_gameObjM->NewGO<Enemy>(0, enemyName);
+					enemy->SetEnemyType(Enemy::EnemyType::type_skeleton);
+					enemy->SetPosition(pos);
+					enemy->SetRotation(rot);
+					enemy->SetPlayer(m_player);
+					m_enemyList.push_back(enemy);
+					//エネミーのレベル
+					enemy->GetStatus()->SetLv(2);
+					enemy->GetStatus()->StatusUp();
+				}
+			}
+			return true;
+		}
+		if (objData.EqualName(L"enpath2") == true) {
+			return true;
+		}
+		return true;
+	});
+	m_level.Init(
 		L"Assets/level/BosHouse.tkl",
 		[&](LevelObjectData& objData) {
 		if (objData.EqualName(L"BosHouse") == true) {
 			//エネミー！！！
+			auto rot = objData.rotation;
+			rot.SetRotationDeg(CVector3::AxisY(), 180.0f);
 			m_enemyBos = g_gameObjM->NewGO<EnemyBos>(0, "EnemyBos");
-			m_enemyBos->SetPosition({ objData.position.x + 100.0f,objData.position.y,objData.position.z });
-			m_enemyBos->SetRotation(objData.rotation);
+			m_enemyBos->SetPosition(objData.position);
+			m_enemyBos->SetRotation(rot);
 			m_enemyBos->GetPlayer(m_player);
 			m_enemyBos->GetStatus()->SetLv(30);
 			return false;

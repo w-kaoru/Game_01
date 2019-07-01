@@ -16,7 +16,7 @@ public:
 	void PostDraw() override;
 	void Destroy() override;
 
-	void SelectYesNo();
+	void SelectYesNo(bool flag);
 	void SetGameEnd(GameEndState state)
 	{
 		m_ges = state;

@@ -5,14 +5,14 @@
 
 
 //これらは前方宣言でよい！
+//class Background;
+//class Dungeon;
 class Enemy;
 class EnemyBos;
 class Player;
 class GameCamera;
 class LightCamera;
 class UI;
-class Background;
-class Dungeon;
 class WarpPoint;
 //ゲームクラス。
 class Stage : public IGameObject
@@ -39,8 +39,8 @@ public:
 	void DungeonNew();
 	void GroundNew();
 private:
-	Background* m_background = nullptr;
-	Dungeon* m_dungeon = nullptr;
+	//Background* m_background = nullptr;
+	//Dungeon* m_dungeon = nullptr;
 	Player* m_player = nullptr;				//プレイヤー
 	EnemyBos* m_enemyBos = nullptr;			//エネミーボス
 	GameCamera* m_gameCamera= nullptr;		//ゲームカメラ。

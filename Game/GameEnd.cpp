@@ -8,7 +8,6 @@ GameEnd::GameEnd()
 {
 }
 
-
 GameEnd::~GameEnd()
 {
 }
@@ -33,7 +32,7 @@ bool GameEnd::Start()
 	return false;
 }
 
-void GameEnd::SelectYesNo()
+void GameEnd::SelectYesNo(bool flag)
 {
 	if (g_pad[0].IsTrigger(enButtonUp)) {
 		m_yesNoFlag = true;
@@ -47,10 +46,14 @@ void GameEnd::SelectYesNo()
 		if (m_yesNoFlag == true) {
 			g_gameObjM->DeleteGO(this);
 			g_gameObjM->NewGO<Title>(0,"Title");
+			g_gameObjM->FindGO<PlayerSave>("PlayerSave")->NeworLoadGame(1, 0.0f);
 		}
 		else {
 			g_gameObjM->DeleteGO(this);
 			g_gameObjM->NewGO<Game>(0,"Game");
+			if (flag == true) {
+				g_gameObjM->FindGO<PlayerSave>("PlayerSave")->NeworLoadGame(1, 0.0f);
+			}
 		}
 	}
 }
@@ -71,7 +74,7 @@ void GameEnd::Update()
 			CQuaternion::Identity(),
 			CVector3::One()
 		);
-		SelectYesNo();
+		SelectYesNo(true);
 		m_ArrowSprite.Update(
 			m_ArrowPos,
 			CQuaternion::Identity(),
@@ -84,7 +87,7 @@ void GameEnd::Update()
 			CQuaternion::Identity(),
 			CVector3::One()
 		);
-		SelectYesNo();
+		SelectYesNo(false);
 		m_ArrowSprite.Update(
 			m_ArrowPos,
 			CQuaternion::Identity(),
@@ -100,7 +103,7 @@ void GameEnd::Update()
 			CQuaternion::Identity(),
 			CVector3::One()
 		);
-		SelectYesNo();
+		SelectYesNo(false);
 		m_ArrowSprite.Update(
 			m_ArrowPos,
 			CQuaternion::Identity(),
