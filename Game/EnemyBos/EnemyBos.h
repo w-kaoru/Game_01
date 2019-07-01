@@ -17,6 +17,7 @@ public:
 	void PlLen();
 	void Damage(float damage);
 	void DamageCut();
+	void DamegeCutSprite();
 	//void HP_Gauge();
 	void SetPosition(CVector3 pos)
 	{

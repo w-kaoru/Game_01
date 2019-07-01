@@ -169,6 +169,39 @@ void EnemyBos::DamageCut()
 	}
 }
 
+void EnemyBos::DamegeCutSprite()
+{
+	if (m_damageCut) {//ポジションを頭の上付近にする。
+		auto pos = m_position;
+		pos.y += 180.0f;
+		//カメラのポジション向きのベクトルを取得。
+		CVector3 s_angle;
+		s_angle = g_camera3D.GetPosition() - m_position;
+		s_angle.y = 0;
+		s_angle.Normalize();
+		//HPの画像がカメラに向かって前を向くようにする。
+		float angle = acos(s_angle.Dot(m_Sprite_Front));
+		angle = CMath::RadToDeg(angle);
+		CVector3 axis;
+		axis.Cross(m_Sprite_Front, s_angle);
+		if (axis.y > 0) {
+			m_Sprite_angle.SetRotationDeg(CVector3::AxisY(), angle);
+		}
+		else {
+			m_Sprite_angle.SetRotationDeg(CVector3::AxisY()*-1, angle);
+		}
+		m_hpGauge = (m_status.GetHp() / m_status.GetMaxHp()) * m_spriteScale;
+
+		//スプライトの更新
+		m_shieldSprite.Update(pos, m_Sprite_angle, { 1.0f, 1.0f, 1.0f });
+		//スプライトの表示
+		m_shieldSprite.Draw(
+			g_camera3D.GetViewMatrix(),
+			g_camera3D.GetProjectionMatrix()
+		);
+	}
+}
+
 //HPを表示するスプライトのための関係。
 /*void EnemyBos::HP_Gauge()
 {
@@ -202,15 +235,6 @@ void EnemyBos::DamageCut()
 		g_camera3D.GetViewMatrix(),
 		g_camera3D.GetProjectionMatrix()
 	); 
-	if (m_damageCut) {
-		//HPスプライトの更新
-		m_shieldSprite.Update(pos_s, m_Sprite_angle, { 1.0f, 1.0f, 1.0f });
-		//HPスプライトの表示
-		m_shieldSprite.Draw(
-			g_camera3D.GetViewMatrix(),
-			g_camera3D.GetProjectionMatrix()
-		);
-	}
 }*/
 
 void EnemyBos::Update()
@@ -267,4 +291,5 @@ void EnemyBos::PostDraw()
 {
 	//HPスプライトの表示をする。
 	//HP_Gauge();
+	DamegeCutSprite();
 }
