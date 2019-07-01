@@ -54,7 +54,7 @@ bool EnemyBos::Start()
 		EnemyBosState::AnimationState::AnimNum//アニメーションクリップの数。
 	);
 	//hpバーのスプライト。
-	m_hpSprite.Init(L"Assets/sprite/hp_gauge.dds", 40.0f, 10.0f);
+	//m_hpSprite.Init(L"Assets/sprite/hp_gauge.dds", 40.0f, 10.0f);
 	m_shieldSprite.Init(L"Assets/sprite/shield.dds", 20.0f, 20.0f);
 	m_position.y += 200.0f;
 	//キャラクターコントローラーの初期化。
@@ -170,7 +170,7 @@ void EnemyBos::DamageCut()
 }
 
 //HPを表示するスプライトのための関係。
-void EnemyBos::HP_Gauge()
+/*void EnemyBos::HP_Gauge()
 {
 	//ポジションを頭の上付近にする。
 	auto pos = m_position;
@@ -211,7 +211,7 @@ void EnemyBos::HP_Gauge()
 			g_camera3D.GetProjectionMatrix()
 		);
 	}
-}
+}*/
 
 void EnemyBos::Update()
 {
@@ -266,5 +266,5 @@ void EnemyBos::Draw()
 void EnemyBos::PostDraw()
 {
 	//HPスプライトの表示をする。
-	HP_Gauge();
+	//HP_Gauge();
 }

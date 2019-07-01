@@ -23,7 +23,7 @@ public:
 	void PlLen();
 	void Damage(float damage);
 	void DamageCut();
-	void HP_Gauge();
+	//void HP_Gauge();
 	void SetPosition(CVector3 pos)
 	{
 		m_position = pos;
@@ -84,7 +84,7 @@ private:
 	Animation m_animation;								//アニメーション。
 	AnimationClip m_animationClips[EnemyState::AnimationState::AnimNum];	//アニメーションクリップ。
 	EnStateMachine m_stMa;								//ステートマシン。
-	Sprite m_hpSprite;									//hpバー。
+	//Sprite m_hpSprite;									//hpバー。
 	Sprite m_shieldSprite;
 	CVector3 m_Sprite_Front = CVector3::AxisZ()*-1;	    //テクスチャの前方向
 	CQuaternion m_Sprite_angle = CQuaternion::Identity();	//テクスチャの回転角度

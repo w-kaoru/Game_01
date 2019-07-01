@@ -227,14 +227,20 @@ void Stage::GroundNew()
 		if (objData.EqualName(L"enpath") == true) {
 			auto pos = objData.position;
 			if (m_enemyList.size() <= 0) {
-				for (int i = 0; i < 5; i++) {
-					pos.x += 150.0f;
+				for (int i = 0; i < 6; i++) {
+					pos.x += 200.0f;
 					auto rot = objData.rotation;
 					rot.SetRotationDeg(CVector3::AxisY(), 180.0f);
 					char enemyName[256];
 					sprintf(enemyName, "EnemyS%d", m_enemyNo++);
 					auto enemy = g_gameObjM->NewGO<Enemy>(0, enemyName);
-					enemy->SetEnemyType(Enemy::EnemyType::type_skeleton);
+					if (i % 2 == 0) {
+						enemy->SetEnemyType(Enemy::EnemyType::type_skeleton);
+					}
+					else if (i % 2 == 1)
+					{
+						enemy->SetEnemyType(Enemy::EnemyType::type_troll);
+					}
 					enemy->SetPosition(pos);
 					enemy->SetRotation(rot);
 					enemy->SetPlayer(m_player);
@@ -244,9 +250,6 @@ void Stage::GroundNew()
 					enemy->GetStatus()->StatusUp();
 				}
 			}
-			return true;
-		}
-		if (objData.EqualName(L"enpath2") == true) {
 			return true;
 		}
 		return true;
