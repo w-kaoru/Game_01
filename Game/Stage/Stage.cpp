@@ -264,6 +264,7 @@ void Stage::Update()
 			StageSelect(StageType::Stage_Dungeon);
 		}
 	}
+	//ä»à’ÉXÉ|Å[Éì
 	if (m_type == StageType::Stage_Ground) {
 		m_level.Init(
 			L"Assets/level/SpawnEnemy.tkl",

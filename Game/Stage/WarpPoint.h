@@ -29,6 +29,7 @@ private:
 	PhysicsStaticObject m_phyStaticObject;
 	CVector3 m_position = CVector3::Zero();
 	CQuaternion m_rotation = CQuaternion::Identity();
+	Sprite m_sprite;
 	float m_len = 0.0f;
 	bool m_isWarp = false;
 };
