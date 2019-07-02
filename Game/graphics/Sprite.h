@@ -45,6 +45,7 @@ public:
 	///	UnityÇÃuGUIÇ…èÄãíÅB
 	/// </param>
 	void Update(const CVector3& trans, const CQuaternion& rot, const CVector3& scale, CVector2 pivot = {0.5f, 0.5f});
+	void Update(const CVector3& trans, const CMatrix& rot, const CVector3& scale, CVector2 pivot = { 0.5f, 0.5f });
 	/// <summary>
 	/// ï`âÊ
 	/// </summary>

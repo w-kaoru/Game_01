@@ -111,6 +111,31 @@ void Sprite::Update(const CVector3& trans, const CQuaternion& rot, const CVector
 	m_world.Mul(m_world, mRot);
 	m_world.Mul(m_world, mTrans);
 }
+void Sprite::Update(const CVector3 & trans, const CMatrix & rot, const CVector3 & scale, CVector2 pivot)
+{
+	//ピボットを考慮に入れた平行移動行列を作成。
+	//ピボットは真ん中が0.0, 0.0、左上が-1.0f, -1.0、右下が1.0、1.0になるようにする。
+	CVector2 localPivot = pivot;
+	localPivot.x -= 0.5f;
+	localPivot.y -= 0.5f;
+	localPivot.x *= -2.0f;
+	localPivot.y *= -2.0f;
+	//画像のハーフサイズを求める。
+	CVector2 halfSize = m_size;
+	halfSize.x *= 0.5f;
+	halfSize.y *= 0.5f;
+	CMatrix mPivotTrans;
+
+	mPivotTrans.MakeTranslation(
+		{ halfSize.x * localPivot.x, halfSize.y * localPivot.y, 0.0f }
+	);
+	CMatrix mTrans, mScale;
+	mTrans.MakeTranslation(trans);
+	mScale.MakeScaling(scale);
+	m_world.Mul(mPivotTrans, mScale);
+	m_world.Mul(m_world, rot);
+	m_world.Mul(m_world, mTrans);
+}
 void Sprite::InitIndexBuffer()
 {
 	//これがインデックス。頂点番号。

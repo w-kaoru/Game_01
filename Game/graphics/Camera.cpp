@@ -27,6 +27,12 @@ void Camera::Update()
 			m_width, m_height, m_near, m_far
 		);
 	}
+	auto lo = m_target - m_position;
+	m_viewRotMatrix.MakeLookAt(
+		CVector3::Zero(),
+		lo,
+		m_up
+	);
 	//ビュー行列の逆行列を計算。(追加)
 	m_viewMatrixInv.Inverse(m_viewMatrix);
 	//カメラの前、右を取得。(追加)

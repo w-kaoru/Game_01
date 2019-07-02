@@ -108,6 +108,13 @@ public:
 	{
 		return m_right;
 	}
+	//カメラ行列の回転成分の逆行列を取得
+	CMatrix GetViewRotationMatrix()
+	{
+		auto m = m_viewRotMatrix;
+		m.Inverse(m);
+		return m;
+	}
 	/// <summary>
 	/// 平行投影の幅を設定。
 	/// </summary>
@@ -153,6 +160,7 @@ private:
 	float m_height = 720.0f;						//平行投影の高さ。
 	CVector3	m_forward = CVector3::Front();		//!<カメラの前方。(追加)
 	CVector3	m_right = CVector3::Right();		//!<カメラの右。(追加)
+	CMatrix	m_viewRotMatrix = CMatrix::Identity();	//ビュー行列の回転成分のみ
 
 	EnUpdateProjMatrixFunc m_updateProjMatrixFunc = enUpdateProjMatrixFunc_Perspective;	//射影行列の作成方法。
 };

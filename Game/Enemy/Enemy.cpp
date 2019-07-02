@@ -201,26 +201,8 @@ void Enemy::DamegeCutSprite()
 	if (m_damageCut) {//ポジションを頭の上付近にする。
 		auto pos = m_position;
 		pos.y += 200.0f;
-		//カメラのポジション向きのベクトルを取得。
-		CVector3 s_angle;
-		s_angle = g_camera3D.GetPosition() - m_position;
-		s_angle.y = 0;
-		s_angle.Normalize();
-		//HPの画像がカメラに向かって前を向くようにする。
-		float angle = acos(s_angle.Dot(m_Sprite_Front));
-		angle = CMath::RadToDeg(angle);
-		CVector3 axis;
-		axis.Cross(m_Sprite_Front, s_angle);
-		if (axis.y > 0) {
-			m_Sprite_angle.SetRotationDeg(CVector3::AxisY(), angle);
-		}
-		else {
-			m_Sprite_angle.SetRotationDeg(CVector3::AxisY()*-1, angle);
-		}
-		m_hpGauge = (m_status.GetHp() / m_status.GetMaxHp()) * m_spriteScale;
-
 		//スプライトの更新
-		m_shieldSprite.Update(pos, m_Sprite_angle, { 1.0f, 1.0f, 1.0f });
+		m_shieldSprite.Update(pos, g_camera3D.GetViewRotationMatrix(), { 1.0f, 1.0f, 1.0f });
 		//スプライトの表示
 		m_shieldSprite.Draw(
 			g_camera3D.GetViewMatrix(),
@@ -234,29 +216,9 @@ void Enemy::DamegeCutSprite()
 {
 	//ポジションを頭の上付近にする。
 	auto pos = m_position;
-	auto pos_s = m_position;
 	pos.y += 200.0f;
-	pos_s.y += 220.0f;
-	//カメラのポジション向きのベクトルを取得。
-	CVector3 hp_angle;
-	hp_angle = g_camera3D.GetPosition() - m_position;
-	hp_angle.y = 0;
-	hp_angle.Normalize();
-	//HPの画像がカメラに向かって前を向くようにする。
-	float angle = acos(hp_angle.Dot(m_Sprite_Front));
-	angle = CMath::RadToDeg(angle);
-	CVector3 hp_axis;
-	hp_axis.Cross(m_Sprite_Front, hp_angle);
-	if (hp_axis.y > 0) {
-		m_Sprite_angle.SetRotationDeg(CVector3::AxisY(), angle);
-	}
-	else {
-		m_Sprite_angle.SetRotationDeg(CVector3::AxisY()*-1, angle);
-	}
-	m_hpGauge = (m_status.GetHp() / m_status.GetMaxHp()) * m_spriteScale;
-
 	//HPスプライトの更新
-	m_hpSprite.Update(pos, m_Sprite_angle, { m_hpGauge, 1.0f, 1.0f });
+	m_hpSprite.Update(pos, g_camera3D.GetViewRotationMatrix(), { m_hpGauge, 1.0f, 1.0f });
 	//HPスプライトの表示
 	m_hpSprite.Draw(
 		g_camera3D.GetViewMatrix(),
