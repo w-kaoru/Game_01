@@ -15,8 +15,8 @@ void ShadowMap::Init()
 	//解像度は2048×2048。
 	//テクスチャのフォーマットはR成分のみの32bit浮動小数点型。
 	m_shadowMapRT.Create(
-		2048,
-		2048,
+		2048*2,
+		2048*2,
 		DXGI_FORMAT_R32_FLOAT
 	);
 }
