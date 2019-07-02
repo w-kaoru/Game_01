@@ -43,7 +43,7 @@ void GameEnd::SelectYesNo(bool flag)
 		m_ArrowPos = m_ArrowNoPos;
 	}
 	if (g_pad[0].IsTrigger(enButtonA)) {
-		if (m_yesNoFlag == true) {
+		if (m_yesNoFlag) {
 			g_gameObjM->DeleteGO(this);
 			g_gameObjM->NewGO<Title>(0,"Title");
 			g_gameObjM->FindGO<PlayerSave>("PlayerSave")->NeworLoadGame(1, 0.0f);
@@ -51,7 +51,7 @@ void GameEnd::SelectYesNo(bool flag)
 		else {
 			g_gameObjM->DeleteGO(this);
 			g_gameObjM->NewGO<Game>(0,"Game");
-			if (flag == true) {
+			if (flag) {
 				g_gameObjM->FindGO<PlayerSave>("PlayerSave")->NeworLoadGame(1, 0.0f);
 			}
 		}
