@@ -104,7 +104,6 @@
     <ClCompile Include="Enemy\EnStateDamage.cpp" />
     <ClCompile Include="Hit\HitObject.cpp" />
     <ClCompile Include="Hit\Hit.cpp" />
-    <ClCompile Include="CharacterStatus.cpp" />
     <ClCompile Include="character\CharacterController.cpp" />
     <ClCompile Include="EnemyBos\EnemyBos.cpp" />
     <ClCompile Include="EnemyBos\EnemyBosStateAttack.cpp" />
@@ -176,12 +175,12 @@
     <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CharacterStatus.h" />
     <ClInclude Include="EnemyBos\EnemyBosStateDamage.h" />
     <ClInclude Include="EnemyBos\EnemyBosStateDeath.h" />
     <ClInclude Include="Enemy\EnStateDamage.h" />
     <ClInclude Include="Hit\HitObject.h" />
     <ClInclude Include="Hit\Hit.h" />
-    <ClInclude Include="CharacterStatus.h" />
     <ClInclude Include="character\CharacterController.h" />
     <ClInclude Include="EnemyBos\EnemyBos.h" />
     <ClInclude Include="EnemyBos\EnemyBosState.h" />

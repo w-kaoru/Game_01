@@ -135,7 +135,6 @@
       <Filter>HID</Filter>
     </ClCompile>
     <ClCompile Include="GameEnd.cpp" />
-    <ClCompile Include="CharacterStatus.cpp" />
     <ClCompile Include="Enemy\Enemy.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
@@ -346,7 +345,6 @@
       <Filter>HID</Filter>
     </ClInclude>
     <ClInclude Include="GameEnd.h" />
-    <ClInclude Include="CharacterStatus.h" />
     <ClInclude Include="Enemy\Enemy.h">
       <Filter>Enemy</Filter>
     </ClInclude>
@@ -478,6 +476,7 @@
       <Filter>Stage</Filter>
     </ClInclude>
     <ClInclude Include="Player\PlayerSave.h" />
+    <ClInclude Include="CharacterStatus.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\enpath2.fbx">
@@ -569,10 +568,6 @@
     <ImageContentTask Include="Assets\sprite\frame.png">
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Assets\sprite\A.png">
-      <Filter>Assets\sprite</Filter>
-    </Image>
+    <ImageContentTask Include="Assets\sprite\A.png" />
   </ItemGroup>
 </Project>

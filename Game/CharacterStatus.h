@@ -1,9 +1,10 @@
-#pragma once
+#pragma once#include "stdafx.h"
+#include "CharacterStatus.h"
 class CharacterStatus
 {
 public:
-	CharacterStatus();
-	~CharacterStatus();
+	CharacterStatus() {};
+	~CharacterStatus() {};
 	void StatusUp()
 	{
 		//ステータスをUPさせる計算
@@ -121,7 +122,7 @@ private:
 	float	m_atk = 0.0f;	//攻撃力
 	float	m_def = 0.0f;	//硬さ
 	float	m_agi = 0.0f;	//素早さ
-	float	m_lvUp = 0.0f;	
+	float	m_lvUp = 0.0f;
 	int		m_maxLv = 100;//レベルの最大値	
 	float	m_maxHp = 100;
 	//基準のステータス
@@ -130,3 +131,4 @@ private:
 	float	m_standardDef = 0.0f;	//硬さ
 	float	m_standardAgi = 0.0f;	//素早さ
 };
+
