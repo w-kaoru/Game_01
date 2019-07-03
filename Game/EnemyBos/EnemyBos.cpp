@@ -160,12 +160,20 @@ void EnemyBos::DamageCut()
 		m_damageCutSpan -= 1.5f * (1.0f / 60.0f);
 		m_damageCutSpan = max(0.0f, m_damageCutSpan);
 		if (m_damageCutSpan <= 0.0f) {
-			m_damageCut = false;
+			m_damageCut = false; 
+			m_damageCutCounter = 0;
 		}
 	}
 	else {
-		m_damageCutSpan += 1.0f * (1.0f / 60.0f);
-		m_damageCutSpan = min(m_damageCutValue, m_damageCutSpan);
+		if (m_damageCutCounter < 5) {
+			m_damageCutSpan += 1.0f * (1.0f / 60.0f);
+			m_damageCutSpan = min(m_damageCutValue, m_damageCutSpan);
+		}
+		else
+		{
+			m_damageCutSpan = m_damageCutValue;
+			m_damageCutCounter = 1;
+		}
 	}
 }
 

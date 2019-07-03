@@ -95,6 +95,7 @@ bool Player::Start()
 	m_se.SetVolume(1.0f);
 	m_model.SetShadowReciever(true);
 	m_status.StatusUp();
+	m_save = g_gameObjM->FindGO<PlayerSave>("PlayerSave");
 	return true;
 }
 
@@ -128,7 +129,7 @@ void Player::Damage(float damage)
 void Player::Update()
 {
 	int lv = m_status.GetLv();
-	g_gameObjM->FindGO<PlayerSave>("PlayerSave")->Lv = lv;
+	m_save->Lv = lv;
 	//前方向の取得。
 	m_rotMatrix.MakeRotationFromQuaternion(m_rotation);
 	m_forward.x = m_rotMatrix.m[2][0];
@@ -137,13 +138,13 @@ void Player::Update()
 	m_forward.Normalize();
 	//経験値
 	//レベルアップの条件
-	if (g_gameObjM->FindGO<PlayerSave>("PlayerSave")->exp / 2.5f >= lv) {
+	if (m_save->exp / 2.5f >= lv) {
 		if (lv < m_status.GetMaxLv()) {
 			m_status.SetHp(m_status.GetMaxHp());
 			m_status.SetLv(lv);
 			m_status.LvUp();
 			m_status.StatusUp();
-			g_gameObjM->FindGO<PlayerSave>("PlayerSave")->exp -= lv;
+			m_save->exp -= lv;
 		}
 	}
 	//ステートマシンの更新。

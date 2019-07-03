@@ -62,7 +62,7 @@ public:
 	}
 	void EXP(float exp)
 	{
-		g_gameObjM->FindGO<PlayerSave>("PlayerSave")->exp += exp;
+		m_save->exp += exp;
 	}
 	void SetDamageCut(bool damage)
 	{
@@ -98,11 +98,11 @@ private:
 	const Hit* m_hit;
 	CharacterStatus m_status;	//プレイヤーのステイタス
 	float m_maxHp = 0.0f;
-	float m_exp = 0.0f;
 	bool m_damageCut = false;
 	float m_damageCutSpan = 6.0f;
 	float m_damageCutValue = 6.0f;
 	CSoundSource m_se;						//SE。
 	ID3D11ShaderResourceView* m_normalMapSRV = nullptr;	//ノーマルマップのSRV
 	ID3D11ShaderResourceView* m_specularMapSRV = nullptr;	//ノーマルマップのSRV
+	PlayerSave* m_save = nullptr;
 };
