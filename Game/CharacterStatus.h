@@ -7,7 +7,7 @@ public:
 	void StatusUp()
 	{
 		//ステータスをUPさせる計算
-		if (m_lv > 1) {
+		if (m_lv > 1 && m_lv <= m_maxLv) {
 			if (m_lv <= m_maxLv) {
 				m_lvUp = (float(m_lv)) / 10.0f;
 				m_lvUp += 1.0f;
