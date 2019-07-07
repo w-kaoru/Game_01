@@ -38,6 +38,7 @@ void Stage::Release()
 	}
 	if (m_enemyBos!=nullptr) g_gameObjM->DeleteGO(m_enemyBos);
 	if (m_warpPoint != nullptr) g_gameObjM->DeleteGO(m_warpPoint);
+	if (m_sky) g_gameObjM->DeleteGO(m_sky);
 }
 bool Stage::EnemyDelete(Enemy* enemy)
 {
@@ -193,7 +194,8 @@ void Stage::DungeonNew()
 	m_light = g_gameObjM->NewGO<LightCamera>(1, "LightCamera");
 	m_light->SetPlayer(m_player);
 	m_ui = g_gameObjM->NewGO<UI>(1, "UI");
-	m_warpPoint = nullptr;
+	m_warpPoint = nullptr; 
+	m_sky = nullptr;
 }
 
 void Stage::GroundNew()
@@ -255,7 +257,7 @@ void Stage::GroundNew()
 	m_light = g_gameObjM->NewGO<LightCamera>(1, "LightCamera");
 	m_light->SetPlayer(m_player);
 	m_ui = g_gameObjM->NewGO<UI>(1, "UI");
-	g_gameObjM->NewGO<Sky>(2, "Sky");
+	m_sky = g_gameObjM->NewGO<Sky>(2, "Sky");
 }
 void Stage::Update()
 {
