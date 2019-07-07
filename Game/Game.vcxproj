@@ -160,6 +160,7 @@
     <ClCompile Include="graphics\RenderTarget.cpp" />
     <ClCompile Include="graphics\ShadowMap.cpp" />
     <ClCompile Include="graphics\Sprite.cpp" />
+    <ClCompile Include="Sky.cpp" />
     <ClCompile Include="sound\SoundEngine.cpp" />
     <ClCompile Include="sound\SoundSource.cpp" />
     <ClCompile Include="sound\WaveFile.cpp" />
@@ -244,6 +245,7 @@
     <ClInclude Include="graphics\RenderTarget.h" />
     <ClInclude Include="graphics\ShadowMap.h" />
     <ClInclude Include="graphics\Sprite.h" />
+    <ClInclude Include="Sky.h" />
     <ClInclude Include="sound\SoundEngine.h" />
     <ClInclude Include="sound\SoundSource.h" />
     <ClInclude Include="sound\WaveFile.h" />
@@ -265,6 +267,7 @@
     <MeshContentTask Include="Assets\modelData\ground.fbx" />
     <MeshContentTask Include="Assets\modelData\paladin.fbx" />
     <MeshContentTask Include="Assets\modelData\plpath.FBX" />
+    <MeshContentTask Include="Assets\modelData\sky.fbx" />
     <MeshContentTask Include="Assets\modelData\TrollGiant.fbx" />
     <MeshContentTask Include="Assets\modelData\Warp_point.fbx" />
   </ItemGroup>

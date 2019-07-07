@@ -151,6 +151,7 @@ private:
 	ID3D11ShaderResourceView* m_normalMapSRV = nullptr;		//線マップのSRV
 	ID3D11ShaderResourceView* m_specularMapSRV = nullptr;	//スペキュラマップのSRV
 	ID3D11ShaderResourceView* m_aoMapSRV = nullptr;			//AOマップ。
+	ID3D11ShaderResourceView* m_cubeMap = nullptr;
 	ModelEffect* effect = nullptr;
 public:
 	/// <summary>
@@ -211,5 +212,9 @@ public:
 	void SetAOMap(ID3D11ShaderResourceView* srv)
 	{
 		m_aoMapSRV = srv;
+	}
+	void SetCubeMap(ID3D11ShaderResourceView* srv)
+	{
+		m_cubeMap = srv;
 	}
 };

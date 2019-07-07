@@ -378,3 +378,14 @@ float4 PSMain(PSInput In) : SV_Target0
 	finalColor.xyz = albedoColor.xyz * lig;
 	return finalColor;
 }
+
+/*!
+ *@brief	空用のシェーダー。
+ */
+TextureCube<float4> skyCubeMap : register(t0);		//スカイキューブマップ。
+float4 PSMain_CubeMap(PSInput In) : SV_Target0
+{
+	float4 color = skyCubeMap.Sample(g_sampler, In.Normal*-1.0f);
+	color.xyz *= 1.0f;
+	return color;
+}

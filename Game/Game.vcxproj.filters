@@ -256,6 +256,7 @@
     <ClCompile Include="Stage\WarpPoint.cpp">
       <Filter>Stage</Filter>
     </ClCompile>
+    <ClCompile Include="Sky.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -477,6 +478,7 @@
     </ClInclude>
     <ClInclude Include="Player\PlayerSave.h" />
     <ClInclude Include="CharacterStatus.h" />
+    <ClInclude Include="Sky.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\enpath2.fbx">
@@ -512,6 +514,7 @@
     <MeshContentTask Include="Assets\modelData\BosHouse.fbx">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\sky.fbx" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\hp_gauge.png">

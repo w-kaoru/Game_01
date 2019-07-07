@@ -10,6 +10,7 @@
 #include "../Enemy\Enemy.h"
 #include "../EnemyBos/EnemyBos.h"
 #include "WarpPoint.h"
+#include "../Sky.h"
 
 Stage::Stage()
 {
@@ -254,6 +255,7 @@ void Stage::GroundNew()
 	m_light = g_gameObjM->NewGO<LightCamera>(1, "LightCamera");
 	m_light->SetPlayer(m_player);
 	m_ui = g_gameObjM->NewGO<UI>(1, "UI");
+	g_gameObjM->NewGO<Sky>(2, "Sky");
 }
 void Stage::Update()
 {

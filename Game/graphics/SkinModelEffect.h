@@ -15,6 +15,7 @@ protected:
 	Shader m_psShader;
 	Shader m_vsShadowMap;			//シャドウマップ生成用の頂点シェーダー。
 	Shader m_psShadowMap;		//シャドウマップ生成用のピクセルシェーダー。
+	Shader m_psCubeMap;
 	bool isSkining;
 	ID3D11ShaderResourceView* m_albedoTex = nullptr;
 	EnRenderMode m_renderMode = enRenderMode_Invalid;	//レンダリングモード。
@@ -27,6 +28,7 @@ public:
 		//todo シャドウマップ用のシェーダーをロード。
 		m_psShadowMap.Load("Assets/shader/model.fx", "PSMain_ShadowMap", Shader::EnType::PS);
 		m_vsShadowMap.Load("Assets/shader/model.fx", "VSMain_ShadowMap", Shader::EnType::VS);
+		m_psCubeMap.Load("Assets/shader/model.fx", "PSMain_CubeMap", Shader::EnType::PS);
 		m_pPSShader = &m_psShader;
 	}
 	virtual ~ModelEffect()

@@ -208,7 +208,11 @@ void SkinModel::Draw( EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projM
 		d3dDeviceContext->PSSetShaderResources(3, 1, &m_specularMapSRV);
 	}
 	if (m_aoMapSRV != nullptr) {
+		//AOマップが設定されていたらレジスタt3に設定する。
 		d3dDeviceContext->PSSetShaderResources(4, 1, &m_aoMapSRV);
+	}
+	if (m_cubeMap != nullptr) {
+		d3dDeviceContext->PSSetShaderResources(0, 1, &m_cubeMap);
 	}
 	//描画。
 	m_modelDx->Draw(
