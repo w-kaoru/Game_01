@@ -212,7 +212,7 @@ float3 CalcSpecularLight(float3 normal, float3 worldPos, float2 uv)
 			//スペキュラマップがある。
 			specColor = g_specularMap.Sample(g_sampler, uv).r;
 
-			specLig = pow(t, 2.0f) * specColor * dligColor[i] * 7.0f;
+			specLig = pow(t, 2.0f) * specColor * dligColor[i] * 4.0f;
 
 			//スペキュラ反射が求まったら、ligに加算する。
 			//鏡面反射を反射光に加算する。
@@ -245,7 +245,7 @@ void CalcShadow(inout float3 lig, float4 posInLvp)
 			//シャドウマップに書き込まれている深度値を取得。
 			float zInShadowMap = g_shadowMap.Sample(g_sampler, shadowMapUV);
 
-			if (zInLVP > zInShadowMap + 0.01f) {
+			if (zInLVP > zInShadowMap + 0.0001f) {
 				//影が落ちているので、光を弱くする
 				lig *= 0.5f;
 			}
