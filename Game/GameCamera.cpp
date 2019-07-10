@@ -13,12 +13,12 @@ GameCamera::~GameCamera()
 }
 bool GameCamera::Start()
 {
+	CVector3 cameraPos = CVector3::Zero();
+	cameraPos.x = m_player->GetPosition().x - (m_player->GetForward().x * 65.0f);
+	cameraPos.z = m_player->GetPosition().z - (m_player->GetForward().z * 65.0f);
+	cameraPos.y = m_player->GetPosition().y + 30.0f;
 	//カメラを初期化。
-	g_camera3D.SetPosition(
-		{ 0.0f,m_player->GetPosition().y + 130.0f,
-		m_player->GetPosition().z + 250.0f
-		}
-	);
+	g_camera3D.SetPosition(cameraPos);
 	g_camera3D.SetTarget(m_player->GetPosition());
 	g_camera3D.SetFar(2000000.0f);
 	//バネカメラの大きさ。

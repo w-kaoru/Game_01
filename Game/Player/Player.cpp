@@ -4,7 +4,6 @@
 #include "../Game.h"
 #include "../GameEnd.h"
 
-
 Player::Player() :m_stMa(this)
 {
 	//cmoファイルの読み込み。
@@ -74,6 +73,12 @@ Player::~Player()
 }
 bool Player::Start()
 {
+	//前方向の取得。
+	m_rotMatrix.MakeRotationFromQuaternion(m_rotation);
+	m_forward.x = m_rotMatrix.m[2][0];
+	m_forward.y = m_rotMatrix.m[2][1];
+	m_forward.z = m_rotMatrix.m[2][2];
+	m_forward.Normalize();
 	m_status.SetMaxHp(m_status.GetHp());
 	//ノーマルマップをセットする。
 	m_model.SetNormalMap(m_normalMapSRV);
@@ -83,7 +88,7 @@ bool Player::Start()
 	//キャラクターコントローラーの初期化。
 	m_charaCon.Init(40.0f, 110.0f, m_position);
 	m_stMa.Start();
-	m_rotation.SetRotationDeg(CVector3::AxisY(), 180.0f);
+	//m_rotation.SetRotationDeg(CVector3::AxisY(), 180.0f);
 	//当たり判定を作る。
 	m_hit = g_hitObject->Create(
 		&m_position, 90.0f,

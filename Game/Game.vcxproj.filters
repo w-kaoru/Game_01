@@ -257,6 +257,7 @@
       <Filter>Stage</Filter>
     </ClCompile>
     <ClCompile Include="Sky.cpp" />
+    <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -479,6 +480,7 @@
     <ClInclude Include="Player\PlayerSave.h" />
     <ClInclude Include="CharacterStatus.h" />
     <ClInclude Include="Sky.h" />
+    <ClInclude Include="Timer.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\enpath2.fbx">

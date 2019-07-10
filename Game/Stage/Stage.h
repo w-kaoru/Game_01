@@ -55,5 +55,6 @@ private:
 	CSoundSource m_bgm;						//BGMÅB
 	CSoundSource m_bgm_bos;					//BOSÇÃBGM
 	StageType m_type = StageType::Stage_Num;
+	int m_middleEnemyNum = 0;
 };
 
