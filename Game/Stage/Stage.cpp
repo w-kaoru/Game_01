@@ -272,7 +272,7 @@ void Stage::Update()
 	}
 	//簡易スポーン
 	if (m_type == StageType::Stage_Ground) {
-		if (m_middleEnemyNum < 18) {
+		if (m_middleEnemyNum < m_enemyMaxNum * 3) {
 			m_level.Init(
 				L"Assets/level/SpawnEnemy.tkl",
 				[&](LevelObjectData& objData) {
@@ -280,7 +280,7 @@ void Stage::Update()
 					auto pos = objData.position;
 					pos.y -= 150.0f;
 					if (m_enemyList.size() <= 0) {
-						for (int i = 0; i < 6; i++) {
+						for (int i = 0; i < m_enemyMaxNum; i++) {
 							pos.x -= 200.0f;
 							auto rot = objData.rotation;
 							rot.SetRotationDeg(CVector3::AxisY(), 180.0f);
@@ -299,7 +299,7 @@ void Stage::Update()
 							enemy->SetPlayer(m_player);
 							m_enemyList.push_back(enemy);
 							//エネミーのレベル
-							enemy->GetStatus()->SetLv(35);
+							enemy->GetStatus()->SetLv(m_enemyMaxLv);
 							enemy->GetStatus()->StatusUp();
 							m_middleEnemyNum++;
 						}

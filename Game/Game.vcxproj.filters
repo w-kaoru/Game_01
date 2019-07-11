@@ -516,7 +516,9 @@
     <MeshContentTask Include="Assets\modelData\BosHouse.fbx">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\sky.fbx" />
+    <MeshContentTask Include="Assets\modelData\sky.fbx">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\hp_gauge.png">
