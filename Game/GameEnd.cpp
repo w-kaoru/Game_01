@@ -46,6 +46,7 @@ void GameEnd::SelectYesNo(bool flag)
 		if (m_yesNoFlag) {
 			g_gameObjM->DeleteGO(this);
 			g_gameObjM->NewGO<Title>(0,"Title");
+			g_gameObjM->FindGO<Save>("Save")->SetLoopcCount(0);
 			g_gameObjM->FindGO<Save>("Save")->NeworLoadGame(1, 0.0f);
 		}
 		else {
