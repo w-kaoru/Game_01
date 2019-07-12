@@ -39,6 +39,7 @@ public:
 	bool EnemyDelete(Enemy* ememy);
 	void DungeonNew();
 	void GroundNew();
+	void EnemySpawn();
 private:
 	//Background* m_background = nullptr;
 	//Dungeon* m_dungeon = nullptr;

@@ -84,7 +84,7 @@ bool Player::Start()
 	m_model.SetNormalMap(m_normalMapSRV);
 	m_model.SetSpecularMap(m_specularMapSRV);
 	//ポジションを少し上にしておく。
-	m_position.y += 100.0f;
+	m_position.y += 10.0f;
 	//キャラクターコントローラーの初期化。
 	m_charaCon.Init(40.0f, 110.0f, m_position);
 	m_stMa.Start();

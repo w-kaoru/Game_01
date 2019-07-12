@@ -273,18 +273,10 @@ void Stage::GroundNew()
 	m_ui = g_gameObjM->NewGO<UI>(1, "UI");
 	m_sky = g_gameObjM->NewGO<Sky>(2, "Sky");
 }
-void Stage::Update()
+
+//簡易スポーン
+void Stage::EnemySpawn()
 {
-	if (m_player != nullptr && m_warpPoint != nullptr) {
-		m_warpPoint->ToLen(m_player->GetPosition());
-		if (g_pad[0].IsTrigger(enButtonA) && m_warpPoint->GetIsWarp()) {
-			m_save->position = m_player->GetPosition();
-			m_save->LoopcCount();
-			Release();
-			StageSelect(StageType::Stage_Dungeon);
-		}
-	}
-	//簡易スポーン
 	if (m_type == StageType::Stage_Ground) {
 		if (m_middleEnemyNum < m_enemyMaxNum * 3) {
 			m_level.Init(
@@ -324,6 +316,21 @@ void Stage::Update()
 			});
 		}
 	}
+
+}
+
+void Stage::Update()
+{
+	if (m_player != nullptr && m_warpPoint != nullptr) {
+		m_warpPoint->ToLen(m_player->GetPosition());
+		if (g_pad[0].IsTrigger(enButtonA) && m_warpPoint->GetIsWarp()) {
+			m_save->position = m_player->GetPosition();
+			m_save->LoopcCount();
+			Release();
+			StageSelect(StageType::Stage_Dungeon);
+		}
+	}
+	EnemySpawn();
 	if (m_enemyBos != nullptr) {
 		if (!m_enemyBos->GetBGMFlag()) {
 
