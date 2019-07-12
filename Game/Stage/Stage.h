@@ -57,6 +57,7 @@ private:
 	StageType m_type = StageType::Stage_Num;
 	int m_middleEnemyNum = 0;
 	int m_enemyMaxNum = 7;
-	int m_enemyMaxLv = 40;
+	int m_enemyMaxLv = 100;
+	Save* m_save = nullptr;
 };
 

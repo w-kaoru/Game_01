@@ -66,6 +66,7 @@ bool Stage::Start()
 
 void Stage::StageSelect(StageType type)
 {
+	m_save = g_gameObjM->FindGO<Save>("Save");
 	m_type = type;
 	switch (m_type)
 	{
@@ -102,7 +103,7 @@ void Stage::DungeonNew()
 			m_player->SetPosition(objData.position);
 			m_player->SetRotation(objData.rotation);
 			//ステータスの設定
-			m_player->GetStatus()->SetLv(g_gameObjM->FindGO<PlayerSave>("PlayerSave")->Lv);
+			m_player->GetStatus()->SetLv(m_save->Lv);
 			return true;
 		}
 		return true;
@@ -121,7 +122,7 @@ void Stage::DungeonNew()
 			enemy->SetPlayer(m_player);
 			m_enemyList.push_back(enemy);
 			//エネミーのレベル
-			enemy->GetStatus()->SetLv(g_gameObjM->FindGO<PlayerSave>("PlayerSave")->Lv + 2);
+			enemy->GetStatus()->SetLv(m_save->Lv + 2);
 			return true;
 		}
 		if (objData.EqualName(L"enpath2") == true) {
@@ -135,7 +136,7 @@ void Stage::DungeonNew()
 			enemy->SetPlayer(m_player);
 			m_enemyList.push_back(enemy);
 			//エネミーのレベル
-			enemy->GetStatus()->SetLv(g_gameObjM->FindGO<PlayerSave>("PlayerSave")->Lv + 2);
+			enemy->GetStatus()->SetLv(m_save->Lv + 2);
 			return true;
 		}
 		return true;
@@ -154,7 +155,7 @@ void Stage::DungeonNew()
 			enemy->SetPlayer(m_player);
 			m_enemyList.push_back(enemy);
 			//エネミーのレベル
-			enemy->GetStatus()->SetLv(g_gameObjM->FindGO<PlayerSave>("PlayerSave")->Lv + 6);
+			enemy->GetStatus()->SetLv(m_save->Lv + 6);
 			enemy->GetStatus()->StatusUp();
 			return true;
 		}
@@ -169,7 +170,7 @@ void Stage::DungeonNew()
 			enemy->SetPlayer(m_player);
 			m_enemyList.push_back(enemy);
 			//エネミーのレベル
-			enemy->GetStatus()->SetLv(g_gameObjM->FindGO<PlayerSave>("PlayerSave")->Lv + 5);
+			enemy->GetStatus()->SetLv(m_save->Lv + 5);
 			enemy->GetStatus()->StatusUp();
 			return true;
 		}
@@ -185,7 +186,7 @@ void Stage::DungeonNew()
 			m_enemyBos->SetPosition(objData.position);
 			m_enemyBos->SetRotation(objData.rotation);
 			m_enemyBos->GetPlayer(m_player);
-			m_enemyBos->GetStatus()->SetLv(g_gameObjM->FindGO<PlayerSave>("PlayerSave")->Lv + 7);
+			m_enemyBos->GetStatus()->SetLv(m_save->Lv + 7);
 			return true;
 		}
 		return true;
@@ -213,19 +214,30 @@ void Stage::GroundNew()
 		return false;
 	});
 	//レベルを初期化。
-	m_level.Init(
-		L"Assets/level/player_02.tkl",
-		[&](LevelObjectData& objData) {
-		if (objData.EqualName(L"plpath") == true) {
-			m_player = g_gameObjM->NewGO<Player>(0, "Player");
-			m_player->SetPosition(objData.position);
-			m_player->SetRotation(objData.rotation);
-			//ステータスの設定
-			m_player->GetStatus()->SetLv(g_gameObjM->FindGO<PlayerSave>("PlayerSave")->Lv);
+	if (m_save->GetloopcCount() <= 0) {
+		m_level.Init(
+			L"Assets/level/player_02.tkl",
+			[&](LevelObjectData& objData) {
+			if (objData.EqualName(L"plpath") == true) {
+				m_player = g_gameObjM->NewGO<Player>(0, "Player");
+				m_player->SetPosition(objData.position);
+				m_player->SetRotation(objData.rotation);
+				//ステータスの設定
+				m_player->GetStatus()->SetLv(m_save->Lv);
+				return true;
+			}
 			return true;
-		}
-		return true;
-	});
+		});
+	}
+	else
+	{
+		m_player = g_gameObjM->NewGO<Player>(0, "Player");
+		m_player->SetPosition(m_save->position);
+		m_player->SetRotation(CQuaternion::Identity());
+		//ステータスの設定
+		m_player->GetStatus()->SetLv(m_save->Lv);
+
+	}
 	m_level.Init(
 		L"Assets/level/BosHouse.tkl",
 		[&](LevelObjectData& objData) {
@@ -237,7 +249,7 @@ void Stage::GroundNew()
 			m_enemyBos->SetPosition(objData.position);
 			m_enemyBos->SetRotation(rot);
 			m_enemyBos->GetPlayer(m_player);
-			m_enemyBos->GetStatus()->SetLv(30);
+			m_enemyBos->GetStatus()->SetLv(95);
 			return false;
 		}
 		return true;
@@ -266,6 +278,8 @@ void Stage::Update()
 	if (m_player != nullptr && m_warpPoint != nullptr) {
 		m_warpPoint->ToLen(m_player->GetPosition());
 		if (g_pad[0].IsTrigger(enButtonA) && m_warpPoint->GetIsWarp()) {
+			m_save->position = m_player->GetPosition();
+			m_save->LoopcCount();
 			Release();
 			StageSelect(StageType::Stage_Dungeon);
 		}

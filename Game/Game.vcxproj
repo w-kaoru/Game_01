@@ -230,9 +230,9 @@
     <ClInclude Include="physics\CapsuleCollider.h" />
     <ClInclude Include="physics\CollisionAttr.h" />
     <ClInclude Include="physics\PhysicsStaticObject.h" />
+    <ClInclude Include="Save.h" />
     <ClInclude Include="Player\IPlState.h" />
     <ClInclude Include="Player\Player.h" />
-    <ClInclude Include="Player\PlayerSave.h" />
     <ClInclude Include="Player\PlayerState.h" />
     <ClInclude Include="Player\PlStateAttack.h" />
     <ClInclude Include="Player\PlStateDamage.h" />

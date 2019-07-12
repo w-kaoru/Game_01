@@ -34,6 +34,7 @@ void EnemyBosStateDeath::Update()
 	if (m_enemy->GetAnimation().IsPlaying() == false) {
 		g_gameObjM->DeleteGO(g_gameObjM->FindGO<Game>("Game"));
 		if (g_gameObjM->FindGO<Stage>("Stage")->GetStageType() == Stage::StageType::Stage_Ground) {
+			g_gameObjM->FindGO<Save>("Save")->SetLoopcCount(0);
 			g_gameObjM->NewGO<GameEnd>()->SetGameEnd(GameEnd::GameEndState::gameCleared);
 		}
 		if (g_gameObjM->FindGO<Stage>("Stage")->GetStageType() == Stage::StageType::Stage_Dungeon) {

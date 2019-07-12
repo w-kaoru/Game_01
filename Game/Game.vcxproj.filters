@@ -386,9 +386,6 @@
     <ClInclude Include="Player\Player.h">
       <Filter>Player</Filter>
     </ClInclude>
-    <ClInclude Include="Player\PlayerState.h">
-      <Filter>Player</Filter>
-    </ClInclude>
     <ClInclude Include="Player\PlStateAttack.h">
       <Filter>Player</Filter>
     </ClInclude>
@@ -477,10 +474,11 @@
     <ClInclude Include="Stage\WarpPoint.h">
       <Filter>Stage</Filter>
     </ClInclude>
-    <ClInclude Include="Player\PlayerSave.h" />
     <ClInclude Include="CharacterStatus.h" />
     <ClInclude Include="Sky.h" />
     <ClInclude Include="Timer.h" />
+    <ClInclude Include="Player\PlayerState.h" />
+    <ClInclude Include="Save.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\enpath2.fbx">

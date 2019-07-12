@@ -12,6 +12,10 @@ public:
 	{
 		m_position = pos;
 	}
+	CVector3 GetPosition() 
+	{
+		return m_position;
+	}
 	void SetRotation(CQuaternion rot)
 	{
 		m_rotation = rot;

@@ -104,5 +104,5 @@ private:
 	CSoundSource m_se;						//SE。
 	ID3D11ShaderResourceView* m_normalMapSRV = nullptr;	//ノーマルマップのSRV
 	ID3D11ShaderResourceView* m_specularMapSRV = nullptr;	//ノーマルマップのSRV
-	PlayerSave* m_save = nullptr;
+	Save* m_save = nullptr;
 };

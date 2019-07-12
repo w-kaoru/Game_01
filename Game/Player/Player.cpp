@@ -60,7 +60,7 @@ Player::Player() :m_stMa(this)
 	m_status.SetStandardDef(1.0f);
 	m_status.SetStandardAtk(13.5f);
 	//m_status.SetStandardAtk(1300.5f);
-	m_status.SetMaxLv(30);
+	m_status.SetMaxLv(90);
 }
 Player::~Player()
 {
@@ -100,7 +100,7 @@ bool Player::Start()
 	m_se.SetVolume(1.0f);
 	m_model.SetShadowReciever(true);
 	m_status.StatusUp();
-	m_save = g_gameObjM->FindGO<PlayerSave>("PlayerSave");
+	m_save = g_gameObjM->FindGO<Save>("Save");
 	return true;
 }
 

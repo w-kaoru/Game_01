@@ -59,7 +59,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	//タイトルシーンの作成。
 	g_hitObject = new HitObject;
 	g_gameObjM->NewGO<Title>(0,"Title");
-	g_gameObjM->NewGO<PlayerSave>(0, "PlayerSave")->NeworLoadGame(1, 0.0f);
+	g_gameObjM->NewGO<Save>(0, "Save")->NeworLoadGame(1, 0.0f);
 	//ゲームループ。
 	while (DispatchWindowMessage() == true)
 	{
