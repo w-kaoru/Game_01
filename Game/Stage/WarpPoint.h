@@ -8,6 +8,7 @@ public:
 	bool Start() override;
 	void Update() override;
 	void Draw() override;
+	void PostDraw() override;
 	void SetPosition(CVector3 pos)
 	{
 		m_position = pos;

@@ -46,6 +46,10 @@ void WarpPoint::Draw()
 		g_camera3D.GetViewMatrix(),
 		g_camera3D.GetProjectionMatrix()
 	);
+}
+
+void WarpPoint::PostDraw()
+{
 	if (m_isWarp) {
 		//スプライトを２次元で表示をする。
 		m_sprite.Draw(
