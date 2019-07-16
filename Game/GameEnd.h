@@ -31,6 +31,5 @@ private:
 	CVector3 m_ArrowPos = CVector3::Zero();
 	const CVector3 m_ArrowYesPos = { -200.0f,-70.0f,0.0f };
 	const CVector3 m_ArrowNoPos = { -200.0f,-235.0f,0.0f };
-	bool m_yesNoFlag = true;
 };
 

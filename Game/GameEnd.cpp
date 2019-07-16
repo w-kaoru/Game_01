@@ -28,30 +28,32 @@ bool GameEnd::Start()
 	m_gameEndSprite.Init(L"Assets/sprite/GameEnd.dds", 1280.0f, 720.0f);
 	//矢印スプライト
 	m_ArrowSprite.Init(L"Assets/sprite/Yazirusi.dds", 60.0f, 80.0f);
-	m_ArrowPos = m_ArrowYesPos;
+	m_ArrowPos = m_ArrowNoPos;
 	return false;
 }
 
 void GameEnd::SelectYesNo(bool flag)
 {
 	if (g_pad[0].IsTrigger(enButtonUp)) {
-		m_yesNoFlag = true;
 		m_ArrowPos = m_ArrowYesPos;
 	}
 	if (g_pad[0].IsTrigger(enButtonDown)) {
-		m_yesNoFlag = false;
 		m_ArrowPos = m_ArrowNoPos;
 	}
 	if (g_pad[0].IsTrigger(enButtonA)) {
-		if (m_yesNoFlag) {
+		if (m_ArrowPos.x == m_ArrowYesPos.x&&
+			m_ArrowPos.y == m_ArrowYesPos.y&&
+			m_ArrowPos.z == m_ArrowYesPos.z) {
 			g_gameObjM->DeleteGO(this);
-			g_gameObjM->NewGO<Title>(0,"Title");
+			g_gameObjM->NewGO<Title>(0, "Title");
 			g_gameObjM->FindGO<Save>("Save")->SetLoopcCount(0);
 			g_gameObjM->FindGO<Save>("Save")->NeworLoadGame(1, 0.0f);
 		}
-		else {
+		else if (m_ArrowPos.x == m_ArrowNoPos.x&&
+			m_ArrowPos.y == m_ArrowNoPos.y&&
+			m_ArrowPos.z == m_ArrowNoPos.z) {
 			g_gameObjM->DeleteGO(this);
-			g_gameObjM->NewGO<Game>(0,"Game");
+			g_gameObjM->NewGO<Game>(0, "Game");
 			if (flag) {
 				g_gameObjM->FindGO<Save>("Save")->NeworLoadGame(1, 0.0f);
 			}
