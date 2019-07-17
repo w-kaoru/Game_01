@@ -477,8 +477,10 @@
     <ClInclude Include="CharacterStatus.h" />
     <ClInclude Include="Sky.h" />
     <ClInclude Include="Timer.h" />
-    <ClInclude Include="Player\PlayerState.h" />
     <ClInclude Include="Save.h" />
+    <ClInclude Include="Player\PlayerState.h">
+      <Filter>Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\enpath2.fbx">
