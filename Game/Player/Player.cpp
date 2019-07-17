@@ -97,7 +97,9 @@ bool Player::Start()
 	);
 	//SE
 	m_se.Init(L"Assets/sound/se_damage.wav");
+	m_se2.Init(L"Assets/sound/footstep.wav");
 	m_se.SetVolume(1.0f);
+	m_se2.SetVolume(1.0f);
 	m_model.SetShadowReciever(true);
 	m_status.StatusUp();
 	m_save = g_gameObjM->FindGO<Save>("Save");

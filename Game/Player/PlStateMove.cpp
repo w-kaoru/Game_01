@@ -46,10 +46,12 @@ void PlStateMove::Update()
 		m_rotation.SetRotation(CVector3::AxisY(), angle);
 		//走るアニメーションの再生するためにステートの変更
 		m_player->SetAnimation(PlayerState::AnimationState::AnimRun);
+		m_player->GetSEFootStep()->Play(false);
 	}
 	else {
 		//待機アニメーションの再生するためにステートの変更
 		m_player->SetAnimation(PlayerState::AnimationState::AnimIdle);
+		m_player->GetSEFootStep()->Stop();
 	}
 	m_player->SetMoveSpeed(m_moveSpeed);
 	m_player->SetRotation(m_rotation);

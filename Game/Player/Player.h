@@ -82,6 +82,9 @@ public:
 	{
 		return &m_charaCon;
 	}
+	CSoundSource* GetSEFootStep() {
+		return &m_se2;
+	}
 private:
 	SkinModel m_model;									//スキンモデル。
 	Animation m_animation;								//アニメーション。
@@ -102,6 +105,7 @@ private:
 	float m_damageCutSpan = 6.0f;
 	float m_damageCutValue = 6.0f;
 	CSoundSource m_se;						//SE。
+	CSoundSource m_se2;
 	ID3D11ShaderResourceView* m_normalMapSRV = nullptr;	//ノーマルマップのSRV
 	ID3D11ShaderResourceView* m_specularMapSRV = nullptr;	//ノーマルマップのSRV
 	Save* m_save = nullptr;

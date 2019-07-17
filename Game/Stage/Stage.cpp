@@ -59,8 +59,8 @@ bool Stage::Start()
 	m_bgm.Init(L"Assets/sound/bgm_Dungeon.wav");
 	m_bgm_bos.Init(L"Assets/sound/bgm_Bos.wav");
 	m_bgm.Play(true);
-	m_bgm.SetVolume(0.17f);
-	m_bgm_bos.SetVolume(0.17f);
+	m_bgm.SetVolume(0.07f);
+	m_bgm_bos.SetVolume(0.1f);
 	return false;
 }
 
