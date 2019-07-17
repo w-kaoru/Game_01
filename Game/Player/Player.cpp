@@ -55,12 +55,12 @@ Player::Player() :m_stMa(this)
 		false, nullptr, &m_specularMapSRV);
 
 	m_status.SetStandardHp(60);
-	m_status.SetStandardAgi(850.0f);
-	//m_status.SetStandardAgi(1850.0f);
+	//m_status.SetStandardAgi(850.0f);
+	m_status.SetStandardAgi(1850.0f);
 	m_status.SetStandardDef(1.0f);
-	m_status.SetStandardAtk(13.5f);
-	//m_status.SetStandardAtk(1300.5f);
-	m_status.SetMaxLv(90);
+	//m_status.SetStandardAtk(13.5f);
+	m_status.SetStandardAtk(1300.5f);
+	m_status.SetMaxLv(30);
 }
 Player::~Player()
 {
@@ -99,7 +99,7 @@ bool Player::Start()
 	m_se.Init(L"Assets/sound/se_damage.wav");
 	m_se2.Init(L"Assets/sound/footstep.wav");
 	m_se.SetVolume(1.0f);
-	m_se2.SetVolume(1.0f);
+	m_se2.SetVolume(0.2f);
 	m_model.SetShadowReciever(true);
 	m_status.StatusUp();
 	m_save = g_gameObjM->FindGO<Save>("Save");
@@ -136,7 +136,7 @@ void Player::Damage(float damage)
 void Player::Update()
 {
 	int lv = m_status.GetLv();
-	m_save->Lv = lv;
+	m_save->PlayerLv = lv;
 	//前方向の取得。
 	m_rotMatrix.MakeRotationFromQuaternion(m_rotation);
 	m_forward.x = m_rotMatrix.m[2][0];
@@ -145,13 +145,13 @@ void Player::Update()
 	m_forward.Normalize();
 	//経験値
 	//レベルアップの条件
-	if (m_save->exp / 2.5f >= lv) {
+	if (m_save->Playerexp / 2.5f >= lv) {
 		if (lv < m_status.GetMaxLv()) {
 			m_status.SetHp(m_status.GetMaxHp());
 			m_status.SetLv(lv);
 			m_status.LvUp();
 			m_status.StatusUp();
-			m_save->exp -= lv;
+			m_save->Playerexp -= lv;
 		}
 	}
 	//ステートマシンの更新。

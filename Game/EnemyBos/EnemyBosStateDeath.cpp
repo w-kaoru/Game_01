@@ -32,13 +32,13 @@ void EnemyBosStateDeath::Update()
 {
 	m_enemy->SetAnimation(EnemyBosState::AnimationState::AnimDeath);
 	if (m_enemy->GetAnimation().IsPlaying() == false) {
-		g_gameObjM->DeleteGO(g_gameObjM->FindGO<Game>("Game"));
-		if (g_gameObjM->FindGO<Stage>("Stage")->GetStageType() == Stage::StageType::Stage_Ground) {
-			g_gameObjM->FindGO<Save>("Save")->SetLoopcCount(0);
+		if (g_gameObjM->FindGO<Stage>("Stage")->GetStageType() == StageType::Stage_Ground) {
+			g_gameObjM->DeleteGO(g_gameObjM->FindGO<Game>("Game"));
 			g_gameObjM->NewGO<GameEnd>()->SetGameEnd(GameEnd::GameEndState::gameCleared);
 		}
-		if (g_gameObjM->FindGO<Stage>("Stage")->GetStageType() == Stage::StageType::Stage_Dungeon) {
-			g_gameObjM->NewGO<GameEnd>()->SetGameEnd(GameEnd::GameEndState::Ground);
+		if (g_gameObjM->FindGO<Stage>("Stage")->GetStageType() == StageType::Stage_Dungeon) {
+			g_gameObjM->FindGO<Stage>("Stage")->Release();
+			g_gameObjM->FindGO<Stage>("Stage")->StageSelect(StageType::Stage_Ground);
 		}
 	}
 }

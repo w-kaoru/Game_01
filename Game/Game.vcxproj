@@ -166,7 +166,6 @@
     <ClCompile Include="sound\WaveFile.cpp" />
     <ClCompile Include="sound\WaveFileBank.cpp" />
     <ClCompile Include="Stage\Stage.cpp" />
-    <ClCompile Include="Stage\WarpPoint.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -252,7 +251,7 @@
     <ClInclude Include="sound\WaveFile.h" />
     <ClInclude Include="sound\WaveFileBank.h" />
     <ClInclude Include="Stage\Stage.h" />
-    <ClInclude Include="Stage\WarpPoint.h" />
+    <ClInclude Include="Stage\StageType.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="system\system.h" />
     <ClInclude Include="Timer.h" />
@@ -271,7 +270,6 @@
     <MeshContentTask Include="Assets\modelData\plpath.FBX" />
     <MeshContentTask Include="Assets\modelData\sky.fbx" />
     <MeshContentTask Include="Assets\modelData\TrollGiant.fbx" />
-    <MeshContentTask Include="Assets\modelData\Warp_point.fbx" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\hp_gauge.png" />

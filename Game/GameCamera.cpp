@@ -16,7 +16,7 @@ bool GameCamera::Start()
 	CVector3 cameraPos = CVector3::Zero();
 	cameraPos.x = m_player->GetPosition().x - (m_player->GetForward().x * 65.0f);
 	cameraPos.z = m_player->GetPosition().z - (m_player->GetForward().z * 65.0f);
-	cameraPos.y = m_player->GetPosition().y + 30.0f;
+	cameraPos.y = m_player->GetPosition().y + 20.0f;
 	//ƒJƒƒ‰‚ð‰Šú‰»B
 	g_camera3D.SetPosition(cameraPos);
 	g_camera3D.SetTarget(m_player->GetPosition());

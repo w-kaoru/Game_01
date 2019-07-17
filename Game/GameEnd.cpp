@@ -2,7 +2,7 @@
 #include "GameEnd.h"
 #include "Title.h"
 #include "Game.h"
-
+#include "Stage/Stage.h"
 
 GameEnd::GameEnd()
 {
@@ -46,7 +46,6 @@ void GameEnd::SelectYesNo(bool flag)
 			m_ArrowPos.z == m_ArrowYesPos.z) {
 			g_gameObjM->DeleteGO(this);
 			g_gameObjM->NewGO<Title>(0, "Title");
-			g_gameObjM->FindGO<Save>("Save")->SetLoopcCount(0);
 			g_gameObjM->FindGO<Save>("Save")->NeworLoadGame(1, 0.0f);
 		}
 		else if (m_ArrowPos.x == m_ArrowNoPos.x&&
@@ -97,9 +96,6 @@ void GameEnd::Update()
 			CVector3::One()
 		);
 		break;
-	case Ground:
-		g_gameObjM->DeleteGO(this);
-		g_gameObjM->NewGO<Game>(0, "Game");
 	case gameDefault:
 		m_gameEndSprite.Update(
 			CVector3::Zero(),

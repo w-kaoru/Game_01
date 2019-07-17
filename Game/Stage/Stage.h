@@ -13,17 +13,11 @@ class Player;
 class GameCamera;
 class LightCamera;
 class UI;
-class WarpPoint;
 class Sky;
 //ゲームクラス。
 class Stage : public IGameObject
 {
 public:
-	enum StageType {
-		Stage_Dungeon,
-		Stage_Ground,
-		Stage_Num
-	};
 	Stage();
 	~Stage();
 	bool Start() override;
@@ -47,7 +41,6 @@ private:
 	EnemyBos* m_enemyBos = nullptr;			//エネミーボス
 	GameCamera* m_gameCamera= nullptr;		//ゲームカメラ。
 	LightCamera* m_light = nullptr;			//ライト
-	WarpPoint* m_warpPoint = nullptr;
 	Sky* m_sky = nullptr;					//空
 	Level m_level;							//レベルを初期化。
 	std::vector< Enemy* > m_enemyList;		//エネミーのリスト。
@@ -58,7 +51,6 @@ private:
 	StageType m_type = StageType::Stage_Num;
 	int m_middleEnemyNum = 0;
 	int m_enemyMaxNum = 7;
-	int m_enemyMaxLv = 100;
 	Save* m_save = nullptr;
 };
 

@@ -253,9 +253,6 @@
     <ClCompile Include="Hit\HitObject.cpp">
       <Filter>Hit</Filter>
     </ClCompile>
-    <ClCompile Include="Stage\WarpPoint.cpp">
-      <Filter>Stage</Filter>
-    </ClCompile>
     <ClCompile Include="Sky.cpp" />
     <ClCompile Include="Timer.cpp" />
   </ItemGroup>
@@ -471,9 +468,6 @@
     <ClInclude Include="Hit\HitObject.h">
       <Filter>Hit</Filter>
     </ClInclude>
-    <ClInclude Include="Stage\WarpPoint.h">
-      <Filter>Stage</Filter>
-    </ClInclude>
     <ClInclude Include="CharacterStatus.h" />
     <ClInclude Include="Sky.h" />
     <ClInclude Include="Timer.h" />
@@ -481,6 +475,7 @@
     <ClInclude Include="Player\PlayerState.h">
       <Filter>Player</Filter>
     </ClInclude>
+    <ClInclude Include="Stage\StageType.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\enpath2.fbx">
@@ -508,9 +503,6 @@
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\ground.fbx">
-      <Filter>Assets\modelData</Filter>
-    </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\Warp_point.fbx">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\BosHouse.fbx">

@@ -17,6 +17,7 @@ Enemy::~Enemy()
 	m_charaCon.RemoveRigidBoby();
 	//“–‚½‚è”»’è‚ðÁ‹ŽB
 	g_hitObject->Delete(m_hit);
+	if(g_gameObjM->FindGO<Stage>("Stage")!=nullptr) g_gameObjM->FindGO<Stage>("Stage")->EnemyDelete(this);
 
 	m_effect->Release();
 }
@@ -273,9 +274,9 @@ void Enemy::Update()
 			m_playEffectHandle,
 			20.0f, 20.0f, 20.0f
 		);
-		g_gameObjM->FindGO<Stage>("Stage")->EnemyDelete(this);
 		float exp = max(2.0f, float(m_status.GetLv() - 5.0f));
 		m_player->EXP(exp);
+		g_gameObjM->DeleteGO(this);
 	}
 }
 

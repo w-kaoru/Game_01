@@ -62,7 +62,7 @@ public:
 	}
 	void EXP(float exp)
 	{
-		m_save->exp += exp;
+		m_save->Playerexp += exp;
 	}
 	void SetDamageCut(bool damage)
 	{

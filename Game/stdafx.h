@@ -51,6 +51,7 @@
 #include "sound/SoundEngine.h"
 #include "Save.h"
 #include "sound/SoundSource.h"
+#include "Stage/StageType.h"
 
 extern HitObject* g_hitObject;
 const float FRAME_BUFFER_W = 1280.0f;				//フレームバッファの幅。
