@@ -33,7 +33,7 @@ void PlStateAttack::Update()
 		m_comboTiming = 15;
 		m_hitTimer++;
 		m_comboTimer++;
-		m_player->SetAnimation(PlayerState::AnimationState::AnimAttack_00);
+		m_player->SetAnimation(PlayerState::AnimationState::AnimAttack_00, 0.1f);
 		//攻撃されてからあたったタイミングで攻撃したい（簡易版）
 		if (m_hitTimer == m_atkHit) {
 			//攻撃をヒットさせる。
@@ -66,7 +66,7 @@ void PlStateAttack::Update()
 		m_comboTiming = 14;
 		m_hitTimer++;
 		m_comboTimer++;
-		m_player->SetAnimation(PlayerState::AnimationState::AnimAttack_01);
+		m_player->SetAnimation(PlayerState::AnimationState::AnimAttack_01, 0.1f);
 		//攻撃されてからあたったタイミングで攻撃したい（簡易版）
 		if (m_hitTimer == m_atkHit) {
 			//攻撃をヒットさせる。
@@ -98,7 +98,7 @@ void PlStateAttack::Update()
 	case Combo::attack_02:
 		m_atkHit = 8;
 		m_hitTimer++;
-		m_player->SetAnimation(PlayerState::AnimationState::AnimAttack_02);
+		m_player->SetAnimation(PlayerState::AnimationState::AnimAttack_02, 0.1f);
 		//攻撃されてからあたったタイミングで攻撃したい（簡易版）
 		if (m_hitTimer == m_atkHit) {
 			//攻撃をヒットさせる。

@@ -53,9 +53,9 @@ public:
 		m_rotation = rot;
 	}
 	//アニメーションのステートのセッター。
-	void SetAnimation(PlayerState::AnimationState state)
+	void SetAnimation(PlayerState::AnimationState state, float interpolateTime = 0.2f)
 	{
-		m_animation.Play(state, 0.2f);
+		m_animation.Play(state, interpolateTime);
 	}
 	void SetMoveSpeed(CVector3 ms) {
 		m_moveSpeed = ms;
