@@ -57,8 +57,6 @@ void Bloom::InitShader()
 	m_vs.Load("Assets/shader/bloom.fx", "VSMain", Shader::EnType::VS);
 	m_psLuminance.Load("Assets/shader/bloom.fx", "PSSamplingLuminance", Shader::EnType::PS);
 	m_psFinal.Load("Assets/shader/bloom.fx", "PSFinal", Shader::EnType::PS);
-	///////////////////////////////////////////////////////////////////////////
-	//最適化のポイント②
 	//ボケ画像合成用のピクセルシェーダーをロードする。
 	m_psCombine.Load("Assets/shader/bloom.fx", "PSCombine", Shader::EnType::PS);
 }
@@ -70,17 +68,10 @@ void Bloom::InitRenderTarget()
 		(unsigned int(FRAME_BUFFER_H)),
 		DXGI_FORMAT_R16G16B16A16_FLOAT
 	);
-	///////////////////////////////////////////////////////////////////////////
-	//最適化のポイント① 
-	//フレームバッファの1/2の解像度のボケ画像合成用のレンダリングターゲットを
-	//作成する。
+	//フレームバッファの1/2の解像度のボケ画像合成用のレンダリングターゲットを作成する。
 	//ぼかした画像を最終合成するためのレンダリングターゲットを作成する。
-	//Q. なぜ1/2の解像度？
-	//A. ガウシアンブラーで作成したボケ画像で、最も高い解像度がフレームバッファの
-	//   1/2になっているから。
-	///////////////////////////////////////////////////////////////////////////
 	m_blurCombineRT.Create(
-		(unsigned int(FRAME_BUFFER_W/2)),
+		(unsigned int(FRAME_BUFFER_W/2)), 
 		(unsigned int(FRAME_BUFFER_H/2)),
 		DXGI_FORMAT_R16G16B16A16_FLOAT
 	);
@@ -146,11 +137,7 @@ void Bloom::Draw(PostEffect& postEffect)
 			gaussianBlur.Execute(postEffect);
 		}
 	}
-	///////////////////////////////////////////////////////////////////////////
-	//最適化のポイント③
-	//ガウスブラーでぼかした画像を1/2の解像度のレンダリングターゲットを使用して、
-	//合成する。
-	///////////////////////////////////////////////////////////////////////////
+	//ガウスブラーでぼかした画像を1/2の解像度のレンダリングターゲットを使用して、合成する。
 	{
 		//レンダリングターゲットをぼかし画像合成用のモノにする。
 		g_graphicsEngine->ChangeRenderTarget(&m_blurCombineRT, m_blurCombineRT.GetViewport());
