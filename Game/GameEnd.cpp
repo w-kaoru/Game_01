@@ -52,8 +52,13 @@ void GameEnd::SelectYesNo(bool flag)
 		else if (m_ArrowPos.x == m_ArrowNoPos.x&&
 			m_ArrowPos.y == m_ArrowNoPos.y&&
 			m_ArrowPos.z == m_ArrowNoPos.z) {
-			g_gameObjM->DeleteGO(this);
-			g_gameObjM->NewGO<Game>(0, "Game");
+			g_gameObjM->DeleteGO(this); 
+			if (g_gameObjM->FindGO<Game>("Game") == nullptr) {
+				g_gameObjM->NewGO<Game>(0, "Game"); 
+			}
+			else {
+				g_gameObjM->FindGO<Game>("Game")->SetUpdateStop(false);
+			}
 			if (flag) {
 				g_gameObjM->FindGO<Save>("Save")->NeworLoadGame(1, 0.0f);
 			}

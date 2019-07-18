@@ -135,69 +135,70 @@ void Player::Damage(float damage)
 
 void Player::Update()
 {
-	int lv = m_status.GetLv();
-	m_save->PlayerLv = lv;
-	//前方向の取得。
-	m_rotMatrix.MakeRotationFromQuaternion(m_rotation);
-	m_forward.x = m_rotMatrix.m[2][0];
-	m_forward.y = m_rotMatrix.m[2][1];
-	m_forward.z = m_rotMatrix.m[2][2];
-	m_forward.Normalize();
-	//経験値
-	//レベルアップの条件
-	if (m_save->Playerexp / 2.5f >= lv) {
-		if (lv < m_status.GetMaxLv()) {
-			m_status.SetHp(m_status.GetMaxHp());
-			m_status.SetLv(lv);
-			m_status.LvUp();
-			m_status.StatusUp();
-			m_save->Playerexp -= lv;
+	if (!g_gameObjM->FindGO<Game>("Game")->GetUpdateStop()) {
+		int lv = m_status.GetLv();
+		m_save->PlayerLv = lv;
+		//前方向の取得。
+		m_rotMatrix.MakeRotationFromQuaternion(m_rotation);
+		m_forward.x = m_rotMatrix.m[2][0];
+		m_forward.y = m_rotMatrix.m[2][1];
+		m_forward.z = m_rotMatrix.m[2][2];
+		m_forward.Normalize();
+		//経験値
+		//レベルアップの条件
+		if (m_save->Playerexp / 2.5f >= lv) {
+			if (lv < m_status.GetMaxLv()) {
+				m_status.SetHp(m_status.GetMaxHp());
+				m_status.SetLv(lv);
+				m_status.LvUp();
+				m_status.StatusUp();
+				m_save->Playerexp -= lv;
+			}
 		}
-	}
-	//ステートマシンの更新。
-	m_stMa.Update();
-	//m_model.SetShadowReciever(true);
+		//ステートマシンの更新。
+		m_stMa.Update();
+		//m_model.SetShadowReciever(true);
 
-	//死亡の判定
-	if (m_status.GetHp() <= 0.0f) {
-		m_stMa.Change(PlayerState::MoveState::Death);
-		m_moveSpeed *= 0.0f;
-	}
-	//攻撃をクラったかどうか
-	if (m_stMa.StateDamage()->GetDamageFlag() == false && m_status.GetHp() > 0.0f) {
-		if (g_pad[0].IsTrigger(enButtonX) && !m_stMa.StateAttack()->GetHit()) {
-			m_stMa.StateAttack()->SetHit(true);
-			//m_stMa.StateAttack()->SetAttack(15);
-			//攻撃ステートに変更
-			m_stMa.Change(PlayerState::MoveState::Attack);
+		//死亡の判定
+		if (m_status.GetHp() <= 0.0f) {
+			m_stMa.Change(PlayerState::MoveState::Death);
+			m_moveSpeed *= 0.0f;
 		}
-		
-		if (!m_stMa.StateAttack()->GetHit()) {
-			//攻撃していない時に移動などの処理。
-			m_stMa.Change(PlayerState::MoveState::Move);
-		}
-	}
-	else {
-		if (!m_animation.IsPlaying()) {
-			m_stMa.Change(PlayerState::MoveState::Move);
-			m_stMa.StateDamage()->SetDamageFlag(false);
-		}
-	}
-	if (g_pad[0].IsTrigger(enButtonY) && m_damageCutSpan >= m_damageCutValue) {
-		m_damageCut = true;
-	}
-	DamageCut();
-	//重力
-	m_moveSpeed.y -= 980.0f * (1.0f / 60.0f);
-	//キャラコンを使って移動する。
-	m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
-	//ワールド行列の更新。
-	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
-	//アニメーションを流す。
-	m_animation.Update(1.0f / 30.0f);
-	//シャドウキャスターを登録。
-	g_graphicsEngine->GetShadowMap()->RegistShadowCaster(&m_model);
+		//攻撃をクラったかどうか
+		if (m_stMa.StateDamage()->GetDamageFlag() == false && m_status.GetHp() > 0.0f) {
+			if (g_pad[0].IsTrigger(enButtonX) && !m_stMa.StateAttack()->GetHit()) {
+				m_stMa.StateAttack()->SetHit(true);
+				//m_stMa.StateAttack()->SetAttack(15);
+				//攻撃ステートに変更
+				m_stMa.Change(PlayerState::MoveState::Attack);
+			}
 
+			if (!m_stMa.StateAttack()->GetHit()) {
+				//攻撃していない時に移動などの処理。
+				m_stMa.Change(PlayerState::MoveState::Move);
+			}
+		}
+		else {
+			if (!m_animation.IsPlaying()) {
+				m_stMa.Change(PlayerState::MoveState::Move);
+				m_stMa.StateDamage()->SetDamageFlag(false);
+			}
+		}
+		if (g_pad[0].IsTrigger(enButtonY) && m_damageCutSpan >= m_damageCutValue) {
+			m_damageCut = true;
+		}
+		DamageCut();
+		//重力
+		m_moveSpeed.y -= 980.0f * (1.0f / 60.0f);
+		//キャラコンを使って移動する。
+		m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
+		//ワールド行列の更新。
+		m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
+		//アニメーションを流す。
+		m_animation.Update(1.0f / 30.0f);
+		//シャドウキャスターを登録。
+		g_graphicsEngine->GetShadowMap()->RegistShadowCaster(&m_model);
+	}
 }
 
 void Player::DamageCut()

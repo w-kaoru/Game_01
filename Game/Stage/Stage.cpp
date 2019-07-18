@@ -10,6 +10,7 @@
 #include "../Enemy\Enemy.h"
 #include "../EnemyBos/EnemyBos.h"
 #include "../Sky.h"
+#include "../Game.h"
 
 Stage::Stage()
 {
@@ -314,6 +315,11 @@ void Stage::Update()
 			m_bgm_bos.Play(true);
 		}
 	}
+	if (g_gameObjM->FindGO<Game>("Game")->GetUpdateStop()) {
+		m_bgm.Stop();
+		m_bgm_bos.Stop();
+	}
+
 }
 
 void Stage::Draw()

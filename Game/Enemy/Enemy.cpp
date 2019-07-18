@@ -2,6 +2,7 @@
 #include "Enemy.h"
 #include "Player\Player.h"
 #include "../Stage/Stage.h"
+#include "../Game.h"
 
 
 Enemy::Enemy():m_stMa(this)
@@ -229,54 +230,56 @@ void Enemy::DamegeCutSprite()
 
 void Enemy::Update()
 {
-	if (m_stMa.StateDamage()->GetDamageFlag() == false) {
-		Search();
-	}
-	else {
-		if (m_animation.IsPlaying() == false) {
-			m_stMa.Change(EnemyState::MoveState::move);
-			m_stMa.StateDamage()->SetDamageFlag(false);
+	if (!g_gameObjM->FindGO<Game>("Game")->GetUpdateStop()) {
+		if (m_stMa.StateDamage()->GetDamageFlag() == false) {
+			Search();
 		}
-	}
-	//ステートマシンの更新
-	m_stMa.Update();
+		else {
+			if (m_animation.IsPlaying() == false) {
+				m_stMa.Change(EnemyState::MoveState::move);
+				m_stMa.StateDamage()->SetDamageFlag(false);
+			}
+		}
+		//ステートマシンの更新
+		m_stMa.Update();
 
-	DamageCut();
-	//重力加速度
-	if (m_charaCon.IsOnGround()) {
-		m_moveSpeed.y *= 0.0f;
-		m_speedY *= 0.0f;
-	}
-	else {
-		m_speedY -= 980.0f * (1.0f / 60.0f);
-		m_moveSpeed.y = m_speedY;
-	}
-	//キャラコンを使って移動する。
-	m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
+		DamageCut();
+		//重力加速度
+		if (m_charaCon.IsOnGround()) {
+			m_moveSpeed.y *= 0.0f;
+			m_speedY *= 0.0f;
+		}
+		else {
+			m_speedY -= 980.0f * (1.0f / 60.0f);
+			m_moveSpeed.y = m_speedY;
+		}
+		//キャラコンを使って移動する。
+		m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
 
-	//シャドウキャスターを登録。
-	g_graphicsEngine->GetShadowMap()->RegistShadowCaster(&m_model);
-	//m_model.SetShadowReciever(true);
-	//ワールド行列を求める。
-	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
-	//アニメーションを流す。
-	m_animation.Update(1.0f / 30.0f);
-	//死んだら。
-	if (m_status.GetHp() < 0.01f&&m_isDeath == false) {
-		m_isDeath = true;
-		m_effectPos = m_position;
-		//エフェクトの再生。
-		m_playEffectHandle = g_graphicsEngine->GetEffekseerManager()->Play(
-			m_effect, m_effectPos.x, m_effectPos.y + 100.0f, m_effectPos.z
-		);
-		//エフェクトの拡大率。
-		g_graphicsEngine->GetEffekseerManager()->SetScale(
-			m_playEffectHandle,
-			20.0f, 20.0f, 20.0f
-		);
-		float exp = max(2.0f, float(m_status.GetLv() - 5.0f));
-		m_player->EXP(exp);
-		g_gameObjM->DeleteGO(this);
+		//シャドウキャスターを登録。
+		g_graphicsEngine->GetShadowMap()->RegistShadowCaster(&m_model);
+		//m_model.SetShadowReciever(true);
+		//ワールド行列を求める。
+		m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
+		//アニメーションを流す。
+		m_animation.Update(1.0f / 30.0f);
+		//死んだら。
+		if (m_status.GetHp() < 0.01f&&m_isDeath == false) {
+			m_isDeath = true;
+			m_effectPos = m_position;
+			//エフェクトの再生。
+			m_playEffectHandle = g_graphicsEngine->GetEffekseerManager()->Play(
+				m_effect, m_effectPos.x, m_effectPos.y + 100.0f, m_effectPos.z
+			);
+			//エフェクトの拡大率。
+			g_graphicsEngine->GetEffekseerManager()->SetScale(
+				m_playEffectHandle,
+				20.0f, 20.0f, 20.0f
+			);
+			float exp = max(2.0f, float(m_status.GetLv() - 5.0f));
+			m_player->EXP(exp);
+			g_gameObjM->DeleteGO(this);
+		}
 	}
 }
 

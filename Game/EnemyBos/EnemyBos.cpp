@@ -209,42 +209,44 @@ void EnemyBos::DamegeCutSprite()
 
 void EnemyBos::Update()
 {
-	if (m_status.GetHp() <= 0.0f) {
-		m_moveSpeed *= 0.0f;
-		m_stMa.Change(EnemyBosState::MoveState::death);
-	}
-	else {
-		if (m_stMa.StateDamage()->GetDamageFlag() == false) {
-			Search();
+	if (!g_gameObjM->FindGO<Game>("Game")->GetUpdateStop()) {
+		if (m_status.GetHp() <= 0.0f) {
+			m_moveSpeed *= 0.0f;
+			m_stMa.Change(EnemyBosState::MoveState::death);
 		}
 		else {
-			if (m_animation.IsPlaying() == false) {
-				m_stMa.Change(EnemyBosState::MoveState::move);
-				m_stMa.StateDamage()->SetDamageFlag(false);
+			if (m_stMa.StateDamage()->GetDamageFlag() == false) {
+				Search();
+			}
+			else {
+				if (m_animation.IsPlaying() == false) {
+					m_stMa.Change(EnemyBosState::MoveState::move);
+					m_stMa.StateDamage()->SetDamageFlag(false);
+				}
 			}
 		}
+		//ステートマシンの更新
+		m_stMa.Update();
+		DamageCut();
+		//重力加速度
+		if (m_charaCon.IsOnGround()) {
+			m_moveSpeed.y *= 0.0f;
+			m_speedY *= 0.0f;
+		}
+		else {
+			m_speedY -= 980.0f * (1.0f / 60.0f);
+			m_moveSpeed.y = m_speedY;
+		}
+		//キャラコンを使って移動する。
+		m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
+		//シャドウキャスターを登録。
+		g_graphicsEngine->GetShadowMap()->RegistShadowCaster(&m_model);
+		//m_model.SetShadowReciever(true);
+		//ワールド行列を求める。
+		m_model.UpdateWorldMatrix(m_position, m_rotation, { 1.0f, 1.0f, 1.0f });
+		//アニメーションを流す。
+		m_animation.Update(1.0f / 30.0f);
 	}
-	//ステートマシンの更新
-	m_stMa.Update();
-	DamageCut();
-	//重力加速度
-	if (m_charaCon.IsOnGround()) {
-		m_moveSpeed.y *= 0.0f; 
-		m_speedY *= 0.0f;
-	}
-	else {
-		m_speedY -= 980.0f * (1.0f / 60.0f);
-		m_moveSpeed.y = m_speedY;
-	}
-	//キャラコンを使って移動する。
-	m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
-	//シャドウキャスターを登録。
-	g_graphicsEngine->GetShadowMap()->RegistShadowCaster(&m_model);
-	//m_model.SetShadowReciever(true);
-	//ワールド行列を求める。
-	m_model.UpdateWorldMatrix(m_position, m_rotation, { 1.0f, 1.0f, 1.0f });
-	//アニメーションを流す。
-	m_animation.Update(1.0f / 30.0f);
 }
 
 void EnemyBos::Draw()

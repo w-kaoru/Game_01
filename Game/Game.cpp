@@ -29,7 +29,8 @@ bool Game::Start()
 void Game::Update()
 {
 	if (g_pad[0].IsTrigger(enButtonSelect)) {
-		g_gameObjM->DeleteGO(this);
+		//g_gameObjM->DeleteGO(this);
+		m_updateStop = true;
 		//タイトルシーンの作成。
 		g_gameObjM->NewGO<GameEnd>(0,"GameEnd")->SetGameEnd(GameEnd::GameEndState::gameDefault);
 	}

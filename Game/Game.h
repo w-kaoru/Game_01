@@ -18,7 +18,14 @@ public:
 	void Draw() override;
 	void PreDraw() override;
 	void Destroy() override;
+	void SetUpdateStop(bool stop) {
+		m_updateStop = stop;
+	}
+	bool GetUpdateStop() {
+		return m_updateStop;
+	}
 private:
 	Stage* m_stage = nullptr;
+	bool m_updateStop = false;
 };
 
