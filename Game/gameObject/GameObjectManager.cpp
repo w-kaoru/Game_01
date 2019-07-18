@@ -22,7 +22,6 @@ void GameObjectManager::Execute()
 			obj->UpdateWrapper();
 		}
 	}
-	DrawExecute();
 	DeleteExecute();
 }
 

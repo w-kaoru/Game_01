@@ -38,6 +38,7 @@ void Stage::Release()
 	}
 	if (m_enemyBos!=nullptr) g_gameObjM->DeleteGO(m_enemyBos);
 	if (m_sky) g_gameObjM->DeleteGO(m_sky);
+	m_save->SaveStage = m_type;
 }
 bool Stage::EnemyDelete(Enemy* enemy)
 {
