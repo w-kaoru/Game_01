@@ -114,6 +114,7 @@ void GameEnd::Update()
 			CQuaternion::Identity(),
 			CVector3::One()
 		);
+		m_titelBackSprite.SetAlpha(0.7f);
 		break;
 	}
 }
