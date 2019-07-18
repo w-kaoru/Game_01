@@ -243,7 +243,7 @@ void Stage::GroundNew()
 			m_enemyBos->SetPosition(objData.position);
 			m_enemyBos->SetRotation(rot);
 			m_enemyBos->GetPlayer(m_player);
-			m_enemyBos->GetStatus()->SetLv(35);
+			m_enemyBos->GetStatus()->SetLv(32);
 			return false;
 		}
 		return true;
@@ -287,7 +287,7 @@ void Stage::EnemySpawn()
 							enemy->SetPlayer(m_player);
 							m_enemyList.push_back(enemy);
 							//エネミーのレベル
-							enemy->GetStatus()->SetLv(22);
+							enemy->GetStatus()->SetLv(25);
 							enemy->GetStatus()->StatusUp();
 							m_middleEnemyNum++;
 						}

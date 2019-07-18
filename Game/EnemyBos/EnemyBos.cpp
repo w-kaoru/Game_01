@@ -58,7 +58,7 @@ bool EnemyBos::Start()
 	m_shieldSprite.Init(L"Assets/sprite/shield.dds", 20.0f, 20.0f);
 	m_position.y += 200.0f;
 	//キャラクターコントローラーの初期化。
-	m_charaCon.Init(50.0f, 110.0f, m_position);
+	m_charaCon.Init(50.0f*1.5f, 110.0f*1.5f, m_position);
 	//エネミーのステートマシンのスタート関数を呼ぶ。
 	//ステートマシンの初期化。
 	m_stMa.Start();
@@ -181,7 +181,7 @@ void EnemyBos::DamegeCutSprite()
 {
 	if (m_damageCut) {//ポジションを頭の上付近にする。
 		auto pos = m_position;
-		pos.y += 180.0f;
+		pos.y += 180.0f*1.5f;
 		//スプライトの更新
 		m_shieldSprite.Update(pos, g_camera3D.GetViewRotationMatrix(), { 1.0f, 1.0f, 1.0f });
 		//スプライトの表示
@@ -243,7 +243,7 @@ void EnemyBos::Update()
 		g_graphicsEngine->GetShadowMap()->RegistShadowCaster(&m_model);
 		//m_model.SetShadowReciever(true);
 		//ワールド行列を求める。
-		m_model.UpdateWorldMatrix(m_position, m_rotation, { 1.0f, 1.0f, 1.0f });
+		m_model.UpdateWorldMatrix(m_position, m_rotation, { 1.5f, 1.5f, 1.5f });
 		//アニメーションを流す。
 		m_animation.Update(1.0f / 30.0f);
 	}
