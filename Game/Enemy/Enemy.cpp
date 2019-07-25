@@ -110,8 +110,8 @@ bool Enemy::Start()
 		Hit::enemy
 	);
 	//SE
-	m_se_damade.Init(L"Assets/sound/se_damage.wav");
-	m_se_damade.SetVolume(1.0f);	
+	m_se_damage.Init(L"Assets/sound/se_damage.wav");
+	m_se_damage.SetVolume(1.0f);
 	m_effect = Effekseer::Effect::Create(
 		g_graphicsEngine->GetEffekseerManager(),
 		(const EFK_CHAR*)L"Assets/effect/death.efk"
@@ -162,7 +162,8 @@ void Enemy::Search()
 //ƒ_ƒ[ƒW
 void Enemy::Damage(float damage)
 {
-	m_se_damade.Play(false);
+	m_se_damage.Stop();
+	m_se_damage.Play(false);
 	if (!m_damageCut) {
 		m_stMa.StateDamage()->SetDamage(damage);
 		m_stMa.Change(EnemyState::MoveState::damage);

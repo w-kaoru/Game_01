@@ -67,6 +67,9 @@ public:
 	bool GetBGMFlag() {
 		return m_bosBgm;
 	}
+	CSoundSource SE_Damage() {
+		return m_se_damage;
+	}
 private:
 	Player* m_player = nullptr;							//プレイヤー
 	CVector3 m_position = CVector3::Zero();				//座標。
@@ -82,7 +85,7 @@ private:
 	//Sprite m_hpSprite;									//hpバー。
 	Sprite m_shieldSprite;
 	const Hit* m_hit;
-	CSoundSource m_se_damade;							//SE
+	CSoundSource m_se_damage;							//SE
 	ID3D11ShaderResourceView* m_normalMapSRV = nullptr;
 	float m_toPlayerLen;		//プレイヤーとの距離
 	float m_speedY = 0.0f;

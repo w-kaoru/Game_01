@@ -88,7 +88,7 @@ private:
 	//Sprite m_hpSprite;									//hpバー。
 	Sprite m_shieldSprite;
 	const Hit* m_hit;
-	CSoundSource m_se_damade;							//SE
+	CSoundSource m_se_damage;							//SE
 	EnemyType m_type = type_num;
 	float m_speedY = 0.0f;
 	float m_toPlayerLen;		//プレイヤーとの距離

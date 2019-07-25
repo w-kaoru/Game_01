@@ -69,8 +69,8 @@ bool EnemyBos::Start()
 		Hit::enemy
 	);
 	//SE
-	m_se_damade.Init(L"Assets/sound/se_damage.wav");
-	m_se_damade.SetVolume(1.0f);
+	m_se_damage.Init(L"Assets/sound/se_damage.wav");
+	m_se_damage.SetVolume(1.0f);
 	m_player = g_gameObjM->FindGO<Player>("Player");
 
 
@@ -132,7 +132,8 @@ void EnemyBos::Search()
 void EnemyBos::Damage(float damage)
 {
 	if (m_status.GetHp() > 0.0f) {
-		m_se_damade.Play(false);
+		m_se_damage.Stop();
+		m_se_damage.Play(false);
 		if (!m_damageCut) {
 			m_stMa.StateDamage()->SetDamage(damage);
 			m_stMa.Change(EnemyBosState::MoveState::damage);
