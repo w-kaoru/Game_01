@@ -70,6 +70,9 @@ public:
 	CSoundSource SE_Damage() {
 		return m_se_damage;
 	}
+	Effekseer::Effect* Effect() {
+		return m_effect;
+	}
 private:
 	Player* m_player = nullptr;							//プレイヤー
 	CVector3 m_position = CVector3::Zero();				//座標。
@@ -101,4 +104,5 @@ private:
 	//エネミーのステイタス
 	CharacterStatus m_status;
 	bool m_bosBgm = false;
+	Effekseer::Effect* m_effect = nullptr;
 };

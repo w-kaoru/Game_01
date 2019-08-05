@@ -40,6 +40,11 @@ bool EnemyBos::Start()
 	//攻撃アニメーション
 	m_animationClips[EnemyBosState::AnimationState::AnimAttack].Load(L"Assets/animData/enemy_Bos/enBosattack.tka");
 	m_animationClips[EnemyBosState::AnimationState::AnimAttack].SetLoopFlag(false);
+	m_animationClips[EnemyBosState::AnimationState::AnimAttackPunch].Load(L"Assets/animData/enemy_Bos/enBosAttackPunch.tka");
+	m_animationClips[EnemyBosState::AnimationState::AnimAttackPunch].SetLoopFlag(false);
+	//強攻撃アニメーション
+	m_animationClips[EnemyBosState::AnimationState::AnimAttackStrong].Load(L"Assets/animData/enemy_Bos/EnBosStrongAttack.tka");
+	m_animationClips[EnemyBosState::AnimationState::AnimAttackStrong].SetLoopFlag(false);
 	//ダメージアニメーション
 	m_animationClips[EnemyBosState::AnimationState::AnimDamage].Load(L"Assets/animData/enemy_Bos/enBosdamage.tka");
 	m_animationClips[EnemyBosState::AnimationState::AnimDamage].SetLoopFlag(false);
@@ -73,6 +78,10 @@ bool EnemyBos::Start()
 	m_se_damage.SetVolume(1.0f);
 	m_player = g_gameObjM->FindGO<Player>("Player");
 
+	m_effect = Effekseer::Effect::Create(
+		g_graphicsEngine->GetEffekseerManager(),
+		(const EFK_CHAR*)L"Assets/effect/StrongAttack.efk"
+	);
 
 	m_status.SetStandardHp(100.0f);
 	m_status.SetStandardAgi(550.0f);
@@ -107,13 +116,13 @@ void EnemyBos::Search()
 	else {
 		m_bosBgm = false;
 	}
-	if (m_toPlayerLen <= 160.0) {
+	if (m_toPlayerLen <= 200.0) {
 		//プレイヤーとの距離が一定以下で
 		//攻撃ステートをよべー。
 		m_stMa.Change(EnemyBosState::MoveState::attack);
-		m_stMa.StateAttack()->SetAttack(25, 10);
+		//m_stMa.StateAttack()->SetAttack(35, 20);
 	}
-	if(m_toPlayerLen > 160.0 &&
+	if(m_toPlayerLen > 200.0 &&
 		m_stMa.StateAttack()->GetAtkFlag() == false)
 	{
 		m_stMa.Change(EnemyBosState::MoveState::move);

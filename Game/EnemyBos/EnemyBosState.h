@@ -15,6 +15,8 @@ public:
 		AnimIdle,
 		AnimMove,
 		AnimAttack,
+		AnimAttackPunch,
+		AnimAttackStrong,
 		AnimDamage,
 		AnimDeath,
 		AnimNum,

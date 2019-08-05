@@ -25,11 +25,16 @@ public:
 	{
 		m_attackFlag = flag;
 	}
+	void SetNo(int no) {
+		m_no = no;
+	}
 private:
 	int m_AttackTiming = 0;
-	int m_atkAnimStart = 0;
-	int m_atkHit = 0;
+	int m_atkAnimStart = 20;
+	int m_atkHit = 35;
 	bool m_attackFlag = false;
 	bool m_isAtk = false;
+	int m_no = 0;
+	Effekseer::Handle m_playEffectHandle = -1;
 };
 
