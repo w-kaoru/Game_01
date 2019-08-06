@@ -36,5 +36,6 @@ private:
 	bool m_isAtk = false;
 	int m_no = 0;
 	Effekseer::Handle m_playEffectHandle = -1;
+	CVector3 m_hitPos;
 };
 

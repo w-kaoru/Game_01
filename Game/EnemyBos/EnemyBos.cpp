@@ -122,7 +122,7 @@ void EnemyBos::Search()
 		m_stMa.Change(EnemyBosState::MoveState::attack);
 		//m_stMa.StateAttack()->SetAttack(35, 20);
 	}
-	if(m_toPlayerLen > 200.0 &&
+	if(m_toPlayerLen > 300.0 &&
 		m_stMa.StateAttack()->GetAtkFlag() == false)
 	{
 		m_stMa.Change(EnemyBosState::MoveState::move);
@@ -247,6 +247,7 @@ void EnemyBos::Update()
 			m_speedY -= 980.0f * (1.0f / 60.0f);
 			m_moveSpeed.y = m_speedY;
 		}
+
 		//キャラコンを使って移動する。
 		m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
 		//シャドウキャスターを登録。

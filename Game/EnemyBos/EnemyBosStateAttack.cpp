@@ -21,6 +21,9 @@ bool EnemyBosStateAttack::Start()
 
 void EnemyBosStateAttack::Update()
 {
+	m_hitPos = m_enemy->GetPosition();
+	m_hitPos.y += 75.0f;
+	m_hitPos += m_enemy->GetForward() * 90.0f;
 	m_AttackTiming++;
 	//攻撃の間隔
 	if (m_AttackTiming == m_atkAnimStart) {
@@ -59,16 +62,13 @@ void EnemyBosStateAttack::Update()
 	//攻撃されてからあたったタイミングで攻撃したい（簡易版）
 	if (m_AttackTiming == m_atkHit) {
 		//当たったと思われるタイミングで
-		CVector3 hit = m_enemy->GetPosition();
-		hit.y += 95.0f;
-		hit += m_enemy->GetForward() * 50.0f;
 		//攻撃をヒットさせる。
 		switch (m_no)
 		{
 		case 0:
 		case 1:
 			g_hitObject->HitTest(
-				hit, 85.0f,
+				m_hitPos, 100.0f,
 				m_enemy->GetStatus()->GetAtk(),
 				Hit::player
 			);
@@ -76,14 +76,14 @@ void EnemyBosStateAttack::Update()
 		case 2:
 		case 3:
 			g_hitObject->HitTest(
-				hit, 90.0f,
+				m_hitPos, 110.0f,
 				m_enemy->GetStatus()->GetAtk()*0.8f,
 				Hit::player
 			);
 			break;
 		case 4:
 			g_hitObject->HitTest(
-				m_enemy->GetPosition(), 170.0f,
+				m_enemy->GetPosition(), 220.0f,
 				m_enemy->GetStatus()->GetAtk()*1.3f,
 				Hit::player
 			);
@@ -114,7 +114,7 @@ void EnemyBosStateAttack::Update()
 			m_atkHit = 30;
 			break;
 		case 4:
-			m_atkHit = 55;
+			m_atkHit = 60;
 			break;
 		}
 	}

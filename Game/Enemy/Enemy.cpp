@@ -145,7 +145,7 @@ void Enemy::Search()
 		m_stMa.Change(EnemyState::MoveState::attack);
 		m_stMa.StateAttack()->SetAttack(m_atkHit, m_atkAnimStart);
 	}
-	if(m_toPlayerLen > 160.0
+	if(m_toPlayerLen > 200.0
 		&&m_stMa.StateAttack()->GetAtkFlag() == false)
 	{
 		m_stMa.Change(EnemyState::MoveState::move);
