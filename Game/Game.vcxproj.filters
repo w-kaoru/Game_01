@@ -570,5 +570,6 @@
     <ImageContentTask Include="Assets\sprite\A.png">
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Gametitel.png" />
   </ItemGroup>
 </Project>

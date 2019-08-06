@@ -14,7 +14,7 @@ Title::~Title()
 bool Title::Start()
 {
 	//2D‚ð‰Šú‰»B
-	m_titelBackSprite.Init(L"Assets/sprite/TitelBack.dds",1280.0f,720.0f);
+	m_titelBackSprite.Init(L"Assets/sprite/GameTitel.dds",1280.0f,720.0f);
 	m_titelSprite.Init(L"Assets/sprite/Titel.dds", 1280.0f, 720.0f);
 
 	//BGM
@@ -30,7 +30,7 @@ void Title::Update()
 		g_gameObjM->NewGO<Game>(0,"Game");
 		g_gameObjM->DeleteGO(this);
 	}
-	m_titelSprite.Update(CVector3::Zero(), CQuaternion::Identity(), CVector3::One());
+	m_titelSprite.Update({0.0f,30.0f,0.0f}, CQuaternion::Identity(), CVector3::One());
 	m_titelBackSprite.Update(CVector3::Zero(), CQuaternion::Identity(), CVector3::One());
 }
 void Title::PostDraw()
