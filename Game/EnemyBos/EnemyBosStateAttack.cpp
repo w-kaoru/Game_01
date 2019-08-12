@@ -87,6 +87,8 @@ void EnemyBosStateAttack::Update()
 				m_enemy->GetStatus()->GetAtk()*1.3f,
 				Hit::player
 			);
+			m_enemy->SE_Explosion()->Stop();
+			m_enemy->SE_Explosion()->Play(false);
 			break;
 		}
 		//UŒ‚‚ÌŠÔŠu‚ğ0‚É–ß‚·B

@@ -76,6 +76,8 @@ bool EnemyBos::Start()
 	//SE
 	m_se_damage.Init(L"Assets/sound/se_damage.wav");
 	m_se_damage.SetVolume(1.0f);
+	m_se_explosion.Init(L"Assets/sound/se_explosion.wav");
+	m_se_explosion.SetVolume(1.0f);
 	m_player = g_gameObjM->FindGO<Player>("Player");
 
 	m_effect = Effekseer::Effect::Create(

@@ -67,8 +67,8 @@ public:
 	bool GetBGMFlag() {
 		return m_bosBgm;
 	}
-	CSoundSource SE_Damage() {
-		return m_se_damage;
+	CSoundSource* SE_Explosion() {
+		return &m_se_explosion;
 	}
 	Effekseer::Effect* Effect() {
 		return m_effect;
@@ -84,11 +84,12 @@ private:
 	CharacterController m_charaCon;						//キャラクターコントローラーを追加。
 	Animation m_animation;								//アニメーション。
 	AnimationClip m_animationClips[EnemyBosState::AnimationState::AnimNum];	//アニメーションクリップ。
-	EnemyBosStateMachine m_stMa;					//ステートマシン。
-	//Sprite m_hpSprite;									//hpバー。
+	EnemyBosStateMachine m_stMa;						//ステートマシン。
+	//Sprite m_hpSprite;								//hpバー。
 	Sprite m_shieldSprite;
 	const Hit* m_hit;
-	CSoundSource m_se_damage;							//SE
+	CSoundSource m_se_damage;							//SE ダメージ
+	CSoundSource m_se_explosion;						//SE 爆発音
 	ID3D11ShaderResourceView* m_normalMapSRV = nullptr;
 	float m_toPlayerLen;		//プレイヤーとの距離
 	float m_speedY = 0.0f;
